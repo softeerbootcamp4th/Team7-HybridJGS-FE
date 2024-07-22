@@ -7,7 +7,7 @@ export default {
                 // Neutral color
                 "n-white": "#FFFFFF",
                 "n-black": "#000000",
-                "n-gray": {
+                "n-neutral": {
                     50: "#F4F6F7",
                     100: "#E3E7EA",
                     300: "#DFDFDF",
