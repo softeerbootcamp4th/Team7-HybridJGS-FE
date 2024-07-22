@@ -6,7 +6,7 @@
 | --------------------------- | --------------------------- | --------------------------- | --------------------------- |
 | ![alt text](images/jhj.png) | ![alt text](images/csy.png) | ![alt text](images/ksj.png) | ![alt text](images/bjw.png) |
 | FE                          | FE                          | BE                          | BE                          |
-| @jhj2713                    | @sooyeoniya                 | @k000927                    | @wjddn2165                  |
+| [@jhj2713](https://github.com/jhj2713)       | [@sooyeoniya](https://github.com/sooyeoniya)       | [@k000927](https://github.com/k000927)                    | [@wjddn2165](https://github.com/wjddn2165)                |
 
 ## 협업 전략
 
