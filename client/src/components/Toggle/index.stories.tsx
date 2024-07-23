@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Meta } from "@storybook/react";
 import Component, { ToggleProps } from "./index";
 
@@ -11,9 +12,15 @@ const meta = {
 export default meta;
 
 const Toggle = (args: ToggleProps) => {
-    return <Component {...args} />;
+    const [isLeftSelected, setIsLeftSelected] = useState(args.isLeftSelected);
+
+    const handleToggle = () => {
+        setIsLeftSelected((prevIsSelected) => !prevIsSelected);
+    };
+
+    return <Component {...args} isLeftSelected={isLeftSelected} handleToggle={handleToggle} />;
 };
 
 export const Default = (args: ToggleProps) => (
-    <Toggle {...args} leftText="Now" rightText="Before" />
+    <Toggle {...args} leftText="Now" rightText="Before" isLeftSelected={true} />
 );
