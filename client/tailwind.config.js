@@ -66,6 +66,9 @@ export default {
                 900: "36px",
                 1000: "40px",
             },
+            boxShadow: {
+                "s-blue": "0 0 12px rgba(22, 143, 208, 0.5)",
+            },
         },
     },
     plugins: [
