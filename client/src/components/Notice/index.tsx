@@ -18,6 +18,25 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
 );
 
 export default function Notice() {
+    const eventDetails = {
+        // 임시 데이터 객체 리터럴
+        badgeDraw: {
+            dateRange: "2024.08.23.~ 2024.09.05.",
+            days: 14,
+        },
+        balanceGame: {
+            dateRange: "2024.08.31.~ 2024.09.05.",
+            days: 6,
+        },
+    };
+    const formatEventItem = (eventName: string, eventKey: keyof typeof eventDetails) => {
+        const event = eventDetails[eventKey];
+        if (event) {
+            return `${eventName} : ${event.dateRange} (${event.days}일)`;
+        }
+        return `${eventName} : 날짜를 불러오는 중입니다...`;
+    };
+
     return (
         <div className="w-full h-[756px] flex flex-col gap-y-5 bg-n-neutral-100 py-20 px-[180px] text-n-black">
             <h3 className="h-heading-3-bold">유의사항</h3>
@@ -25,8 +44,8 @@ export default function Notice() {
                 title="이벤트 참여"
                 items={[
                     "이벤트 기간",
-                    "캐스퍼봇 뱃지 추첨 이벤트 : 2024.08.23.~ 2024.09.05. (14일)",
-                    "선착순 밸런스 게임 이벤트 : 2024.08.31.~ 2024.09.05. (6일)",
+                    formatEventItem("캐스퍼봇 뱃지 추첨 이벤트", "badgeDraw"),
+                    formatEventItem("선착순 밸런스 게임 이벤트", "balanceGame"),
                     "선착순 밸런스 게임 이벤트는 이벤트 기간 내 매일 하루에 한 번씩, 기간 내 최대 6번 참여 가능합니다.",
                     "이벤트 참여 시 당첨자 연락을 위해 전화번호 기재와 개인정보 수집 동의, 마케팅 정보 수신 동의가 필수로 요구됩니다.",
                     "본 이벤트에서 제작해주신 캐스퍼봇 이미지는 추후 마케팅에 이용될 수 있습니다.",
