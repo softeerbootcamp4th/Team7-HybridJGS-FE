@@ -10,7 +10,7 @@ const checkBoxVariants = cva(`absolute w-6 h-6 left-0 top-0 rounded-200`, {
     variants: {
         isChecked: {
             true: `bg-s-blue`,
-            false: `bg-n-gray-500`,
+            false: `bg-n-neutral-500`,
         },
     },
 });
