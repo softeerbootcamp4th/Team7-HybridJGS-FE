@@ -17,17 +17,8 @@ export const Default: Story = {
         const { showToast, ToastComponent } = useToast("추첨 이벤트에 응모가 완료되었어요!");
 
         return (
-            <div style={{ padding: "20px" }}>
-                <button
-                    onClick={showToast}
-                    style={{
-                        backgroundColor: "blue",
-                        color: "white",
-                        padding: "10px",
-                        border: "none",
-                        borderRadius: "4px",
-                    }}
-                >
+            <div className="p-4">
+                <button onClick={showToast} className="rounded-500 bg-s-blue p-3 text-n-white">
                     Show Toast
                 </button>
                 {ToastComponent}
