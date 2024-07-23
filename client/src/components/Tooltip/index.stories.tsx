@@ -6,7 +6,10 @@ const meta = {
     component: Component,
     tags: ["autodocs"],
     argTypes: {
-        content: { control: "text", positionPercent: "text" },
+        content: { description: "툴팁 내부에 들어가는 내용", control: "text" },
+        positionPercent: { description: "툴팁 위치 (%)", control: "text" },
+        children: { description: "툴팁이 위치할 컴포넌트" },
+        isVisible: { description: "툴팁 가시성" },
     },
 } as Meta;
 
