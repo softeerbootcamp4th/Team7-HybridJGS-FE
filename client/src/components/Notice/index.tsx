@@ -1,5 +1,15 @@
 import React from "react";
 
+interface EventDetails {
+    startDate: string;
+    endDate: string;
+    days: number;
+}
+
+interface EventData {
+    [key: string]: EventDetails;
+}
+
 interface SectionProps {
     title: string;
     items: string[];
@@ -18,21 +28,23 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
 );
 
 export default function Notice() {
-    const eventDetails = {
-        // 임시 데이터 객체 리터럴
+    const eventDetails: EventData = {
+        // TODO: 임시 데이터 -> API로 변경 필요
         badgeDraw: {
-            dateRange: "2024.08.23.~ 2024.09.05.",
+            startDate: "2024.08.23.",
+            endDate: "2024.09.05.",
             days: 14,
         },
         balanceGame: {
-            dateRange: "2024.08.31.~ 2024.09.05.",
+            startDate: "2024.08.31.",
+            endDate: "2024.09.05.",
             days: 6,
         },
     };
-    const formatEventItem = (eventName: string, eventKey: keyof typeof eventDetails) => {
+    const formatEventItem = (eventName: string, eventKey: keyof EventData) => {
         const event = eventDetails[eventKey];
         if (event) {
-            return `${eventName} : ${event.dateRange} (${event.days}일)`;
+            return `${eventName} : ${event.startDate} ~ ${event.endDate} (${event.days}일)`;
         }
         return `${eventName} : 날짜를 불러오는 중입니다...`;
     };
