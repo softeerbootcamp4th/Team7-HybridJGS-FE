@@ -11,6 +11,8 @@ interface PositionType {
     left: number | null;
 }
 
+const TOOLTIP_GAP = 10;
+
 export default function Tooltip({
     content,
     children,
@@ -23,7 +25,7 @@ export default function Tooltip({
 
     const contentStyle = {
         top: `${position.top}px`,
-        left: `calc(${position.left}px - ${positionPercent})`,
+        left: `${position.left}px`,
     };
 
     const arrowStyle = {
@@ -32,11 +34,14 @@ export default function Tooltip({
 
     useEffect(() => {
         if (isVisible && triggerRef.current && tooltipRef.current) {
+            const triggerRect = triggerRef.current.getBoundingClientRect();
             const tooltipRect = tooltipRef.current.getBoundingClientRect();
 
+            const percentToAdditionWidth = (tooltipRect.width * parseInt(positionPercent)) / 100;
+
             setPosition({
-                top: window.scrollY - tooltipRect.height - 8,
-                left: window.scrollX,
+                top: window.scrollY - tooltipRect.height - TOOLTIP_GAP,
+                left: window.scrollX - percentToAdditionWidth + triggerRect.width / 2,
             });
         }
     }, [isVisible, positionPercent]);
@@ -47,7 +52,7 @@ export default function Tooltip({
             {isVisible && (
                 <div
                     ref={tooltipRef}
-                    className="absolute z-10 h-heading-4-bold bg-s-yellow text-n-gray-950 rounded-200 py-400 px-500 whitespace-nowrap"
+                    className="absolute z-10 h-heading-4-bold bg-s-yellow text-n-neutral-950 rounded-200 py-400 px-500 whitespace-nowrap text-center"
                     style={contentStyle}
                 >
                     {content}
