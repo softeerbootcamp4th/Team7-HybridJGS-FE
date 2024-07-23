@@ -7,7 +7,6 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Bold.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Bold.woff") format("woff");
-    font-weight: 700;
 }
 
 @font-face {
@@ -15,7 +14,6 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Medium.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Medium.woff") format("woff");
-    font-weight: 500;
 }
 
 @font-face {
@@ -23,7 +21,6 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Regular.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Regular.woff") format("woff");
-    font-weight: 400;
 }
 
 @font-face {
@@ -31,7 +28,6 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Light.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Light.woff") format("woff");
-    font-weight: 300;
 }
 
 @font-face {
@@ -39,7 +35,6 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Bold.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Bold.woff") format("woff");
-    font-weight: 700;
 }
 
 @font-face {
@@ -47,7 +42,6 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Medium.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Medium.woff") format("woff");
-    font-weight: 500;
 }
 
 @font-face {
@@ -55,5 +49,4 @@
     src:
         url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Regular.woff2") format("woff2"),
         url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Regular.woff") format("woff");
-    font-weight: 400;
 }
