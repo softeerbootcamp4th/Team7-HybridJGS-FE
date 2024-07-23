@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Toast from "../components/Toast";
 
 export default function useToast(message: string, duration: number = 3000) {
@@ -8,13 +8,17 @@ export default function useToast(message: string, duration: number = 3000) {
         setVisible(true);
     }, []);
 
-    const closeToast = useCallback(() => {
-        setVisible(false);
-    }, []);
+    useEffect(() => {
+        if (visible) {
+            const timer = setTimeout(() => {
+                setVisible(false);
+            }, duration);
 
-    const ToastComponent: ReactNode = visible ? (
-        <Toast message={message} duration={duration} onClose={closeToast} />
-    ) : null;
+            return () => clearTimeout(timer);
+        }
+    }, [visible, duration]);
+
+    const ToastComponent = <Toast message={message} isVisible={visible} />;
 
     return { showToast, ToastComponent };
 }

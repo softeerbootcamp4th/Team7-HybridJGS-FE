@@ -1,20 +1,15 @@
-import { useEffect } from "react";
-
-interface toastProps {
+interface ToastProps {
     message: string;
-    duration: number;
-    onClose: () => void;
+    isVisible: boolean;
 }
 
-export default function Toast({ message, duration = 3000, onClose }: toastProps) {
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();
-        }, duration);
-        return () => clearTimeout(timer);
-    }, [duration, onClose]);
+export default function Toast({ message, isVisible }: ToastProps) {
     return (
-        <div className="fixed bottom-4 right-4 h-heading-4-bold bg-s-blue text-n-white px-6 py-4 rounded-500">
+        <div
+            className={`fixed bottom-4 right-4 h-heading-4-bold bg-s-blue text-n-white px-6 py-4 rounded-500 transition-opacity ${
+                isVisible ? "opacity-100" : "opacity-0"
+            }`}
+        >
             {message}
         </div>
     );
