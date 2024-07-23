@@ -14,7 +14,7 @@ export default function Toast({ message, duration = 3000, onClose }: toastProps)
         return () => clearTimeout(timer);
     }, [duration, onClose]);
     return (
-        <div className="fixed h-heading-4-bold bg-s-blue text-n-white px-6 py-4 rounded-500">
+        <div className="fixed bottom-4 right-4 h-heading-4-bold bg-s-blue text-n-white px-6 py-4 rounded-500">
             {message}
         </div>
     );
