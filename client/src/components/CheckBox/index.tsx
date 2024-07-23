@@ -21,7 +21,7 @@ export default function CheckBox({ isChecked, handleChangeCheck }: CheckBoxProps
     };
 
     return (
-        <div className="relative w-6 h-6 rounded-200 hover:shadow-check-box">
+        <div className="relative w-6 h-6 rounded-200 hover:shadow-s-blue">
             <label className="cursor-pointer">
                 <input
                     type="checkbox"
