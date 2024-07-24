@@ -137,4 +137,4 @@ close #{issue number}
 [notion](https://www.notion.so/bside/0f847f8e83e9423394eeb95e460a0840?pvs=4)
 
 ## 개발 이슈
-[notion](https://www.notion.so/bside/941aa9df9b7b4bc69d0219e05a105077)
+[notion](https://www.notion.so/bside/941aa9df9b7b4bc69d0219e05a105077?pvs=4)
