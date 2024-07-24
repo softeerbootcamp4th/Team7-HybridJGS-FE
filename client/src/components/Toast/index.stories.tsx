@@ -6,6 +6,13 @@ const meta: Meta<typeof Toast> = {
     title: "Toast",
     component: Toast,
     tags: ["autodocs"],
+    argTypes: {
+        message: { control: "text", description: "토스트 메시지에 띄을 텍스트" },
+        isVisible: {
+            control: "boolean",
+            description: "현재 화면에 토스트 메시지가 보이는지에 대한 여부",
+        },
+    },
 };
 
 export default meta;
