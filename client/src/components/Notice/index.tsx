@@ -51,7 +51,7 @@ export default function Notice() {
 
     return (
         <div className="w-full h-[756px] flex flex-col gap-y-5 bg-n-neutral-100 py-20 px-[180px] text-n-black">
-            <h3 className="h-heading-3-bold">유의사항</h3>
+            <h3 className="!leading-9 h-heading-3-bold">유의사항</h3>
             <Section
                 title="이벤트 참여"
                 items={[
