@@ -123,11 +123,11 @@ close #{issue number}
 
 ## 기획 링크
 
-[Figma](https://www.figma.com/design/RjcSZf0akqXegZpLM400IJ/Handoff_%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C%EC%A0%95%EA%B0%81%EC%84%B8?node-id=0-1&t=k82334z7qujXpsBD-1)
+[Figma](https://www.figma.com/design/RjcSZf0akqXegZpLM400IJ/Handoff_%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C%EC%A0%95%EA%B0%81%EC%84%B8?node-id=1216-1405&t=6yNT6Xn926EUb7VQ-1)
 
 ## 디자인 링크
 
-[Figma](https://www.figma.com/design/rt4g2VwFF4icjxvj7ZFG0W/Design?node-id=39-21&t=zY12rmKl2QrujAhA-1)
+[Figma](https://www.figma.com/design/rt4g2VwFF4icjxvj7ZFG0W/Design?node-id=700-18097&t=08P3U4XuXCvULXoW-1)
 
 ## Git Project
 
@@ -135,3 +135,6 @@ close #{issue number}
 
 ## 노션
 [notion](https://www.notion.so/bside/0f847f8e83e9423394eeb95e460a0840?pvs=4)
+
+## 개발 이슈
+[notion](https://www.notion.so/bside/941aa9df9b7b4bc69d0219e05a105077)
