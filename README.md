@@ -128,3 +128,10 @@ close #{issue number}
 ## 디자인 링크
 
 [Figma](https://www.figma.com/design/rt4g2VwFF4icjxvj7ZFG0W/Design?node-id=39-21&t=zY12rmKl2QrujAhA-1)
+
+## Git Project
+
+[github](https://github.com/orgs/softeerbootcamp4th/projects/8)
+
+## 노션
+[notion](https://www.notion.so/bside/0f847f8e83e9423394eeb95e460a0840?pvs=4)
