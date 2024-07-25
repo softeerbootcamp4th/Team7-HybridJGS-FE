@@ -7,7 +7,9 @@ const meta = {
     component: Component,
     tags: ["autodocs"],
     argTypes: {
-        isChecked: { control: "boolean" },
+        label: { description: "check box 레이블" },
+        isChecked: { control: "boolean", description: "체크 여부" },
+        handleChangeCheck: { description: "체크 여부 변경 이벤트 핸들러" },
     },
 } as Meta;
 

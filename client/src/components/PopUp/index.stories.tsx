@@ -8,6 +8,8 @@ const meta = {
     tags: ["autodocs"],
     argTypes: {
         phoneNumber: { description: "Input 색상 타입" },
+        handlePhoneNumberChange: { description: "phone number가 변경되는 이벤트 핸들러" },
+        handleClose: { description: "popup close 이벤트 핸들러" },
     },
 } as Meta;
 
