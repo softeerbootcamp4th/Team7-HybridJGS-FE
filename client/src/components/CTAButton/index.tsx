@@ -1,13 +1,18 @@
 import "@/index.css";
 
-export interface ButtonProps {
+export interface CTAButtonProps {
     label: string;
     onClick: () => void;
     disabled?: boolean;
     color?: "blue" | "white";
 }
 
-export default function Button({ label, onClick, disabled = false, color = "blue" }: ButtonProps) {
+export default function CTAButton({
+    label,
+    onClick,
+    disabled = false,
+    color = "blue",
+}: CTAButtonProps) {
     return (
         <button
             onClick={onClick}
