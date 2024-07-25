@@ -24,4 +24,13 @@ const CheckBox = (args: CheckBoxProps) => {
 };
 
 export const Checked = (args: CheckBoxProps) => <CheckBox {...args} isChecked />;
+
 export const UnChecked = (args: CheckBoxProps) => <CheckBox {...args} isChecked={false} />;
+
+export const CheckedLabel = (args: CheckBoxProps) => (
+    <CheckBox {...args} isChecked label="개인정보 수집 및 활용 동의" />
+);
+
+export const UnCheckedLabel = (args: CheckBoxProps) => (
+    <CheckBox {...args} isChecked={false} label="마케팅 정보 수신 동의" />
+);
