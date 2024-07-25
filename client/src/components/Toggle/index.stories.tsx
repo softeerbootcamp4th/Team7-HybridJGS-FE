@@ -7,14 +7,11 @@ const meta = {
     component: Component,
     tags: ["autodocs"],
     argTypes: {
-        leftText: {
-            description: "toggle의 왼쪽 칸에 들어갈 텍스트",
+        options: {
+            description: "toggle 될 옵션들",
         },
-        rightText: {
-            description: "toggle의 오른쪽 칸에 들어갈 텍스트",
-        },
-        isLeftSelected: {
-            description: "toggle의 왼쪽 칸 선택 여부",
+        selectedIdx: {
+            description: "선택된 옵션의 index",
         },
         handleToggle: {
             description: "toggle trigger",
