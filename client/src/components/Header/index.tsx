@@ -22,7 +22,7 @@ export default function Header({ type }: HeaderProps) {
         const selectedEventType =
             pathname === "/bot"
                 ? EVENT_TYPE.RAFFLE
-                : pathname === "/balence"
+                : pathname === "/balance"
                   ? EVENT_TYPE.FIRST_COME
                   : "";
         setSelectedEvent(selectedEventType);
@@ -45,7 +45,7 @@ export default function Header({ type }: HeaderProps) {
                     <ButtonHeader
                         isSelected={selectedEvent === EVENT_TYPE.FIRST_COME}
                         type={type}
-                        url="/balence"
+                        url="/balance"
                     >
                         선착순 밸런스 게임
                     </ButtonHeader>
