@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CheckBox from "../CheckBox";
 import Input from "../Input";
 
@@ -9,11 +10,12 @@ export interface PopUpProps {
 }
 
 export default function PopUp({ phoneNumber, handlePhoneNumberChange, handleClose }: PopUpProps) {
-    const [isUserInfoCheck, setIsUserInfoCheck] = useState(false);
-    const [isMarketingInfoCheck, setIsMarketingInfoCheck] = useState(false);
+    const [isUserInfoCheck, setIsUserInfoCheck] = useState(true);
+    const [isMarketingInfoCheck, setIsMarketingInfoCheck] = useState(true);
 
     const handleTextFieldChange = (val: string) => {
-        handlePhoneNumberChange(val);
+        const formattedPhoneNumber = formatPhoneNumber(val);
+        handlePhoneNumberChange(formattedPhoneNumber);
     };
 
     const handleDimClick = () => {
