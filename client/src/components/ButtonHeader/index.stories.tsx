@@ -5,6 +5,12 @@ const meta = {
     title: "ButtonHeader",
     component: Component,
     tags: ["autodocs"],
+    argTypes: {
+        type: { description: "라이트모드 / 다크모드" },
+        isSelected: { description: "해당 버튼 헤더 선택 여부" },
+        url: { description: "버튼 헤더 클릭 시 이동하는 URL" },
+        children: { description: "버튼 헤더 내부에 들어가는 Node" },
+    },
 } as Meta;
 
 export default meta;

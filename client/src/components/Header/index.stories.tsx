@@ -5,6 +5,9 @@ const meta = {
     title: "Header",
     component: Component,
     tags: ["autodocs"],
+    argTypes: {
+        type: { description: "라이트모드 / 다크모드" },
+    },
 } as Meta;
 
 export default meta;
