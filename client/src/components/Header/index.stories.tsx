@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Component from "./index";
+import type { Meta } from "@storybook/react";
+import Component, { HeaderProps } from "./index";
 
 const meta = {
     title: "Header",
@@ -9,12 +9,10 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-export const Light: Story = {
-    args: {},
+const Header = (args: HeaderProps) => {
+    return <Component {...args} />;
 };
 
-export const Dark: Story = {
-    args: {},
-};
+export const Light = (args: HeaderProps) => <Header {...args} type="light" />;
+
+export const Dark = (args: HeaderProps) => <Header {...args} type="dark" />;
