@@ -32,6 +32,7 @@ export default {
                 "s-blue": "#04AAD2",
                 "s-red": "#E43311",
                 "s-yellow": "#F9C101",
+                "s-hover": "#068AB4",
             },
             // Gradient
             backgroundImage: {

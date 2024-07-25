@@ -1,12 +1,20 @@
+import "@/index.css";
+
 export interface ButtonProps {
     label: string;
-    onClick?: () => void;
+    onClick: () => void;
+    disabled?: boolean;
+    color?: "blue" | "white";
 }
 
-export const Button = ({ label, ...props }: ButtonProps) => {
+export default function Button({ label, onClick, disabled = false, color = "blue" }: ButtonProps) {
     return (
-        <button type="button" className="bg-s-blue" {...props}>
+        <button
+            onClick={onClick}
+            disabled={disabled}
+            className={`button ${disabled ? "button-disabled" : `button-${color}`}`}
+        >
             {label}
         </button>
     );
-};
+}

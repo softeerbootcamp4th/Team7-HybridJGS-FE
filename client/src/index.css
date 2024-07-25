@@ -16,6 +16,19 @@ textarea:focus {
     outline: none;
 }
 
+.button {
+    @apply h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] cursor-pointer;
+}
+.button-blue {
+    @apply bg-s-blue text-n-white hover:bg-s-hover;
+}
+.button-white {
+    @apply bg-n-white text-s-blue hover:bg-n-neutral-50 hover:text-s-hover;
+}
+.button-disabled {
+    @apply bg-n-neutral-300 text-n-neutral-500 cursor-default;
+}
+
 @font-face {
     font-family: "HyundaiSansHeadOffice-Bold";
     src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFBold.otf") format("opentype");
@@ -29,11 +42,6 @@ textarea:focus {
 @font-face {
     font-family: "HyundaiSansHeadOffice-Regular";
     src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFRegular.otf") format("opentype");
-}
-
-@font-face {
-    font-family: "HyundaiSansHeadOffice-Light";
-    src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFLight.otf") format("opentype");
 }
 
 @font-face {
