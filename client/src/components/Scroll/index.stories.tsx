@@ -6,7 +6,8 @@ const meta = {
     component: Component,
     tags: ["autodocs"],
     argTypes: {
-        isChecked: { control: "boolean" },
+        type: { description: "Scroll 색상 타입" },
+        children: { description: "Scroll에 들어갈 텍스트" },
     },
 } as Meta;
 
