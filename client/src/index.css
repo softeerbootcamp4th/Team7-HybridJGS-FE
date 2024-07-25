@@ -17,7 +17,7 @@ textarea:focus {
 }
 
 .button {
-    @apply h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] cursor-pointer;
+    @apply h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] cursor-pointer flex justify-center items-center gap-2;
 }
 .button-blue {
     @apply bg-s-blue text-n-white hover:bg-s-hover;

@@ -17,6 +17,7 @@ const meta: Meta<typeof Component> = {
             control: { type: "select" },
         },
         disabled: { description: "버튼 활성 상태", control: "boolean" },
+        hasIcon: { description: "아이콘 유무", control: "boolean" },
     },
 };
 
@@ -27,13 +28,27 @@ const CTAButton: StoryFn<typeof Component> = (args: CTAButtonProps) => {
 };
 
 export const EnabledBlue: StoryFn<typeof Component> = (args: CTAButtonProps) => (
-    <CTAButton {...args} label="다음" onClick={() => {}} color="blue" disabled={false} />
+    <CTAButton
+        {...args}
+        label="이벤트 참여하기"
+        onClick={() => {}}
+        color="blue"
+        disabled={false}
+        hasIcon={true}
+    />
 );
 
 export const EnabledWhite: StoryFn<typeof Component> = (args: CTAButtonProps) => (
-    <CTAButton {...args} label="다음" onClick={() => {}} color="white" disabled={false} />
+    <CTAButton
+        {...args}
+        label="다음"
+        onClick={() => {}}
+        color="white"
+        disabled={false}
+        hasIcon={true}
+    />
 );
 
 export const Disabled: StoryFn<typeof Component> = (args: CTAButtonProps) => (
-    <CTAButton {...args} label="다음" onClick={() => {}} disabled={true} />
+    <CTAButton {...args} label="다음" onClick={() => {}} disabled={true} hasIcon={true} />
 );
