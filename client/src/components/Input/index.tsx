@@ -14,8 +14,8 @@ const inputContainerVariants = cva(
     {
         variants: {
             type: {
-                light: "text-n-neutral-950 bg-n-white",
-                dark: "text-n-white bg-n-neutral-950",
+                light: "text-n-neutral-950 bg-n-neutral-50 focus-within:bg-n-white",
+                dark: "text-n-white bg-n-neutral-950 focus-within:bg-n-neutral-500",
             },
         },
     }
