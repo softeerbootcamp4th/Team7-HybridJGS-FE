@@ -1,17 +1,26 @@
 import { useEffect, useRef, useState } from "react";
+import { cva } from "class-variance-authority";
 
 export interface ToggleProps {
-    leftText: string;
-    rightText: string;
-    isLeftSelected: boolean;
-    handleToggle: (val: boolean) => void;
+    options: string[];
+    selectedIdx: number;
+    handleToggle: (idx: number) => void;
 }
 
 const PADDING = 8;
 
-export default function Toggle({ leftText, rightText, isLeftSelected, handleToggle }: ToggleProps) {
-    const leftTextRef = useRef<HTMLDivElement>(null);
-    const rightTextRef = useRef<HTMLDivElement>(null);
+const optionVariants = cva(`h-body-2-bold py-200 px-300 z-10 transition-all duration-500`, {
+    variants: {
+        isSelected: {
+            true: "text-n-white",
+            false: "text-n-neutral-500",
+        },
+    },
+});
+
+export default function Toggle({ options, selectedIdx = 0, handleToggle }: ToggleProps) {
+    const optionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
     const [selectedWidth, setSelectedWidth] = useState<number>(0);
     const [selectedTranslate, setSelectedTranslate] = useState<number>(0);
 
@@ -31,46 +40,48 @@ export default function Toggle({ leftText, rightText, isLeftSelected, handleTogg
 
     useEffect(() => {
         calculateTextWidth();
-    }, [isLeftSelected, leftText, rightText]);
+    }, [selectedIdx, options]);
 
     const calculateTextWidth = () => {
-        if (!leftTextRef.current || !rightTextRef.current) {
+        if (optionRefs.current.some((ref) => ref === null)) {
             return;
         }
 
-        const leftWidth = leftTextRef.current.offsetWidth;
-        const rightWidth = rightTextRef.current.offsetWidth;
-        setSelectedWidth(isLeftSelected ? leftWidth : rightWidth);
+        const optionElements = optionRefs.current as HTMLDivElement[];
+        const selectedOptionRef = optionElements[selectedIdx];
+        if (!selectedOptionRef) {
+            return;
+        }
 
-        const translate = isLeftSelected ? PADDING : leftWidth + PADDING * 2;
+        const selectedOptionWidth = selectedOptionRef.offsetWidth;
+        setSelectedWidth(selectedOptionWidth);
+
+        const translate = optionElements
+            .slice(0, selectedIdx)
+            .reduce((acc, val) => acc + val.offsetWidth + PADDING, PADDING);
         setSelectedTranslate(translate);
     };
 
-    const handleToggleClick = () => {
-        handleToggle(!isLeftSelected);
+    const handleToggleClick = (idx: number) => {
+        handleToggle(idx);
     };
 
     return (
-        <div
-            className="bg-n-white rounded-700 p-300 inline-flex items-center gap-300 cursor-pointer relative select-none"
-            onClick={handleToggleClick}
-        >
+        <div className="bg-n-neutral-50 rounded-700 p-300 inline-flex items-center gap-300 cursor-pointer relative select-none">
             <div
-                className="rounded-500 bg-n-black absolute top-300 left-0 h-[30px] transition-all duration-500"
+                className="rounded-500 bg-n-neutral-950 absolute top-300 left-0 h-[30px] transition-all duration-500"
                 style={toggleBackgroundDynamicStyle}
             ></div>
-            <div
-                ref={leftTextRef}
-                className="h-body-2-bold py-200 px-300 z-10 mix-blend-difference text-n-white"
-            >
-                {leftText}
-            </div>
-            <div
-                ref={rightTextRef}
-                className="h-body-2-bold py-200 px-300 z-10 mix-blend-difference text-n-white"
-            >
-                {rightText}
-            </div>
+            {options.map((option, idx) => (
+                <div
+                    key={idx}
+                    ref={(ref) => (optionRefs.current[idx] = ref)}
+                    className={optionVariants({ isSelected: idx === selectedIdx })}
+                    onClick={() => handleToggleClick(idx)}
+                >
+                    {option}
+                </div>
+            ))}
         </div>
     );
 }

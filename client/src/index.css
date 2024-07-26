@@ -32,11 +32,6 @@ textarea:focus {
 }
 
 @font-face {
-    font-family: "HyundaiSansHeadOffice-Light";
-    src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFLight.otf") format("opentype");
-}
-
-@font-face {
     font-family: "HyundaiSansTextOffice-Bold";
     src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFBold.otf") format("opentype");
 }
