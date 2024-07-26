@@ -27,6 +27,7 @@ const PopUp = (args: PopUpProps) => {
             {...args}
             phoneNumber={phoneNumber}
             handlePhoneNumberChange={handlePhoneNumberChange}
+            handleClose={() => {}}
         />
     );
 };

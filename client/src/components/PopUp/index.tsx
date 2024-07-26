@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
+import { useEffect, useState } from "react";
+import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
+import CTAButton from "../CTAButton";
 import CheckBox from "../CheckBox";
 import Input from "../Input";
 
@@ -7,19 +8,43 @@ export interface PopUpProps {
     phoneNumber: string;
     handlePhoneNumberChange: (val: string) => void;
     handleClose: () => void;
+    handleConfirm: () => void;
 }
 
-export default function PopUp({ phoneNumber, handlePhoneNumberChange, handleClose }: PopUpProps) {
+export default function PopUp({
+    phoneNumber = "",
+    handlePhoneNumberChange,
+    handleClose,
+    handleConfirm,
+}: PopUpProps) {
     const [isUserInfoCheck, setIsUserInfoCheck] = useState(true);
     const [isMarketingInfoCheck, setIsMarketingInfoCheck] = useState(true);
 
+    const [canConfirm, setCanConfirm] = useState(false);
+
+    useEffect(() => {
+        const isPhoneNumberFormat = !!phoneNumber.match(PHONE_NUMBER_FORMAT);
+
+        setCanConfirm(isUserInfoCheck && isMarketingInfoCheck && isPhoneNumberFormat);
+    }, [isUserInfoCheck, isMarketingInfoCheck, phoneNumber]);
+
     const handleTextFieldChange = (val: string) => {
+        if (val.length > 13) {
+            return;
+        }
+
         const formattedPhoneNumber = formatPhoneNumber(val);
         handlePhoneNumberChange(formattedPhoneNumber);
     };
 
     const handleDimClick = () => {
         handleClose();
+    };
+
+    const handleCTAButtonClick = () => {
+        if (canConfirm) {
+            handleConfirm();
+        }
     };
 
     return (
@@ -75,7 +100,15 @@ export default function PopUp({ phoneNumber, handlePhoneNumberChange, handleClos
 
                 <div className="pt-1000" />
 
-                <button>다음</button>
+                <div className="flex justify-center">
+                    <CTAButton
+                        disabled={canConfirm ? false : true}
+                        color="blue"
+                        label="다음"
+                        hasIcon={false}
+                        onClick={handleCTAButtonClick}
+                    />
+                </div>
             </div>
         </div>
     );

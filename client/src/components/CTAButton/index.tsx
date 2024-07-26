@@ -10,7 +10,7 @@ const BUTTON_STATUS = {
 };
 
 const buttonVariants = cva(
-    "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] cursor-pointer flex justify-center items-center gap-2",
+    "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] flex justify-center items-center gap-2",
     {
         variants: {
             status: {
