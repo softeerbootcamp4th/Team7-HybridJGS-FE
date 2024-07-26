@@ -1,5 +1,6 @@
 import "@/index.css";
-import SVGIcon from "@/utils/SVGIcon.tsx";
+import ArrowIcon from "/public/assets/icon/arrow.svg?react";
+import ShareIcon from "/public/assets/icon/share.svg?react";
 
 export interface CTAButtonProps {
     label: string;
@@ -27,8 +28,8 @@ export default function CTAButton({
             {label}
             {hasIcon && (
                 <>
-                    <SVGIcon src="/public/assets/icon/arrow.svg" stroke={strokeColor} />
-                    <SVGIcon src="/public/assets/icon/share.svg" stroke={strokeColor} />
+                    <ArrowIcon stroke={strokeColor} />
+                    <ShareIcon stroke={strokeColor} />
                 </>
             )}
         </button>
