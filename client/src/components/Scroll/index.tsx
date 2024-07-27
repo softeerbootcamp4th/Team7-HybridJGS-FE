@@ -21,7 +21,7 @@ export default function Scroll({ type, children }: ScrollProps) {
             <div className={scrollTextVariants({ type })}>{children}</div>
             <img
                 alt="아래 스크롤 아이콘"
-                src="/assets/icon/arrow-down.svg"
+                src="/assets/icons/arrow-down.svg"
                 className="w-[72px] h-[32px]"
             />
         </div>
