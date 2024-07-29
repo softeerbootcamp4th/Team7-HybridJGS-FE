@@ -9,8 +9,11 @@ import PixelDesign from "@/features/lottery/PixelDesign";
 import ShortCut from "@/features/lottery/ShortCut";
 import SmileBadge from "@/features/lottery/SmileBadge";
 import WheelDesign from "@/features/lottery/WheelDesign";
+import useScrollTop from "@/hooks/useScrollTop";
 
 export default function Lottery() {
+    useScrollTop();
+
     return (
         <div className="overflow-x-hidden">
             <Headline />
