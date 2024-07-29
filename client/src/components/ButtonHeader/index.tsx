@@ -11,12 +11,7 @@ export interface ButtonHeaderProps {
 
 export default function ButtonHeader({ type, isSelected, url, children }: ButtonHeaderProps) {
     return (
-        <Link
-            to={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={buttonVariants({ isSelected, type })}
-        >
+        <Link to={url} className={buttonVariants({ isSelected, type })}>
             <p>{children}</p>
         </Link>
     );
