@@ -105,7 +105,6 @@ export default function PopUp({
                         disabled={canConfirm ? false : true}
                         color="blue"
                         label="다음"
-                        hasIcon={false}
                         onClick={handleCTAButtonClick}
                     />
                 </div>
