@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 
 export default function Headline() {
     return (
         <section className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center">
-            <div className="absolute">
+            <div className="absolute pointer-events-none">
                 <img
                     alt="캐스퍼 봇 아이콘"
                     src="/assets/lottery/casper-badges.webp"
@@ -23,9 +22,13 @@ export default function Headline() {
                 </h3>
             </div>
 
-            <Link to="/lottery/custom" className="mt-[49px]">
-                <CTAButton label="캐스퍼 일렉트릭 봇 만들러 가기" hasIcon onClick={() => {}} />
-            </Link>
+            <div className="mt-[49px]">
+                <CTAButton
+                    label="캐스퍼 일렉트릭 봇 만들러 가기"
+                    hasArrowIcon
+                    url="/lottery/custom"
+                />
+            </div>
 
             <div className="mt-[146px]" />
 
