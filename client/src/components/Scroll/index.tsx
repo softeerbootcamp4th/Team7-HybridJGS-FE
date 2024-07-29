@@ -6,7 +6,7 @@ export interface ScrollProps {
     children: ReactNode;
 }
 
-const scrollTextVariants = cva(``, {
+const scrollTextVariants = cva(`h-body-2-regular`, {
     variants: {
         type: {
             light: "text-n-white",
