@@ -10,12 +10,12 @@ export interface InputProps {
 }
 
 const inputContainerVariants = cva(
-    `relative h-body-1-regular w-[390px] h-[64px] px-600 py-[19px] rounded-400 border border-transparent focus-within:border-s-blue`,
+    `block relative h-body-1-regular w-[390px] h-[64px] px-600 py-[19px] rounded-400 border border-transparent focus-within:border-s-blue`,
     {
         variants: {
             type: {
-                light: "text-n-neutral-950 bg-n-white",
-                dark: "text-n-white bg-n-neutral-950",
+                light: "text-n-neutral-950 bg-n-neutral-50 focus-within:bg-n-white",
+                dark: "text-n-white bg-n-neutral-950 focus-within:bg-n-neutral-500",
             },
         },
     }
