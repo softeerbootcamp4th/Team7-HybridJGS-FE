@@ -24,10 +24,11 @@ const buttonVariants = cva(
 
 export interface CTAButtonProps extends VariantProps<typeof buttonVariants> {
     label: string;
-    onClick: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     color?: "blue" | "white";
-    hasIcon: boolean;
+    arrowIcon?: boolean;
+    shareIcon?: boolean;
 }
 
 export default function CTAButton({
@@ -35,7 +36,8 @@ export default function CTAButton({
     onClick,
     disabled = false,
     color = "blue",
-    hasIcon = false,
+    arrowIcon = false,
+    shareIcon = false,
 }: CTAButtonProps) {
     const strokeColor = disabled ? "#637381" : color === "blue" ? "#FFFFFF" : "#04AAD2";
     const status = disabled
@@ -47,12 +49,8 @@ export default function CTAButton({
     return (
         <button onClick={onClick} disabled={disabled} className={buttonVariants({ status })}>
             {label}
-            {hasIcon && (
-                <>
-                    <ArrowIcon stroke={strokeColor} />
-                    <ShareIcon stroke={strokeColor} />
-                </>
-            )}
+            {arrowIcon && <ArrowIcon stroke={strokeColor} />}
+            {shareIcon && <ShareIcon stroke={strokeColor} />}
         </button>
     );
 }
