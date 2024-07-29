@@ -1,4 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
+import { Link } from "react-router-dom";
 import "@/index.css";
 import ArrowIcon from "/public/assets/icon/arrow.svg?react";
 import ShareIcon from "/public/assets/icon/share.svg?react";
@@ -27,6 +28,7 @@ export interface CTAButtonProps extends VariantProps<typeof buttonVariants> {
     onClick?: () => void;
     disabled?: boolean;
     color?: "blue" | "white";
+    url?: string;
     arrowIcon?: boolean;
     shareIcon?: boolean;
 }
@@ -36,6 +38,7 @@ export default function CTAButton({
     onClick,
     disabled = false,
     color = "blue",
+    url,
     arrowIcon = false,
     shareIcon = false,
 }: CTAButtonProps) {
@@ -46,11 +49,38 @@ export default function CTAButton({
           ? BUTTON_STATUS.ACTIVE_BLUE
           : BUTTON_STATUS.ACTIVE_WHITE;
 
-    return (
-        <button onClick={onClick} disabled={disabled} className={buttonVariants({ status })}>
+    const baseClass = buttonVariants({ status });
+    const linkClass = `${baseClass} inline-flex`;
+
+    const isExternalLink = url && (url.startsWith("http://") || url.startsWith("https://"));
+
+    const content = (
+        <>
             {label}
             {arrowIcon && <ArrowIcon stroke={strokeColor} />}
             {shareIcon && <ShareIcon stroke={strokeColor} />}
-        </button>
+        </>
     );
+
+    if (url && !disabled) {
+        if (isExternalLink) {
+            return (
+                <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                    {content}
+                </a>
+            );
+        } else {
+            return (
+                <Link to={url} className={linkClass}>
+                    {content}
+                </Link>
+            );
+        }
+    } else {
+        return (
+            <button onClick={onClick} disabled={disabled} className={baseClass}>
+                {content}
+            </button>
+        );
+    }
 }
