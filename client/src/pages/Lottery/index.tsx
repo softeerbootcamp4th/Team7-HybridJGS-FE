@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import Tooltip from "@/components/Tooltip";
+import Description from "@/features/lottery/Description";
 
 export default function Lottery() {
     return (
@@ -63,23 +64,23 @@ export default function Lottery() {
 
             <section className="h-screen relative flex flex-col items-center justify-center">
                 <div className="w-[1200px]">
-                    <div className="flex gap-[42px]">
-                        <h2 className="h-heading-2-bold text-s-blue">
-                            새로운
-                            <br />
-                            원형 헤드램프
-                        </h2>
-                        <div className="flex flex-col gap-400">
-                            <h2 className="h-heading-2-bold text-n-neutral-950">
-                                나만의 캐스퍼 일렉트릭 봇 만들기
-                            </h2>
-                            <p className="h-body-1-regular">
+                    <Description
+                        label={
+                            <>
+                                새로운
+                                <br />
+                                원형 헤드램프
+                            </>
+                        }
+                        title={<>나만의 캐스퍼 일렉트릭 봇 만들기</>}
+                        description={
+                            <>
                                 캐스퍼 일렉트릭은 기존 캐스퍼에도 적용되었던
                                 <br />
                                 동그란 헤드램프를 4분할하여 미래적인 느낌을 전달해요.
-                            </p>
-                        </div>
-                    </div>
+                            </>
+                        }
+                    />
 
                     <div className="mt-[98px] flex gap-700">
                         <img
