@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
+import Tooltip from "@/components/Tooltip";
 
 export default function Lottery() {
     return (
@@ -36,6 +37,7 @@ export default function Lottery() {
                     <p>해보세요</p>
                 </Scroll>
             </section>
+
             <section className="h-screen relative flex flex-col">
                 <div className="mt-[112px] flex flex-col items-center gap-400 text-n-neutral-950">
                     <p className="h-body-1-regular">CASPER Electric Design</p>
@@ -56,6 +58,47 @@ export default function Lottery() {
                         src="/assets/lottery/car-intro.jpg"
                         className="h-[674px] object-cover"
                     />
+                </div>
+            </section>
+
+            <section className="h-screen relative flex flex-col items-center justify-center">
+                <div className="w-[1200px]">
+                    <div className="flex gap-[42px]">
+                        <h2 className="h-heading-2-bold text-s-blue">
+                            새로운
+                            <br />
+                            원형 헤드램프
+                        </h2>
+                        <div className="flex flex-col gap-400">
+                            <h2 className="h-heading-2-bold text-n-neutral-950">
+                                나만의 캐스퍼 일렉트릭 봇 만들기
+                            </h2>
+                            <p className="h-body-1-regular">
+                                캐스퍼 일렉트릭은 기존 캐스퍼에도 적용되었던
+                                <br />
+                                동그란 헤드램프를 4분할하여 미래적인 느낌을 전달해요.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mt-[98px] flex gap-700">
+                        <img
+                            alt="헤드램프 첫번째 이미지"
+                            src="/assets/lottery/head-lamp-1.jpg"
+                            className="w-[666px] object-cover"
+                        />
+                        <Tooltip
+                            content="충전 포트는 헤드라이트 옆에 있어요"
+                            isVisible
+                            tooltipPosition="right"
+                        >
+                            <img
+                                alt="헤드램프 두번째 이미지"
+                                src="/assets/lottery/head-lamp-2.jpg"
+                                className="w-[510px] object-cover"
+                            />
+                        </Tooltip>
+                    </div>
                 </div>
             </section>
         </div>
