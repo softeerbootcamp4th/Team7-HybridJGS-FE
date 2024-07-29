@@ -8,6 +8,7 @@ const meta = {
     argTypes: {
         content: { description: "툴팁 내부에 들어가는 내용", control: "text" },
         tooltipPosition: { description: "툴팁 위치" },
+        absolutePosition: { description: "absolute 툴팁 위치" },
         children: { description: "툴팁이 위치할 컴포넌트" },
         isVisible: { description: "툴팁 가시성" },
     },
