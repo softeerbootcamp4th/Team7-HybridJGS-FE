@@ -11,7 +11,7 @@ const BUTTON_STATUS = {
 };
 
 const buttonVariants = cva(
-    "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] cursor-pointer flex justify-center items-center gap-2",
+    "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] flex justify-center items-center gap-2",
     {
         variants: {
             status: {
@@ -62,25 +62,34 @@ export default function CTAButton({
         </>
     );
 
-    if (url && !disabled) {
-        if (isExternalLink) {
+    const renderButton = () => {
+        if (disabled) {
             return (
-                <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                <button disabled className={baseClass}>
                     {content}
-                </a>
-            );
-        } else {
-            return (
-                <Link to={url} className={linkClass}>
-                    {content}
-                </Link>
+                </button>
             );
         }
-    } else {
+
+        if (!url) {
+            return (
+                <button onClick={onClick} className={baseClass}>
+                    {content}
+                </button>
+            );
+        }
+
+        const LinkComponent = isExternalLink ? "a" : Link;
+        const linkProps = isExternalLink
+            ? { href: url, target: "_blank", rel: "noopener noreferrer" }
+            : { to: url };
+
         return (
-            <button onClick={onClick} disabled={disabled} className={baseClass}>
+            <LinkComponent {...linkProps} className={linkClass}>
                 {content}
-            </button>
+            </LinkComponent>
         );
-    }
+    };
+
+    return renderButton();
 }
