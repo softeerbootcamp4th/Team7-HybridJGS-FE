@@ -7,7 +7,7 @@ const meta = {
     tags: ["autodocs"],
     argTypes: {
         content: { description: "툴팁 내부에 들어가는 내용", control: "text" },
-        positionPercent: { description: "툴팁 위치 (%)", control: "text" },
+        tooltipPosition: { description: "툴팁 위치" },
         children: { description: "툴팁이 위치할 컴포넌트" },
         isVisible: { description: "툴팁 가시성" },
     },
@@ -19,12 +19,12 @@ const Tooltip = (args: TooltipProps) => {
     return <Component {...args} />;
 };
 
-export const Default = (args: TooltipProps) => (
+export const PositionLeft = (args: TooltipProps) => (
     <div className="absolute left-40 top-40">
         <Tooltip
             {...args}
             isVisible
-            positionPercent="50%"
+            tooltipPosition="left"
             content={
                 <>
                     뱃지 만들고 친구에게 공유하면 당첨 확률 UP!
@@ -38,12 +38,12 @@ export const Default = (args: TooltipProps) => (
     </div>
 );
 
-export const Percent20 = (args: TooltipProps) => (
+export const PositionCenter = (args: TooltipProps) => (
     <div className="absolute left-40 top-40">
         <Tooltip
             {...args}
             isVisible
-            positionPercent="20%"
+            tooltipPosition="center"
             content={
                 <>
                     뱃지 만들고 친구에게 공유하면 당첨 확률 UP!
@@ -57,12 +57,12 @@ export const Percent20 = (args: TooltipProps) => (
     </div>
 );
 
-export const Percent80 = (args: TooltipProps) => (
+export const PositionRight = (args: TooltipProps) => (
     <div className="absolute left-40 top-40">
         <Tooltip
             {...args}
             isVisible
-            positionPercent="80%"
+            tooltipPosition="right"
             content={
                 <>
                     뱃지 만들고 친구에게 공유하면 당첨 확률 UP!
