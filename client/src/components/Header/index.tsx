@@ -8,7 +8,7 @@ export interface HeaderProps {
 }
 
 const EVENT_TYPE = {
-    RAFFLE: "raffle",
+    LOTTERY: "lottery",
     FIRST_COME: "first-come",
 };
 type EventType = (typeof EVENT_TYPE)[keyof typeof EVENT_TYPE];
@@ -19,12 +19,11 @@ export default function Header({ type }: HeaderProps) {
 
     useEffect(() => {
         const pathname = location.pathname;
-        const selectedEventType =
-            pathname === "/bot"
-                ? EVENT_TYPE.RAFFLE
-                : pathname === "/balance"
-                  ? EVENT_TYPE.FIRST_COME
-                  : "";
+        const selectedEventType = pathname.startsWith(`/${EVENT_TYPE.LOTTERY}`)
+            ? EVENT_TYPE.LOTTERY
+            : pathname === "/balance"
+              ? EVENT_TYPE.FIRST_COME
+              : "";
         setSelectedEvent(selectedEventType);
     }, [location]);
 
@@ -35,11 +34,10 @@ export default function Header({ type }: HeaderProps) {
                 <h1 className={logoVariants({ type })}>CASPER Electric Event</h1>
                 <div className="flex gap-700">
                     <ButtonHeader
-                        isSelected={selectedEvent === EVENT_TYPE.RAFFLE}
+                        isSelected={selectedEvent === EVENT_TYPE.LOTTERY}
                         type={type}
-                        url="/bot"
+                        url={`/${EVENT_TYPE.LOTTERY}`}
                     >
-                        {/* TODO: URL 경로 수정 */}
                         나만의 캐스퍼 일렉트릭 봇 만들기
                     </ButtonHeader>
                     <ButtonHeader

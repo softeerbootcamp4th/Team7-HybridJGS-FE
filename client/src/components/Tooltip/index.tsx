@@ -1,10 +1,13 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 
+type TooltipPositionType = "left" | "center" | "right";
+type TooltipAbsolutePositionType = { left: number; top: number };
 export interface TooltipProps {
     content: ReactNode;
-    children: ReactNode;
-    tooltipPosition?: "left" | "center" | "right";
-    isVisible: boolean;
+    children?: ReactNode;
+    tooltipPosition?: TooltipPositionType;
+    absolutePosition?: TooltipAbsolutePositionType;
+    isVisible?: boolean;
 }
 interface PositionType {
     top: number | null;
@@ -22,11 +25,14 @@ export default function Tooltip({
     content,
     children,
     tooltipPosition = "center",
-    isVisible,
+    isVisible = true,
+    absolutePosition,
 }: TooltipProps) {
     const [position, setPosition] = useState<PositionType>({ top: null, left: null });
     const tooltipRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
+
+    const isAbsolutePosition = !!absolutePosition;
 
     const contentStyle = {
         top: `${position.top}px`,
@@ -38,26 +44,48 @@ export default function Tooltip({
     };
 
     useEffect(() => {
-        if (isVisible && triggerRef.current && tooltipRef.current) {
-            const triggerRect = triggerRef.current.getBoundingClientRect();
-            const tooltipRect = tooltipRef.current.getBoundingClientRect();
-
-            const leftPosition =
-                tooltipPosition === "left"
-                    ? 0
-                    : tooltipPosition === "center"
-                      ? triggerRect.width / 2 - tooltipRect.width / 2
-                      : triggerRect.width - tooltipRect.width;
-
-            setPosition({
-                top: window.scrollY - tooltipRect.height - TOOLTIP_GAP,
-                left: window.scrollX + leftPosition,
-            });
+        if (!isVisible || !triggerRef.current || !tooltipRef.current) {
+            return;
         }
+
+        const triggerRect = triggerRef.current.getBoundingClientRect();
+        const tooltipRect = tooltipRef.current.getBoundingClientRect();
+
+        if (isAbsolutePosition) {
+            setPosition({
+                top: absolutePosition.top - tooltipRect.height - TOOLTIP_GAP,
+                left: absolutePosition.left,
+            });
+            return;
+        }
+
+        const leftPosition = getLeftPosition(tooltipPosition, triggerRect.width, tooltipRect.width);
+
+        setPosition({
+            top: window.scrollY - tooltipRect.height - TOOLTIP_GAP,
+            left: window.scrollX + leftPosition,
+        });
     }, [isVisible, tooltipPosition]);
 
+    const getLeftPosition = (
+        position: TooltipPositionType,
+        triggerWidth: number,
+        tooltipWidth: number
+    ) => {
+        switch (position) {
+            case "left":
+                return 0;
+            case "center":
+                return triggerWidth / 2 - tooltipWidth / 2;
+            case "right":
+                return triggerWidth - tooltipWidth;
+            default:
+                return 0;
+        }
+    };
+
     return (
-        <div className="relative" ref={triggerRef}>
+        <div className={`${!isAbsolutePosition && "relative"}`} ref={triggerRef}>
             {children}
             {isVisible && (
                 <div
