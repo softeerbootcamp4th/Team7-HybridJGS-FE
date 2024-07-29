@@ -28,7 +28,7 @@ export default function HeadLamp() {
                     <img
                         alt="헤드램프 첫번째 이미지"
                         src="/assets/lottery/head-lamp-1.jpg"
-                        className="w-[666px] object-cover"
+                        className="w-[666px] object-cover rounded-300"
                     />
                     <Tooltip
                         content="충전 포트는 헤드라이트 옆에 있어요"
@@ -38,7 +38,7 @@ export default function HeadLamp() {
                         <img
                             alt="헤드램프 두번째 이미지"
                             src="/assets/lottery/head-lamp-2.jpg"
-                            className="w-[510px] object-cover"
+                            className="w-[510px] object-cover rounded-300"
                         />
                     </Tooltip>
                 </div>

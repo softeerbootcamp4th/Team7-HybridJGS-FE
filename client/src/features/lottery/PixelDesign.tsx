@@ -29,12 +29,12 @@ export default function PixelDesign() {
                     <img
                         alt="픽셀 디자인 첫번째 이미지"
                         src="/assets/lottery/pixel-design-1.jpg"
-                        className="w-[673px] object-cover"
+                        className="w-[673px] object-cover rounded-300"
                     />
                     <img
                         alt="픽셀 디자인 두번째 이미지"
                         src="/assets/lottery/pixel-design-2.jpg"
-                        className="w-[502px] object-cover"
+                        className="w-[502px] object-cover rounded-300"
                     />
                 </div>
             </div>

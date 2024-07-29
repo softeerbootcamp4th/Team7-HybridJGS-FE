@@ -27,12 +27,12 @@ export default function WheelDesign() {
                     <img
                         alt="휠 디자인 첫번째 이미지"
                         src="/assets/lottery/wheel-design-1.jpg"
-                        className="w-[588px] object-cover"
+                        className="w-[588px] object-cover rounded-300"
                     />
                     <img
                         alt="휠 디자인 두번째 이미지"
                         src="/assets/lottery/wheel-design-2.jpg"
-                        className="w-[588px] object-cover"
+                        className="w-[588px] object-cover rounded-300"
                     />
                 </div>
             </div>
