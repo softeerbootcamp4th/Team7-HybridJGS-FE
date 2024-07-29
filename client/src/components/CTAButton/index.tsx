@@ -1,4 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
+import { Link } from "react-router-dom";
 import "@/index.css";
 import ArrowIcon from "/public/assets/icon/arrow.svg?react";
 import ShareIcon from "/public/assets/icon/share.svg?react";
@@ -10,7 +11,7 @@ const BUTTON_STATUS = {
 };
 
 const buttonVariants = cva(
-    "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] cursor-pointer flex justify-center items-center gap-2",
+    "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] flex justify-center items-center gap-2",
     {
         variants: {
             status: {
@@ -24,10 +25,12 @@ const buttonVariants = cva(
 
 export interface CTAButtonProps extends VariantProps<typeof buttonVariants> {
     label: string;
-    onClick: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     color?: "blue" | "white";
-    hasIcon: boolean;
+    url?: string;
+    hasArrowIcon?: boolean;
+    hasShareIcon?: boolean;
 }
 
 export default function CTAButton({
@@ -35,7 +38,9 @@ export default function CTAButton({
     onClick,
     disabled = false,
     color = "blue",
-    hasIcon = false,
+    url,
+    hasArrowIcon = false,
+    hasShareIcon = false,
 }: CTAButtonProps) {
     const strokeColor = disabled ? "#637381" : color === "blue" ? "#FFFFFF" : "#04AAD2";
     const status = disabled
@@ -44,15 +49,47 @@ export default function CTAButton({
           ? BUTTON_STATUS.ACTIVE_BLUE
           : BUTTON_STATUS.ACTIVE_WHITE;
 
-    return (
-        <button onClick={onClick} disabled={disabled} className={buttonVariants({ status })}>
+    const baseClass = buttonVariants({ status });
+    const linkClass = `${baseClass} inline-flex`;
+
+    const isExternalLink = url && (url.startsWith("http://") || url.startsWith("https://"));
+
+    const content = (
+        <>
             {label}
-            {hasIcon && (
-                <>
-                    <ArrowIcon stroke={strokeColor} />
-                    <ShareIcon stroke={strokeColor} />
-                </>
-            )}
-        </button>
+            {hasArrowIcon && <ArrowIcon stroke={strokeColor} />}
+            {hasShareIcon && <ShareIcon stroke={strokeColor} />}
+        </>
     );
+
+    const renderButton = () => {
+        if (disabled) {
+            return (
+                <button disabled className={baseClass}>
+                    {content}
+                </button>
+            );
+        }
+
+        if (!url) {
+            return (
+                <button onClick={onClick} className={baseClass}>
+                    {content}
+                </button>
+            );
+        }
+
+        const LinkComponent = isExternalLink ? "a" : Link;
+        const linkProps = isExternalLink
+            ? { href: url, target: "_blank", rel: "noopener noreferrer" }
+            : { to: url };
+
+        return (
+            <LinkComponent {...linkProps} className={linkClass}>
+                {content}
+            </LinkComponent>
+        );
+    };
+
+    return renderButton();
 }
