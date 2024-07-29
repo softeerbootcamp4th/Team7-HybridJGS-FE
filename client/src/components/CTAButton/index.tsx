@@ -1,7 +1,7 @@
 import { VariantProps, cva } from "class-variance-authority";
 import "@/index.css";
-import ArrowIcon from "/public/assets/icon/arrow.svg?react";
-import ShareIcon from "/public/assets/icon/share.svg?react";
+import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import ShareIcon from "/public/assets/icons/share.svg?react";
 
 const BUTTON_STATUS = {
     ACTIVE_BLUE: "activeBlue",
