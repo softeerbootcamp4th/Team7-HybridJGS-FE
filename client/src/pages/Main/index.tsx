@@ -28,7 +28,7 @@ export default function Main() {
                 </p>
                 <div className="flex gap-14	p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950">
                     <img
-                        src="/assets/main/casper.svg"
+                        src="/assets/common/casper.webp"
                         alt="casper"
                         className="w-[400px] h-[400px]"
                     />
