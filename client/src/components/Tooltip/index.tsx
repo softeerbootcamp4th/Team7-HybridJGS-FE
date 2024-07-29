@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 export interface TooltipProps {
     content: ReactNode;
     children: ReactNode;
-    positionPercent?: string;
+    tooltipPosition?: "left" | "center" | "right";
     isVisible: boolean;
 }
 interface PositionType {
@@ -11,12 +11,17 @@ interface PositionType {
     left: number | null;
 }
 
-const TOOLTIP_GAP = 10;
+const TOOLTIP_GAP = 18;
+const TOOLTIP_POSITION_MAP = {
+    left: "10%",
+    center: "50%",
+    right: "90%",
+};
 
 export default function Tooltip({
     content,
     children,
-    positionPercent = "50%",
+    tooltipPosition = "center",
     isVisible,
 }: TooltipProps) {
     const [position, setPosition] = useState<PositionType>({ top: null, left: null });
@@ -29,7 +34,7 @@ export default function Tooltip({
     };
 
     const arrowStyle = {
-        left: positionPercent,
+        left: TOOLTIP_POSITION_MAP[tooltipPosition],
     };
 
     useEffect(() => {
@@ -37,14 +42,19 @@ export default function Tooltip({
             const triggerRect = triggerRef.current.getBoundingClientRect();
             const tooltipRect = tooltipRef.current.getBoundingClientRect();
 
-            const percentToAdditionWidth = (tooltipRect.width * parseInt(positionPercent)) / 100;
+            const leftPosition =
+                tooltipPosition === "left"
+                    ? 0
+                    : tooltipPosition === "center"
+                      ? triggerRect.width / 2 - tooltipRect.width / 2
+                      : triggerRect.width - tooltipRect.width;
 
             setPosition({
                 top: window.scrollY - tooltipRect.height - TOOLTIP_GAP,
-                left: window.scrollX - percentToAdditionWidth + triggerRect.width / 2,
+                left: window.scrollX + leftPosition,
             });
         }
-    }, [isVisible, positionPercent]);
+    }, [isVisible, tooltipPosition]);
 
     return (
         <div className="relative" ref={triggerRef}>
