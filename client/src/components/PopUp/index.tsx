@@ -54,7 +54,7 @@ export default function PopUp({
         >
             <div className="px-[80px] py-[81px] bg-n-white rounded-800 absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
                 <button className="absolute right-700 top-700">
-                    <img src="/assets/icon/close.svg" />
+                    <img alt="팝업 닫기 버튼" src="/assets/icon/close.svg" />
                 </button>
 
                 <div className="flex flex-col gap-400">
