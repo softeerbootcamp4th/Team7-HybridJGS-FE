@@ -18,8 +18,8 @@ const meta: Meta<typeof Component> = {
             control: { type: "select" },
         },
         url: { description: "이동 경로 url", control: "text" },
-        arrowIcon: { description: "화살표 아이콘 유무", control: "boolean" },
-        shareIcon: { description: "공유 아이콘 유무", control: "boolean" },
+        hasArrowIcon: { description: "화살표 아이콘 유무", control: "boolean" },
+        hasShareIcon: { description: "공유 아이콘 유무", control: "boolean" },
     },
 };
 
@@ -35,15 +35,15 @@ export const EnabledBlue: StoryFn<typeof Component> = (args: CTAButtonProps) => 
         label="더 알아보러 가기"
         color="blue"
         disabled={false}
-        shareIcon={true}
+        hasShareIcon={true}
         url="https://casper.hyundai.com/vehicles/electric/highlight"
     />
 );
 
 export const EnabledWhite: StoryFn<typeof Component> = (args: CTAButtonProps) => (
-    <CTAButton {...args} label="다음" color="white" disabled={false} arrowIcon={true} url="/" />
+    <CTAButton {...args} label="다음" color="white" disabled={false} hasArrowIcon={true} url="/" />
 );
 
 export const Disabled: StoryFn<typeof Component> = (args: CTAButtonProps) => (
-    <CTAButton {...args} label="다음" disabled={true} arrowIcon={true} shareIcon={true} />
+    <CTAButton {...args} label="다음" disabled={true} hasArrowIcon={true} hasShareIcon={true} />
 );
