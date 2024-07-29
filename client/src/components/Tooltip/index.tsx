@@ -85,7 +85,7 @@ export default function Tooltip({
     };
 
     return (
-        <div className={`${isAbsolutePosition ? "" : "relative"}`} ref={triggerRef}>
+        <div className={`${!isAbsolutePosition && "relative"}`} ref={triggerRef}>
             {children}
             {isVisible && (
                 <div
