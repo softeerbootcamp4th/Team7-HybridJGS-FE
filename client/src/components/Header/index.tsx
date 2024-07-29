@@ -19,12 +19,11 @@ export default function Header({ type }: HeaderProps) {
 
     useEffect(() => {
         const pathname = location.pathname;
-        const selectedEventType =
-            pathname === `/${EVENT_TYPE.LOTTERY}`
-                ? EVENT_TYPE.LOTTERY
-                : pathname === "/balance"
-                  ? EVENT_TYPE.FIRST_COME
-                  : "";
+        const selectedEventType = pathname.startsWith(`/${EVENT_TYPE.LOTTERY}`)
+            ? EVENT_TYPE.LOTTERY
+            : pathname === "/balance"
+              ? EVENT_TYPE.FIRST_COME
+              : "";
         setSelectedEvent(selectedEventType);
     }, [location]);
 
