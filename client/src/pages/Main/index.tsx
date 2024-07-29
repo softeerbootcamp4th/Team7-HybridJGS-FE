@@ -10,7 +10,11 @@ export default function Main() {
         <div>
             <section className="h-screen bg-[url('/assets/main/car-1.jpg')] bg-no-repeat bg-cover flex flex-col justify-center items-center">
                 <Keyword children="CASPER Electric 출시 기념 이벤트" />
-                <div className="w-full h-[300px] mt-10 bg-[url('/assets/main/title.svg')] bg-no-repeat bg-center" />
+                <img
+                    src="/assets/main/title.webp"
+                    alt="main-title"
+                    className="w-[667px] h-[300px] mt-10"
+                />
                 <p className="h-heading-3-medium text-n-white pb-28">
                     2024. 08. 21. (수) ~ 2024. 09. 03. (화)
                 </p>
