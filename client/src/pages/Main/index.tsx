@@ -58,7 +58,7 @@ export default function Main() {
                     <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
                     <ArrowIcon stroke="#637381" />
                 </button>
-                <CTAButton label="이벤트 참여하기" onClick={() => {}} hasIcon={true} />
+                <CTAButton label="이벤트 참여하기" hasArrowIcon={true} />
             </section>
             <section className="flex flex-col gap-3 justify-center items-center h-screen bg-n-white">
                 <p className="h-body-1-regular text-n-black">Event 2. 선착순 이벤트</p>
@@ -95,14 +95,18 @@ export default function Main() {
                         <div className="flex gap-10">{/* 이벤트 경품 컴포넌트 추가 */}</div>
                     </div>
                 </div>
-                <CTAButton label="이벤트 참여하기" onClick={() => {}} hasIcon={true} />
+                <CTAButton label="이벤트 참여하기" hasArrowIcon={true} />
             </section>
             <section className="flex flex-col gap-6 justify-center items-center h-[76.5vh] bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-cover">
                 <span className="flex flex-col gap-3 justify-center items-center">
                     <p className="h-heading-3-bold text-n-white">나의 첫 전기차</p>
                     <p className="h-heading-1-bold text-n-white">CASPER Electric</p>
                 </span>
-                <CTAButton label="더 알아보러 가기" onClick={() => {}} hasIcon={true} />
+                <CTAButton
+                    label="더 알아보러 가기"
+                    hasShareIcon={true}
+                    url="https://casper.hyundai.com/vehicles/electric/highlight"
+                />
             </section>
             <Notice />
             <Footer />
