@@ -3,6 +3,7 @@ import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import Tooltip from "@/components/Tooltip";
 import Description from "@/features/lottery/Description";
+import Section from "@/features/lottery/Section";
 
 export default function Lottery() {
     return (
@@ -62,7 +63,7 @@ export default function Lottery() {
                 </div>
             </section>
 
-            <section className="h-screen relative flex flex-col items-center justify-center">
+            <Section>
                 <div className="w-[1200px]">
                     <Description
                         label={
@@ -101,9 +102,9 @@ export default function Lottery() {
                         </Tooltip>
                     </div>
                 </div>
-            </section>
+            </Section>
 
-            <section className="h-screen relative flex flex-col items-center justify-center">
+            <Section>
                 <div className="w-[1200px]">
                     <Description
                         label={
@@ -138,9 +139,9 @@ export default function Lottery() {
                         />
                     </div>
                 </div>
-            </section>
+            </Section>
 
-            <section className="h-screen relative flex flex-col items-center justify-center">
+            <Section>
                 <div className="w-[1200px] flex flex-col items-end">
                     <Description
                         label={
@@ -173,9 +174,9 @@ export default function Lottery() {
                         />
                     </div>
                 </div>
-            </section>
+            </Section>
 
-            <section className="h-screen relative flex flex-col items-center justify-center">
+            <Section>
                 <div className="w-[1200px]">
                     <Description
                         label={<>커스텀 디자인</>}
@@ -204,7 +205,7 @@ export default function Lottery() {
                         />
                     </div>
                 </div>
-            </section>
+            </Section>
         </div>
     );
 }
