@@ -33,6 +33,13 @@ export default {
                 "s-red": "#E43311",
                 "s-yellow": "#F9C101",
                 "s-hover": "#068AB4",
+
+                // Casper color
+                "c-cream": "#D8D2BC",
+                "c-orange": "#CA7349",
+                "c-khaki": "#515868",
+                "c-silver": "#AAAEB1",
+                "c-black": "#000000",
             },
             // Gradient
             backgroundImage: {
