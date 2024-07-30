@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from "react";
-import { CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/BotCustom/casper";
+import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/BotCustom/casper";
 import { getRandomInt } from "@/utils/getRandomInt";
 
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
@@ -13,7 +13,7 @@ type SelectedBotIdxType = {
 
 export interface BotCustomContextType {
     selectedBotIdx: SelectedBotIdxType;
-    handleSelectOption: (option: CustomOptionType, idx: number) => void;
+    handleSelectOption: (option: CustomOptionType, id: string) => void;
     handleShuffleBot: () => void;
 }
 
@@ -28,8 +28,12 @@ export const BotCustomProvider = ({ children }: { children: ReactNode }) => {
         [CUSTOM_OPTION.STICKER]: null,
     });
 
-    const handleSelectOption = (option: CustomOptionType, idx: number) => {
-        setSelectedBotIdx({ ...selectedBotIdx, [option]: idx });
+    const handleSelectOption = (option: CustomOptionType, id: string) => {
+        const selectedIdx = CASPER_OPTION[option].findIndex((opt) => opt.id === id);
+
+        if (selectedIdx !== -1) {
+            setSelectedBotIdx({ ...selectedBotIdx, [option]: selectedIdx });
+        }
     };
 
     const handleShuffleBot = () => {

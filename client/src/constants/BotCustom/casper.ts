@@ -54,7 +54,7 @@ const STICKER_OPTION = {
     LOVELY: "lovely",
     TWINKLE: "twinkle",
 };
-const OPTION_TYPE = {
+export const OPTION_TYPE = {
     LIMITED: "limited",
     BASIC: "basic",
 };

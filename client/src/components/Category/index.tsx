@@ -6,7 +6,7 @@ export interface CategoryProps {
     type: "basic" | "limited";
 }
 
-const categoryVariants = cva(`px-300 py-200 rounded-1000 text-n-white h-body-2-regular`, {
+const categoryVariants = cva(`w-fit px-300 py-200 rounded-1000 text-n-white h-body-2-regular`, {
     variants: {
         type: {
             basic: "bg-n-neutral-500",
