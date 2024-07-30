@@ -1,4 +1,4 @@
-name: HybridJGS-FE
+name: HybridJGS-FE Dev Production
 
 on:
   push:

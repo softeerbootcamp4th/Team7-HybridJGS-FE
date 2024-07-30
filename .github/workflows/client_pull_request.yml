@@ -21,9 +21,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+        working-directory: ${{ env.working-directory }}
 
       - name: Build project
         run: yarn build
+        working-directory: ${{ env.working-directory }}
 
   comment:
     needs: build
