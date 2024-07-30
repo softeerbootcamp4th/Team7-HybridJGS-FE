@@ -2,12 +2,12 @@ import { PropsWithChildren } from "react";
 import CTAButton from "@/components/CTAButton";
 
 interface SectionProps extends PropsWithChildren {
-    backgroundColor?: string;
-    title?: string;
-    titleColor?: string;
-    subtitle?: string;
-    description?: string;
-    descriptionColor?: string;
+    backgroundColor: string;
+    title: string;
+    titleColor: string;
+    subtitle: string;
+    description: string;
+    descriptionColor: string;
     url?: string;
 }
 
