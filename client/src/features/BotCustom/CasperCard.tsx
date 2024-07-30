@@ -9,6 +9,8 @@ const CASPER_SIZE_OPTION = {
 };
 interface CasperCardProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    optionDescription?: string;
+    casperName?: string;
 }
 
 const casperCardContainerVariants = cva(`relative`, {
@@ -19,6 +21,18 @@ const casperCardContainerVariants = cva(`relative`, {
         },
     },
 });
+
+const casperNameVariants = cva(
+    `absolute flex justify-center items-center bottom-0 w-[100%] bg-n-white text-n-black`,
+    {
+        variants: {
+            size: {
+                [CASPER_SIZE_OPTION.LG]: "h-heading-3-bold rounded-b-800 h-[53px]",
+                [CASPER_SIZE_OPTION.SM]: "h-body-1-bold rounded-b-700 h-[40px]",
+            },
+        },
+    }
+);
 
 const CASPER_SIZE = {
     [CASPER_SIZE_OPTION.LG]: {
@@ -49,7 +63,11 @@ const CASPER_SIZE = {
     },
 };
 
-export default function CasperCard({ size = CASPER_SIZE_OPTION.LG }: CasperCardProps) {
+export default function CasperCard({
+    size = CASPER_SIZE_OPTION.LG,
+    optionDescription,
+    casperName,
+}: CasperCardProps) {
     const { selectedBotIdx, handleShuffleBot } = useBotCustom();
 
     const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedBotIdx[CUSTOM_OPTION.COLOR]];
@@ -130,6 +148,14 @@ export default function CasperCard({ size = CASPER_SIZE_OPTION.LG }: CasperCardP
                     src="/assets/bot-custom/shuffle.svg"
                 />
             </button>
+
+            {optionDescription && (
+                <div className="absolute bottom-[48px] left-[50%] translate-x-[-50%] py-300 px-500 h-body-1-regular text-n-white rounded-700 bg-n-white/[.16] border border-n-white text-nowrap">
+                    {optionDescription}
+                </div>
+            )}
+
+            {casperName && <div className={casperNameVariants({ size })}>{casperName}</div>}
         </div>
     );
 }
