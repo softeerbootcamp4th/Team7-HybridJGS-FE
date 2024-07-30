@@ -1,40 +1,8 @@
 import { Link } from "react-router-dom";
-import LotteryEvent, { LotteryEventProps } from "@/components/LotteryEvent";
+import LotteryEvent from "@/components/LotteryEvent";
+import { lotteryEventData } from "@/constants/Main/lotteryEventData.ts";
 import Section from "@/features/Main/Section.tsx";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
-
-export const lotteryEventData: LotteryEventProps[] = [
-    {
-        rank: 1,
-        image: "/public/assets/main/lottery/prize-1.png",
-        prizeName: "CASPER Electric",
-        winnerCount: 1,
-    },
-    {
-        rank: 2,
-        image: "/public/assets/main/lottery/prize-2.png",
-        prizeName: "프라이탁 메신저백",
-        winnerCount: 5,
-    },
-    {
-        rank: 3,
-        image: "/public/assets/main/lottery/prize-3.png",
-        prizeName: "나이키 에어포스",
-        winnerCount: 5,
-    },
-    {
-        rank: 4,
-        image: "/public/assets/main/lottery/prize-4.png",
-        prizeName: "스탠리 텀블러",
-        winnerCount: 10,
-    },
-    {
-        rank: 5,
-        image: "/public/assets/main/lottery/prize-5.png",
-        prizeName: "스타벅스 커피 기프티콘",
-        winnerCount: 315,
-    },
-];
 
 export default function Lottery() {
     return (
