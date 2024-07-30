@@ -1,14 +1,17 @@
-import CTAButton from "@/components/CTAButton";
+import Section from "@/features/Main/Section.tsx";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 export default function Lottery() {
     return (
-        <section className="flex flex-col gap-3 justify-center items-center h-screen bg-n-black">
-            <p className="h-body-1-regular text-n-white">Event 1. 추첨 이벤트</p>
-            <p className="h-heading-2-bold text-n-white">나만의 캐스퍼 일렉트릭 봇 만들기</p>
-            <p className="h-body-1-medium text-s-blue">
-                나만의 캐스퍼봇을 만들면 100% 응모 완료! 친구에게 공유하면 당첨 확률 UP!
-            </p>
+        <Section
+            backgroundColor="bg-n-black"
+            title="Event 1. 추첨 이벤트"
+            titleColor="text-n-white"
+            subtitle="나만의 캐스퍼 일렉트릭 봇 만들기"
+            description="나만의 캐스퍼봇을 만들면 100% 응모 완료! 친구에게 공유하면 당첨 확률 UP!"
+            descriptionColor="text-s-blue"
+            url="/lottery"
+        >
             <div className="flex gap-14	p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950">
                 <img
                     src="/assets/common/casper.webp"
@@ -41,7 +44,6 @@ export default function Lottery() {
                 <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
                 <ArrowIcon stroke="#637381" />
             </button>
-            <CTAButton label="이벤트 참여하기" hasArrowIcon={true} />
-        </section>
+        </Section>
     );
 }

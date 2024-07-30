@@ -1,15 +1,16 @@
-import CTAButton from "@/components/CTAButton";
+import Section from "@/features/Main/Section.tsx";
 
 export default function Rush() {
     return (
-        <section className="flex flex-col gap-3 justify-center items-center h-screen bg-n-white">
-            <p className="h-body-1-regular text-n-black">Event 2. 선착순 이벤트</p>
-            <p className="h-heading-2-bold text-n-black">
-                매일 315명에게! 짜릿짜릿 선착순 밸런스 게임
-            </p>
-            <p className="h-body-1-medium text-s-red">
-                매일 오후 10시! 선착순 밸런스 게임 참여하고 선물 받자!
-            </p>
+        <Section
+            backgroundColor="bg-n-white"
+            title="Event 2. 선착순 이벤트"
+            titleColor="text-n-black"
+            subtitle="매일 315명에게! 짜릿짜릿 선착순 밸런스 게임"
+            description="매일 오후 10시! 선착순 밸런스 게임 참여하고 선물 받자!"
+            descriptionColor="text-s-red"
+            url="/rush"
+        >
             <div className="flex flex-col gap-8 py-8 px-14 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-50">
                 <div className="flex gap-[110px]">
                     <div className="flex flex-col gap-3">
@@ -37,7 +38,6 @@ export default function Rush() {
                     <div className="flex gap-10">{/* 이벤트 경품 컴포넌트 추가 */}</div>
                 </div>
             </div>
-            <CTAButton label="이벤트 참여하기" hasArrowIcon={true} />
-        </section>
+        </Section>
     );
 }
