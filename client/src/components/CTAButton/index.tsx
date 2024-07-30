@@ -4,11 +4,12 @@ import "@/index.css";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 import ShareIcon from "/public/assets/icons/share.svg?react";
 
-const BUTTON_STATUS = {
+const BUTTON_STATUS: Record<string, ButtonStatusType> = {
     ACTIVE_BLUE: "activeBlue",
     ACTIVE_WHITE: "activeWhite",
     DISABLED: "disabled",
 };
+type ButtonStatusType = "activeBlue" | "activeWhite" | "disabled";
 
 const buttonVariants = cva(
     "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] flex justify-center items-center gap-2",
