@@ -62,34 +62,23 @@ export default function CTAButton({
         </>
     );
 
-    const renderButton = () => {
-        if (disabled) {
+    if (url && !disabled) {
+        if (isExternalLink) {
             return (
-                <button disabled className={baseClass}>
+                <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
                     {content}
-                </button>
+                </a>
             );
         }
-
-        if (!url) {
-            return (
-                <button onClick={onClick} className={baseClass}>
-                    {content}
-                </button>
-            );
-        }
-
-        const LinkComponent = isExternalLink ? "a" : Link;
-        const linkProps = isExternalLink
-            ? { href: url, target: "_blank", rel: "noopener noreferrer" }
-            : { to: url };
-
         return (
-            <LinkComponent {...linkProps} className={linkClass}>
+            <Link to={url} className={linkClass}>
                 {content}
-            </LinkComponent>
+            </Link>
         );
-    };
-
-    return renderButton();
+    }
+    return (
+        <button onClick={onClick} disabled={disabled} className={baseClass}>
+            {content}
+        </button>
+    );
 }
