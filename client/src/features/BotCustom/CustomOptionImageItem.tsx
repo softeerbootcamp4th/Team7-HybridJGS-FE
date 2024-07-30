@@ -24,12 +24,7 @@ export default function CustomOptionImageItem({
     handleClickOption,
 }: CustomOptionImageItemProps) {
     return (
-        <li
-            className={selectableVariants({
-                selected,
-            })}
-            onClick={handleClickOption}
-        >
+        <li className={selectableVariants({ selected })} onClick={handleClickOption}>
             <img src={`/assets/bot-custom/preview/${optionId}.png`} />
         </li>
     );

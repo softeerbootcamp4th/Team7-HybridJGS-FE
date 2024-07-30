@@ -1,19 +1,17 @@
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import Category from "@/components/Category";
 import { CUSTOM_OPTION } from "@/constants/BotCustom/casper";
 import BotCustomPanelLayout from "./BotCustomPanelLayout";
 
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
+type OptionListItemType = {
+    id: string;
+    component: ReactNode;
+};
 interface SharedPanelProps {
     selectedPanel: CustomOptionType;
-    limitedOptions?: {
-        id: string;
-        component: ReactNode;
-    }[];
-    basicOptions?: {
-        id: string;
-        component: ReactNode;
-    }[];
+    limitedOptions?: OptionListItemType[];
+    basicOptions?: OptionListItemType[];
 }
 
 export default function SharedPanel({ limitedOptions, basicOptions }: SharedPanelProps) {
@@ -27,7 +25,9 @@ export default function SharedPanel({ limitedOptions, basicOptions }: SharedPane
                     <div className="flex flex-col gap-700">
                         <Category type="limited">CASPER Electric Limited</Category>
                         <ul className="flex gap-700 flex-wrap">
-                            {limitedOptions.map((option) => option.component)}
+                            {limitedOptions.map((option) => (
+                                <Fragment key={option.id}>{option.component}</Fragment>
+                            ))}
                         </ul>
                     </div>
 
@@ -39,7 +39,9 @@ export default function SharedPanel({ limitedOptions, basicOptions }: SharedPane
                 <div className="flex flex-col gap-700">
                     <Category type="basic">Basic</Category>
                     <ul className="flex gap-700 flex-wrap">
-                        {basicOptions.map((option) => option.component)}
+                        {basicOptions.map((option) => (
+                            <Fragment key={option.id}>{option.component}</Fragment>
+                        ))}
                     </ul>
                 </div>
             )}

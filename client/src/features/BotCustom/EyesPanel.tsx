@@ -21,14 +21,20 @@ const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, 
 export default function EyesPanel() {
     const { selectedBotIdx, handleSelectOption } = useBotCustomContext();
 
-    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedBotIdx[CUSTOM_OPTION.EYES]];
-    const selectedEyesDirection =
-        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedBotIdx[CUSTOM_OPTION.EYES_DIRECTION]];
+    const eyesOptions = CASPER_OPTION[CUSTOM_OPTION.EYES];
+    const eyesDirectionOptions = CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION];
 
-    const eyes = CASPER_OPTION[CUSTOM_OPTION.EYES];
-    const limitedEyes = eyes.filter((eye) => eye.type === OPTION_TYPE.LIMITED);
-    const basicEyes = eyes.filter((eye) => eye.type === OPTION_TYPE.BASIC);
-    const directionEyes = [POSITION_OPTION.CENTER, POSITION_OPTION.LEFT, POSITION_OPTION.RIGHT];
+    const selectedEyes = eyesOptions[selectedBotIdx[CUSTOM_OPTION.EYES]];
+    const selectedEyesDirection =
+        eyesDirectionOptions[selectedBotIdx[CUSTOM_OPTION.EYES_DIRECTION]];
+
+    const limitedEyes = eyesOptions.filter((eye) => eye.type === OPTION_TYPE.LIMITED);
+    const basicEyes = eyesOptions.filter((eye) => eye.type === OPTION_TYPE.BASIC);
+    const eyesDirectionArray = [
+        POSITION_OPTION.CENTER,
+        POSITION_OPTION.LEFT,
+        POSITION_OPTION.RIGHT,
+    ];
 
     const handleClickEyes = (id: string) => {
         handleSelectOption(CUSTOM_OPTION.EYES, id);
@@ -87,7 +93,7 @@ export default function EyesPanel() {
             <div className="flex flex-col gap-700 mt-[30px]">
                 <p className="h-body-1-regular text-n-white">눈은 어느 쪽을 볼까요?</p>
                 <ul className="flex gap-700">
-                    {directionEyes.map((direction) => (
+                    {eyesDirectionArray.map((direction) => (
                         <li
                             key={direction}
                             className={selectableImageVariants({
@@ -95,10 +101,14 @@ export default function EyesPanel() {
                             })}
                             onClick={() => handleClickEyesDirection(direction)}
                         >
-                            <img
-                                src={`/assets/bot-custom/preview/${eyes[0].id}-${direction}.png`}
-                                style={{ width: "148px", height: "48px" }}
-                            />
+                            {eyesOptions.length !== 0 ? (
+                                <img
+                                    src={`/assets/bot-custom/preview/${eyesOptions[0].id}-${direction}.png`}
+                                    style={{ width: "148px", height: "48px" }}
+                                />
+                            ) : (
+                                <></>
+                            )}
                         </li>
                     ))}
                 </ul>

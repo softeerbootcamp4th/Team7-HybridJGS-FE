@@ -23,7 +23,7 @@ export default function Panels() {
     const stickerSelectedOption =
         stickerSelectedIdx !== null ? stickerOptions[stickerSelectedIdx] : null;
 
-    const mouthLimited = CASPER_OPTION["mouth"]
+    const mouthLimited = CASPER_OPTION[CUSTOM_OPTION.MOUTH]
         .filter((option) => option.type === OPTION_TYPE.LIMITED)
         .map((option) => {
             return {
@@ -37,12 +37,12 @@ export default function Panels() {
                                 ? mouthSelectedOption.id === option.id
                                 : false
                         }
-                        handleClickOption={() => handleSelectOption("mouth", option.id)}
+                        handleClickOption={() => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id)}
                     />
                 ),
             };
         });
-    const mouthBasic = CASPER_OPTION["mouth"]
+    const mouthBasic = CASPER_OPTION[CUSTOM_OPTION.MOUTH]
         .filter((option) => option.type === OPTION_TYPE.BASIC)
         .map((option) => {
             return {
@@ -56,7 +56,7 @@ export default function Panels() {
                                 ? mouthSelectedOption.id === option.id
                                 : false
                         }
-                        handleClickOption={() => handleSelectOption("mouth", option.id)}
+                        handleClickOption={() => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id)}
                     />
                 ),
             };
@@ -71,7 +71,7 @@ export default function Panels() {
         },
     });
 
-    const colorLimited = CASPER_OPTION["color"]
+    const colorLimited = CASPER_OPTION[CUSTOM_OPTION.COLOR]
         .filter((option) => option.type === OPTION_TYPE.LIMITED)
         .map((option) => {
             return {
@@ -85,12 +85,12 @@ export default function Panels() {
                                     : false,
                         })}
                         style={{ backgroundColor: option.id }}
-                        onClick={() => handleSelectOption("color", option.id)}
+                        onClick={() => handleSelectOption(CUSTOM_OPTION.COLOR, option.id)}
                     />
                 ),
             };
         });
-    const colorBasic = CASPER_OPTION["color"]
+    const colorBasic = CASPER_OPTION[CUSTOM_OPTION.COLOR]
         .filter((option) => option.type === OPTION_TYPE.BASIC)
         .map((option) => {
             return {
@@ -104,13 +104,13 @@ export default function Panels() {
                                     : false,
                         })}
                         style={{ backgroundColor: option.id }}
-                        onClick={() => handleSelectOption("color", option.id)}
+                        onClick={() => handleSelectOption(CUSTOM_OPTION.COLOR, option.id)}
                     />
                 ),
             };
         });
 
-    const stickerLimited = CASPER_OPTION["sticker"]
+    const stickerLimited = CASPER_OPTION[CUSTOM_OPTION.STICKER]
         .filter((option) => option.type === OPTION_TYPE.LIMITED)
         .map((option) => {
             return {
@@ -124,12 +124,14 @@ export default function Panels() {
                                 ? stickerSelectedOption.id === option.id
                                 : false
                         }
-                        handleClickOption={() => handleSelectOption("sticker", option.id)}
+                        handleClickOption={() =>
+                            handleSelectOption(CUSTOM_OPTION.STICKER, option.id)
+                        }
                     />
                 ),
             };
         });
-    const stickerBasic = CASPER_OPTION["sticker"]
+    const stickerBasic = CASPER_OPTION[CUSTOM_OPTION.STICKER]
         .filter((option) => option.type === OPTION_TYPE.BASIC)
         .map((option) => {
             return {
@@ -143,7 +145,9 @@ export default function Panels() {
                                 ? stickerSelectedOption.id === option.id
                                 : false
                         }
-                        handleClickOption={() => handleSelectOption("sticker", option.id)}
+                        handleClickOption={() =>
+                            handleSelectOption(CUSTOM_OPTION.STICKER, option.id)
+                        }
                     />
                 ),
             };
@@ -156,17 +160,17 @@ export default function Panels() {
             <CasperCard size="sm" />
             <EyesPanel />
             <SharedPanel
-                selectedPanel="mouth"
+                selectedPanel={CUSTOM_OPTION.MOUTH}
                 limitedOptions={mouthLimited}
                 basicOptions={mouthBasic}
             />
             <SharedPanel
-                selectedPanel="color"
+                selectedPanel={CUSTOM_OPTION.COLOR}
                 limitedOptions={colorLimited}
                 basicOptions={colorBasic}
             />
             <SharedPanel
-                selectedPanel="sticker"
+                selectedPanel={CUSTOM_OPTION.STICKER}
                 limitedOptions={stickerLimited}
                 basicOptions={stickerBasic}
             />
