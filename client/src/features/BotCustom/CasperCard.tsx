@@ -1,15 +1,18 @@
 import { cva } from "class-variance-authority";
-import { CASPER_OPTION, COLOR_BACKGROUND_MAP, CUSTOM_OPTION } from "@/constants/BotCustom/casper";
+import {
+    CASPER_MOUTH_SIZE,
+    CASPER_OPTION,
+    CASPER_SIZE,
+    CASPER_SIZE_OPTION,
+    COLOR_BACKGROUND_MAP,
+    CUSTOM_OPTION,
+} from "@/constants/BotCustom/casper";
 import useBotCustomContext from "@/hooks/useBotCustomContext";
 import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/bot-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/bot-custom/face.svg?react";
 
-const CASPER_SIZE_OPTION = {
-    LG: "lg",
-    SM: "sm",
-};
 interface CasperCardProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
     optionDescription?: string;
@@ -37,35 +40,6 @@ const casperNameVariants = cva(
     }
 );
 
-const CASPER_SIZE = {
-    [CASPER_SIZE_OPTION.LG]: {
-        CARD_WIDTH: 384,
-        CARD_HEIGHT: 500,
-        CASPER_WIDTH: 260,
-        CASPER_HEIGHT: 170,
-        CASPER_TOP: 148,
-        EYES_WIDTH: 216,
-        EYES_HEIGHT: 70,
-        EYES_TOP: 180,
-        MOUTH_WIDTH: 170,
-        MOUTH_HEIGHT: 34,
-        MOUTH_TOP: 254,
-    },
-    [CASPER_SIZE_OPTION.SM]: {
-        CARD_WIDTH: 288,
-        CARD_HEIGHT: 375,
-        CASPER_WIDTH: 196,
-        CASPER_HEIGHT: 128,
-        CASPER_TOP: 112,
-        EYES_WIDTH: 162,
-        EYES_HEIGHT: 53,
-        EYES_TOP: 134,
-        MOUTH_WIDTH: 128,
-        MOUTH_HEIGHT: 26,
-        MOUTH_TOP: 192,
-    },
-};
-
 export default function CasperCard({
     size = CASPER_SIZE_OPTION.LG,
     optionDescription,
@@ -87,12 +61,10 @@ export default function CasperCard({
         EYES_WIDTH,
         EYES_HEIGHT,
         EYES_TOP,
-        MOUTH_TOP,
-        MOUTH_WIDTH,
-        MOUTH_HEIGHT,
         CARD_WIDTH,
         CARD_HEIGHT,
     } = CASPER_SIZE[size];
+    const { WIDTH: MOUTH_WIDTH, TOP: MOUTH_TOP } = CASPER_MOUTH_SIZE[size][selectedMouth.id];
 
     const CasperEyesSvgComponent = getCasperEyesComponent(
         selectedEyes.id,
@@ -158,16 +130,18 @@ export default function CasperCard({
                 />
             )}
 
-            <button
-                className="bg-n-white/[.2] rounded-800 absolute right-[24px] top-[24px] w-[42px] h-[42px]"
-                onClick={handleShuffleBot}
-            >
-                <img
-                    alt="캐스퍼 일렉트릭 봇 랜덤화"
-                    className="p-300"
-                    src="/assets/bot-custom/shuffle.svg"
-                />
-            </button>
+            {size === CASPER_SIZE_OPTION.LG && (
+                <button
+                    className="bg-n-white/[.2] rounded-800 absolute right-[24px] top-[24px] w-[42px] h-[42px]"
+                    onClick={handleShuffleBot}
+                >
+                    <img
+                        alt="캐스퍼 일렉트릭 봇 랜덤화"
+                        className="p-300"
+                        src="/assets/bot-custom/shuffle.svg"
+                    />
+                </button>
+            )}
 
             {optionDescription && (
                 <div className="absolute bottom-[48px] left-[50%] translate-x-[-50%] py-300 px-500 h-body-1-regular text-n-white rounded-700 bg-n-white/[.16] border border-n-white text-nowrap">

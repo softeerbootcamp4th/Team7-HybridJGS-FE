@@ -6,8 +6,8 @@ export default function BotCustom() {
     return (
         <BotCustomProvider>
             <ListStep options={["눈", "입", "색상", "스티커"]} selectedIdx={3} />
-            <CasperCard casperName="김캐스퍼" />
-            <CasperCard size="sm" casperName="주캐스퍼" />
+            <CasperCard optionDescription="정면을 보는 15인치 알로이 휠 눈" />
+            <CasperCard size="sm" />
         </BotCustomProvider>
     );
 }
