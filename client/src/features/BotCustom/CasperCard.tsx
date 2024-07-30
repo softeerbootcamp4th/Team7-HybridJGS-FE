@@ -50,7 +50,7 @@ const CASPER_SIZE = {
 };
 
 export default function CasperCard({ size = CASPER_SIZE_OPTION.LG }: CasperCardProps) {
-    const { selectedBotIdx } = useBotCustom();
+    const { selectedBotIdx, handleShuffleBot } = useBotCustom();
 
     const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedBotIdx[CUSTOM_OPTION.COLOR]];
     const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedBotIdx[CUSTOM_OPTION.EYES]];
@@ -119,6 +119,17 @@ export default function CasperCard({ size = CASPER_SIZE_OPTION.LG }: CasperCardP
                     }}
                 />
             )}
+
+            <button
+                className="bg-n-white/[.2] rounded-800 absolute right-[24px] top-[24px] w-[42px] h-[42px]"
+                onClick={handleShuffleBot}
+            >
+                <img
+                    alt="캐스퍼 일렉트릭 봇 랜덤화"
+                    className="p-300"
+                    src="/assets/bot-custom/shuffle.svg"
+                />
+            </button>
         </div>
     );
 }
