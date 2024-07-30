@@ -2,6 +2,7 @@ import { BotCustomProvider } from "@/contexts/botCustomContext";
 import CasperCard from "@/features/BotCustom/CasperCard";
 import EyesPanel from "@/features/BotCustom/EyesPanel";
 import ListStep from "@/features/BotCustom/ListStep";
+import SharedPanel from "@/features/BotCustom/SharedPanel";
 
 export default function BotCustom() {
     return (
@@ -10,6 +11,8 @@ export default function BotCustom() {
             <CasperCard optionDescription="정면을 보는 15인치 알로이 휠 눈" />
             <CasperCard size="sm" />
             <EyesPanel />
+            <SharedPanel selectedPanel="mouth" />
+            <SharedPanel selectedPanel="sticker" />
         </BotCustomProvider>
     );
 }

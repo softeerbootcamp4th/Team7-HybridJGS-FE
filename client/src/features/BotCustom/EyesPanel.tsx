@@ -52,7 +52,7 @@ export default function EyesPanel() {
                             onClick={() => handleClickEyes(eye.id)}
                         >
                             <img
-                                src={`/assets/bot-custom/eyes/${eye.id}-center.png`}
+                                src={`/assets/bot-custom/preview/${eye.id}-center.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
                         </button>
@@ -74,7 +74,7 @@ export default function EyesPanel() {
                             onClick={() => handleClickEyes(eye.id)}
                         >
                             <img
-                                src={`/assets/bot-custom/eyes/${eye.id}-center.png`}
+                                src={`/assets/bot-custom/preview/${eye.id}-center.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
                         </button>
@@ -96,7 +96,7 @@ export default function EyesPanel() {
                             onClick={() => handleClickEyesDirection(direction)}
                         >
                             <img
-                                src={`/assets/bot-custom/eyes/${eyes[0].id}-${direction}.png`}
+                                src={`/assets/bot-custom/preview/${eyes[0].id}-${direction}.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
                         </button>

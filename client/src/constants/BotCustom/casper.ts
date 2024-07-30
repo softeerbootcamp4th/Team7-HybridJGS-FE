@@ -101,9 +101,9 @@ export const CASPER_OPTION = {
         { id: EYES_OPTION.HEART, description: "하트 눈", type: OPTION_TYPE.BASIC },
     ],
     [CUSTOM_OPTION.EYES_DIRECTION]: [
-        { id: POSITION_OPTION.CENTER, description: "정면을 보는" },
-        { id: POSITION_OPTION.LEFT, description: "왼쪽을 보는" },
-        { id: POSITION_OPTION.RIGHT, description: "오른쪽을 보는" },
+        { id: POSITION_OPTION.CENTER, description: "정면을 보는", type: null },
+        { id: POSITION_OPTION.LEFT, description: "왼쪽을 보는", type: null },
+        { id: POSITION_OPTION.RIGHT, description: "오른쪽을 보는", type: null },
     ],
     [CUSTOM_OPTION.MOUTH]: [
         { id: MOUTH_OPTION.SMILE, description: "미소 짓는 입", type: OPTION_TYPE.BASIC },
