@@ -7,6 +7,7 @@ export default function BotCustom() {
         <BotCustomProvider>
             <ListStep options={["눈", "입", "색상", "스티커"]} selectedIdx={3} />
             <CasperCard />
+            <CasperCard size="sm" />
         </BotCustomProvider>
     );
 }

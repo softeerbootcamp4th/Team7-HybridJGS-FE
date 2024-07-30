@@ -100,9 +100,9 @@ export const CASPER_OPTION = {
         { id: EYES_OPTION.HEART, description: "하트 눈", type: OPTION_TYPE.BASIC },
     ],
     [CUSTOM_OPTION.EYES_DIRECTION]: [
-        POSITION_OPTION.CENTER,
-        POSITION_OPTION.LEFT,
-        POSITION_OPTION.RIGHT,
+        { id: POSITION_OPTION.CENTER, description: "정면을 보는" },
+        { id: POSITION_OPTION.LEFT, description: "왼쪽을 보는" },
+        { id: POSITION_OPTION.RIGHT, description: "오른쪽을 보는" },
     ],
     [CUSTOM_OPTION.MOUTH]: [
         { id: MOUTH_OPTION.SMILE, description: "미소 짓는 입", type: OPTION_TYPE.BASIC },
@@ -137,11 +137,21 @@ export const CASPER_OPTION = {
         { id: COLOR_OPTION.R_YELLOW, description: "옐로우", type: OPTION_TYPE.BASIC },
     ],
     [CUSTOM_OPTION.STICKER]: [
-        { id: STICKER_OPTION.ELECTRIC, description: "전기 찌릿", type: OPTION_TYPE.LIMITED },
+        {
+            id: STICKER_OPTION.ELECTRIC,
+            description: "전기 찌릿",
+            type: OPTION_TYPE.LIMITED,
+            position: "absolute",
+        },
         { id: STICKER_OPTION.CHARGE_MAX, description: "충전 빵빵", type: OPTION_TYPE.LIMITED },
         { id: STICKER_OPTION.CHARGE_NONE, description: "배터리 깜빡", type: OPTION_TYPE.LIMITED },
 
         { id: STICKER_OPTION.LOVELY, description: "러블리 리본", type: OPTION_TYPE.BASIC },
-        { id: STICKER_OPTION.TWINKLE, description: "반짝반짝", type: OPTION_TYPE.BASIC },
+        {
+            id: STICKER_OPTION.TWINKLE,
+            description: "반짝반짝",
+            type: OPTION_TYPE.BASIC,
+            position: "absolute",
+        },
     ],
 };

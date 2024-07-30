@@ -1,14 +1,15 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { Link } from "react-router-dom";
 import "@/index.css";
-import ArrowIcon from "/public/assets/icon/arrow.svg?react";
-import ShareIcon from "/public/assets/icon/share.svg?react";
+import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import ShareIcon from "/public/assets/icons/share.svg?react";
 
-const BUTTON_STATUS = {
+const BUTTON_STATUS: Record<string, ButtonStatusType> = {
     ACTIVE_BLUE: "activeBlue",
     ACTIVE_WHITE: "activeWhite",
     DISABLED: "disabled",
 };
+type ButtonStatusType = "activeBlue" | "activeWhite" | "disabled";
 
 const buttonVariants = cva(
     "h-heading-4-bold rounded-[48px] min-w-60 max-w-[400px] py-3 px-6 h-[60px] flex justify-center items-center gap-2",
@@ -62,34 +63,23 @@ export default function CTAButton({
         </>
     );
 
-    const renderButton = () => {
-        if (disabled) {
+    if (url && !disabled) {
+        if (isExternalLink) {
             return (
-                <button disabled className={baseClass}>
+                <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
                     {content}
-                </button>
+                </a>
             );
         }
-
-        if (!url) {
-            return (
-                <button onClick={onClick} className={baseClass}>
-                    {content}
-                </button>
-            );
-        }
-
-        const LinkComponent = isExternalLink ? "a" : Link;
-        const linkProps = isExternalLink
-            ? { href: url, target: "_blank", rel: "noopener noreferrer" }
-            : { to: url };
-
         return (
-            <LinkComponent {...linkProps} className={linkClass}>
+            <Link to={url} className={linkClass}>
                 {content}
-            </LinkComponent>
+            </Link>
         );
-    };
-
-    return renderButton();
+    }
+    return (
+        <button onClick={onClick} disabled={disabled} className={baseClass}>
+            {content}
+        </button>
+    );
 }
