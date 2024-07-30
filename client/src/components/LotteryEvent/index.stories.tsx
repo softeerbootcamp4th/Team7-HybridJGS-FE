@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { lotteryEventData } from "@/features/Main/Lottery.tsx";
+import { lotteryEventData } from "@/constants/Main/lotteryEventData.ts";
 import LotteryEvent, { LotteryEventProps } from "./index";
 
 const meta: Meta<typeof LotteryEvent> = {
