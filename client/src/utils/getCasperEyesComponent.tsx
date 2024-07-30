@@ -46,7 +46,6 @@ export function getCasperEyesComponent(
             return Alloy17Left;
         case "17inch-alloy-right":
             return Alloy17Right;
-
         case "cute-center":
             return CuteCenter;
         case "cute-left":
@@ -59,7 +58,6 @@ export function getCasperEyesComponent(
             return ElectricLeft;
         case "electric-right":
             return ElectricRight;
-
         case "heart-center":
             return HeartCenter;
         case "heart-left":

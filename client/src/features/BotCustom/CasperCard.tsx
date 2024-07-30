@@ -1,7 +1,8 @@
 import { cva } from "class-variance-authority";
 import { CASPER_OPTION, COLOR_BACKGROUND_MAP, CUSTOM_OPTION } from "@/constants/BotCustom/casper";
-import { useBotCustom } from "@/hooks/useBotCustom";
+import useBotCustomContext from "@/hooks/useBotCustomContext";
 import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
+import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/bot-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/bot-custom/face.svg?react";
 
@@ -70,7 +71,7 @@ export default function CasperCard({
     optionDescription,
     casperName,
 }: CasperCardProps) {
-    const { selectedBotIdx, handleShuffleBot } = useBotCustom();
+    const { selectedBotIdx, handleShuffleBot } = useBotCustomContext();
 
     const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedBotIdx[CUSTOM_OPTION.COLOR]];
     const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedBotIdx[CUSTOM_OPTION.EYES]];
@@ -97,6 +98,7 @@ export default function CasperCard({
         selectedEyes.id,
         selectedEyesDirection.id
     );
+    const CasperMouthSvgComponent = getCasperMouthComponent(selectedMouth.id);
 
     return (
         <div
@@ -116,7 +118,7 @@ export default function CasperCard({
             />
             <CasperEyesLayout
                 className="absolute left-[50%] translate-x-[-50%]"
-                fill="#000000"
+                fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
                 style={{
                     top: EYES_TOP,
                     width: EYES_WIDTH,
@@ -134,15 +136,16 @@ export default function CasperCard({
                     }}
                 />
             )}
-            <img
-                alt="캐스퍼 일렉트릭 봇 입"
-                src={`/assets/bot-custom/mouth/${selectedMouth.id}.png`}
-                className="absolute left-[50%] translate-x-[-50%]"
-                style={{
-                    top: MOUTH_TOP,
-                    width: MOUTH_WIDTH,
-                }}
-            />
+            {CasperMouthSvgComponent && (
+                <CasperMouthSvgComponent
+                    className="absolute left-[50%] translate-x-[-50%]"
+                    fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
+                    style={{
+                        top: MOUTH_TOP,
+                        width: MOUTH_WIDTH,
+                    }}
+                />
+            )}
             {selectedStickerIdx !== null && (
                 <img
                     alt="캐스퍼 일렉트릭 봇 스티커"
