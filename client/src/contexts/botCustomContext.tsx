@@ -25,7 +25,7 @@ export const BotCustomProvider = ({ children }: { children: ReactNode }) => {
         [CUSTOM_OPTION.EYES_DIRECTION]: 0,
         [CUSTOM_OPTION.MOUTH]: 0,
         [CUSTOM_OPTION.COLOR]: 0,
-        [CUSTOM_OPTION.STICKER]: 0,
+        [CUSTOM_OPTION.STICKER]: null,
     });
 
     const handleSelectOption = (option: CustomOptionType, idx: number) => {

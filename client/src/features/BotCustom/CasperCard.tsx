@@ -118,6 +118,7 @@ export default function CasperCard({
                     }}
                 />
             )}
+
             {selectedStickerIdx !== null && (
                 <img
                     alt="캐스퍼 일렉트릭 봇 스티커"
