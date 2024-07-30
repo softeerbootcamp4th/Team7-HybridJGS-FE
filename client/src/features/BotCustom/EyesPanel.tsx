@@ -9,7 +9,7 @@ import {
 import useBotCustomContext from "@/hooks/useBotCustomContext";
 import BotCustomPanelLayout from "./BotCustomPanelLayout";
 
-const selectableImageVariants = cva(`rounded-1000 border-[2px]`, {
+const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, {
     variants: {
         selected: {
             true: "border-s-red",
@@ -42,9 +42,9 @@ export default function EyesPanel() {
         <BotCustomPanelLayout className="px-[30px] py-1000">
             <div className="flex flex-col gap-700">
                 <Category type="limited">CASPER Electric Limited</Category>
-                <div className="flex gap-700">
+                <ul className="flex gap-700">
                     {limitedEyes.map((eye) => (
-                        <button
+                        <li
                             key={eye.id}
                             className={selectableImageVariants({
                                 selected: selectedEyes.id === eye.id,
@@ -55,18 +55,18 @@ export default function EyesPanel() {
                                 src={`/assets/bot-custom/preview/${eye.id}-center.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
-                        </button>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
 
             <div className="mt-[38px]" />
 
             <div className="flex flex-col gap-700">
                 <Category type="basic">Basic</Category>
-                <div className="flex gap-700">
+                <ul className="flex gap-700">
                     {basicEyes.map((eye) => (
-                        <button
+                        <li
                             key={eye.id}
                             className={selectableImageVariants({
                                 selected: selectedEyes.id === eye.id,
@@ -77,18 +77,18 @@ export default function EyesPanel() {
                                 src={`/assets/bot-custom/preview/${eye.id}-center.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
-                        </button>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
 
             <div className="border-t-[2px] border-n-neutral-500 mt-1000" />
 
             <div className="flex flex-col gap-700 mt-[30px]">
                 <p className="h-body-1-regular text-n-white">눈은 어느 쪽을 볼까요?</p>
-                <div className="flex gap-700">
+                <ul className="flex gap-700">
                     {directionEyes.map((direction) => (
-                        <button
+                        <li
                             key={direction}
                             className={selectableImageVariants({
                                 selected: selectedEyesDirection.id === direction,
@@ -99,9 +99,9 @@ export default function EyesPanel() {
                                 src={`/assets/bot-custom/preview/${eyes[0].id}-${direction}.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
-                        </button>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
         </BotCustomPanelLayout>
     );
