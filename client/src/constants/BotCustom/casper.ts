@@ -5,7 +5,7 @@ export const CUSTOM_OPTION = {
     COLOR: "color",
     STICKER: "sticker",
 } as const;
-const EYES_OPTION = {
+export const EYES_OPTION = {
     "15INCH_ALLOY": "15inch-alloy",
     "17INCH_ALLOY": "17inch-alloy",
     PIXEL: "pixel",
@@ -15,7 +15,7 @@ const EYES_OPTION = {
     CUTE: "cute",
     HEART: "heart",
 };
-const POSITION_OPTION = {
+export const POSITION_OPTION = {
     LEFT: "left",
     CENTER: "center",
     RIGHT: "right",

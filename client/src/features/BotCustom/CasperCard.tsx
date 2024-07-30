@@ -1,6 +1,8 @@
 import { cva } from "class-variance-authority";
 import { CASPER_OPTION, COLOR_BACKGROUND_MAP, CUSTOM_OPTION } from "@/constants/BotCustom/casper";
 import { useBotCustom } from "@/hooks/useBotCustom";
+import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
+import CasperEyesLayout from "/public/assets/bot-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/bot-custom/face.svg?react";
 
 const CASPER_SIZE_OPTION = {
@@ -91,6 +93,11 @@ export default function CasperCard({
         CARD_HEIGHT,
     } = CASPER_SIZE[size];
 
+    const CasperEyesSvgComponent = getCasperEyesComponent(
+        selectedEyes.id,
+        selectedEyesDirection.id
+    );
+
     return (
         <div
             className={casperCardContainerVariants({
@@ -107,16 +114,26 @@ export default function CasperCard({
                     top: CASPER_TOP,
                 }}
             />
-            <img
-                alt="캐스퍼 일렉트릭 봇 눈"
-                src={`/assets/bot-custom/eyes/${selectedEyes.id}-${selectedEyesDirection.id}.png`}
+            <CasperEyesLayout
                 className="absolute left-[50%] translate-x-[-50%]"
+                fill="#000000"
                 style={{
                     top: EYES_TOP,
                     width: EYES_WIDTH,
                     height: EYES_HEIGHT,
                 }}
             />
+            {CasperEyesSvgComponent && (
+                <CasperEyesSvgComponent
+                    className="absolute left-[50%] translate-x-[-50%]"
+                    fill={selectedColor.id}
+                    style={{
+                        top: EYES_TOP,
+                        width: EYES_WIDTH,
+                        height: EYES_HEIGHT,
+                    }}
+                />
+            )}
             <img
                 alt="캐스퍼 일렉트릭 봇 입"
                 src={`/assets/bot-custom/mouth/${selectedMouth.id}.png`}
