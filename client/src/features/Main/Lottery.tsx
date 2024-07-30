@@ -1,6 +1,40 @@
 import { Link } from "react-router-dom";
+import LotteryEvent, { LotteryEventProps } from "@/components/LotteryEvent";
 import Section from "@/features/Main/Section.tsx";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+
+export const lotteryEventData: LotteryEventProps[] = [
+    {
+        rank: 1,
+        image: "/public/assets/main/lottery/prize-1.png",
+        prizeName: "CASPER Electric",
+        winnerCount: 1,
+    },
+    {
+        rank: 2,
+        image: "/public/assets/main/lottery/prize-2.png",
+        prizeName: "프라이탁 메신저백",
+        winnerCount: 5,
+    },
+    {
+        rank: 3,
+        image: "/public/assets/main/lottery/prize-3.png",
+        prizeName: "나이키 에어포스",
+        winnerCount: 5,
+    },
+    {
+        rank: 4,
+        image: "/public/assets/main/lottery/prize-4.png",
+        prizeName: "스탠리 텀블러",
+        winnerCount: 10,
+    },
+    {
+        rank: 5,
+        image: "/public/assets/main/lottery/prize-5.png",
+        prizeName: "스타벅스 커피 기프티콘",
+        winnerCount: 315,
+    },
+];
 
 export default function Lottery() {
     return (
@@ -37,7 +71,17 @@ export default function Lottery() {
                     </div>
                     <div className="flex flex-col gap-4">
                         <p className="h-heading-4-bold text-n-white">이벤트 경품</p>
-                        <div className="flex gap-10">{/* 이벤트 경품 컴포넌트 추가 */}</div>
+                        <div className="flex gap-10">
+                            {lotteryEventData.map((event) => (
+                                <LotteryEvent
+                                    key={event.rank}
+                                    rank={event.rank}
+                                    image={event.image}
+                                    prizeName={event.prizeName}
+                                    winnerCount={event.winnerCount}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
