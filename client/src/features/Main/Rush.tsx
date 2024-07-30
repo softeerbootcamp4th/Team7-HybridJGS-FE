@@ -1,6 +1,5 @@
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import Section from "@/features/Main/Section.tsx";
-import { formatDate } from "@/utils/formatDate.ts";
 
 // TODO: API로 대체될 데이터
 export const rushEventData: RushEventProps[] = [
@@ -82,7 +81,7 @@ export default function Rush() {
                             <RushEvent
                                 key={event.id}
                                 id={event.id}
-                                date={formatDate(event.date)}
+                                date={event.date}
                                 image={event.image}
                                 prizeName={event.prizeName}
                             />
