@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v2
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn
 
       - name: Build project
         run: yarn build
@@ -29,6 +29,7 @@ jobs:
     if: always()
 
     steps:
+      #       성공 시 코멘트
       - name: Add a comment on success
         if: success()
         uses: actions/github-script@v6
@@ -41,6 +42,7 @@ jobs:
               body: '빌드를 성공했습니다! :tada:'
             })
 
+      #       실패 시 코멘트
       - name: Add a comment on failure
         if: failure()
         uses: actions/github-script@v6
