@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Section from "@/features/Main/Section.tsx";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 export default function Lottery() {
-    const navigate = useNavigate();
     return (
         <Section
             backgroundColor="bg-n-black"
@@ -42,15 +41,13 @@ export default function Lottery() {
                     </div>
                 </div>
             </div>
-            <button
+            <Link
+                to="/lottery/show-case"
                 className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"
-                onClick={() => {
-                    navigate("/lottery/show-case");
-                }}
             >
                 <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
                 <ArrowIcon stroke="#637381" />
-            </button>
+            </Link>
         </Section>
     );
 }
