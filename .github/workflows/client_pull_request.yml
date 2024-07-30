@@ -31,7 +31,7 @@ jobs:
     steps:
       #       성공 시 코멘트
       - name: Add a comment on success
-        if: success()
+        if: ${{ success() }}
         uses: actions/github-script@v6
         with:
           script: |
@@ -44,7 +44,7 @@ jobs:
 
       #       실패 시 코멘트
       - name: Add a comment on failure
-        if: failure()
+        if: ${{ failure() }}
         uses: actions/github-script@v6
         with:
           script: |
