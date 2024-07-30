@@ -10,8 +10,7 @@
 
 ## 협업 전략
 
-### 브랜치 컨벤션
-
+### 커밋 컨벤션
 ```md
 feat: 기능 구현
 chore: 사소한 변경 사항
@@ -21,7 +20,15 @@ fix: 오류 수정
 docs: 문서 작성
 ```
 
-### 폴더 구조
+### 브랜치 컨벤션
+```md
+main
+dev
+feat/#1-button
+fix/#2-category
+```
+
+### 폴더 구조 (변동 가능)
 
 ```jsx
 └── src
@@ -46,7 +53,7 @@ docs: 문서 작성
         └── badge.ts
 ```
 
-### 커밋 템플릿
+### Pull Requests 템플릿
 
 ```md
 ## 🖥️ Preview
@@ -60,7 +67,7 @@ close #{issue number}
 ## ❓ 논의가 필요한 사항
 ```
 
-### 이슈 템플릿
+### Issues 템플릿
 
 ```md
 ## 🖥️ 어떤 기능인가요?
