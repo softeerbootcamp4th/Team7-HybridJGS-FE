@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useState } from "react";
-import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/BotCustom/casper";
+import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/CasperCustom/casper";
 import { getRandomInt } from "@/utils/getRandomInt";
 
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
-type SelectedBotIdxType = {
+type SelectedCasperIdxType = {
     [CUSTOM_OPTION.EYES]: number;
     [CUSTOM_OPTION.EYES_DIRECTION]: number;
     [CUSTOM_OPTION.MOUTH]: number;
@@ -11,16 +11,16 @@ type SelectedBotIdxType = {
     [CUSTOM_OPTION.STICKER]: number | null;
 };
 
-export interface BotCustomContextType {
-    selectedBotIdx: SelectedBotIdxType;
+export interface CasperCustomContextType {
+    selectedCasperIdx: SelectedCasperIdxType;
     handleSelectOption: (option: CustomOptionType, id: string) => void;
-    handleShuffleBot: () => void;
+    handleShuffleCasper: () => void;
 }
 
-export const BotCustomContext = createContext<BotCustomContextType | null>(null);
+export const CasperCustomContext = createContext<CasperCustomContextType | null>(null);
 
-export const BotCustomProvider = ({ children }: { children: ReactNode }) => {
-    const [selectedBotIdx, setSelectedBotIdx] = useState<SelectedBotIdxType>({
+export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
+    const [selectedCasperIdx, setSelectedCasperIdx] = useState<SelectedCasperIdxType>({
         [CUSTOM_OPTION.EYES]: 0,
         [CUSTOM_OPTION.EYES_DIRECTION]: 0,
         [CUSTOM_OPTION.MOUTH]: 0,
@@ -32,13 +32,13 @@ export const BotCustomProvider = ({ children }: { children: ReactNode }) => {
         const selectedIdx = CASPER_OPTION[option].findIndex((opt) => opt.id === id);
 
         if (selectedIdx !== -1) {
-            setSelectedBotIdx({ ...selectedBotIdx, [option]: selectedIdx });
+            setSelectedCasperIdx({ ...selectedCasperIdx, [option]: selectedIdx });
         }
     };
 
-    const handleShuffleBot = () => {
-        setSelectedBotIdx({
-            ...selectedBotIdx,
+    const handleShuffleCasper = () => {
+        setSelectedCasperIdx({
+            ...selectedCasperIdx,
             [CUSTOM_OPTION.EYES]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
             [CUSTOM_OPTION.EYES_DIRECTION]: getRandomInt(
                 0,
@@ -50,14 +50,14 @@ export const BotCustomProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <BotCustomContext.Provider
+        <CasperCustomContext.Provider
             value={{
-                selectedBotIdx,
+                selectedCasperIdx,
                 handleSelectOption,
-                handleShuffleBot,
+                handleShuffleCasper,
             }}
         >
             {children}
-        </BotCustomContext.Provider>
+        </CasperCustomContext.Provider>
     );
 };

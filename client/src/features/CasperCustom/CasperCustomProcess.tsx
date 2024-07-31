@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { cva } from "class-variance-authority";
 import ListStep from "@/components/ListStep";
-import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/BotCustom/casper";
-import CasperCardFront from "@/features/BotCustom/CasperCardFront";
-import CustomOptionImageItem from "@/features/BotCustom/CustomOptionImageItem";
-import EyesPanel from "@/features/BotCustom/EyesPanel";
-import SharedPanel from "@/features/BotCustom/SharedPanel";
-import useBotCustomContext from "@/hooks/useBotCustomContext";
+import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/CasperCustom/casper";
+import CasperCardFront from "@/features/CasperCustom/CasperCardFront";
+import CustomOptionImageItem from "@/features/CasperCustom/CustomOptionImageItem";
+import EyesPanel from "@/features/CasperCustom/EyesPanel";
+import SharedPanel from "@/features/CasperCustom/SharedPanel";
+import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import CasperCardBack from "./CasperCardBack";
 
-export default function Panels() {
-    const { selectedBotIdx, handleSelectOption } = useBotCustomContext();
+export default function CasperCustomProcess() {
+    const { selectedCasperIdx, handleSelectOption } = useCasperCustomContext();
     const [selectedOption, setSelectedOption] = useState<number>(0);
 
     const mouthOptions = CASPER_OPTION[CUSTOM_OPTION.MOUTH];
-    const mouthSelectedIdx = selectedBotIdx[CUSTOM_OPTION.MOUTH];
+    const mouthSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.MOUTH];
     const mouthSelectedOption = mouthOptions[mouthSelectedIdx];
 
     const colorOptions = CASPER_OPTION[CUSTOM_OPTION.COLOR];
-    const colorSelectedIdx = selectedBotIdx[CUSTOM_OPTION.COLOR];
+    const colorSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.COLOR];
     const colorSelectedOption = colorOptions[colorSelectedIdx];
 
     const stickerOptions = CASPER_OPTION[CUSTOM_OPTION.STICKER];
-    const stickerSelectedIdx = selectedBotIdx[CUSTOM_OPTION.STICKER];
+    const stickerSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.STICKER];
     const stickerSelectedOption =
         stickerSelectedIdx !== null ? stickerOptions[stickerSelectedIdx] : null;
 

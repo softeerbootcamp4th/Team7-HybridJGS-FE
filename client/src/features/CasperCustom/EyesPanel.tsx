@@ -5,9 +5,9 @@ import {
     CUSTOM_OPTION,
     OPTION_TYPE,
     POSITION_OPTION,
-} from "@/constants/BotCustom/casper";
-import useBotCustomContext from "@/hooks/useBotCustomContext";
-import BotCustomPanelLayout from "./BotCustomPanelLayout";
+} from "@/constants/CasperCustom/casper";
+import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import CasperCustomPanelLayout from "./CasperCustomPanelLayout";
 
 const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, {
     variants: {
@@ -19,14 +19,14 @@ const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, 
 });
 
 export default function EyesPanel() {
-    const { selectedBotIdx, handleSelectOption } = useBotCustomContext();
+    const { selectedCasperIdx, handleSelectOption } = useCasperCustomContext();
 
     const eyesOptions = CASPER_OPTION[CUSTOM_OPTION.EYES];
     const eyesDirectionOptions = CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION];
 
-    const selectedEyes = eyesOptions[selectedBotIdx[CUSTOM_OPTION.EYES]];
+    const selectedEyes = eyesOptions[selectedCasperIdx[CUSTOM_OPTION.EYES]];
     const selectedEyesDirection =
-        eyesDirectionOptions[selectedBotIdx[CUSTOM_OPTION.EYES_DIRECTION]];
+        eyesDirectionOptions[selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION]];
 
     const limitedEyes = eyesOptions.filter((eye) => eye.type === OPTION_TYPE.LIMITED);
     const basicEyes = eyesOptions.filter((eye) => eye.type === OPTION_TYPE.BASIC);
@@ -45,7 +45,7 @@ export default function EyesPanel() {
     };
 
     return (
-        <BotCustomPanelLayout className="px-[30px] py-1000">
+        <CasperCustomPanelLayout className="px-[30px] py-1000">
             <div className="flex flex-col gap-700">
                 <Category type="limited">CASPER Electric Limited</Category>
                 <ul className="flex gap-700">
@@ -58,7 +58,7 @@ export default function EyesPanel() {
                             onClick={() => handleClickEyes(eye.id)}
                         >
                             <img
-                                src={`/assets/bot-custom/preview/${eye.id}-center.png`}
+                                src={`/assets/casper-custom/preview/${eye.id}-center.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
                         </li>
@@ -80,7 +80,7 @@ export default function EyesPanel() {
                             onClick={() => handleClickEyes(eye.id)}
                         >
                             <img
-                                src={`/assets/bot-custom/preview/${eye.id}-center.png`}
+                                src={`/assets/casper-custom/preview/${eye.id}-center.png`}
                                 style={{ width: "148px", height: "48px" }}
                             />
                         </li>
@@ -103,7 +103,7 @@ export default function EyesPanel() {
                         >
                             {eyesOptions.length !== 0 ? (
                                 <img
-                                    src={`/assets/bot-custom/preview/${eyesOptions[0].id}-${direction}.png`}
+                                    src={`/assets/casper-custom/preview/${eyesOptions[0].id}-${direction}.png`}
                                     style={{ width: "148px", height: "48px" }}
                                 />
                             ) : (
@@ -113,6 +113,6 @@ export default function EyesPanel() {
                     ))}
                 </ul>
             </div>
-        </BotCustomPanelLayout>
+        </CasperCustomPanelLayout>
     );
 }

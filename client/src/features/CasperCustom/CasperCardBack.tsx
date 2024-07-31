@@ -6,12 +6,12 @@ import {
     CUSTOM_OPTION,
     MINI_CASPER_MOUTH_SIZE,
     MINI_CASPER_SIZE,
-} from "@/constants/BotCustom/casper";
-import useBotCustomContext from "@/hooks/useBotCustomContext";
+} from "@/constants/CasperCustom/casper";
+import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
-import CasperEyesLayout from "/public/assets/bot-custom/eyes/layout.svg?react";
-import CasperFace from "/public/assets/bot-custom/face.svg?react";
+import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
+import CasperFace from "/public/assets/casper-custom/face.svg?react";
 import HyundaiLogo from "/public/assets/hyundai-logo.svg?react";
 
 interface CasperCardBackProps {
@@ -63,13 +63,17 @@ export default function CasperCardBack({
     casperName,
     expectations,
 }: CasperCardBackProps) {
-    const { selectedBotIdx } = useBotCustomContext();
+    const { selectedCasperIdx } = useCasperCustomContext();
 
-    const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedBotIdx[CUSTOM_OPTION.COLOR]];
-    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedBotIdx[CUSTOM_OPTION.EYES]];
+    const selectedColor =
+        CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedCasperIdx[CUSTOM_OPTION.COLOR]];
+    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedCasperIdx[CUSTOM_OPTION.EYES]];
     const selectedEyesDirection =
-        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedBotIdx[CUSTOM_OPTION.EYES_DIRECTION]];
-    const selectedMouth = CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedBotIdx[CUSTOM_OPTION.MOUTH]];
+        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][
+            selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION]
+        ];
+    const selectedMouth =
+        CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
 
     const {
         CARD_WIDTH,
@@ -97,7 +101,7 @@ export default function CasperCardBack({
             style={{
                 width: CARD_WIDTH,
                 height: CARD_HEIGHT,
-                backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]],
+                backgroundColor: COLOR_BACKGROUND_MAP[selectedCasperIdx[CUSTOM_OPTION.COLOR]],
             }}
         >
             <div

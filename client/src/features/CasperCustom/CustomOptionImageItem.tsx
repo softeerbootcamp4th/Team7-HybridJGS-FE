@@ -25,7 +25,7 @@ export default function CustomOptionImageItem({
 }: CustomOptionImageItemProps) {
     return (
         <li className={selectableVariants({ selected })} onClick={handleClickOption}>
-            <img src={`/assets/bot-custom/preview/${optionId}.png`} />
+            <img src={`/assets/casper-custom/preview/${optionId}.png`} />
         </li>
     );
 }

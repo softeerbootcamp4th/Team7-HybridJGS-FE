@@ -1,7 +1,7 @@
 import { Fragment, ReactNode } from "react";
 import Category from "@/components/Category";
-import { CUSTOM_OPTION } from "@/constants/BotCustom/casper";
-import BotCustomPanelLayout from "./BotCustomPanelLayout";
+import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
+import CasperCustomPanelLayout from "./CasperCustomPanelLayout";
 
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
 type OptionListItemType = {
@@ -19,7 +19,7 @@ export default function SharedPanel({ limitedOptions, basicOptions }: SharedPane
     const hasBasicOptions = basicOptions && basicOptions.length !== 0;
 
     return (
-        <BotCustomPanelLayout className="px-[30px] py-1000">
+        <CasperCustomPanelLayout className="px-[30px] py-1000">
             {hasLimitedOptions && (
                 <>
                     <div className="flex flex-col gap-700">
@@ -45,6 +45,6 @@ export default function SharedPanel({ limitedOptions, basicOptions }: SharedPane
                     </ul>
                 </div>
             )}
-        </BotCustomPanelLayout>
+        </CasperCustomPanelLayout>
     );
 }

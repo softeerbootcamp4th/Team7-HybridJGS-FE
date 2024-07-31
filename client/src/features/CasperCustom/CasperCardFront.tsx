@@ -6,12 +6,12 @@ import {
     CASPER_SIZE_OPTION,
     COLOR_BACKGROUND_MAP,
     CUSTOM_OPTION,
-} from "@/constants/BotCustom/casper";
-import useBotCustomContext from "@/hooks/useBotCustomContext";
+} from "@/constants/CasperCustom/casper";
+import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
-import CasperEyesLayout from "/public/assets/bot-custom/eyes/layout.svg?react";
-import CasperFace from "/public/assets/bot-custom/face.svg?react";
+import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
+import CasperFace from "/public/assets/casper-custom/face.svg?react";
 
 interface CasperCardFrontProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
@@ -45,14 +45,18 @@ export default function CasperCardFront({
     optionDescription,
     casperName,
 }: CasperCardFrontProps) {
-    const { selectedBotIdx, handleShuffleBot } = useBotCustomContext();
+    const { selectedCasperIdx, handleShuffleCasper } = useCasperCustomContext();
 
-    const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedBotIdx[CUSTOM_OPTION.COLOR]];
-    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedBotIdx[CUSTOM_OPTION.EYES]];
+    const selectedColor =
+        CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedCasperIdx[CUSTOM_OPTION.COLOR]];
+    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedCasperIdx[CUSTOM_OPTION.EYES]];
     const selectedEyesDirection =
-        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedBotIdx[CUSTOM_OPTION.EYES_DIRECTION]];
-    const selectedMouth = CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedBotIdx[CUSTOM_OPTION.MOUTH]];
-    const selectedStickerIdx = selectedBotIdx[CUSTOM_OPTION.STICKER];
+        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][
+            selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION]
+        ];
+    const selectedMouth =
+        CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
+    const selectedStickerIdx = selectedCasperIdx[CUSTOM_OPTION.STICKER];
 
     const {
         CASPER_WIDTH,
@@ -81,7 +85,7 @@ export default function CasperCardFront({
             style={{
                 width: CARD_WIDTH,
                 height: CARD_HEIGHT,
-                backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]],
+                backgroundColor: COLOR_BACKGROUND_MAP[selectedCasperIdx[CUSTOM_OPTION.COLOR]],
             }}
         >
             <div
@@ -139,7 +143,7 @@ export default function CasperCardFront({
                 <img
                     alt="캐스퍼 일렉트릭 봇 스티커"
                     className={`${CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx].position}`}
-                    src={`/assets/bot-custom/sticker/${CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx].id}.png`}
+                    src={`/assets/casper-custom/sticker/${CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx].id}.png`}
                     style={{
                         width: CARD_WIDTH,
                         height: CARD_HEIGHT,
@@ -150,12 +154,12 @@ export default function CasperCardFront({
             {size === CASPER_SIZE_OPTION.LG && (
                 <button
                     className="bg-n-white/[.2] rounded-800 absolute right-[24px] top-[24px] w-[42px] h-[42px]"
-                    onClick={handleShuffleBot}
+                    onClick={handleShuffleCasper}
                 >
                     <img
                         alt="캐스퍼 일렉트릭 봇 랜덤화"
                         className="p-300"
-                        src="/assets/bot-custom/shuffle.svg"
+                        src="/assets/casper-custom/shuffle.svg"
                     />
                 </button>
             )}
