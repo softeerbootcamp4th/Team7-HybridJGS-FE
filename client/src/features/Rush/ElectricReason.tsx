@@ -1,14 +1,8 @@
 import { useState } from "react";
 import Toggle from "@/components/Toggle";
+import { CARD_DATA, TOGGLE_OPTIONS } from "@/constants/Rush/electricCardData.tsx";
+import ElectricReasonCard from "@/features/Rush/ElectricReasonCard.tsx";
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
-
-const TOGGLE_OPTIONS = [
-    "혜택이 늘어요",
-    "충전소가 늘어요",
-    "유지비가 줄어요",
-    "환경오염이 줄어요",
-    "소음이 줄어요",
-];
 
 export default function ElectricReason() {
     const [selectedIdx, setSelectedIdx] = useState(0);
@@ -34,30 +28,7 @@ export default function ElectricReason() {
                 options={TOGGLE_OPTIONS}
                 selectedIdx={selectedIdx}
             />
-            <div className="flex flex-col justify-center items-center p-8 h-[600px] w-[730px] mt-8 gap-10 rounded-500 border-2">
-                <img
-                    src="/assets/rush/electric/ranc.jpg"
-                    alt="RANC"
-                    className="h-[380px] w-[666px]"
-                />
-                <span className="flex flex-col justify-between items-center gap-3">
-                    <span className="h-heading-3-bold">
-                        <p className="text-n-neutral-950">노면소음을 줄이는 </p>
-                        <p className="text-s-blue">RANC기술</p>
-                    </span>
-                    <span className="h-body-2-regular text-nowrap flex flex-col justify-center items-center">
-                        <p>
-                            현대차는 능동형 소음 저감 기술(ANC)을 넘어 노면 소음을 줄이는
-                            RANC(Road-noise Active Noise Control) 기술을 개발했어요.
-                        </p>
-                        <p>RANC는 특히 저주파 대의 노면소음을 효과적으로 줄이며,</p>
-                        <p>
-                            포장된 지 오래된 아스팔트 노면이나 교량 연결부의 소음을 약 3dB 감소시켜
-                            소음 에너지를 절반 수준으로 낮춘답니다.
-                        </p>
-                    </span>
-                </span>
-            </div>
+            <ElectricReasonCard data={CARD_DATA[selectedIdx]} />
         </ElectricSection>
     );
 }
