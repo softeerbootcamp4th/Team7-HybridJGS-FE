@@ -1,31 +1,35 @@
-import Tooltip from "@/components/Tooltip";
+import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
 
 export default function ElectricAdvantage() {
     return (
-        <section className="h-screen bg-n-white flex flex-col justify-center items-center pt-32">
-            <Tooltip
-                content="캐스퍼 일렉트릭은 첫 차로도, 세컨드 카로도 딱이에요"
-                tooltipPosition="right"
-            >
+        <ElectricSection
+            tooltipContent="캐스퍼 일렉트릭은 첫 차로도, 세컨드 카로도 딱이에요"
+            tooltipChildren={
                 <span className="flex flex-col justify-center items-center h-heading-2-bold">
                     <p>다른 전기차에 비해 가격 부담이 적어요</p>
                     <p>전기차 가격의 혁신을 이뤄냈거든요</p>
                 </span>
-            </Tooltip>
-            <span className="h-body-1-regular text-n-neutral-950 mt-2 mb-8 flex flex-col justify-center items-center">
-                <span>
+            }
+            descriptionClass="flex flex-col justify-center items-center"
+            descriptionChildren={
+                <>
+                    <span>
+                        <p>
+                            캐스퍼 일렉트릭은 전기차를 대중적으로 사용하게 하는걸 목표로, 일반적인
+                            전기차들보다{" "}
+                        </p>
+                        <p className="h-body-1-bold text-s-blue">
+                            훨씬 저렴하게 나온 도심형 전기차
+                        </p>
+                        <p>예요.</p>
+                    </span>
                     <p>
-                        캐스퍼 일렉트릭은 전기차를 대중적으로 사용하게 하는걸 목표로, 일반적인
-                        전기차들보다
+                        도시 주행에 필요한 기능만 알차게 담아, 일반적으로 다른 전기차 모델보다 20%
+                        저렴한 가격에 구매할 수 있어요.
                     </p>
-                    <p className="h-body-1-bold text-s-blue"> 훨씬 저렴하게 나온 도심형 전기차</p>
-                    <p>예요.</p>
-                </span>
-                <p>
-                    도시 주행에 필요한 기능만 알차게 담아, 일반적으로 다른 전기차 모델보다 20%
-                    저렴한 가격에 구매할 수 있어요.
-                </p>
-            </span>
+                </>
+            }
+        >
             <div className="flex justify-between items-center h-[336px] w-[797px] mt-8 gap-25">
                 <div className="h-[336px] w-[367px] flex flex-col">
                     <div className="flex items-end">
@@ -60,6 +64,6 @@ export default function ElectricAdvantage() {
                     </span>
                 </div>
             </div>
-        </section>
+        </ElectricSection>
     );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Toggle from "@/components/Toggle";
-import Tooltip from "@/components/Tooltip";
+import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
 
 const TOGGLE_OPTIONS = [
     "혜택이 늘어요",
@@ -18,18 +18,17 @@ export default function ElectricReason() {
     };
 
     return (
-        <section className="h-screen bg-n-white flex flex-col justify-center items-center pt-32">
-            <Tooltip
-                content="캐스퍼 일렉트릭은 첫 차로도, 세컨드 카로도 딱이에요"
-                tooltipPosition="right"
-            >
-                <p className="h-heading-2-bold">전기차를 사야 하는 5가지 이유</p>
-            </Tooltip>
-            <span className="h-body-1-regular text-n-neutral-950 mt-2 mb-8">
-                <p>궁금한 문장을 </p>
-                <p className="h-body-1-bold text-s-blue">클릭</p>
-                <p>해 세부 내용을 확인해보세요</p>
-            </span>
+        <ElectricSection
+            tooltipContent="현대는 왜 전기차에 집중할까요?"
+            tooltipChildren={<p className="h-heading-2-bold">전기차를 사야 하는 5가지 이유</p>}
+            descriptionChildren={
+                <>
+                    <p>궁금한 문장을 </p>
+                    <p className="h-body-1-bold text-s-blue">클릭</p>
+                    <p>해 세부 내용을 확인해보세요</p>
+                </>
+            }
+        >
             <Toggle
                 handleToggle={handleToggle}
                 options={TOGGLE_OPTIONS}
@@ -59,6 +58,6 @@ export default function ElectricReason() {
                     </span>
                 </span>
             </div>
-        </section>
+        </ElectricSection>
     );
 }
