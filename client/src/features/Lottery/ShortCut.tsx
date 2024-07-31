@@ -1,6 +1,10 @@
 import CTAButton from "@/components/CTAButton";
 
-export default function ShortCut() {
+interface ShortCutProps {
+    handleClickShortCutButton: () => void;
+}
+
+export default function ShortCut({ handleClickShortCutButton }: ShortCutProps) {
     return (
         <div className="h-[623px] bg-n-black flex flex-col justify-center items-center text-center">
             <img
@@ -15,7 +19,11 @@ export default function ShortCut() {
                 캐스퍼 일렉트릭부터 스타벅스 기프티콘까지 선물이 가득!
             </h3>
             <div className="h-[30px]" />
-            <CTAButton label="캐스퍼 일렉트릭 봇 만들러 가기" hasArrowIcon url="/lottery/custom" />
+            <CTAButton
+                label="캐스퍼 일렉트릭 봇 만들러 가기"
+                hasArrowIcon
+                onClick={handleClickShortCutButton}
+            />
         </div>
     );
 }

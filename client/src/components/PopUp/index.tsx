@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CTAButton from "../CTAButton";
 import CheckBox from "../CheckBox";
@@ -8,14 +8,14 @@ export interface PopUpProps {
     phoneNumber: string;
     handlePhoneNumberChange: (val: string) => void;
     handleClose: () => void;
-    handleConfirm: () => void;
+    confirmUrl: string;
 }
 
 export default function PopUp({
     phoneNumber = "",
     handlePhoneNumberChange,
     handleClose,
-    handleConfirm,
+    confirmUrl,
 }: PopUpProps) {
     const [isUserInfoCheck, setIsUserInfoCheck] = useState(true);
     const [isMarketingInfoCheck, setIsMarketingInfoCheck] = useState(true);
@@ -41,17 +41,12 @@ export default function PopUp({
         handleClose();
     };
 
-    const handleCTAButtonClick = () => {
-        if (canConfirm) {
-            handleConfirm();
-        }
-    };
-
     return (
-        <div
-            className="fixed left-0 top-0 w-full h-full z-50 bg-n-black/[.4]"
-            onClick={handleDimClick}
-        >
+        <div className="fixed w-full h-full left-0 top-0 z-50">
+            <div
+                className="absolute left-0 top-0 w-[100%] h-[100%] bg-n-black/[.4]"
+                onClick={handleDimClick}
+            />
             <div className="px-[80px] py-[81px] bg-n-white rounded-800 absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
                 <button className="absolute right-700 top-700">
                     <img alt="팝업 닫기 버튼" src="/assets/icons/close.svg" />
@@ -105,7 +100,7 @@ export default function PopUp({
                         disabled={canConfirm ? false : true}
                         color="blue"
                         label="다음"
-                        onClick={handleCTAButtonClick}
+                        url={confirmUrl}
                     />
                 </div>
             </div>
