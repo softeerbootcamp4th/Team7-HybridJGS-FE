@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ButtonHeader from "../ButtonHeader";
 import { backgroundBlurVariants, logoVariants } from "./index.style";
 
@@ -9,7 +9,7 @@ export interface HeaderProps {
 
 const EVENT_TYPE = {
     LOTTERY: "lottery",
-    RUSH: "rush",
+    FIRST_COME: "first-come",
 };
 type EventType = (typeof EVENT_TYPE)[keyof typeof EVENT_TYPE];
 
@@ -21,8 +21,8 @@ export default function Header({ type }: HeaderProps) {
         const pathname = location.pathname;
         const selectedEventType = pathname.startsWith(`/${EVENT_TYPE.LOTTERY}`)
             ? EVENT_TYPE.LOTTERY
-            : pathname === "/rush"
-              ? EVENT_TYPE.RUSH
+            : pathname === "/balance"
+              ? EVENT_TYPE.FIRST_COME
               : "";
         setSelectedEvent(selectedEventType);
     }, [location]);
@@ -31,9 +31,7 @@ export default function Header({ type }: HeaderProps) {
         <header className="flex justify-center fixed top-0 w-full h-16 overflow-hidden z-20">
             <div className={backgroundBlurVariants({ type })}></div>
             <div className="w-[1200px] flex justify-between">
-                <Link to="/" className={logoVariants({ type })}>
-                    CASPER Electric Event
-                </Link>
+                <h1 className={logoVariants({ type })}>CASPER Electric Event</h1>
                 <div className="flex gap-700">
                     <ButtonHeader
                         isSelected={selectedEvent === EVENT_TYPE.LOTTERY}
@@ -43,9 +41,9 @@ export default function Header({ type }: HeaderProps) {
                         나만의 캐스퍼 일렉트릭 봇 만들기
                     </ButtonHeader>
                     <ButtonHeader
-                        isSelected={selectedEvent === EVENT_TYPE.RUSH}
+                        isSelected={selectedEvent === EVENT_TYPE.FIRST_COME}
                         type={type}
-                        url={`/${EVENT_TYPE.RUSH}`}
+                        url="/balance"
                     >
                         선착순 밸런스 게임
                     </ButtonHeader>
