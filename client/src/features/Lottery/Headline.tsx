@@ -1,7 +1,11 @@
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 
-export default function Headline() {
+interface HeadlineProps {
+    handleClickShortCutButton: () => void;
+}
+
+export default function Headline({ handleClickShortCutButton }: HeadlineProps) {
     return (
         <section className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center">
             <div className="absolute pointer-events-none">
@@ -26,7 +30,7 @@ export default function Headline() {
                 <CTAButton
                     label="캐스퍼 일렉트릭 봇 만들러 가기"
                     hasArrowIcon
-                    url="/lottery/custom"
+                    onClick={handleClickShortCutButton}
                 />
             </div>
 
