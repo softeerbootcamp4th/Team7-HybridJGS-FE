@@ -80,6 +80,12 @@ export const COLOR_BACKGROUND_MAP = [
     COLOR_OPTION.R_LIGHTBLUE,
 ];
 
+export const CASPER_Z_INDEX = {
+    CASPER: 2,
+    UNDER_CASPER: 1,
+    UPPER_CASPER: 3,
+};
+
 export const CASPER_OPTION = {
     [CUSTOM_OPTION.EYES]: [
         {
@@ -223,17 +229,32 @@ export const CASPER_OPTION = {
             id: STICKER_OPTION.ELECTRIC,
             description: "전기 찌릿",
             type: OPTION_TYPE.LIMITED,
-            position: "absolute",
+            "z-index": CASPER_Z_INDEX.UPPER_CASPER,
         },
-        { id: STICKER_OPTION.CHARGE_MAX, description: "충전 빵빵", type: OPTION_TYPE.LIMITED },
-        { id: STICKER_OPTION.CHARGE_NONE, description: "배터리 깜빡", type: OPTION_TYPE.LIMITED },
+        {
+            id: STICKER_OPTION.CHARGE_MAX,
+            description: "충전 빵빵",
+            type: OPTION_TYPE.LIMITED,
+            "z-index": CASPER_Z_INDEX.UNDER_CASPER,
+        },
+        {
+            id: STICKER_OPTION.CHARGE_NONE,
+            description: "배터리 깜빡",
+            type: OPTION_TYPE.LIMITED,
+            "z-index": CASPER_Z_INDEX.UNDER_CASPER,
+        },
 
-        { id: STICKER_OPTION.LOVELY, description: "러블리 리본", type: OPTION_TYPE.BASIC },
+        {
+            id: STICKER_OPTION.LOVELY,
+            description: "러블리 리본",
+            type: OPTION_TYPE.BASIC,
+            "z-index": CASPER_Z_INDEX.UNDER_CASPER,
+        },
         {
             id: STICKER_OPTION.TWINKLE,
             description: "반짝반짝",
             type: OPTION_TYPE.BASIC,
-            position: "absolute",
+            "z-index": CASPER_Z_INDEX.UPPER_CASPER,
         },
     ],
 };

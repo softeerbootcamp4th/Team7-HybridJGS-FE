@@ -4,6 +4,7 @@ import {
     CASPER_OPTION,
     CASPER_SIZE,
     CASPER_SIZE_OPTION,
+    CASPER_Z_INDEX,
     COLOR_BACKGROUND_MAP,
     CUSTOM_OPTION,
 } from "@/constants/CasperCustom/casper";
@@ -94,6 +95,7 @@ export default function CasperCardFront({
                     top: CASPER_TOP,
                     width: CASPER_WIDTH,
                     height: CASPER_HEIGHT,
+                    zIndex: CASPER_Z_INDEX.CASPER,
                 }}
             >
                 <CasperFace
@@ -142,11 +144,12 @@ export default function CasperCardFront({
             {selectedStickerIdx !== null && (
                 <img
                     alt="캐스퍼 일렉트릭 봇 스티커"
-                    className={`${CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx].position}`}
+                    className="absolute top-0"
                     src={`/assets/casper-custom/sticker/${CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx].id}.png`}
                     style={{
                         width: CARD_WIDTH,
                         height: CARD_HEIGHT,
+                        zIndex: CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx]["z-index"],
                     }}
                 />
             )}
@@ -154,6 +157,7 @@ export default function CasperCardFront({
             {size === CASPER_SIZE_OPTION.LG && (
                 <button
                     className="bg-n-white/[.2] rounded-800 absolute right-[24px] top-[24px] w-[42px] h-[42px]"
+                    style={{ zIndex: CASPER_Z_INDEX.UPPER_CASPER }}
                     onClick={handleShuffleCasper}
                 >
                     <img
@@ -165,7 +169,10 @@ export default function CasperCardFront({
             )}
 
             {optionDescription && (
-                <div className="absolute bottom-[48px] left-[50%] translate-x-[-50%] py-300 px-500 h-body-1-regular text-n-white rounded-700 bg-n-white/[.16] border border-n-white text-nowrap">
+                <div
+                    className="absolute bottom-[48px] left-[50%] translate-x-[-50%] py-300 px-500 h-body-1-regular text-n-white rounded-700 bg-n-white/[.16] border border-n-white text-nowrap"
+                    style={{ zIndex: CASPER_Z_INDEX.UPPER_CASPER }}
+                >
                     {optionDescription}
                 </div>
             )}
