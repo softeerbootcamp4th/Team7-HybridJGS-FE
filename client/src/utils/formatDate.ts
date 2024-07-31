@@ -3,7 +3,7 @@ export const formatDate = (dateString: string): string => {
 
     if (isNaN(date.getTime())) {
         console.error(`Invalid date string: ${dateString}`);
-        return;
+        return "";
     }
 
     const month = date.getMonth() + 1;
