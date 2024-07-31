@@ -12,6 +12,12 @@ export const CUSTOM_STEP_OPTION = {
     FINISHING: "finishing",
     FINISH: "finish",
 };
+export const CUSTOM_STEP_OPTION_ARRAY = [
+    CUSTOM_STEP_OPTION.PROCESS,
+    CUSTOM_STEP_OPTION.FORM,
+    CUSTOM_STEP_OPTION.FINISHING,
+    CUSTOM_STEP_OPTION.FINISH,
+];
 
 export const CUSTOM_STEP_HEADLINE = {
     [CUSTOM_STEP_OPTION.PROCESS]: {
@@ -27,10 +33,6 @@ export const CUSTOM_STEP_HEADLINE = {
                 (최초 1회만 응모 가능해요)
             </>
         ),
-    },
-    [CUSTOM_STEP_OPTION.FINISHING]: {
-        title: "",
-        description: "",
     },
     [CUSTOM_STEP_OPTION.FINISH]: {
         title: "친구에게 이벤트를 공유하고 당첨 확률을 높이세요!",

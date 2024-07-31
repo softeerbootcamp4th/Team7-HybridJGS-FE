@@ -6,7 +6,11 @@ import CasperCardFront from "@/features/CasperCustom/CasperCardFront";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import { getCasperOptionDescription } from "@/utils/getCasperOptionDescription";
 
-export default function CasperCustomProcess() {
+interface CasperCustomProcessProps {
+    handleClickNextStep: () => void;
+}
+
+export default function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcessProps) {
     const { selectedCasperIdx } = useCasperCustomContext();
     const [selectedStepIdx, setSelectedStepIdx] = useState<number>(0);
 
@@ -28,7 +32,7 @@ export default function CasperCustomProcess() {
         if (!isLastOption) {
             setSelectedStepIdx(selectedStepIdx + 1);
         } else {
-            // TODO: 완료 로직
+            handleClickNextStep();
         }
     };
 

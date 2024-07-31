@@ -18,6 +18,7 @@ interface CasperCardFrontProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
     optionDescription?: string;
     casperName?: string;
+    hasRandomButton?: boolean;
 }
 
 const casperCardContainerVariants = cva(`relative`, {
@@ -45,6 +46,7 @@ export default function CasperCardFront({
     size = CASPER_SIZE_OPTION.LG,
     optionDescription,
     casperName,
+    hasRandomButton = true,
 }: CasperCardFrontProps) {
     const { selectedCasperIdx, handleShuffleCasper } = useCasperCustomContext();
 
@@ -154,7 +156,7 @@ export default function CasperCardFront({
                 />
             )}
 
-            {size === CASPER_SIZE_OPTION.LG && (
+            {hasRandomButton && (
                 <button
                     className="bg-n-white/[.2] rounded-800 absolute right-[24px] top-[24px] w-[42px] h-[42px]"
                     style={{ zIndex: CASPER_Z_INDEX.UPPER_CASPER }}
