@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Popup, { PopUpProps } from "@/components/PopUp";
 
 export default function usePopup({
@@ -8,7 +8,14 @@ export default function usePopup({
 }: Omit<PopUpProps, "handleClose">) {
     const [isVisible, setIsVisible] = useState(false);
 
+    useEffect(() => {
+        if (!isVisible) {
+            document.body.style.overflow = "unset";
+        }
+    }, [isVisible]);
+
     const handleOpenPopup = () => {
+        document.body.style.overflow = "hidden";
         setIsVisible(true);
     };
 

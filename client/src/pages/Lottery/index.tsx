@@ -12,6 +12,7 @@ import SmileBadge from "@/features/Lottery/SmileBadge";
 import WheelDesign from "@/features/Lottery/WheelDesign";
 import usePopup from "@/hooks/usePopup";
 import useScrollTop from "@/hooks/useScrollTop";
+import useToast from "@/hooks/useToast";
 
 export default function Lottery() {
     useScrollTop();
@@ -27,9 +28,19 @@ export default function Lottery() {
         handlePhoneNumberChange,
         confirmUrl: `/lottery/custom`,
     });
+    const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
+
+    /**
+     * TODO: 이벤트 기간 맞는지 확인하는 로직 필요
+     */
+    const isEventPeriod = false;
 
     const handleClickShortCut = () => {
-        handleOpenPopup();
+        if (isEventPeriod) {
+            handleOpenPopup();
+        } else {
+            showToast();
+        }
     };
 
     return (
@@ -48,6 +59,7 @@ export default function Lottery() {
             <Footer />
 
             {PopupComponent}
+            {ToastComponent}
         </div>
     );
 }

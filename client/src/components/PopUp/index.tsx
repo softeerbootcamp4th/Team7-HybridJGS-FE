@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CTAButton from "../CTAButton";
 import CheckBox from "../CheckBox";
@@ -37,18 +37,14 @@ export default function PopUp({
         handlePhoneNumberChange(formattedPhoneNumber);
     };
 
-    const handleDimClick = () => {
-        handleClose();
-    };
-
     return (
-        <div className="fixed w-full h-full left-0 top-0 z-50">
+        <div className="fixed w-full h-full left-0 top-0 z-20">
             <div
                 className="absolute left-0 top-0 w-[100%] h-[100%] bg-n-black/[.4]"
-                onClick={handleDimClick}
+                onClick={handleClose}
             />
             <div className="px-[80px] py-[81px] bg-n-white rounded-800 absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
-                <button className="absolute right-700 top-700">
+                <button className="absolute right-700 top-700" onClick={handleClose}>
                     <img alt="팝업 닫기 버튼" src="/assets/icons/close.svg" />
                 </button>
 
