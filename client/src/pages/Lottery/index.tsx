@@ -25,7 +25,6 @@ export default function Lottery() {
             <NewColor />
             <SmileBadge />
             <ShortCut />
-
             <Notice />
             <Footer />
         </div>
