@@ -45,8 +45,8 @@ export default function Input({
             />
             {!isFocused && value.length === 0 && (
                 <div className="absolute left-600 top-[11px] text-n-neutral-500">
-                    <p className="h-detail-1-regular">{label}</p>
-                    <p className="h-body-1-regular">{placeholder}</p>
+                    <p className="block h-detail-1-regular">{label}</p>
+                    <p className="block h-body-1-regular">{placeholder}</p>
                 </div>
             )}
         </label>
