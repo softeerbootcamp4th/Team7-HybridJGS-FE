@@ -2,11 +2,12 @@ import { useState } from "react";
 import { cva } from "class-variance-authority";
 import ListStep from "@/components/ListStep";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/BotCustom/casper";
-import CasperCard from "@/features/BotCustom/CasperCard";
+import CasperCardFront from "@/features/BotCustom/CasperCardFront";
 import CustomOptionImageItem from "@/features/BotCustom/CustomOptionImageItem";
 import EyesPanel from "@/features/BotCustom/EyesPanel";
 import SharedPanel from "@/features/BotCustom/SharedPanel";
 import useBotCustomContext from "@/hooks/useBotCustomContext";
+import CasperCardBack from "./CasperCardBack";
 
 export default function Panels() {
     const { selectedBotIdx, handleSelectOption } = useBotCustomContext();
@@ -162,8 +163,13 @@ export default function Panels() {
                 selectedIdx={selectedOption}
                 handleClickOption={(idx) => setSelectedOption(idx)}
             />
-            <CasperCard optionDescription="정면을 보는 15인치 알로이 휠 눈" />
-            <CasperCard size="sm" />
+            <CasperCardFront optionDescription="정면을 보는 15인치 알로이 휠 눈" />
+            <CasperCardFront size="sm" />
+            <CasperCardBack
+                casperName="가다나라마바사"
+                expectations="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십"
+            />
+
             <EyesPanel />
             <SharedPanel
                 selectedPanel={CUSTOM_OPTION.MOUTH}
