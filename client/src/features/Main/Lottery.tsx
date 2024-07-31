@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import LotteryEvent from "@/components/LotteryEvent";
+import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import Section from "@/features/Main/Section.tsx";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
@@ -37,7 +39,17 @@ export default function Lottery() {
                     </div>
                     <div className="flex flex-col gap-4">
                         <p className="h-heading-4-bold text-n-white">이벤트 경품</p>
-                        <div className="flex gap-10">{/* 이벤트 경품 컴포넌트 추가 */}</div>
+                        <div className="flex gap-10">
+                            {LOTTERY_EVENT_DATA.map((event) => (
+                                <LotteryEvent
+                                    key={event.rank}
+                                    rank={event.rank}
+                                    image={event.image}
+                                    prizeName={event.prizeName}
+                                    winnerCount={event.winnerCount}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
