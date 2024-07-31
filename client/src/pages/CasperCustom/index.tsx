@@ -5,6 +5,7 @@ import {
     CUSTOM_STEP_OPTION_ARRAY,
 } from "@/constants/CasperCustom/customStep";
 import { CasperCustomProvider } from "@/contexts/casperCustomContext";
+import CasperCustomFinish from "@/features/CasperCustom/CasperCustomFinish";
 import CasperCustomFinishing from "@/features/CasperCustom/CasperCustomFinishing";
 import CasperCustomForm from "@/features/CasperCustom/CasperCustomForm";
 import CasperCustomProcess from "@/features/CasperCustom/CasperCustomProcess";
@@ -30,7 +31,9 @@ export default function CasperCustom() {
         } else if (selectedStep === CUSTOM_STEP_OPTION.FORM) {
             return <CasperCustomForm handleSubmitCustomCasper={handleSubmitCustomCasper} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISHING) {
-            return <CasperCustomFinishing />;
+            return <CasperCustomFinishing navigateNextStep={handleClickNextStep} />;
+        } else if (selectedStep === CUSTOM_STEP_OPTION.FINISH) {
+            return <CasperCustomFinish />;
         }
         return <></>;
     };

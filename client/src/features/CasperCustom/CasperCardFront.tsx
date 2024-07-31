@@ -180,7 +180,10 @@ export default function CasperCardFront({
             )}
 
             {casperName && (
-                <div className={casperNameVariants({ size })} style={{ height: BOTTOM_BAR_HEIGHT }}>
+                <div
+                    className={casperNameVariants({ size })}
+                    style={{ height: BOTTOM_BAR_HEIGHT, zIndex: CASPER_Z_INDEX.UPPER_CASPER }}
+                >
                     {casperName}
                 </div>
             )}
