@@ -23,8 +23,8 @@ interface CasperCardBackProps {
 const casperCardContainerVariants = cva(`relative`, {
     variants: {
         size: {
-            [CASPER_SIZE_OPTION.LG]: "w-[384px] h-[500px] rounded-800",
-            [CASPER_SIZE_OPTION.SM]: "w-[288px] h-[375px] rounded-700",
+            [CASPER_SIZE_OPTION.LG]: "rounded-800",
+            [CASPER_SIZE_OPTION.SM]: "rounded-700",
         },
     },
 });
@@ -34,19 +34,36 @@ const casperLogoVariants = cva(
     {
         variants: {
             size: {
-                [CASPER_SIZE_OPTION.LG]: "h-body-2-bold rounded-b-800 h-[53px]",
-                [CASPER_SIZE_OPTION.SM]: "h-detail-1-bold rounded-b-700 h-[40px]",
+                [CASPER_SIZE_OPTION.LG]: "h-body-2-bold rounded-b-800",
+                [CASPER_SIZE_OPTION.SM]: "h-detail-1-bold rounded-b-700",
             },
         },
     }
 );
+
+const INNER_STYLE = {
+    [CASPER_SIZE_OPTION.LG]: {
+        LOGO_SIZE: 101,
+        OUTER_GAP: "gap-800",
+        INNER_GAP: "gap-500",
+        TITLE_TEXT: "h-heading-3-bold",
+        DESCRIPTION_TEXT: "h-body-1-regular",
+    },
+    [CASPER_SIZE_OPTION.SM]: {
+        LOGO_SIZE: 80,
+        OUTER_GAP: "gap-500",
+        INNER_GAP: "gap-300",
+        TITLE_TEXT: "h-body-1-bold",
+        DESCRIPTION_TEXT: "h-body-2-regular",
+    },
+};
 
 export default function CasperCardBack({
     size = CASPER_SIZE_OPTION.LG,
     casperName,
     expectations,
 }: CasperCardBackProps) {
-    const { selectedBotIdx, handleShuffleBot } = useBotCustomContext();
+    const { selectedBotIdx } = useBotCustomContext();
 
     const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedBotIdx[CUSTOM_OPTION.COLOR]];
     const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedBotIdx[CUSTOM_OPTION.EYES]];
@@ -54,8 +71,16 @@ export default function CasperCardBack({
         CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedBotIdx[CUSTOM_OPTION.EYES_DIRECTION]];
     const selectedMouth = CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedBotIdx[CUSTOM_OPTION.MOUTH]];
 
-    const { CASPER_WIDTH, CASPER_HEIGHT, EYES_WIDTH, EYES_HEIGHT, EYES_TOP } =
-        MINI_CASPER_SIZE[size];
+    const {
+        CARD_WIDTH,
+        CARD_HEIGHT,
+        CASPER_WIDTH,
+        CASPER_HEIGHT,
+        EYES_WIDTH,
+        EYES_HEIGHT,
+        EYES_TOP,
+        BOTTOM_BAR_HEIGHT,
+    } = MINI_CASPER_SIZE[size];
     const { WIDTH: MOUTH_WIDTH, TOP: MOUTH_TOP } = MINI_CASPER_MOUTH_SIZE[size][selectedMouth.id];
 
     const CasperEyesSvgComponent = getCasperEyesComponent(
@@ -69,10 +94,17 @@ export default function CasperCardBack({
             className={casperCardContainerVariants({
                 size,
             })}
-            style={{ backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]] }}
+            style={{
+                width: CARD_WIDTH,
+                height: CARD_HEIGHT,
+                backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]],
+            }}
         >
-            <div className="h-[446px] flex flex-col items-center justify-center gap-800">
-                <div className="flex flex-col gap-500 items-center">
+            <div
+                className={`flex flex-col items-center justify-center ${INNER_STYLE[size].OUTER_GAP}`}
+                style={{ height: CARD_HEIGHT - BOTTOM_BAR_HEIGHT }}
+            >
+                <div className={`flex flex-col items-center ${INNER_STYLE[size].INNER_GAP}`}>
                     <div
                         className="relative"
                         style={{
@@ -123,18 +155,21 @@ export default function CasperCardBack({
                         </div>
                     </div>
 
-                    <h3 className="h-heading-3-bold text-n-black">{casperName}</h3>
+                    <h3 className={`text-n-black ${INNER_STYLE[size].TITLE_TEXT}`}>{casperName}</h3>
                 </div>
 
                 {expectations && (
-                    <div className="h-body-1-regular flex flex-col items-center gap-500 w-[288px]">
+                    <div
+                        className={`flex flex-col items-center ${INNER_STYLE[size].INNER_GAP} ${INNER_STYLE[size].DESCRIPTION_TEXT}`}
+                        style={{ width: CARD_WIDTH - 100 }}
+                    >
                         <p className="text-n-neutral-500">작성한 기대평</p>
                         <p className="text-n-black">{expectations}</p>
                     </div>
                 )}
 
-                <div className={casperLogoVariants({ size })}>
-                    <HyundaiLogo fill="#003468" width={101} height={24} />
+                <div className={casperLogoVariants({ size })} style={{ height: BOTTOM_BAR_HEIGHT }}>
+                    <HyundaiLogo fill="#003468" width={INNER_STYLE[size].LOGO_SIZE} height={24} />
                     <div className="border-l border-n-neutral-500 h-[12px]" />
                     <p>CASPER Electric</p>
                 </div>

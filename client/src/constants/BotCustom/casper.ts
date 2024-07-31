@@ -260,6 +260,7 @@ export const CASPER_SIZE = {
         EYES_WIDTH: 216,
         EYES_HEIGHT: 70,
         EYES_TOP: 32,
+        BOTTOM_BAR_HEIGHT: 53,
     },
     [CASPER_SIZE_OPTION.SM]: {
         CARD_WIDTH: 288,
@@ -270,6 +271,7 @@ export const CASPER_SIZE = {
         EYES_WIDTH: 162,
         EYES_HEIGHT: 53,
         EYES_TOP: 22,
+        BOTTOM_BAR_HEIGHT: 40,
     },
 };
 
@@ -282,15 +284,17 @@ export const MINI_CASPER_SIZE = {
         EYES_WIDTH: 76,
         EYES_HEIGHT: 24,
         EYES_TOP: 11,
+        BOTTOM_BAR_HEIGHT: 53,
     },
     [CASPER_SIZE_OPTION.SM]: {
         CARD_WIDTH: 288,
         CARD_HEIGHT: 375,
-        CASPER_WIDTH: 196,
-        CASPER_HEIGHT: 128,
-        EYES_WIDTH: 162,
-        EYES_HEIGHT: 53,
-        EYES_TOP: 22,
+        CASPER_WIDTH: 72,
+        CASPER_HEIGHT: 48,
+        EYES_WIDTH: 62,
+        EYES_HEIGHT: 18,
+        EYES_TOP: 9,
+        BOTTOM_BAR_HEIGHT: 40,
     },
 };
 
@@ -366,24 +370,24 @@ export const MINI_CASPER_MOUTH_SIZE = {
     },
     [CASPER_SIZE_OPTION.SM]: {
         [MOUTH_OPTION.CLOUDY]: {
-            WIDTH: 128,
-            TOP: 78,
+            WIDTH: 48,
+            TOP: 18,
         },
         [MOUTH_OPTION.EXPRESSIONLESS]: {
-            WIDTH: 100,
-            TOP: 86,
+            WIDTH: 32,
+            TOP: 27,
         },
         [MOUTH_OPTION.LAUGH]: {
-            WIDTH: 68,
-            TOP: 70,
+            WIDTH: 24,
+            TOP: 9,
         },
         [MOUTH_OPTION.MOCKING]: {
-            WIDTH: 126,
-            TOP: 59,
+            WIDTH: 46,
+            TOP: 3,
         },
         [MOUTH_OPTION.SMILE]: {
-            WIDTH: 128,
-            TOP: 78,
+            WIDTH: 48,
+            TOP: 18,
         },
     },
 };

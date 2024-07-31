@@ -169,6 +169,11 @@ export default function Panels() {
                 casperName="가다나라마바사"
                 expectations="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십"
             />
+            <CasperCardBack
+                size="sm"
+                casperName="가다나라마바사"
+                expectations="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십"
+            />
 
             <EyesPanel />
             <SharedPanel

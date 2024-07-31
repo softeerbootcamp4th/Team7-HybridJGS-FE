@@ -22,8 +22,8 @@ interface CasperCardFrontProps {
 const casperCardContainerVariants = cva(`relative`, {
     variants: {
         size: {
-            [CASPER_SIZE_OPTION.LG]: "w-[384px] h-[500px] rounded-800",
-            [CASPER_SIZE_OPTION.SM]: "w-[288px] h-[375px] rounded-700",
+            [CASPER_SIZE_OPTION.LG]: "rounded-800",
+            [CASPER_SIZE_OPTION.SM]: "rounded-700",
         },
     },
 });
@@ -33,8 +33,8 @@ const casperNameVariants = cva(
     {
         variants: {
             size: {
-                [CASPER_SIZE_OPTION.LG]: "h-heading-3-bold rounded-b-800 h-[53px]",
-                [CASPER_SIZE_OPTION.SM]: "h-body-1-bold rounded-b-700 h-[40px]",
+                [CASPER_SIZE_OPTION.LG]: "h-heading-3-bold rounded-b-800",
+                [CASPER_SIZE_OPTION.SM]: "h-body-1-bold rounded-b-700",
             },
         },
     }
@@ -63,6 +63,7 @@ export default function CasperCardFront({
         EYES_TOP,
         CARD_WIDTH,
         CARD_HEIGHT,
+        BOTTOM_BAR_HEIGHT,
     } = CASPER_SIZE[size];
     const { WIDTH: MOUTH_WIDTH, TOP: MOUTH_TOP } = CASPER_MOUTH_SIZE[size][selectedMouth.id];
 
@@ -77,7 +78,11 @@ export default function CasperCardFront({
             className={casperCardContainerVariants({
                 size,
             })}
-            style={{ backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]] }}
+            style={{
+                width: CARD_WIDTH,
+                height: CARD_HEIGHT,
+                backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]],
+            }}
         >
             <div
                 className="relative left-[50%] translate-x-[-50%]"
@@ -161,7 +166,11 @@ export default function CasperCardFront({
                 </div>
             )}
 
-            {casperName && <div className={casperNameVariants({ size })}>{casperName}</div>}
+            {casperName && (
+                <div className={casperNameVariants({ size })} style={{ height: BOTTOM_BAR_HEIGHT }}>
+                    {casperName}
+                </div>
+            )}
         </div>
     );
 }
