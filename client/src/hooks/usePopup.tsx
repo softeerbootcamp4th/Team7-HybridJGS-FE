@@ -19,11 +19,16 @@ export default function usePopup({
         setIsVisible(true);
     };
 
+    const handleClosePopup = () => {
+        handlePhoneNumberChange("");
+        setIsVisible(false);
+    };
+
     const PopupComponent = isVisible ? (
         <Popup
             phoneNumber={phoneNumber}
             handlePhoneNumberChange={handlePhoneNumberChange}
-            handleClose={() => setIsVisible(false)}
+            handleClose={handleClosePopup}
             confirmUrl={confirmUrl}
         />
     ) : (
