@@ -1,6 +1,6 @@
-import { useState } from "react";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
+import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import CasperCardFront from "./CasperCardFront";
 
 interface CasperCustomFormProps {
@@ -8,8 +8,7 @@ interface CasperCustomFormProps {
 }
 
 export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
-    const [casperName, setCasperName] = useState<string>("");
-    const [expectations, setExpectations] = useState<string>("");
+    const { casperName, setCasperName, expectations, setExpectations } = useCasperCustomContext();
 
     const canSubmit = casperName.length !== 0;
 

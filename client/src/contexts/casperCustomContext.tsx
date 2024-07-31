@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { Dispatch, ReactNode, createContext, useState } from "react";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/CasperCustom/casper";
 import { getRandomInt } from "@/utils/getRandomInt";
 
@@ -13,6 +13,10 @@ export type SelectedCasperIdxType = {
 
 export interface CasperCustomContextType {
     selectedCasperIdx: SelectedCasperIdxType;
+    casperName: string;
+    setCasperName: Dispatch<string>;
+    expectations: string;
+    setExpectations: Dispatch<string>;
     handleSelectOption: (option: CustomOptionType, id: string) => void;
     handleShuffleCasper: () => void;
 }
@@ -27,6 +31,8 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
         [CUSTOM_OPTION.COLOR]: 0,
         [CUSTOM_OPTION.STICKER]: null,
     });
+    const [casperName, setCasperName] = useState<string>("");
+    const [expectations, setExpectations] = useState<string>("");
 
     const handleSelectOption = (option: CustomOptionType, id: string) => {
         const selectedIdx = CASPER_OPTION[option].findIndex((opt) => opt.id === id);
@@ -53,6 +59,10 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
         <CasperCustomContext.Provider
             value={{
                 selectedCasperIdx,
+                casperName,
+                setCasperName,
+                expectations,
+                setExpectations,
                 handleSelectOption,
                 handleShuffleCasper,
             }}
