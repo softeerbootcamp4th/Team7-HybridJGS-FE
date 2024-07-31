@@ -1,6 +1,6 @@
 import { LotteryEventProps } from "@/components/LotteryEvent";
 
-export const lotteryEventData: LotteryEventProps[] = [
+export const LOTTERY_EVENT_DATA: LotteryEventProps[] = [
     {
         rank: 1,
         image: "/public/assets/main/lottery/prize-1.png",

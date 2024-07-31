@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { lotteryEventData } from "@/constants/Main/lotteryEventData.ts";
+import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import LotteryEvent, { LotteryEventProps } from "./index";
 
 const meta: Meta<typeof LotteryEvent> = {
@@ -24,23 +24,23 @@ const Template: StoryFn<typeof LotteryEvent> = (args: LotteryEventProps) => (
 );
 
 export const FirstPrize = Template.bind({});
-FirstPrize.args = lotteryEventData[0];
+FirstPrize.args = LOTTERY_EVENT_DATA[0];
 
 export const SecondPrize = Template.bind({});
-SecondPrize.args = lotteryEventData[1];
+SecondPrize.args = LOTTERY_EVENT_DATA[1];
 
 export const ThirdPrize = Template.bind({});
-ThirdPrize.args = lotteryEventData[2];
+ThirdPrize.args = LOTTERY_EVENT_DATA[2];
 
 export const FourthPrize = Template.bind({});
-FourthPrize.args = lotteryEventData[3];
+FourthPrize.args = LOTTERY_EVENT_DATA[3];
 
 export const FifthPrize = Template.bind({});
-FifthPrize.args = lotteryEventData[4];
+FifthPrize.args = LOTTERY_EVENT_DATA[4];
 
 export const AllPrizes: StoryFn<typeof LotteryEvent> = () => (
     <>
-        {lotteryEventData.map((event) => (
+        {LOTTERY_EVENT_DATA.map((event) => (
             <LotteryEvent
                 key={event.rank}
                 rank={event.rank}
