@@ -4,26 +4,29 @@ import ListStep from "@/components/ListStep";
 import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
 import CasperCardFront from "@/features/CasperCustom/CasperCardFront";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import { getCasperOptionDescription } from "@/utils/getCasperOptionDescription";
 
 export default function CasperCustomProcess() {
-    const { selectedCasperIdx, handleSelectOption } = useCasperCustomContext();
-    const [selectedOptionIdx, setSelectedOptionIdx] = useState<number>(0);
+    const { selectedCasperIdx } = useCasperCustomContext();
+    const [selectedStepIdx, setSelectedStepIdx] = useState<number>(0);
 
-    const PanelComponent = CUSTOM_OPTION_ARRAY[selectedOptionIdx].component;
+    const optionDescription = getCasperOptionDescription({ selectedStepIdx, selectedCasperIdx });
+
+    const PanelComponent = CUSTOM_OPTION_ARRAY[selectedStepIdx].component;
 
     const customOptionLabels = CUSTOM_OPTION_ARRAY.map((option) => option.label);
-    const isFirstOption = selectedOptionIdx === 0;
-    const isLastOption = selectedOptionIdx === CUSTOM_OPTION_ARRAY.length - 1;
+    const isFirstOption = selectedStepIdx === 0;
+    const isLastOption = selectedStepIdx === CUSTOM_OPTION_ARRAY.length - 1;
 
     const handleClickPrevButton = () => {
         if (!isFirstOption) {
-            setSelectedOptionIdx(selectedOptionIdx - 1);
+            setSelectedStepIdx(selectedStepIdx - 1);
         }
     };
 
     const handleClickNextButton = () => {
         if (!isLastOption) {
-            setSelectedOptionIdx(selectedOptionIdx + 1);
+            setSelectedStepIdx(selectedStepIdx + 1);
         } else {
             // TODO: 완료 로직
         }
@@ -32,13 +35,13 @@ export default function CasperCustomProcess() {
     return (
         <>
             <div className="flex items-end gap-1000">
-                <CasperCardFront optionDescription="정면을 보는 15인치 알로이 휠 눈" />
+                <CasperCardFront optionDescription={optionDescription} />
 
                 <div className="flex flex-col gap-400 mt-[42px]">
                     <ListStep
                         options={customOptionLabels}
-                        selectedIdx={selectedOptionIdx}
-                        handleClickOption={(idx) => setSelectedOptionIdx(idx)}
+                        selectedIdx={selectedStepIdx}
+                        handleClickOption={(idx) => setSelectedStepIdx(idx)}
                     />
                     {PanelComponent}
                 </div>

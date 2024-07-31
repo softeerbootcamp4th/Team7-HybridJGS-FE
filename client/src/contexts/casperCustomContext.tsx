@@ -2,8 +2,8 @@ import { ReactNode, createContext, useState } from "react";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/CasperCustom/casper";
 import { getRandomInt } from "@/utils/getRandomInt";
 
-type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
-type SelectedCasperIdxType = {
+export type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
+export type SelectedCasperIdxType = {
     [CUSTOM_OPTION.EYES]: number;
     [CUSTOM_OPTION.EYES_DIRECTION]: number;
     [CUSTOM_OPTION.MOUTH]: number;
