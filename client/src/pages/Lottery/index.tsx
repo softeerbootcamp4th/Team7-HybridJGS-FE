@@ -33,7 +33,7 @@ export default function Lottery() {
     /**
      * TODO: 이벤트 기간 맞는지 확인하는 로직 필요
      */
-    const isEventPeriod = false;
+    const isEventPeriod = true;
 
     const handleClickShortCut = () => {
         if (isEventPeriod) {
