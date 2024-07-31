@@ -21,7 +21,7 @@ export default function Header({ type }: HeaderProps) {
         const pathname = location.pathname;
         const selectedEventType = pathname.startsWith(`/${EVENT_TYPE.LOTTERY}`)
             ? EVENT_TYPE.LOTTERY
-            : pathname === "/rush"
+            : pathname.startsWith(`/${EVENT_TYPE.RUSH}`)
               ? EVENT_TYPE.RUSH
               : "";
         setSelectedEvent(selectedEventType);
