@@ -273,32 +273,95 @@ export const CASPER_SIZE = {
     },
 };
 
+export const MINI_CASPER_SIZE = {
+    [CASPER_SIZE_OPTION.LG]: {
+        CARD_WIDTH: 384,
+        CARD_HEIGHT: 500,
+        CASPER_WIDTH: 90,
+        CASPER_HEIGHT: 60,
+        EYES_WIDTH: 76,
+        EYES_HEIGHT: 24,
+        EYES_TOP: 11,
+    },
+    [CASPER_SIZE_OPTION.SM]: {
+        CARD_WIDTH: 288,
+        CARD_HEIGHT: 375,
+        CASPER_WIDTH: 196,
+        CASPER_HEIGHT: 128,
+        EYES_WIDTH: 162,
+        EYES_HEIGHT: 53,
+        EYES_TOP: 22,
+    },
+};
+
 export const CASPER_MOUTH_SIZE = {
     [CASPER_SIZE_OPTION.LG]: {
         [MOUTH_OPTION.CLOUDY]: {
             WIDTH: 170,
-            HEIGHT: 34,
             TOP: 106,
         },
         [MOUTH_OPTION.EXPRESSIONLESS]: {
             WIDTH: 120,
-            HEIGHT: 15,
             TOP: 119,
         },
         [MOUTH_OPTION.LAUGH]: {
             WIDTH: 90,
-            HEIGHT: 50,
-            TOP: 102,
+            TOP: 103,
         },
         [MOUTH_OPTION.MOCKING]: {
             WIDTH: 170,
-            HEIGHT: 60,
             TOP: 90,
         },
         [MOUTH_OPTION.SMILE]: {
             WIDTH: 170,
-            HEIGHT: 34,
             TOP: 106,
+        },
+    },
+    [CASPER_SIZE_OPTION.SM]: {
+        [MOUTH_OPTION.CLOUDY]: {
+            WIDTH: 128,
+            TOP: 78,
+        },
+        [MOUTH_OPTION.EXPRESSIONLESS]: {
+            WIDTH: 100,
+            TOP: 86,
+        },
+        [MOUTH_OPTION.LAUGH]: {
+            WIDTH: 68,
+            TOP: 70,
+        },
+        [MOUTH_OPTION.MOCKING]: {
+            WIDTH: 126,
+            TOP: 59,
+        },
+        [MOUTH_OPTION.SMILE]: {
+            WIDTH: 128,
+            TOP: 78,
+        },
+    },
+};
+
+export const MINI_CASPER_MOUTH_SIZE = {
+    [CASPER_SIZE_OPTION.LG]: {
+        [MOUTH_OPTION.CLOUDY]: {
+            WIDTH: 60,
+            TOP: 28,
+        },
+        [MOUTH_OPTION.EXPRESSIONLESS]: {
+            WIDTH: 40,
+            TOP: 37,
+        },
+        [MOUTH_OPTION.LAUGH]: {
+            WIDTH: 30,
+            TOP: 19,
+        },
+        [MOUTH_OPTION.MOCKING]: {
+            WIDTH: 56,
+            TOP: 12,
+        },
+        [MOUTH_OPTION.SMILE]: {
+            WIDTH: 60,
+            TOP: 28,
         },
     },
     [CASPER_SIZE_OPTION.SM]: {

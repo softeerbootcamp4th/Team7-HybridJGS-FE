@@ -79,49 +79,55 @@ export default function CasperCardFront({
             })}
             style={{ backgroundColor: COLOR_BACKGROUND_MAP[selectedBotIdx[CUSTOM_OPTION.COLOR]] }}
         >
-            <CasperFace
-                fill={selectedColor.id}
-                className="absolute left-[50%] translate-x-[-50%]"
-                width={CASPER_WIDTH}
-                height={CASPER_HEIGHT}
+            <div
+                className="relative left-[50%] translate-x-[-50%]"
                 style={{
                     top: CASPER_TOP,
+                    width: CASPER_WIDTH,
+                    height: CASPER_HEIGHT,
                 }}
-            />
-            <div
-                className="absolute left-[50%] translate-x-[-50%]"
-                style={{ width: CASPER_WIDTH, height: CASPER_HEIGHT, top: CASPER_TOP }}
             >
-                <CasperEyesLayout
-                    className="absolute left-[50%] translate-x-[-50%]"
-                    fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
-                    style={{
-                        top: EYES_TOP,
-                        width: EYES_WIDTH,
-                        height: EYES_HEIGHT,
-                    }}
+                <CasperFace
+                    fill={selectedColor.id}
+                    className="absolute top-0"
+                    width={CASPER_WIDTH}
+                    height={CASPER_HEIGHT}
                 />
-                {CasperEyesSvgComponent && (
-                    <CasperEyesSvgComponent
+                <div
+                    className="absolute top-0"
+                    style={{ width: CASPER_WIDTH, height: CASPER_HEIGHT }}
+                >
+                    <CasperEyesLayout
                         className="absolute left-[50%] translate-x-[-50%]"
-                        fill={selectedColor.id}
+                        fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
                         style={{
                             top: EYES_TOP,
                             width: EYES_WIDTH,
                             height: EYES_HEIGHT,
                         }}
                     />
-                )}
-                {CasperMouthSvgComponent && (
-                    <CasperMouthSvgComponent
-                        className="absolute left-[50%] translate-x-[-50%]"
-                        fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
-                        style={{
-                            top: MOUTH_TOP,
-                            width: MOUTH_WIDTH,
-                        }}
-                    />
-                )}
+                    {CasperEyesSvgComponent && (
+                        <CasperEyesSvgComponent
+                            className="absolute left-[50%] translate-x-[-50%]"
+                            fill={selectedColor.id}
+                            style={{
+                                top: EYES_TOP,
+                                width: EYES_WIDTH,
+                                height: EYES_HEIGHT,
+                            }}
+                        />
+                    )}
+                    {CasperMouthSvgComponent && (
+                        <CasperMouthSvgComponent
+                            className="absolute left-[50%] translate-x-[-50%]"
+                            fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
+                            style={{
+                                top: MOUTH_TOP,
+                                width: MOUTH_WIDTH,
+                            }}
+                        />
+                    )}
+                </div>
             </div>
 
             {selectedStickerIdx !== null && (

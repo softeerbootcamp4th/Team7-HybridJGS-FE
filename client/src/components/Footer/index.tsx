@@ -1,4 +1,5 @@
 import React from "react";
+import HyundaiLogo from "/public/assets/hyundai-logo.svg?react";
 
 const LinkSection: React.FC = () => (
     <div className="flex gap-x-2.5 h-heading-4-medium">
@@ -39,7 +40,7 @@ export default function Footer() {
     return (
         <div className="w-full h-[266px] bg-black pl-[180px] py-[70px]">
             <div className="flex h-6 gap-[180px]">
-                <img src="/assets/hyundai-logo.svg" alt="hyundai-logo" />
+                <HyundaiLogo fill="#ffffff" width={189} height={27} />
                 <div className="flex flex-col gap-2.5 h-heading-4-regular text-[#949494]">
                     <LinkSection />
                     <InfoSection />
