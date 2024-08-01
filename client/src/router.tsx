@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
-import BotCustom from "./pages/BotCustom";
-import BotCustomResult from "./pages/BotCustomResult";
-import BotShowCase from "./pages/BotShowCase";
+import CasperCustom from "./pages/CasperCustom";
+import CasperCustomResult from "./pages/CasperCustomResult";
+import CasperShowCase from "./pages/CasperShowCase";
 import Lottery from "./pages/Lottery";
 import Main from "./pages/Main";
 import Rush from "./pages/Rush";
@@ -29,15 +29,15 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "custom",
-                        element: <BotCustom />,
+                        element: <CasperCustom />,
                     },
                     {
                         path: "result",
-                        element: <BotCustomResult />,
+                        element: <CasperCustomResult />,
                     },
                     {
                         path: "show-case",
-                        element: <BotShowCase />,
+                        element: <CasperShowCase />,
                     },
                 ],
             },
