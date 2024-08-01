@@ -19,16 +19,19 @@ export interface CasperCustomContextType {
     setExpectations: Dispatch<string>;
     handleSelectOption: (option: CustomOptionType, id: string) => void;
     handleShuffleCasper: () => void;
+    handleResetCustomIndex: () => void;
 }
 
 export const CasperCustomContext = createContext<CasperCustomContextType | null>(null);
 
+const INITIAL_INDEX = 0;
+
 export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
     const [selectedCasperIdx, setSelectedCasperIdx] = useState<SelectedCasperIdxType>({
-        [CUSTOM_OPTION.EYES]: 0,
-        [CUSTOM_OPTION.EYES_DIRECTION]: 0,
-        [CUSTOM_OPTION.MOUTH]: 0,
-        [CUSTOM_OPTION.COLOR]: 0,
+        [CUSTOM_OPTION.EYES]: INITIAL_INDEX,
+        [CUSTOM_OPTION.EYES_DIRECTION]: INITIAL_INDEX,
+        [CUSTOM_OPTION.MOUTH]: INITIAL_INDEX,
+        [CUSTOM_OPTION.COLOR]: INITIAL_INDEX,
         [CUSTOM_OPTION.STICKER]: null,
     });
     const [casperName, setCasperName] = useState<string>("");
@@ -55,6 +58,16 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
+    const handleResetCustomIndex = () => {
+        setSelectedCasperIdx({
+            [CUSTOM_OPTION.EYES]: INITIAL_INDEX,
+            [CUSTOM_OPTION.EYES_DIRECTION]: INITIAL_INDEX,
+            [CUSTOM_OPTION.MOUTH]: INITIAL_INDEX,
+            [CUSTOM_OPTION.COLOR]: INITIAL_INDEX,
+            [CUSTOM_OPTION.STICKER]: null,
+        });
+    };
+
     return (
         <CasperCustomContext.Provider
             value={{
@@ -65,6 +78,7 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
                 setExpectations,
                 handleSelectOption,
                 handleShuffleCasper,
+                handleResetCustomIndex,
             }}
         >
             {children}

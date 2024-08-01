@@ -46,3 +46,5 @@ export const CUSTOM_OPTION_ARRAY = [
     { id: CUSTOM_OPTION.COLOR, label: "색상", component: <ColorPanel /> },
     { id: CUSTOM_OPTION.STICKER, label: "스티커", component: <StickerPanel /> },
 ];
+
+export const MAX_APPLY = 10;

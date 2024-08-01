@@ -10,8 +10,10 @@ import CasperCustomFinishing from "@/features/CasperCustom/CasperCustomFinishing
 import CasperCustomForm from "@/features/CasperCustom/CasperCustomForm";
 import CasperCustomProcess from "@/features/CasperCustom/CasperCustomProcess";
 
+const INITIAL_STEP = 0;
+
 export default function CasperCustom() {
-    const [selectedStepIdx, setSelectedStepIdx] = useState(0);
+    const [selectedStepIdx, setSelectedStepIdx] = useState(INITIAL_STEP);
 
     const selectedStep = CUSTOM_STEP_OPTION_ARRAY[selectedStepIdx];
 
@@ -25,6 +27,10 @@ export default function CasperCustom() {
         handleClickNextStep();
     };
 
+    const handleResetStep = () => {
+        setSelectedStepIdx(INITIAL_STEP);
+    };
+
     const renderCustomStep = () => {
         if (selectedStep === CUSTOM_STEP_OPTION.PROCESS) {
             return <CasperCustomProcess handleClickNextStep={handleClickNextStep} />;
@@ -33,7 +39,7 @@ export default function CasperCustom() {
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISHING) {
             return <CasperCustomFinishing navigateNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISH) {
-            return <CasperCustomFinish />;
+            return <CasperCustomFinish handleResetStep={handleResetStep} />;
         }
         return <></>;
     };
