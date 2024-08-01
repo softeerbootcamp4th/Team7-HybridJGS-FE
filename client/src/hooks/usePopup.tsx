@@ -9,10 +9,10 @@ export default function usePopup({
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        if (!isVisible) {
+        return () => {
             document.body.style.overflow = "unset";
-        }
-    }, [isVisible]);
+        };
+    }, []);
 
     const handleOpenPopup = () => {
         document.body.style.overflow = "hidden";
@@ -20,6 +20,7 @@ export default function usePopup({
     };
 
     const handleClosePopup = () => {
+        document.body.style.overflow = "unset";
         handlePhoneNumberChange("");
         setIsVisible(false);
     };
