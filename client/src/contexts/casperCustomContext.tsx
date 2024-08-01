@@ -5,7 +5,8 @@ import { getRandomInt } from "@/utils/getRandomInt";
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
 type CasperFaceKeys = Exclude<CustomOptionType, typeof CUSTOM_OPTION.STICKER>;
 type CasperFaceType = Record<CasperFaceKeys, number>;
-type SelectedCasperIdxType = CasperFaceType & Record<typeof CUSTOM_OPTION.STICKER, number | null>;
+export type SelectedCasperIdxType = CasperFaceType &
+    Record<typeof CUSTOM_OPTION.STICKER, number | null>;
 
 export interface CasperCustomContextType {
     selectedCasperIdx: SelectedCasperIdxType;
