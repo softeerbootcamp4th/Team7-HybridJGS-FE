@@ -13,7 +13,7 @@ interface CasperCustomFinishProps {
 }
 
 export default function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
-    const { casperName, handleResetCustomIndex } = useCasperCustomContext();
+    const { casperName, handleResetCustom } = useCasperCustomContext();
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,7 @@ export default function CasperCustomFinish({ handleResetStep }: CasperCustomFini
 
     const handleReset = () => {
         handleResetStep();
-        handleResetCustomIndex();
+        handleResetCustom();
     };
 
     return (

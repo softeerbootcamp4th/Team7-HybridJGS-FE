@@ -11,9 +11,10 @@ export default function CasperCustomFinishing({ navigateNextStep }: CasperCustom
     const { casperName, expectations } = useCasperCustomContext();
 
     useEffect(() => {
+        // TODO: flip 애니메이션 후 next step으로 넘어가게 하기
         setTimeout(() => {
             navigateNextStep();
-        }, 5000);
+        }, 3000);
     }, []);
 
     return (
