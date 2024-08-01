@@ -6,6 +6,30 @@ import CustomOptionImageItem from "./CustomOptionImageItem";
 import EyesPanelComponent from "./EyesPanel";
 import SharedPanel from "./SharedPanel";
 
+interface GetCustomOptionImageItemProps {
+    optionId: string;
+    isSelected: boolean;
+    handleClickOption: () => void;
+}
+
+function getCustomOptionImageItem({
+    optionId,
+    isSelected,
+    handleClickOption,
+}: GetCustomOptionImageItemProps) {
+    return {
+        id: optionId,
+        component: (
+            <CustomOptionImageItem
+                key={optionId}
+                optionId={optionId}
+                selected={isSelected}
+                handleClickOption={handleClickOption}
+            />
+        ),
+    };
+}
+
 export function EyesPanel() {
     return <EyesPanelComponent />;
 }
@@ -19,42 +43,22 @@ export function MouthPanel() {
 
     const mouthLimited = mouthOptions
         .filter((option) => option.type === OPTION_TYPE.LIMITED)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            mouthSelectedOption !== null
-                                ? mouthSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id)}
-                    />
-                ),
-            };
-        });
+        .map((option) =>
+            getCustomOptionImageItem({
+                optionId: option.id,
+                isSelected: mouthSelectedOption?.id === option.id || false,
+                handleClickOption: () => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id),
+            })
+        );
     const mouthBasic = mouthOptions
         .filter((option) => option.type === OPTION_TYPE.BASIC)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            mouthSelectedOption !== null
-                                ? mouthSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id)}
-                    />
-                ),
-            };
-        });
+        .map((option) =>
+            getCustomOptionImageItem({
+                optionId: option.id,
+                isSelected: mouthSelectedOption?.id === option.id || false,
+                handleClickOption: () => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id),
+            })
+        );
 
     return (
         <SharedPanel
@@ -88,10 +92,7 @@ export function ColorPanel() {
                 component: (
                     <div
                         className={colorVariants({
-                            selected:
-                                colorSelectedOption !== null
-                                    ? colorSelectedOption.id === option.id
-                                    : false,
+                            selected: colorSelectedOption?.id === option.id || false,
                         })}
                         style={{ backgroundColor: option.id }}
                         onClick={() => handleSelectOption(CUSTOM_OPTION.COLOR, option.id)}
@@ -107,10 +108,7 @@ export function ColorPanel() {
                 component: (
                     <div
                         className={colorVariants({
-                            selected:
-                                colorSelectedOption !== null
-                                    ? colorSelectedOption.id === option.id
-                                    : false,
+                            selected: colorSelectedOption?.id === option.id || false,
                         })}
                         style={{ backgroundColor: option.id }}
                         onClick={() => handleSelectOption(CUSTOM_OPTION.COLOR, option.id)}
@@ -145,46 +143,22 @@ export function StickerPanel() {
 
     const stickerLimited = stickerOptions
         .filter((option) => option.type === OPTION_TYPE.LIMITED)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            stickerSelectedOption !== null
-                                ? stickerSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() =>
-                            handleSelectOption(CUSTOM_OPTION.STICKER, option.id)
-                        }
-                    />
-                ),
-            };
-        });
+        .map((option) =>
+            getCustomOptionImageItem({
+                optionId: option.id,
+                isSelected: stickerSelectedOption?.id === option.id || false,
+                handleClickOption: () => handleSelectOption(CUSTOM_OPTION.STICKER, option.id),
+            })
+        );
     const stickerBasic = stickerOptions
         .filter((option) => option.type === OPTION_TYPE.BASIC)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            stickerSelectedOption !== null
-                                ? stickerSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() =>
-                            handleSelectOption(CUSTOM_OPTION.STICKER, option.id)
-                        }
-                    />
-                ),
-            };
-        });
+        .map((option) =>
+            getCustomOptionImageItem({
+                optionId: option.id,
+                isSelected: stickerSelectedOption?.id === option.id || false,
+                handleClickOption: () => handleSelectOption(CUSTOM_OPTION.STICKER, option.id),
+            })
+        );
 
     return (
         <SharedPanel
