@@ -31,7 +31,7 @@ const casperCardContainerVariants = cva(`relative`, {
 });
 
 const casperNameVariants = cva(
-    `absolute flex justify-center items-center bottom-0 w-[100%] bg-n-white text-n-black`,
+    `absolute flex justify-center items-center bottom-0 w-full bg-n-white text-n-black`,
     {
         variants: {
             size: {

@@ -31,7 +31,7 @@ const casperCardContainerVariants = cva(`relative`, {
 });
 
 const casperLogoVariants = cva(
-    `absolute flex justify-center items-center gap-300 bottom-0 w-[100%] bg-n-white text-n-black`,
+    `absolute flex justify-center items-center gap-300 bottom-0 w-full bg-n-white text-n-black`,
     {
         variants: {
             size: {
@@ -168,7 +168,7 @@ export default function CasperCardBack({
 
                 <div className={casperLogoVariants({ size })} style={{ height: BOTTOM_BAR_HEIGHT }}>
                     <HyundaiLogo fill="#003468" width={INNER_STYLE[size].LOGO_SIZE} height={24} />
-                    <div className="border-l border-n-neutral-500 h-[12px]" />
+                    <div className="border-l border-n-neutral-500 h-3" />
                     <p>CASPER Electric</p>
                 </div>
             </div>
