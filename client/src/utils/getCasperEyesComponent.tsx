@@ -27,63 +27,40 @@ import VacantRight from "/public/assets/casper-custom/eyes/vacant-right.svg?reac
 type EyesOptionType = (typeof EYES_OPTION)[keyof typeof EYES_OPTION];
 type EyesDirectionOptionType = (typeof POSITION_OPTION)[keyof typeof POSITION_OPTION];
 
+const EYES_COMPONENT_MAP: Record<
+    string,
+    React.ComponentType<React.SVGProps<SVGSVGElement>> | null
+> = {
+    "15inch-alloy-center": Alloy15Center,
+    "15inch-alloy-left": Alloy15Left,
+    "15inch-alloy-right": Alloy15Right,
+    "17inch-alloy-center": Alloy17Center,
+    "17inch-alloy-left": Alloy17Left,
+    "17inch-alloy-right": Alloy17Right,
+    "cute-center": CuteCenter,
+    "cute-left": CuteLeft,
+    "cute-right": CuteRight,
+    "electric-center": ElectricCenter,
+    "electric-left": ElectricLeft,
+    "electric-right": ElectricRight,
+    "heart-center": HeartCenter,
+    "heart-left": HeartLeft,
+    "heart-right": HeartRight,
+    "pixel-center": PixelCenter,
+    "pixel-left": PixelLeft,
+    "pixel-right": PixelRight,
+    "smile-center": SmileCenter,
+    "smile-left": SmileLeft,
+    "smile-right": SmileRight,
+    "vacant-center": VacantCenter,
+    "vacant-left": VacantLeft,
+    "vacant-right": VacantRight,
+};
+
 export function getCasperEyesComponent(
     eyesOption: EyesOptionType,
     eyesDirectionOption: EyesDirectionOptionType
 ): React.ComponentType<React.SVGProps<SVGSVGElement>> | null {
     const componentKey = `${eyesOption}-${eyesDirectionOption}`;
-
-    switch (componentKey) {
-        case "15inch-alloy-center":
-            return Alloy15Center;
-        case "15inch-alloy-left":
-            return Alloy15Left;
-        case "15inch-alloy-right":
-            return Alloy15Right;
-        case "17inch-alloy-center":
-            return Alloy17Center;
-        case "17inch-alloy-left":
-            return Alloy17Left;
-        case "17inch-alloy-right":
-            return Alloy17Right;
-        case "cute-center":
-            return CuteCenter;
-        case "cute-left":
-            return CuteLeft;
-        case "cute-right":
-            return CuteRight;
-        case "electric-center":
-            return ElectricCenter;
-        case "electric-left":
-            return ElectricLeft;
-        case "electric-right":
-            return ElectricRight;
-        case "heart-center":
-            return HeartCenter;
-        case "heart-left":
-            return HeartLeft;
-        case "heart-right":
-            return HeartRight;
-        case "pixel-center":
-            return PixelCenter;
-        case "pixel-left":
-            return PixelLeft;
-        case "pixel-right":
-            return PixelRight;
-
-        case "smile-center":
-            return SmileCenter;
-        case "smile-left":
-            return SmileLeft;
-        case "smile-right":
-            return SmileRight;
-        case "vacant-center":
-            return VacantCenter;
-        case "vacant-left":
-            return VacantLeft;
-        case "vacant-right":
-            return VacantRight;
-        default:
-            return null;
-    }
+    return EYES_COMPONENT_MAP[componentKey];
 }
