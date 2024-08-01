@@ -9,17 +9,19 @@ import {
     COLOR_BACKGROUND_MAP,
     CUSTOM_OPTION,
 } from "@/constants/CasperCustom/casper";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
 import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/casper-custom/face.svg?react";
 
-interface CasperCardFrontProps {
+interface CasperCardFrontUIProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
     optionDescription?: string;
     casperName?: string;
     hasRandomButton?: boolean;
+    selectedCasperIdx: SelectedCasperIdxType;
+    handleShuffleCasper?: () => void;
 }
 
 const casperCardContainerVariants = cva(`relative`, {
@@ -43,24 +45,27 @@ const casperNameVariants = cva(
     }
 );
 
-export default function CasperCardFront({
+export default function CasperCardFrontUI({
     size = CASPER_SIZE_OPTION.LG,
     optionDescription,
     casperName,
     hasRandomButton = true,
-}: CasperCardFrontProps) {
-    const { selectedCasperIdx, handleShuffleCasper } = useCasperCustomContext();
+    selectedCasperIdx,
+    handleShuffleCasper,
+}: CasperCardFrontUIProps) {
+    const {
+        [CUSTOM_OPTION.EYES]: selectedEyesIdx,
+        [CUSTOM_OPTION.EYES_DIRECTION]: selectedEyesDirectionIdx,
+        [CUSTOM_OPTION.MOUTH]: selectedMouthIdx,
+        [CUSTOM_OPTION.COLOR]: selectedColorIdx,
+        [CUSTOM_OPTION.STICKER]: selectedStickerIdx,
+    } = selectedCasperIdx;
 
-    const selectedColor =
-        CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedCasperIdx[CUSTOM_OPTION.COLOR]];
-    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedCasperIdx[CUSTOM_OPTION.EYES]];
+    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedEyesIdx];
     const selectedEyesDirection =
-        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][
-            selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION]
-        ];
-    const selectedMouth =
-        CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
-    const selectedStickerIdx = selectedCasperIdx[CUSTOM_OPTION.STICKER];
+        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedEyesDirectionIdx];
+    const selectedMouth = CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedMouthIdx];
+    const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedColorIdx];
 
     const { CARD_WIDTH, CARD_HEIGHT } = CASPER_CARD_SIZE[size];
     const {
@@ -88,7 +93,7 @@ export default function CasperCardFront({
             style={{
                 width: CARD_WIDTH,
                 height: CARD_HEIGHT,
-                backgroundColor: COLOR_BACKGROUND_MAP[selectedCasperIdx[CUSTOM_OPTION.COLOR]],
+                backgroundColor: COLOR_BACKGROUND_MAP[selectedColorIdx],
             }}
         >
             <div

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
-import CasperCardBack from "./CasperCardBack";
-import CasperCardFront from "./CasperCardFront";
+import MyCasperCardBack from "./MyCasperCardBack";
+import MyCasperCardFront from "./MyCasperCardFront";
 
 interface CasperCustomFinishingProps {
     navigateNextStep: () => void;
@@ -19,8 +19,8 @@ export default function CasperCustomFinishing({ navigateNextStep }: CasperCustom
 
     return (
         <div className="flex">
-            <CasperCardFront casperName={casperName} hasRandomButton={false} />
-            <CasperCardBack casperName={casperName} expectations={expectations} />
+            <MyCasperCardFront casperName={casperName} hasRandomButton={false} />
+            <MyCasperCardBack casperName={casperName} expectations={expectations} />
         </div>
     );
 }

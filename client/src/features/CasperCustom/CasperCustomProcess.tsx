@@ -2,7 +2,7 @@ import { useState } from "react";
 import CTAButton from "@/components/CTAButton";
 import ListStep from "@/components/ListStep";
 import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
-import CasperCardFront from "@/features/CasperCustom/CasperCardFront";
+import MyCasperCardFront from "@/features/CasperCustom/MyCasperCardFront";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import { getCasperOptionDescription } from "@/utils/getCasperOptionDescription";
 
@@ -39,7 +39,7 @@ export default function CasperCustomProcess({ handleClickNextStep }: CasperCusto
     return (
         <>
             <div className="flex items-end gap-1000">
-                <CasperCardFront optionDescription={optionDescription} />
+                <MyCasperCardFront optionDescription={optionDescription} />
 
                 <div className="flex flex-col gap-400 mt-[42px]">
                     <ListStep

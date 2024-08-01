@@ -5,7 +5,7 @@ import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import { saveDomImage } from "@/utils/saveDomImage";
 import Battery from "./Battery";
-import CasperCardFront from "./CasperCardFront";
+import MyCasperCardFront from "./MyCasperCardFront";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 interface CasperCustomFinishProps {
@@ -42,7 +42,7 @@ export default function CasperCustomFinish({ handleResetStep }: CasperCustomFini
             <div className="flex items-center gap-[107px]">
                 <div>
                     <div ref={casperCustomRef}>
-                        <CasperCardFront casperName={casperName} hasRandomButton={false} />
+                        <MyCasperCardFront casperName={casperName} hasRandomButton={false} />
                     </div>
 
                     <div className="flex gap-500 h-body-1-bold text-n-white mt-[30px]">

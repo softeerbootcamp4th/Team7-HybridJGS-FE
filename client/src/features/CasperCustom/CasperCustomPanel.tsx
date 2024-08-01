@@ -135,9 +135,10 @@ export function StickerPanel() {
         stickerSelectedIdx !== null ? stickerOptions[stickerSelectedIdx] : null;
 
     useEffect(() => {
-        if (stickerOptions.length === 0) {
+        if (stickerOptions.length === 0 || stickerSelectedOption !== null) {
             return;
         }
+
         handleSelectOption(CUSTOM_OPTION.STICKER, stickerOptions[0].id);
     }, []);
 

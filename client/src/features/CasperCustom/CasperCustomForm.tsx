@@ -1,7 +1,7 @@
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
-import CasperCardFront from "./CasperCardFront";
+import MyCasperCardFront from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
     handleSubmitCustomCasper: () => void;
@@ -15,7 +15,7 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
     return (
         <>
             <div className="flex items-center mt-[68px] gap-1000">
-                <CasperCardFront hasRandomButton={false} />
+                <MyCasperCardFront hasRandomButton={false} />
                 <div>
                     <TextField
                         label="캐스퍼 일렉트릭 봇의 이름을 지어주세요!"
