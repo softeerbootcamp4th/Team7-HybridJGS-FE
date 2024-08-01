@@ -2,14 +2,10 @@ import { Dispatch, ReactNode, createContext, useState } from "react";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/CasperCustom/casper";
 import { getRandomInt } from "@/utils/getRandomInt";
 
-export type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
-export type SelectedCasperIdxType = {
-    [CUSTOM_OPTION.EYES]: number;
-    [CUSTOM_OPTION.EYES_DIRECTION]: number;
-    [CUSTOM_OPTION.MOUTH]: number;
-    [CUSTOM_OPTION.COLOR]: number;
-    [CUSTOM_OPTION.STICKER]: number | null;
-};
+type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
+type CasperFaceKeys = Exclude<CustomOptionType, typeof CUSTOM_OPTION.STICKER>;
+type CasperFaceType = Record<CasperFaceKeys, number>;
+type SelectedCasperIdxType = CasperFaceType & Record<typeof CUSTOM_OPTION.STICKER, number | null>;
 
 export interface CasperCustomContextType {
     selectedCasperIdx: SelectedCasperIdxType;
@@ -48,13 +44,12 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
     const handleShuffleCasper = () => {
         setSelectedCasperIdx({
             ...selectedCasperIdx,
-            [CUSTOM_OPTION.EYES]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
+            [CUSTOM_OPTION.EYES]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
             [CUSTOM_OPTION.EYES_DIRECTION]: getRandomInt(
-                0,
                 OPTION_MAX_COUNT[CUSTOM_OPTION.EYES_DIRECTION]
             ),
-            [CUSTOM_OPTION.MOUTH]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
-            [CUSTOM_OPTION.COLOR]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
+            [CUSTOM_OPTION.MOUTH]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
+            [CUSTOM_OPTION.COLOR]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
         });
     };
 

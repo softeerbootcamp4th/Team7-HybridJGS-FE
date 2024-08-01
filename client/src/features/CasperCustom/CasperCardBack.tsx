@@ -1,5 +1,6 @@
 import { cva } from "class-variance-authority";
 import {
+    CASPER_CARD_SIZE,
     CASPER_OPTION,
     CASPER_SIZE_OPTION,
     COLOR_BACKGROUND_MAP,
@@ -30,7 +31,7 @@ const casperCardContainerVariants = cva(`relative`, {
 });
 
 const casperLogoVariants = cva(
-    `absolute flex justify-center items-center gap-300 bottom-0 w-[100%] bg-n-white text-n-black`,
+    `absolute flex justify-center items-center gap-300 bottom-0 w-full bg-n-white text-n-black`,
     {
         variants: {
             size: {
@@ -75,16 +76,9 @@ export default function CasperCardBack({
     const selectedMouth =
         CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
 
-    const {
-        CARD_WIDTH,
-        CARD_HEIGHT,
-        CASPER_WIDTH,
-        CASPER_HEIGHT,
-        EYES_WIDTH,
-        EYES_HEIGHT,
-        EYES_TOP,
-        BOTTOM_BAR_HEIGHT,
-    } = MINI_CASPER_SIZE[size];
+    const { CARD_WIDTH, CARD_HEIGHT } = CASPER_CARD_SIZE[size];
+    const { CASPER_WIDTH, CASPER_HEIGHT, EYES_WIDTH, EYES_HEIGHT, EYES_TOP, BOTTOM_BAR_HEIGHT } =
+        MINI_CASPER_SIZE[size];
     const { WIDTH: MOUTH_WIDTH, TOP: MOUTH_TOP } = MINI_CASPER_MOUTH_SIZE[size][selectedMouth.id];
 
     const CasperEyesSvgComponent = getCasperEyesComponent(
@@ -174,7 +168,7 @@ export default function CasperCardBack({
 
                 <div className={casperLogoVariants({ size })} style={{ height: BOTTOM_BAR_HEIGHT }}>
                     <HyundaiLogo fill="#003468" width={INNER_STYLE[size].LOGO_SIZE} height={24} />
-                    <div className="border-l border-n-neutral-500 h-[12px]" />
+                    <div className="border-l border-n-neutral-500 h-3" />
                     <p>CASPER Electric</p>
                 </div>
             </div>

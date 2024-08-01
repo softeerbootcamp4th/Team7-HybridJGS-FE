@@ -31,7 +31,7 @@ export default function SharedPanel({ limitedOptions, basicOptions }: SharedPane
                         </ul>
                     </div>
 
-                    <div className="mt-[48px]" />
+                    <div className="mt-12" />
                 </>
             )}
 

@@ -1,4 +1,3 @@
-import { cva } from "class-variance-authority";
 import Category from "@/components/Category";
 import {
     CASPER_OPTION,
@@ -8,15 +7,7 @@ import {
 } from "@/constants/CasperCustom/casper";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
 import CasperCustomPanelLayout from "./CasperCustomPanelLayout";
-
-const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, {
-    variants: {
-        selected: {
-            true: "border-s-red",
-            false: "border-transparent",
-        },
-    },
-});
+import EyesOptionImageItem from "./EyesOptionImageItem";
 
 export default function EyesPanel() {
     const { selectedCasperIdx, handleSelectOption } = useCasperCustomContext();
@@ -50,18 +41,12 @@ export default function EyesPanel() {
                 <Category type="limited">CASPER Electric Limited</Category>
                 <ul className="flex gap-700">
                     {limitedEyes.map((eye) => (
-                        <li
+                        <EyesOptionImageItem
                             key={eye.id}
-                            className={selectableImageVariants({
-                                selected: selectedEyes.id === eye.id,
-                            })}
-                            onClick={() => handleClickEyes(eye.id)}
-                        >
-                            <img
-                                src={`/assets/casper-custom/preview/${eye.id}-center.png`}
-                                style={{ width: "148px", height: "48px" }}
-                            />
-                        </li>
+                            isSelected={selectedEyes.id === eye.id}
+                            handleClickOption={() => handleClickEyes(eye.id)}
+                            previewUrl={`${eye.id}-center.png`}
+                        />
                     ))}
                 </ul>
             </div>
@@ -72,18 +57,12 @@ export default function EyesPanel() {
                 <Category type="basic">Basic</Category>
                 <ul className="flex gap-700">
                     {basicEyes.map((eye) => (
-                        <li
+                        <EyesOptionImageItem
                             key={eye.id}
-                            className={selectableImageVariants({
-                                selected: selectedEyes.id === eye.id,
-                            })}
-                            onClick={() => handleClickEyes(eye.id)}
-                        >
-                            <img
-                                src={`/assets/casper-custom/preview/${eye.id}-center.png`}
-                                style={{ width: "148px", height: "48px" }}
-                            />
-                        </li>
+                            isSelected={selectedEyes.id === eye.id}
+                            handleClickOption={() => handleClickEyes(eye.id)}
+                            previewUrl={`${eye.id}-center.png`}
+                        />
                     ))}
                 </ul>
             </div>
@@ -93,24 +72,15 @@ export default function EyesPanel() {
             <div className="flex flex-col gap-700 mt-[30px]">
                 <p className="h-body-1-regular text-n-white">눈은 어느 쪽을 볼까요?</p>
                 <ul className="flex gap-700">
-                    {eyesDirectionArray.map((direction) => (
-                        <li
-                            key={direction}
-                            className={selectableImageVariants({
-                                selected: selectedEyesDirection.id === direction,
-                            })}
-                            onClick={() => handleClickEyesDirection(direction)}
-                        >
-                            {eyesOptions.length !== 0 ? (
-                                <img
-                                    src={`/assets/casper-custom/preview/${eyesOptions[0].id}-${direction}.png`}
-                                    style={{ width: "148px", height: "48px" }}
-                                />
-                            ) : (
-                                <></>
-                            )}
-                        </li>
-                    ))}
+                    {eyesOptions.length !== 0 &&
+                        eyesDirectionArray.map((direction) => (
+                            <EyesOptionImageItem
+                                key={direction}
+                                isSelected={selectedEyesDirection.id === direction}
+                                handleClickOption={() => handleClickEyesDirection(direction)}
+                                previewUrl={`${eyesOptions[0].id}-${direction}.png`}
+                            />
+                        ))}
                 </ul>
             </div>
         </CasperCustomPanelLayout>
