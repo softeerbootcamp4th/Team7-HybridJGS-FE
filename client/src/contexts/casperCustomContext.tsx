@@ -3,13 +3,9 @@ import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/Casp
 import { getRandomInt } from "@/utils/getRandomInt";
 
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
-type SelectedCasperIdxType = {
-    [CUSTOM_OPTION.EYES]: number;
-    [CUSTOM_OPTION.EYES_DIRECTION]: number;
-    [CUSTOM_OPTION.MOUTH]: number;
-    [CUSTOM_OPTION.COLOR]: number;
-    [CUSTOM_OPTION.STICKER]: number | null;
-};
+type CasperFaceKeys = Exclude<CustomOptionType, typeof CUSTOM_OPTION.STICKER>;
+type CasperFaceType = Record<CasperFaceKeys, number>;
+type SelectedCasperIdxType = CasperFaceType & Record<typeof CUSTOM_OPTION.STICKER, number | null>;
 
 export interface CasperCustomContextType {
     selectedCasperIdx: SelectedCasperIdxType;
