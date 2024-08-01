@@ -35,13 +35,12 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
     const handleShuffleCasper = () => {
         setSelectedCasperIdx({
             ...selectedCasperIdx,
-            [CUSTOM_OPTION.EYES]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
+            [CUSTOM_OPTION.EYES]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
             [CUSTOM_OPTION.EYES_DIRECTION]: getRandomInt(
-                0,
                 OPTION_MAX_COUNT[CUSTOM_OPTION.EYES_DIRECTION]
             ),
-            [CUSTOM_OPTION.MOUTH]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
-            [CUSTOM_OPTION.COLOR]: getRandomInt(0, OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
+            [CUSTOM_OPTION.MOUTH]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
+            [CUSTOM_OPTION.COLOR]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
         });
     };
 
