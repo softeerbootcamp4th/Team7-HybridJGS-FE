@@ -20,10 +20,21 @@ export default function BalanceGame() {
                     <p className="h-body-1-regular text-n-neutral-500">
                         밸런스 게임 주제 공개까지 남은 시간
                     </p>
-                    <div className="h-body-2-regular text-n-neutral-500 flex gap-[75px]">
-                        <p>Hours</p>
-                        <p>Minutes</p>
-                        <p>Seconds</p>
+                    <div className="flex items-end gap-6 font-['HyundaiSansTextOffice-Bold'] font-normal text-[100px] text-n-neutral-950">
+                        <span className="flex flex-col justify-center items-center gap-4 w-[116px]">
+                            <p className="h-body-2-regular text-n-neutral-500">Hours</p>
+                            <p className="leading-[100px]">04</p>
+                        </span>
+                        <p className="leading-[100px]">:</p>
+                        <span className="flex flex-col justify-center items-center gap-4 w-[116px]">
+                            <p className="h-body-2-regular text-n-neutral-500">Minutes</p>
+                            <p className="leading-[100px]">21</p>
+                        </span>
+                        <p className="leading-[100px]">:</p>
+                        <span className="flex flex-col justify-center items-center gap-4 w-[116px]">
+                            <p className="h-body-2-regular text-n-neutral-500">Seconds</p>
+                            <p className="leading-[100px]">32</p>
+                        </span>
                     </div>
                 </div>
             </div>
