@@ -27,10 +27,7 @@ export default function EyesOptionImageItem({
             })}
             onClick={handleClickOption}
         >
-            <img
-                src={`/assets/casper-custom/preview/${previewUrl}`}
-                style={{ width: "148px", height: "48px" }}
-            />
+            <img src={`/assets/casper-custom/preview/${previewUrl}`} className="w-[148px] h-12" />
         </li>
     );
 }
