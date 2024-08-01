@@ -1,4 +1,3 @@
-import { cva } from "class-variance-authority";
 import Category from "@/components/Category";
 import {
     CASPER_OPTION,
