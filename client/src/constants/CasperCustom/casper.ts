@@ -271,10 +271,19 @@ export const CASPER_SIZE_OPTION = {
     SM: "sm",
 };
 
-export const CASPER_SIZE = {
+export const CASPER_CARD_SIZE = {
     [CASPER_SIZE_OPTION.LG]: {
         CARD_WIDTH: 384,
         CARD_HEIGHT: 500,
+    },
+    [CASPER_SIZE_OPTION.SM]: {
+        CARD_WIDTH: 288,
+        CARD_HEIGHT: 375,
+    },
+};
+
+export const CASPER_SIZE = {
+    [CASPER_SIZE_OPTION.LG]: {
         CASPER_WIDTH: 260,
         CASPER_HEIGHT: 170,
         CASPER_TOP: 148,
@@ -284,8 +293,6 @@ export const CASPER_SIZE = {
         BOTTOM_BAR_HEIGHT: 53,
     },
     [CASPER_SIZE_OPTION.SM]: {
-        CARD_WIDTH: 288,
-        CARD_HEIGHT: 375,
         CASPER_WIDTH: 196,
         CASPER_HEIGHT: 128,
         CASPER_TOP: 112,
@@ -298,8 +305,6 @@ export const CASPER_SIZE = {
 
 export const MINI_CASPER_SIZE = {
     [CASPER_SIZE_OPTION.LG]: {
-        CARD_WIDTH: 384,
-        CARD_HEIGHT: 500,
         CASPER_WIDTH: 90,
         CASPER_HEIGHT: 60,
         EYES_WIDTH: 76,
@@ -308,8 +313,6 @@ export const MINI_CASPER_SIZE = {
         BOTTOM_BAR_HEIGHT: 53,
     },
     [CASPER_SIZE_OPTION.SM]: {
-        CARD_WIDTH: 288,
-        CARD_HEIGHT: 375,
         CASPER_WIDTH: 72,
         CASPER_HEIGHT: 48,
         EYES_WIDTH: 62,

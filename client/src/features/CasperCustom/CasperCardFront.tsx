@@ -1,5 +1,6 @@
 import { cva } from "class-variance-authority";
 import {
+    CASPER_CARD_SIZE,
     CASPER_MOUTH_SIZE,
     CASPER_OPTION,
     CASPER_SIZE,
@@ -59,6 +60,7 @@ export default function CasperCardFront({
         CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
     const selectedStickerIdx = selectedCasperIdx[CUSTOM_OPTION.STICKER];
 
+    const { CARD_WIDTH, CARD_HEIGHT } = CASPER_CARD_SIZE[size];
     const {
         CASPER_WIDTH,
         CASPER_HEIGHT,
@@ -66,8 +68,6 @@ export default function CasperCardFront({
         EYES_WIDTH,
         EYES_HEIGHT,
         EYES_TOP,
-        CARD_WIDTH,
-        CARD_HEIGHT,
         BOTTOM_BAR_HEIGHT,
     } = CASPER_SIZE[size];
     const { WIDTH: MOUTH_WIDTH, TOP: MOUTH_TOP } = CASPER_MOUTH_SIZE[size][selectedMouth.id];

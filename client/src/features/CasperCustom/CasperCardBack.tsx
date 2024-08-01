@@ -1,5 +1,6 @@
 import { cva } from "class-variance-authority";
 import {
+    CASPER_CARD_SIZE,
     CASPER_OPTION,
     CASPER_SIZE_OPTION,
     COLOR_BACKGROUND_MAP,
@@ -75,16 +76,9 @@ export default function CasperCardBack({
     const selectedMouth =
         CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
 
-    const {
-        CARD_WIDTH,
-        CARD_HEIGHT,
-        CASPER_WIDTH,
-        CASPER_HEIGHT,
-        EYES_WIDTH,
-        EYES_HEIGHT,
-        EYES_TOP,
-        BOTTOM_BAR_HEIGHT,
-    } = MINI_CASPER_SIZE[size];
+    const { CARD_WIDTH, CARD_HEIGHT } = CASPER_CARD_SIZE[size];
+    const { CASPER_WIDTH, CASPER_HEIGHT, EYES_WIDTH, EYES_HEIGHT, EYES_TOP, BOTTOM_BAR_HEIGHT } =
+        MINI_CASPER_SIZE[size];
     const { WIDTH: MOUTH_WIDTH, TOP: MOUTH_TOP } = MINI_CASPER_MOUTH_SIZE[size][selectedMouth.id];
 
     const CasperEyesSvgComponent = getCasperEyesComponent(
