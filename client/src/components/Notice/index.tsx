@@ -19,8 +19,8 @@ interface SectionProps {
 const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] }) => (
     <div className="flex flex-col !leading-8 h-heading-4-regular">
         <h4 className="h-heading-4-bold">{title}</h4>
-        {items.map((item, index) => (
-            <p key={index} className={indentedIndices.includes(index) ? "pl-8" : ""}>
+        {items.map((item, idx) => (
+            <p key={idx} className={indentedIndices.includes(idx) ? "pl-8" : ""}>
                 {`•ㅤ${item}`}
             </p>
         ))}

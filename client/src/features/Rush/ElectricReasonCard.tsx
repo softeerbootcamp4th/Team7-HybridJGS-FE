@@ -17,8 +17,8 @@ export default function ElectricReasonCard({ data }: ElectricReasonCardProps) {
             <span className="flex flex-col justify-between items-center gap-3">
                 <span className="h-heading-3-bold text-n-neutral-950">{data.title}</span>
                 <span className="h-body-2-regular text-nowrap flex flex-col justify-center items-center">
-                    {data.description.map((line, index) => (
-                        <p key={index}>{line}</p>
+                    {data.description.map((line, idx) => (
+                        <p key={idx}>{line}</p>
                     ))}
                 </span>
             </span>
