@@ -10,8 +10,8 @@ import {
     CUSTOM_OPTION,
 } from "@/constants/CasperCustom/casper";
 import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
-import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
-import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
+import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
+import { getCasperMouthComponent } from "@/utils/CasperCustom/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/casper-custom/face.svg?react";
 

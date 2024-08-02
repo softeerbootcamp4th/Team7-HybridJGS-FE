@@ -4,7 +4,7 @@ import ListStep from "@/components/ListStep";
 import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
 import MyCasperCardFront from "@/features/CasperCustom/MyCasperCardFront";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
-import { getCasperOptionDescription } from "@/utils/getCasperOptionDescription";
+import { getCasperOptionDescription } from "@/utils/CasperCustom/getCasperOptionDescription";
 
 interface CasperCustomProcessProps {
     handleClickNextStep: () => void;
