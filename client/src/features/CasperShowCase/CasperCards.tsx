@@ -1,8 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
-import CasperCardFrontUI from "../CasperCustom/CasperCardFrontUI";
 import TransitionCasperCards, { CasperCardType } from "./TransitionCasperCards";
 
 interface CasperCardsProps {
