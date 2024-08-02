@@ -54,7 +54,6 @@ export default function Lottery() {
             <NewColor />
             <SmileBadge />
             <ShortCut handleClickShortCutButton={handleClickShortCut} />
-
             <Notice />
             <Footer />
 
