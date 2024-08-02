@@ -34,17 +34,20 @@ const casperCustomReducer = (
             return { ...state, casperName: action.payload };
         case CASPER_ACTION.SET_EXPECTATIONS:
             return { ...state, expectations: action.payload };
-        case CASPER_ACTION.SELECT_OPTION:
-            const selectedIdx = CASPER_OPTION[action.option].findIndex(
-                (opt) => opt.id === action.id
-            );
+        case CASPER_ACTION.SELECT_OPTION: {
+            const { option, id } = action.payload;
+            const selectedIdx = CASPER_OPTION[option].findIndex((opt) => opt.id === id);
             if (selectedIdx !== -1) {
                 return {
                     ...state,
-                    selectedCasperIdx: { ...state.selectedCasperIdx, [action.option]: selectedIdx },
+                    selectedCasperIdx: {
+                        ...state.selectedCasperIdx,
+                        [option]: selectedIdx,
+                    },
                 };
             }
             return state;
+        }
         case CASPER_ACTION.SHUFFLE_CASPER:
             return {
                 ...state,
@@ -69,8 +72,8 @@ export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(casperCustomReducer, initialState);
 
     return (
-        <CasperCustomDispatchContext.Provider value={{ dispatch }}>
-            <CasperCustomStateContext.Provider value={{ ...state }}>
+        <CasperCustomDispatchContext.Provider value={dispatch}>
+            <CasperCustomStateContext.Provider value={state}>
                 {children}
             </CasperCustomStateContext.Provider>
         </CasperCustomDispatchContext.Provider>

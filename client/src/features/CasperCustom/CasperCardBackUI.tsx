@@ -8,7 +8,7 @@ import {
     MINI_CASPER_MOUTH_SIZE,
     MINI_CASPER_SIZE,
 } from "@/constants/CasperCustom/casper";
-import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
 import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/CasperCustom/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";

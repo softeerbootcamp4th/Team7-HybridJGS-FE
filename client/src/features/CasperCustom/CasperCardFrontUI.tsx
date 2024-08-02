@@ -9,7 +9,7 @@ import {
     COLOR_BACKGROUND_MAP,
     CUSTOM_OPTION,
 } from "@/constants/CasperCustom/casper";
-import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
 import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/CasperCustom/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";

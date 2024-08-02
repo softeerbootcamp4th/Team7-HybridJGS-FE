@@ -19,15 +19,16 @@ export const CASPER_ACTION = {
     SELECT_OPTION: "SELECT_OPTION",
     SHUFFLE_CASPER: "SHUFFLE_CASPER",
     RESET_CUSTOM: "RESET_CUSTOM",
-};
+} as const;
 
 export type CasperCustomAction =
     | { type: typeof CASPER_ACTION.SET_CASPER_NAME; payload: string }
     | { type: typeof CASPER_ACTION.SET_EXPECTATIONS; payload: string }
-    | { type: typeof CASPER_ACTION.SELECT_OPTION; option: CustomOptionType; id: string }
+    | {
+          type: typeof CASPER_ACTION.SELECT_OPTION;
+          payload: { option: CustomOptionType; id: string };
+      }
     | { type: typeof CASPER_ACTION.SHUFFLE_CASPER }
     | { type: typeof CASPER_ACTION.RESET_CUSTOM };
 
-export interface CasperCustomDispatchType {
-    dispatch: Dispatch<CasperCustomAction>;
-}
+export type CasperCustomDispatchType = Dispatch<CasperCustomAction>;

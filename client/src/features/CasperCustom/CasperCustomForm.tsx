@@ -11,7 +11,7 @@ interface CasperCustomFormProps {
 
 export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
     const { casperName, expectations } = useCasperCustomStateContext();
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const canSubmit = casperName.length !== 0;
 

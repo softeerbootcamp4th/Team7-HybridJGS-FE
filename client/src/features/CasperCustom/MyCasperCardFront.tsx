@@ -18,7 +18,7 @@ export default function MyCasperCardFront({
     hasRandomButton,
 }: MyCasperCardFrontProps) {
     const { selectedCasperIdx } = useCasperCustomStateContext();
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     return (
         <CasperCardFrontUI

@@ -61,7 +61,7 @@ export function EyesPanel() {
 
 export function MouthPanel() {
     const { selectedCasperIdx } = useCasperCustomStateContext();
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const mouthOptions = CASPER_OPTION[CUSTOM_OPTION.MOUTH];
     const mouthSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.MOUTH];
@@ -74,8 +74,7 @@ export function MouthPanel() {
         handleClickOption: (optionId) =>
             dispatch({
                 type: CASPER_ACTION.SELECT_OPTION,
-                option: CUSTOM_OPTION.MOUTH,
-                id: optionId,
+                payload: { option: CUSTOM_OPTION.MOUTH, id: optionId },
             }),
     });
     const mouthBasic = getFilteredOptions({
@@ -85,8 +84,7 @@ export function MouthPanel() {
         handleClickOption: (optionId) =>
             dispatch({
                 type: CASPER_ACTION.SELECT_OPTION,
-                option: CUSTOM_OPTION.MOUTH,
-                id: optionId,
+                payload: { option: CUSTOM_OPTION.MOUTH, id: optionId },
             }),
     });
 
@@ -109,7 +107,7 @@ const colorVariants = cva(`rounded-1000 border-[2px] w-[72px] h-[72px] cursor-po
 });
 export function ColorPanel() {
     const { selectedCasperIdx } = useCasperCustomStateContext();
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const colorOptions = CASPER_OPTION[CUSTOM_OPTION.COLOR];
     const colorSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.COLOR];
@@ -129,8 +127,7 @@ export function ColorPanel() {
                         onClick={() =>
                             dispatch({
                                 type: CASPER_ACTION.SELECT_OPTION,
-                                option: CUSTOM_OPTION.COLOR,
-                                id: option.id,
+                                payload: { option: CUSTOM_OPTION.COLOR, id: option.id },
                             })
                         }
                     />
@@ -151,8 +148,7 @@ export function ColorPanel() {
                         onClick={() =>
                             dispatch({
                                 type: CASPER_ACTION.SELECT_OPTION,
-                                option: CUSTOM_OPTION.COLOR,
-                                id: option.id,
+                                payload: { option: CUSTOM_OPTION.COLOR, id: option.id },
                             })
                         }
                     />
@@ -171,7 +167,7 @@ export function ColorPanel() {
 
 export function StickerPanel() {
     const { selectedCasperIdx } = useCasperCustomStateContext();
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const stickerOptions = CASPER_OPTION[CUSTOM_OPTION.STICKER];
     const stickerSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.STICKER];
@@ -185,8 +181,7 @@ export function StickerPanel() {
 
         dispatch({
             type: CASPER_ACTION.SELECT_OPTION,
-            option: CUSTOM_OPTION.STICKER,
-            id: stickerOptions[0].id,
+            payload: { option: CUSTOM_OPTION.STICKER, id: stickerOptions[0].id },
         });
     }, []);
 
@@ -197,8 +192,7 @@ export function StickerPanel() {
         handleClickOption: (optionId) =>
             dispatch({
                 type: CASPER_ACTION.SELECT_OPTION,
-                option: CUSTOM_OPTION.STICKER,
-                id: optionId,
+                payload: { option: CUSTOM_OPTION.STICKER, id: optionId },
             }),
     });
     const stickerBasic = getFilteredOptions({
@@ -208,8 +202,7 @@ export function StickerPanel() {
         handleClickOption: (optionId) =>
             dispatch({
                 type: CASPER_ACTION.SELECT_OPTION,
-                option: CUSTOM_OPTION.STICKER,
-                id: optionId,
+                payload: { option: CUSTOM_OPTION.STICKER, id: optionId },
             }),
     });
 

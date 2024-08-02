@@ -13,7 +13,7 @@ import EyesOptionImageItem from "./EyesOptionImageItem";
 
 export default function EyesPanel() {
     const { selectedCasperIdx } = useCasperCustomStateContext();
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const eyesOptions = CASPER_OPTION[CUSTOM_OPTION.EYES];
     const eyesDirectionOptions = CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION];
@@ -31,11 +31,17 @@ export default function EyesPanel() {
     ];
 
     const handleClickEyes = (id: string) => {
-        dispatch({ type: CASPER_ACTION.SELECT_OPTION, option: CUSTOM_OPTION.EYES, id });
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.EYES, id },
+        });
     };
 
     const handleClickEyesDirection = (id: string) => {
-        dispatch({ type: CASPER_ACTION.SELECT_OPTION, option: CUSTOM_OPTION.EYES_DIRECTION, id });
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.EYES_DIRECTION, id },
+        });
     };
 
     return (

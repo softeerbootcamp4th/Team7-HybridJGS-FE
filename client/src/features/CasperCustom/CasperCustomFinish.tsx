@@ -15,7 +15,7 @@ interface CasperCustomFinishProps {
 }
 
 export default function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
-    const { dispatch } = useCasperCustomDispatchContext();
+    const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
