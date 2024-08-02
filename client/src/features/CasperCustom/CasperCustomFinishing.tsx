@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import MyCasperCardBack from "./MyCasperCardBack";
 import MyCasperCardFront from "./MyCasperCardFront";
 
@@ -8,7 +8,7 @@ interface CasperCustomFinishingProps {
 }
 
 export default function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishingProps) {
-    const { casperName, expectations } = useCasperCustomContext();
+    const { casperName, expectations } = useCasperCustomStateContext();
 
     useEffect(() => {
         // TODO: flip 애니메이션 후 next step으로 넘어가게 하기

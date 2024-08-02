@@ -1,85 +1,78 @@
-import { Dispatch, ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useReducer } from "react";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_MAX_COUNT } from "@/constants/CasperCustom/casper";
+import {
+    CASPER_ACTION,
+    CasperCustomAction,
+    CasperCustomDispatchType,
+    CasperCustomStateType,
+} from "@/types/casperCustom";
 import { getRandomInt } from "@/utils/getRandomInt";
 
-type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
-type CasperFaceKeys = Exclude<CustomOptionType, typeof CUSTOM_OPTION.STICKER>;
-type CasperFaceType = Record<CasperFaceKeys, number>;
-export type SelectedCasperIdxType = CasperFaceType &
-    Record<typeof CUSTOM_OPTION.STICKER, number | null>;
-
-export interface CasperCustomContextType {
-    selectedCasperIdx: SelectedCasperIdxType;
-    casperName: string;
-    setCasperName: Dispatch<string>;
-    expectations: string;
-    setExpectations: Dispatch<string>;
-    handleSelectOption: (option: CustomOptionType, id: string) => void;
-    handleShuffleCasper: () => void;
-    handleResetCustom: () => void;
-}
-
-export const CasperCustomContext = createContext<CasperCustomContextType | null>(null);
+export const CasperCustomStateContext = createContext<CasperCustomStateType | null>(null);
+export const CasperCustomDispatchContext = createContext<CasperCustomDispatchType | null>(null);
 
 const INITIAL_INDEX = 0;
 
-export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
-    const [selectedCasperIdx, setSelectedCasperIdx] = useState<SelectedCasperIdxType>({
+const initialState: CasperCustomStateType = {
+    selectedCasperIdx: {
         [CUSTOM_OPTION.EYES]: INITIAL_INDEX,
         [CUSTOM_OPTION.EYES_DIRECTION]: INITIAL_INDEX,
         [CUSTOM_OPTION.MOUTH]: INITIAL_INDEX,
         [CUSTOM_OPTION.COLOR]: INITIAL_INDEX,
         [CUSTOM_OPTION.STICKER]: null,
-    });
-    const [casperName, setCasperName] = useState<string>("");
-    const [expectations, setExpectations] = useState<string>("");
+    },
+    casperName: "",
+    expectations: "",
+};
 
-    const handleSelectOption = (option: CustomOptionType, id: string) => {
-        const selectedIdx = CASPER_OPTION[option].findIndex((opt) => opt.id === id);
+const casperCustomReducer = (
+    state: CasperCustomStateType,
+    action: CasperCustomAction
+): CasperCustomStateType => {
+    switch (action.type) {
+        case CASPER_ACTION.SET_CASPER_NAME:
+            return { ...state, casperName: action.payload };
+        case CASPER_ACTION.SET_EXPECTATIONS:
+            return { ...state, expectations: action.payload };
+        case CASPER_ACTION.SELECT_OPTION:
+            const selectedIdx = CASPER_OPTION[action.option].findIndex(
+                (opt) => opt.id === action.id
+            );
+            if (selectedIdx !== -1) {
+                return {
+                    ...state,
+                    selectedCasperIdx: { ...state.selectedCasperIdx, [action.option]: selectedIdx },
+                };
+            }
+            return state;
+        case CASPER_ACTION.SHUFFLE_CASPER:
+            return {
+                ...state,
+                selectedCasperIdx: {
+                    ...state.selectedCasperIdx,
+                    [CUSTOM_OPTION.EYES]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
+                    [CUSTOM_OPTION.EYES_DIRECTION]: getRandomInt(
+                        OPTION_MAX_COUNT[CUSTOM_OPTION.EYES_DIRECTION]
+                    ),
+                    [CUSTOM_OPTION.MOUTH]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
+                    [CUSTOM_OPTION.COLOR]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
+                },
+            };
+        case CASPER_ACTION.RESET_CUSTOM:
+            return initialState;
+        default:
+            return state;
+    }
+};
 
-        if (selectedIdx !== -1) {
-            setSelectedCasperIdx({ ...selectedCasperIdx, [option]: selectedIdx });
-        }
-    };
-
-    const handleShuffleCasper = () => {
-        setSelectedCasperIdx({
-            ...selectedCasperIdx,
-            [CUSTOM_OPTION.EYES]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.EYES]),
-            [CUSTOM_OPTION.EYES_DIRECTION]: getRandomInt(
-                OPTION_MAX_COUNT[CUSTOM_OPTION.EYES_DIRECTION]
-            ),
-            [CUSTOM_OPTION.MOUTH]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
-            [CUSTOM_OPTION.COLOR]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
-        });
-    };
-
-    const handleResetCustom = () => {
-        setSelectedCasperIdx({
-            [CUSTOM_OPTION.EYES]: INITIAL_INDEX,
-            [CUSTOM_OPTION.EYES_DIRECTION]: INITIAL_INDEX,
-            [CUSTOM_OPTION.MOUTH]: INITIAL_INDEX,
-            [CUSTOM_OPTION.COLOR]: INITIAL_INDEX,
-            [CUSTOM_OPTION.STICKER]: null,
-        });
-        setCasperName("");
-        setExpectations("");
-    };
+export const CasperCustomProvider = ({ children }: { children: ReactNode }) => {
+    const [state, dispatch] = useReducer(casperCustomReducer, initialState);
 
     return (
-        <CasperCustomContext.Provider
-            value={{
-                selectedCasperIdx,
-                casperName,
-                setCasperName,
-                expectations,
-                setExpectations,
-                handleSelectOption,
-                handleShuffleCasper,
-                handleResetCustom,
-            }}
-        >
-            {children}
-        </CasperCustomContext.Provider>
+        <CasperCustomDispatchContext.Provider value={{ dispatch }}>
+            <CasperCustomStateContext.Provider value={{ ...state }}>
+                {children}
+            </CasperCustomStateContext.Provider>
+        </CasperCustomDispatchContext.Provider>
     );
 };

@@ -3,7 +3,7 @@ import CTAButton from "@/components/CTAButton";
 import ListStep from "@/components/ListStep";
 import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
 import MyCasperCardFront from "@/features/CasperCustom/MyCasperCardFront";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { getCasperOptionDescription } from "@/utils/getCasperOptionDescription";
 
 interface CasperCustomProcessProps {
@@ -11,7 +11,7 @@ interface CasperCustomProcessProps {
 }
 
 export default function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcessProps) {
-    const { selectedCasperIdx } = useCasperCustomContext();
+    const { selectedCasperIdx } = useCasperCustomStateContext();
     const [selectedStepIdx, setSelectedStepIdx] = useState<number>(0);
 
     const optionDescription = getCasperOptionDescription({ selectedStepIdx, selectedCasperIdx });
