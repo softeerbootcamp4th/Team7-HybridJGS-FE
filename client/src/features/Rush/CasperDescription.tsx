@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 import CasperSubDescription from "@/features/Rush/CasperSubDescription.tsx";
 
 interface CasperDescriptionProps {
-    title: string | ReactNode;
-    subTitle: string | ReactNode;
+    title: ReactNode;
+    subTitle: ReactNode;
     description?: string[] | ReactNode;
 }
 

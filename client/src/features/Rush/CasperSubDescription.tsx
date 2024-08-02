@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface CasperDescriptionProps {
-    subTitle: string | ReactNode;
+    subTitle: ReactNode;
     description?: string[] | ReactNode;
 }
 
