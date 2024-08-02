@@ -10,7 +10,7 @@ interface CasperCardsProps {
 }
 
 export default function CasperCards({ cardList }: CasperCardsProps) {
-    const cardLength = 20;
+    const cardLength = cardList.length;
     const cardLengthHalf = Math.floor(cardLength / 2);
     const topCardList = cardList.slice(0, cardLengthHalf);
     const bottomCardList = cardList.slice(cardLengthHalf, cardLength);

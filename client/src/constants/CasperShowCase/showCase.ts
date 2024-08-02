@@ -2,7 +2,7 @@ export const CARD_TRANSITION = {
     x: {
         repeat: Infinity,
         repeatType: "loop",
-        duration: 10,
+        duration: 100,
         ease: "linear",
     },
 };
