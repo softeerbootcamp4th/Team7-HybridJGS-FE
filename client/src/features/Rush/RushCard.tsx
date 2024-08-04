@@ -27,9 +27,13 @@ const backgroundGradients = cva(
 
 export default function RushCard({ color, title, description }: RushCardProps) {
     return (
-        <div className={backgroundGradients({ color: color })}>
+        <div className={backgroundGradients({ color })}>
             <h2 className="h-heading-2-bold text-center">{title}</h2>
-            <p className="h-body-1-regular text-center">{description}</p>
+            {description.map((text, index) => (
+                <p key={index} className="h-body-1-regular text-center">
+                    {text}
+                </p>
+            ))}
         </div>
     );
 }
