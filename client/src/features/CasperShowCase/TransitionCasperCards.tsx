@@ -39,7 +39,7 @@ export default function TransitionCasperCards({
         });
     };
 
-    const stopLeftAnimation = () => {
+    const stopAnimation = () => {
         transitionControls.stop();
         if (containerRef.current) {
             const computedStyle = window.getComputedStyle(containerRef.current);
@@ -51,6 +51,19 @@ export default function TransitionCasperCards({
     useEffect(() => {
         startAnimation(x);
     }, [transitionControls, totalWidth]);
+
+    const renderCardItem = (cardItem: CasperCardType, id: string) => {
+        return (
+            <div key={id} onMouseEnter={stopAnimation} onMouseLeave={() => startAnimation(x)}>
+                <CasperCardFrontUI
+                    size="sm"
+                    casperName={cardItem.casperName}
+                    hasRandomButton={false}
+                    selectedCasperIdx={cardItem.selectedCasperIdx}
+                />
+            </div>
+        );
+    };
 
     return (
         <motion.div
@@ -64,34 +77,8 @@ export default function TransitionCasperCards({
                 }
             }}
         >
-            {cardList.map((card) => (
-                <div
-                    key={card.id}
-                    onMouseEnter={stopLeftAnimation}
-                    onMouseLeave={() => startAnimation(x)}
-                >
-                    <CasperCardFrontUI
-                        size="sm"
-                        casperName={card.casperName}
-                        hasRandomButton={false}
-                        selectedCasperIdx={card.selectedCasperIdx}
-                    />
-                </div>
-            ))}
-            {cardList.map((card) => (
-                <div
-                    key={`${card.id}-clone`}
-                    onMouseEnter={stopLeftAnimation}
-                    onMouseLeave={() => startAnimation(x)}
-                >
-                    <CasperCardFrontUI
-                        size="sm"
-                        casperName={card.casperName}
-                        hasRandomButton={false}
-                        selectedCasperIdx={card.selectedCasperIdx}
-                    />
-                </div>
-            ))}
+            {cardList.map((card) => renderCardItem(card, card.id))}
+            {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
         </motion.div>
     );
 }
