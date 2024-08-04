@@ -30,11 +30,10 @@ const backgroundGradients = cva(
     }
 );
 
-type CardType = (typeof CARD_TYPE)[keyof typeof CARD_TYPE];
-
-const currentDay = CARD_DAYS.DAY2;
-const cardType: CardType = CARD_TYPE.FIRST_CARD;
-const cardStatus = CARD_SELECTED_STATUS.FALSE;
+const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY5;
+const cardType: (typeof CARD_TYPE)[keyof typeof CARD_TYPE] = CARD_TYPE.FIRST_CARD;
+const cardStatus: (typeof CARD_SELECTED_STATUS)[keyof typeof CARD_SELECTED_STATUS] =
+    CARD_SELECTED_STATUS.FALSE;
 
 const cardTitle = CARD_TITLES[currentDay][cardType];
 const cardDescription = CARD_DESCRIPTION[currentDay][cardType][cardStatus];
