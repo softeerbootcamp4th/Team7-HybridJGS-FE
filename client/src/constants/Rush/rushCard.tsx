@@ -1,5 +1,10 @@
 import { ReactNode } from "react";
 
+export const CARD_TYPE = {
+    FIRST_CARD: "FIRST_CARD",
+    SECOND_CARD: "SECOND_CARD",
+} as const;
+
 export const CARD_COLOR = {
     BLUE: "blue",
     RED: "red",
@@ -22,7 +27,12 @@ export const CARD_DAYS = {
 } as const;
 
 // TODO: API 연동
-export const CARD_COLORS: { [key: number]: { FIRST_CARD: string; SECOND_CARD: string } } = {
+export const CARD_COLORS: {
+    [key in (typeof CARD_DAYS)[keyof typeof CARD_DAYS]]: {
+        FIRST_CARD: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
+        SECOND_CARD: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
+    };
+} = {
     [CARD_DAYS.DAY1]: { FIRST_CARD: CARD_COLOR.GREEN, SECOND_CARD: CARD_COLOR.BLUE },
     [CARD_DAYS.DAY2]: { FIRST_CARD: CARD_COLOR.YELLOW, SECOND_CARD: CARD_COLOR.RED },
     [CARD_DAYS.DAY3]: { FIRST_CARD: CARD_COLOR.BLUE, SECOND_CARD: CARD_COLOR.RED },
