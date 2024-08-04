@@ -62,8 +62,8 @@ export default function Tooltip({
         const leftPosition = getLeftPosition(tooltipPosition, triggerRect.width, tooltipRect.width);
 
         setPosition({
-            top: window.scrollY - tooltipRect.height - TOOLTIP_GAP,
-            left: window.scrollX + leftPosition,
+            top: triggerRef.current.scrollTop - tooltipRect.height - TOOLTIP_GAP,
+            left: triggerRef.current.scrollLeft + leftPosition,
         });
     }, [isVisible, tooltipPosition]);
 
