@@ -10,7 +10,7 @@ import RushCard from "@/features/Rush/RushCard.tsx";
 
 export default function RushCardComparison() {
     // TODO: 추후 API 연동
-    const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY2;
+    const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
     const firstCardType: (typeof CARD_TYPE)[keyof typeof CARD_TYPE] = CARD_TYPE.FIRST_CARD;
     const secondCardType: (typeof CARD_TYPE)[keyof typeof CARD_TYPE] = CARD_TYPE.SECOND_CARD;
     const cardStatus: (typeof CARD_SELECTED_STATUS)[keyof typeof CARD_SELECTED_STATUS] =
