@@ -2,10 +2,8 @@ import { cva } from "class-variance-authority";
 import Category from "@/components/Category";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.tsx";
 
-type CardColor = keyof typeof CARD_COLOR;
-
 interface RushCardDescriptionProps {
-    color: CardColor;
+    color: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
 }
 
 const backgroundGradients = cva(
