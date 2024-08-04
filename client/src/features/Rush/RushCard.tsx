@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { cva } from "class-variance-authority";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.tsx";
 
