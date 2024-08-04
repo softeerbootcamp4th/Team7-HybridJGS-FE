@@ -43,7 +43,7 @@ export default function TransitionCasperCards({
         transitionControls.stop();
         if (containerRef.current) {
             const computedStyle = window.getComputedStyle(containerRef.current);
-            const matrix = new WebKitCSSMatrix(computedStyle.transform);
+            const matrix = new DOMMatrix(computedStyle.transform);
             setX(matrix.m41);
         }
     };
