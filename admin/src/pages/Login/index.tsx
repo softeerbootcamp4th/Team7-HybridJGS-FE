@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "@/components/Button";
 import Header from "@/components/Header";
 import TabHeader from "@/components/TabHeader";
 
@@ -13,6 +14,14 @@ export default function Login() {
                 selectedIdx={selectedIdx}
                 handleClickTab={(idx) => setSelectedIdx(idx)}
             />
+            <Button type="lg">임시 저장</Button>
+            <Button type="sm">임시 저장</Button>
+            <Button type="lg" isValid={false}>
+                임시 저장
+            </Button>
+            <Button type="sm" isValid={false}>
+                임시 저장
+            </Button>
         </>
     );
 }
