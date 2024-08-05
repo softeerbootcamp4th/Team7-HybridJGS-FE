@@ -55,7 +55,7 @@ export default function Lottery() {
     };
 
     return (
-        <div className="overflow-x-hidden">
+        <div className="h-screen overflow-auto snap-y snap-mandatory">
             <Headline handleClickShortCutButton={handleClickShortCut} />
             <Intro />
             <HeadLamp />

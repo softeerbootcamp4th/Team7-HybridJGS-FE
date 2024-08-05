@@ -7,7 +7,7 @@ interface SectionProps extends PropsWithChildren {
 export default function Section({ children, className }: SectionProps) {
     return (
         <section
-            className={`h-screen relative flex flex-col items-center justify-center ${className}`}
+            className={`h-screen relative flex flex-col items-center justify-center snap-start ${className}`}
         >
             {children}
         </section>

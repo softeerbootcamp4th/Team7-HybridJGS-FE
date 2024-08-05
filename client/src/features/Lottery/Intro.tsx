@@ -1,6 +1,6 @@
 export default function Intro() {
     return (
-        <section className="h-screen relative flex flex-col">
+        <section className="h-screen relative flex flex-col snap-start">
             <div className="mt-[112px] flex flex-col items-center gap-400 text-n-neutral-950">
                 <p className="h-body-1-regular">CASPER Electric Design</p>
                 <h2 className="h-heading-2-bold text-center">

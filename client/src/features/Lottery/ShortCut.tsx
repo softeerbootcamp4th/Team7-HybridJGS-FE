@@ -6,7 +6,7 @@ interface ShortCutProps {
 
 export default function ShortCut({ handleClickShortCutButton }: ShortCutProps) {
     return (
-        <div className="h-[623px] bg-n-black flex flex-col justify-center items-center text-center">
+        <div className="h-[623px] bg-n-black flex flex-col justify-center items-center text-center snap-start">
             <img
                 alt="캐스퍼 아이콘"
                 src="/assets/common/casper.webp"

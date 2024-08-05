@@ -7,7 +7,7 @@ interface HeadlineProps {
 
 export default function Headline({ handleClickShortCutButton }: HeadlineProps) {
     return (
-        <section className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center">
+        <section className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center snap-start">
             <div className="absolute pointer-events-none">
                 <img
                     alt="캐스퍼 봇 아이콘"
