@@ -1,5 +1,5 @@
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import CasperCardBackUI from "./CasperCardBackUI";
 
 interface MyCasperCardBackProps {
@@ -13,7 +13,7 @@ export default function MyCasperCardBack({
     casperName,
     expectations,
 }: MyCasperCardBackProps) {
-    const { selectedCasperIdx } = useCasperCustomContext();
+    const { selectedCasperIdx } = useCasperCustomStateContext();
 
     return (
         <CasperCardBackUI
