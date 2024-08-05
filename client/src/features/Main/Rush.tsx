@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import Section from "@/features/Main/Section.tsx";
-import { SectionKey } from "@/types/scrollAnimation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 // TODO: API로 대체될 데이터
 export const rushEventData: RushEventProps[] = [

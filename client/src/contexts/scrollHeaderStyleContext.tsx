@@ -1,9 +1,14 @@
 import { ReactNode, RefObject, createContext, useEffect, useMemo, useRef, useState } from "react";
-import { SECTIONS, ScrollAnimationType, SectionKey, SectionRefs } from "@/types/scrollAnimation";
+import {
+    SECTIONS,
+    ScrollHeaderStyleType,
+    SectionKey,
+    SectionRefs,
+} from "@/types/scrollHeaderStyle.ts";
 
-export const ScrollAnimationContext = createContext<ScrollAnimationType | null>(null);
+export const ScrollHeaderStyleContext = createContext<ScrollHeaderStyleType | null>(null);
 
-export const ScrollAnimationProvider = ({ children }: { children: ReactNode }) => {
+export const ScrollHeaderStyleProvider = ({ children }: { children: ReactNode }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeSection, setActiveSection] = useState<SectionKey>(SECTIONS.HEADLINE as SectionKey);
 
@@ -78,6 +83,8 @@ export const ScrollAnimationProvider = ({ children }: { children: ReactNode }) =
     );
 
     return (
-        <ScrollAnimationContext.Provider value={value}>{children}</ScrollAnimationContext.Provider>
+        <ScrollHeaderStyleContext.Provider value={value}>
+            {children}
+        </ScrollHeaderStyleContext.Provider>
     );
 };

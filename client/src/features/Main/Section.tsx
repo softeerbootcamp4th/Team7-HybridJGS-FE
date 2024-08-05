@@ -1,6 +1,6 @@
 import { PropsWithChildren, forwardRef } from "react";
 import CTAButton from "@/components/CTAButton";
-import { SectionKey } from "@/types/scrollAnimation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 interface SectionProps extends PropsWithChildren {
     sectionId: SectionKey;

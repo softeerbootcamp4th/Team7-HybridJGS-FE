@@ -13,7 +13,7 @@ export type SectionRefs = {
     [key in SectionKey]: RefObject<HTMLDivElement>;
 };
 
-export interface ScrollAnimationType {
+export interface ScrollHeaderStyleType {
     containerRef: RefObject<HTMLDivElement>;
     sectionRefs: SectionRefs;
     scrollToRef: (sectionKey: SectionKey) => void;

@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
-import { SectionKey } from "@/types/scrollAnimation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 interface HeadlineProps {
     sectionId: SectionKey;

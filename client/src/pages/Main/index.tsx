@@ -4,13 +4,13 @@ import Headline from "@/features/Main/Headline.tsx";
 import LearnMore from "@/features/Main/LearnMore.tsx";
 import Lottery from "@/features/Main/Lottery.tsx";
 import Rush from "@/features/Main/Rush.tsx";
-import useScrollAnimationContext from "@/hooks/useScrollAnimationContext.ts";
+import useScrollHeaderStyleContext from "@/hooks/useScrollHeaderStyleContext.ts";
 import useScrollTop from "@/hooks/useScrollTop.tsx";
-import { SECTIONS, SectionKey } from "@/types/scrollAnimation.ts";
+import { SECTIONS, SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 export default function Main() {
     useScrollTop();
-    const { sectionRefs, containerRef } = useScrollAnimationContext();
+    const { sectionRefs, containerRef } = useScrollHeaderStyleContext();
 
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">

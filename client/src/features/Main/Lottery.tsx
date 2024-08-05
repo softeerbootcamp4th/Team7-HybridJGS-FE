@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import Section from "@/features/Main/Section.tsx";
-import { SectionKey } from "@/types/scrollAnimation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 interface LotteryProps {
