@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Header from "./components/Header";
+import Login from "./pages/Login";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Header />,
+        element: <Login />,
     },
 ]);
