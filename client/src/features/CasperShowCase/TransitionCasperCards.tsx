@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
-import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
 import CasperFlipCard from "../CasperCustom/CasperFlipCard";
 
 export interface CasperCardType {
