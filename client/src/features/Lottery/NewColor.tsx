@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { DISSOLVE } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -17,13 +19,13 @@ export default function NewColor() {
                 }
             />
 
-            <div className="mt-[86px]">
+            <motion.div className="mt-[86px]" {...DISSOLVE}>
                 <img
                     alt="캐스퍼 신규 컬러 목록"
                     src="/assets/lottery/casper-list.webp"
                     className="max-w-[1800px]"
                 />
-            </div>
+            </motion.div>
         </Section>
     );
 }

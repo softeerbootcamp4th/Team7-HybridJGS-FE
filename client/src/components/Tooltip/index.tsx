@@ -1,4 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { ASCEND } from "@/constants/animation.ts";
 
 type TooltipPositionType = "left" | "center" | "right";
 type TooltipAbsolutePositionType = { left: number; top: number };
@@ -88,17 +90,18 @@ export default function Tooltip({
         <div className={`${!isAbsolutePosition && "relative"}`} ref={triggerRef}>
             {children}
             {isVisible && (
-                <div
+                <motion.div
                     ref={tooltipRef}
                     className="absolute z-10 h-heading-4-bold bg-s-yellow text-n-neutral-950 rounded-200 py-400 px-500 whitespace-nowrap text-center"
                     style={contentStyle}
+                    {...ASCEND}
                 >
                     {content}
                     <div
                         className="absolute bottom-[-10px] translate-x-[-50%] w-0 h-0 border-x-[10.5px] border-x-transparent border-t-[12px] border-t-s-yellow border-solid"
                         style={arrowStyle}
                     ></div>
-                </div>
+                </motion.div>
             )}
         </div>
     );

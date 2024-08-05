@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { DISSOLVE } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -19,7 +21,7 @@ export default function CustomDesign() {
                     }
                 />
 
-                <div className="mt-[98px] flex gap-700">
+                <motion.div className="mt-[98px] flex gap-700" {...DISSOLVE}>
                     <img
                         alt="커스텀 디자인 첫번째 이미지"
                         src="/assets/lottery/custom-design-1.jpg"
@@ -30,7 +32,7 @@ export default function CustomDesign() {
                         src="/assets/lottery/custom-design-2.jpg"
                         className="w-[588px] object-cover rounded-300"
                     />
-                </div>
+                </motion.div>
             </div>
         </Section>
     );

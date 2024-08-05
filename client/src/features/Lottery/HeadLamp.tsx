@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
+import { DISSOLVE } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -24,7 +26,7 @@ export default function HeadLamp() {
                     }
                 />
 
-                <div className="mt-[98px] flex gap-700">
+                <motion.div className="mt-[98px] flex gap-700" {...DISSOLVE}>
                     <img
                         alt="헤드램프 첫번째 이미지"
                         src="/assets/lottery/head-lamp-1.jpg"
@@ -41,7 +43,7 @@ export default function HeadLamp() {
                             className="w-[510px] object-cover rounded-300"
                         />
                     </Tooltip>
-                </div>
+                </motion.div>
             </div>
         </Section>
     );

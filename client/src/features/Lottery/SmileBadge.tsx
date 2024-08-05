@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
+import { DISSOLVE } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -10,15 +12,17 @@ export default function SmileBadge() {
                 src="/assets/lottery/casper-back.jpg"
                 className="w-[648px] absolute left-0 top-[197px]"
             />
-            <img
+            <motion.img
                 alt="확대 아이콘"
                 src="/assets/lottery/scale-triangle.svg"
                 className="w-[490px] absolute left-[182px] top-[393px]"
+                {...DISSOLVE}
             />
-            <img
+            <motion.img
                 alt="캐스퍼 확대 이미지"
                 src="/assets/lottery/casper-badge.jpg"
                 className="absolute left-[668px] top-[393px] w-[792px] h-[460px] rounded-300"
+                {...DISSOLVE}
             />
             <div className="absolute left-[668px] top-[156px]">
                 <Description

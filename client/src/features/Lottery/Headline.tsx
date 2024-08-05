@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
+import { ASCEND } from "@/constants/animation.ts";
 
 interface HeadlineProps {
     handleClickShortCutButton: () => void;
@@ -15,7 +17,7 @@ export default function Headline({ handleClickShortCutButton }: HeadlineProps) {
                     className="max-w-[1475px]"
                 />
             </div>
-            <div className="flex flex-col items-center gap-400">
+            <motion.div className="flex flex-col items-center gap-400" {...ASCEND}>
                 <p className="h-body-1-regular text-n-white">Event 1. 추첨 이벤트</p>
                 <h2 className="h-heading-2-bold text-n-white text-center">
                     나만의 캐스퍼 일렉트릭 봇<br />
@@ -24,7 +26,7 @@ export default function Headline({ handleClickShortCutButton }: HeadlineProps) {
                 <h3 className="h-heading-3-regular text-n-neutral-300">
                     기대평을 작성하면 당첨 확률이 높아져요!
                 </h3>
-            </div>
+            </motion.div>
 
             <div className="mt-[49px]">
                 <CTAButton
