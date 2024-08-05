@@ -1,12 +1,15 @@
+import { motion } from "framer-motion";
+import { DISSOLVE } from "@/constants/animation.ts";
 import CasperSubDescription from "@/features/Rush/CasperSubDescription.tsx";
 
 export default function CasperSmartKey() {
     return (
         <section className="h-[800px] flex gap-10 justify-center items-center snap-start">
-            <img
+            <motion.img
                 alt="capser smart key"
                 src="/assets/rush/casper/smart-key.png"
                 className="w-[570px] h-[380px] object-cover rounded-300"
+                {...DISSOLVE}
             />
             <CasperSubDescription
                 subTitle="스마트 키를 사용할 수 있어요"

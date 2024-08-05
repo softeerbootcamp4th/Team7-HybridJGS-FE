@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { DISSOLVE } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
 
@@ -12,7 +14,7 @@ export default function CasperFar() {
                     "한 번만 충전해도 서울에서 인천까지 9번 운전할 수 있을 정도로, 수도권에 산다면 서울 출퇴근에 활용하기 좋아요.",
                 ]}
             />
-            <div className="flex gap-10">
+            <motion.div className="flex gap-10" {...DISSOLVE}>
                 <img
                     alt="capser far-1"
                     src="/assets/rush/casper/far-1.png"
@@ -23,7 +25,7 @@ export default function CasperFar() {
                     src="/assets/rush/casper/far-2.jpeg"
                     className="w-[516px] h-[380px] object-cover rounded-300"
                 />
-            </div>
+            </motion.div>
         </CasperSection>
     );
 }

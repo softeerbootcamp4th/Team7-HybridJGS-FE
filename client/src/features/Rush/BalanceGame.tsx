@@ -1,13 +1,20 @@
+import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
+import { ASCEND } from "@/constants/animation.ts";
 import Background from "@/features/Rush/Background.tsx";
 
 export default function BalanceGame() {
     return (
         <section className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start">
-            <p className="h-heading-2-bold pt-10">이제 곧 하단에 밸런스 게임 주제가 공개돼요!</p>
+            <motion.p className="h-heading-2-bold pt-10" {...ASCEND}>
+                이제 곧 하단에 밸런스 게임 주제가 공개돼요!
+            </motion.p>
             <Background>
-                <div className="flex flex-col gap-6 justify-center items-center w-[800px] h-[390px] bg-n-white rounded-[29px] relative z-20">
+                <motion.div
+                    className="flex flex-col gap-6 justify-center items-center w-[800px] h-[390px] bg-n-white rounded-[29px] relative z-20"
+                    {...ASCEND}
+                >
                     <p className="h-body-1-regular text-n-neutral-500">
                         밸런스 게임 주제 공개까지 남은 시간
                     </p>
@@ -27,12 +34,12 @@ export default function BalanceGame() {
                             <p className="leading-[100px]">32</p>
                         </span>
                     </div>
-                </div>
+                </motion.div>
             </Background>
             <div className="flex flex-col justify-center items-center gap-4 my-3">
-                <p className="h-body-2-regular text-n-neutral-500">
+                <motion.p className="h-body-2-regular text-n-neutral-500" {...ASCEND}>
                     우리 편에 투표할 친구를 불러오세요!
-                </p>
+                </motion.p>
                 <CTAButton label="이벤트 링크 공유" />
             </div>
             <Scroll type="dark">

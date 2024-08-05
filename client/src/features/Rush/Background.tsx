@@ -1,8 +1,10 @@
 import { PropsWithChildren } from "react";
+import { motion } from "framer-motion";
+import { ASCEND } from "@/constants/animation.ts";
 
 export default function Background({ children }: PropsWithChildren) {
     return (
-        <div className="relative z-10">
+        <motion.div className="relative z-10" {...ASCEND}>
             <div className="absolute top-0 left-[-38px] w-[880px] h-[390px] rounded-[29px] overflow-hidden bg-n-white/[.16] -rotate-[4deg] z-20">
                 <div className="w-1/2 h-full float-left bg-gradient-green blur-[40px]" />
                 <div className="w-1/2 h-full float-right bg-gradient-red blur-[40px]" />
@@ -14,6 +16,6 @@ export default function Background({ children }: PropsWithChildren) {
                 <div className="w-1/2 h-full float-left bg-gradient-green blur-[40px]" />
             </div>
             {children}
-        </div>
+        </motion.div>
     );
 }
