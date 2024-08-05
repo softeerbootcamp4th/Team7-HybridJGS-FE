@@ -1,6 +1,6 @@
 import { CASPER_OPTION, CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
-import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
 
 interface GetCasperOptionDescriptionProps {
     selectedStepIdx: number;

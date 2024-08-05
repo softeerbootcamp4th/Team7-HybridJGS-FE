@@ -1,6 +1,8 @@
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import { CASPER_ACTION } from "@/types/casperCustom";
 import MyCasperCardFront from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
@@ -8,9 +10,18 @@ interface CasperCustomFormProps {
 }
 
 export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
-    const { casperName, setCasperName, expectations, setExpectations } = useCasperCustomContext();
+    const { casperName, expectations } = useCasperCustomStateContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const canSubmit = casperName.length !== 0;
+
+    const handleSetCasperName = (value: string) => {
+        dispatch({ type: CASPER_ACTION.SET_CASPER_NAME, payload: value });
+    };
+
+    const handleSetExpectations = (value: string) => {
+        dispatch({ type: CASPER_ACTION.SET_EXPECTATIONS, payload: value });
+    };
 
     return (
         <>
@@ -24,7 +35,7 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
                         placeholder="김캐스퍼"
                         limit={10}
                         value={casperName}
-                        handleValueChange={(val) => setCasperName(val)}
+                        handleValueChange={handleSetCasperName}
                     />
                     <div className="mt-[42px]" />
                     <TextField
@@ -34,7 +45,7 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
                         placeholder="캐스퍼와 함께 혼자 차박하고 싶어요!"
                         limit={60}
                         value={expectations}
-                        handleValueChange={(val) => setExpectations(val)}
+                        handleValueChange={handleSetExpectations}
                     />
                 </div>
             </div>

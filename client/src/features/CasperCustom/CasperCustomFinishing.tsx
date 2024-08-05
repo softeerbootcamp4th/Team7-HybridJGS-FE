@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
 import CasperFlipCard from "./CasperFlipCard";
 
@@ -10,7 +10,7 @@ interface CasperCustomFinishingProps {
 }
 
 export default function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishingProps) {
-    const { casperName, expectations, selectedCasperIdx } = useCasperCustomContext();
+    const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
     const card: Omit<CasperCardType, "id"> = {

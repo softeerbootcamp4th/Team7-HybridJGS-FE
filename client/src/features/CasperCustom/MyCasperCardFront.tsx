@@ -1,5 +1,7 @@
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import { CASPER_ACTION } from "@/types/casperCustom";
 import CasperCardFrontUI from "./CasperCardFrontUI";
 
 interface MyCasperCardFrontProps {
@@ -15,7 +17,8 @@ export default function MyCasperCardFront({
     casperName,
     hasRandomButton,
 }: MyCasperCardFrontProps) {
-    const { selectedCasperIdx, handleShuffleCasper } = useCasperCustomContext();
+    const { selectedCasperIdx } = useCasperCustomStateContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     return (
         <CasperCardFrontUI
@@ -24,7 +27,7 @@ export default function MyCasperCardFront({
             casperName={casperName}
             hasRandomButton={hasRandomButton}
             selectedCasperIdx={selectedCasperIdx}
-            handleShuffleCasper={handleShuffleCasper}
+            handleShuffleCasper={() => dispatch({ type: CASPER_ACTION.SHUFFLE_CASPER })}
         />
     );
 }

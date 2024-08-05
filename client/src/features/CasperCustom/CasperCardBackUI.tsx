@@ -8,9 +8,9 @@ import {
     MINI_CASPER_MOUTH_SIZE,
     MINI_CASPER_SIZE,
 } from "@/constants/CasperCustom/casper";
-import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
-import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
-import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
+import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
+import { getCasperMouthComponent } from "@/utils/CasperCustom/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/casper-custom/face.svg?react";
 import HyundaiLogo from "/public/assets/hyundai-logo.svg?react";

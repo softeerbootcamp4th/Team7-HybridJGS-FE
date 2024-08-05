@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
+import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import { CASPER_ACTION } from "@/types/casperCustom";
 import { saveDomImage } from "@/utils/saveDomImage";
 import Battery from "./Battery";
 import MyCasperCardFront from "./MyCasperCardFront";
@@ -13,7 +15,8 @@ interface CasperCustomFinishProps {
 }
 
 export default function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
-    const { casperName, handleResetCustom } = useCasperCustomContext();
+    const dispatch = useCasperCustomDispatchContext();
+    const { casperName } = useCasperCustomStateContext();
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,7 @@ export default function CasperCustomFinish({ handleResetStep }: CasperCustomFini
 
     const handleReset = () => {
         handleResetStep();
-        handleResetCustom();
+        dispatch({ type: CASPER_ACTION.RESET_CUSTOM });
     };
 
     return (

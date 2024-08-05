@@ -10,22 +10,33 @@ import PixelDesign from "@/features/Lottery/PixelDesign";
 import ShortCut from "@/features/Lottery/ShortCut";
 import SmileBadge from "@/features/Lottery/SmileBadge";
 import WheelDesign from "@/features/Lottery/WheelDesign";
+import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
+import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
+import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
 
 export default function Lottery() {
     useScrollTop();
 
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const { phoneNumber } = usePhoneNumberStateContext();
+    const dispatch = usePhoneNumberDispatchContext();
+
+    const [phoneNumberState, setPhoneNumberState] = useState(phoneNumber);
 
     const handlePhoneNumberChange = (val: string) => {
-        setPhoneNumber(val);
+        setPhoneNumberState(val);
+    };
+
+    const handlePhoneNumberConfirm = (val: string) => {
+        dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
     };
 
     const { handleOpenPopup, PopupComponent } = usePopup({
-        phoneNumber,
+        phoneNumber: phoneNumberState,
         handlePhoneNumberChange,
+        handlePhoneNumberConfirm,
         confirmUrl: `/lottery/custom`,
     });
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
