@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { AdminAPI } from "./apis/adminAPI";
 import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import CasperCustom from "./pages/CasperCustom";
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Lottery />,
+                        loader: AdminAPI.getLottery,
                     },
                     {
                         path: "custom",

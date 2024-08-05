@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { useLoaderData } from "react-router-dom";
 import { AuthAPI } from "@/apis/authAPI";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
@@ -18,7 +19,9 @@ import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
+import { GetLotteryResponse } from "@/types/adminApi";
 import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
+import { getMsTime } from "@/utils/getMsTime";
 
 export default function Lottery() {
     useScrollTop();
@@ -29,6 +32,8 @@ export default function Lottery() {
     const dispatch = usePhoneNumberDispatchContext();
 
     const [phoneNumberState, setPhoneNumberState] = useState(phoneNumber);
+
+    const data = useLoaderData() as GetLotteryResponse;
 
     const handlePhoneNumberChange = (val: string) => {
         setPhoneNumberState(val);
@@ -49,12 +54,18 @@ export default function Lottery() {
     });
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
 
-    /**
-     * TODO: 이벤트 기간 맞는지 확인하는 로직 필요
-     */
-    const isEventPeriod = true;
-
     const handleClickShortCut = () => {
+        if (data.length === 0) {
+            return;
+        }
+
+        const currentEvent = data[0];
+        const startDate = getMsTime(currentEvent.start_date);
+        const endDate = getMsTime(currentEvent.end_date);
+        const currentDate = new Date().getTime();
+
+        const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
+
         if (isEventPeriod) {
             handleOpenPopup();
         } else {
