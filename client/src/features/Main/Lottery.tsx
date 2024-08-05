@@ -1,7 +1,9 @@
 import { forwardRef } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
+import { ASCEND } from "@/constants/animation.ts";
 import Section from "@/features/Main/Section.tsx";
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
@@ -23,7 +25,10 @@ const Lottery = forwardRef<HTMLDivElement, LotteryProps>(({ sectionId }, ref) =>
             descriptionColor="text-s-blue"
             url="/lottery"
         >
-            <div className="flex gap-14	p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950">
+            <motion.div
+                className="flex gap-14	p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950"
+                {...ASCEND}
+            >
                 <img
                     src="/assets/common/casper.webp"
                     alt="casper"
@@ -60,14 +65,16 @@ const Lottery = forwardRef<HTMLDivElement, LotteryProps>(({ sectionId }, ref) =>
                         </div>
                     </div>
                 </div>
-            </div>
-            <Link
-                to="/lottery/show-case"
-                className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"
-            >
-                <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
-                <ArrowIcon stroke="#637381" />
-            </Link>
+            </motion.div>
+            <motion.div {...ASCEND}>
+                <Link
+                    to="/lottery/show-case"
+                    className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"
+                >
+                    <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
+                    <ArrowIcon stroke="#637381" />
+                </Link>
+            </motion.div>
         </Section>
     );
 });
