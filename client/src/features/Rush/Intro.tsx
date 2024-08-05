@@ -1,6 +1,6 @@
 export default function Intro() {
     return (
-        <section className="flex flex-col justify-center items-center gap-3 h-screen bg-[url('/assets/rush/car.jpg')] bg-no-repeat bg-cover">
+        <section className="flex flex-col justify-center items-center gap-3 h-screen bg-[url('/assets/rush/car.jpg')] bg-no-repeat bg-cover snap-start">
             <p className="h-body-1-regular text-n-white">나의 첫 전기차 CASPER Electric</p>
             <span className="h-heading-2-bold text-n-white flex flex-col justify-center items-center">
                 <p>전기차가 처음이라면</p>

@@ -1,6 +1,6 @@
 export default function FAQ() {
     return (
-        <section className="h-screen flex flex-col justify-center items-center bg-n-neutral-300 gap-3">
+        <section className="h-screen flex flex-col justify-center items-center bg-n-neutral-300 gap-3 snap-start">
             <span className="h-heading-2-bold text-n-neutral-950 flex flex-col justify-center items-center">
                 <p>캐스퍼가 전기차로 돌아왔어요</p>
                 <p>전기차가 아직 낯설다구요?</p>

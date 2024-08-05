@@ -17,7 +17,7 @@ export function ElectricSection({
     descriptionChildren,
 }: ElectricSectionProps) {
     return (
-        <section className="h-screen bg-n-white flex flex-col justify-center items-center pt-32">
+        <section className="h-screen bg-n-white flex flex-col justify-center items-center pt-32 snap-start">
             <Tooltip content={tooltipContent} tooltipPosition="right">
                 {tooltipChildren}
             </Tooltip>

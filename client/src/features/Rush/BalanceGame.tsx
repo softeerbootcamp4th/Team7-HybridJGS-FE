@@ -4,7 +4,7 @@ import Background from "@/features/Rush/Background.tsx";
 
 export default function BalanceGame() {
     return (
-        <section className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center">
+        <section className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start">
             <p className="h-heading-2-bold pt-10">이제 곧 하단에 밸런스 게임 주제가 공개돼요!</p>
             <Background>
                 <div className="flex flex-col gap-6 justify-center items-center w-[800px] h-[390px] bg-n-white rounded-[29px] relative z-20">

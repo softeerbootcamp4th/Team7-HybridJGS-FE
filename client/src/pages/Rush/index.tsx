@@ -18,7 +18,7 @@ import useScrollTop from "@/hooks/useScrollTop.tsx";
 export default function Rush() {
     useScrollTop();
     return (
-        <div>
+        <div className="h-screen overflow-auto snap-y snap-mandatory">
             <BalanceGame />
             <Intro />
             <FAQ />
