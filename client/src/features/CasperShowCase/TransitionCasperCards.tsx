@@ -28,7 +28,7 @@ export default function TransitionCasperCards({
     gap,
     isEndCard,
 }: TransitionCasperCardsProps) {
-    const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLUListElement>(null);
     const transitionControls = useAnimation();
 
     const [x, setX] = useState<number>(initialX);
@@ -67,18 +67,18 @@ export default function TransitionCasperCards({
         };
 
         return (
-            <div key={id} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <li key={id} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <CasperFlipCard
                     card={cardItem}
                     size={CASPER_SIZE_OPTION.SM}
                     isFlipped={isFlipped}
                 />
-            </div>
+            </li>
         );
     };
 
     return (
-        <motion.div
+        <motion.ul
             ref={containerRef}
             className="flex"
             animate={transitionControls}
@@ -91,6 +91,6 @@ export default function TransitionCasperCards({
         >
             {cardList.map((card) => renderCardItem(card, card.id))}
             {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
-        </motion.div>
+        </motion.ul>
     );
 }
