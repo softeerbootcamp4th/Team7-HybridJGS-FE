@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
+import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
 import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
-import CasperCardFrontUI from "../CasperCustom/CasperCardFrontUI";
+import CasperFlipCard from "../CasperCustom/CasperFlipCard";
 
 export interface CasperCardType {
     id: string;
@@ -53,13 +54,24 @@ export default function TransitionCasperCards({
     }, [transitionControls, totalWidth]);
 
     const renderCardItem = (cardItem: CasperCardType, id: string) => {
+        const [isFlipped, setIsFlipped] = useState<boolean>(false);
+
+        const handleMouseEnter = () => {
+            stopAnimation();
+            setIsFlipped(true);
+        };
+
+        const handleMouseLeave = () => {
+            startAnimation(x);
+            setIsFlipped(false);
+        };
+
         return (
-            <div key={id} onMouseEnter={stopAnimation} onMouseLeave={() => startAnimation(x)}>
-                <CasperCardFrontUI
-                    size="sm"
-                    casperName={cardItem.casperName}
-                    hasRandomButton={false}
-                    selectedCasperIdx={cardItem.selectedCasperIdx}
+            <div key={id} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                <CasperFlipCard
+                    card={cardItem}
+                    size={CASPER_SIZE_OPTION.SM}
+                    isFlipped={isFlipped}
                 />
             </div>
         );

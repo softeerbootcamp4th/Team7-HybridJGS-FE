@@ -1,26 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import useCasperCustomContext from "@/hooks/useCasperCustomContext";
-import MyCasperCardBack from "./MyCasperCardBack";
-import MyCasperCardFront from "./MyCasperCardFront";
+import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
+import CasperFlipCard from "./CasperFlipCard";
 
 interface CasperCustomFinishingProps {
     navigateNextStep: () => void;
 }
 
 export default function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishingProps) {
-    const { casperName, expectations } = useCasperCustomContext();
+    const { casperName, expectations, selectedCasperIdx } = useCasperCustomContext();
+    const [isFlipped, setIsFlipped] = useState<boolean>(false);
+
+    const card: Omit<CasperCardType, "id"> = {
+        casperName,
+        expectations,
+        selectedCasperIdx,
+    };
 
     useEffect(() => {
-        // TODO: flip 애니메이션 후 next step으로 넘어가게 하기
+        setTimeout(() => {
+            setIsFlipped(true);
+        }, 3000);
+
         setTimeout(() => {
             navigateNextStep();
-        }, 3000);
+        }, 6000);
     }, []);
 
     return (
-        <div className="flex">
-            <MyCasperCardFront casperName={casperName} hasRandomButton={false} />
-            <MyCasperCardBack casperName={casperName} expectations={expectations} />
-        </div>
+        <motion.div className="flex">
+            <CasperFlipCard size={CASPER_SIZE_OPTION.LG} card={card} isFlipped={isFlipped} />
+        </motion.div>
     );
 }
