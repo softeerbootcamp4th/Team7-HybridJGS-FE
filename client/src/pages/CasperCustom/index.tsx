@@ -22,7 +22,6 @@ export default function CasperCustom() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
 
     const [selectedStepIdx, setSelectedStepIdx] = useState(INITIAL_STEP);
-
     const selectedStep = CUSTOM_STEP_OPTION_ARRAY[selectedStepIdx];
 
     const handleClickNextStep = () => {

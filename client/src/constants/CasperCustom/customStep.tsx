@@ -37,7 +37,7 @@ export const CUSTOM_STEP_HEADLINE = {
     [CUSTOM_STEP_OPTION.FINISHING]: null,
     [CUSTOM_STEP_OPTION.FINISH]: {
         title: "친구에게 이벤트를 공유하고 당첨 확률을 높이세요!",
-        description: "*당첨 결과는 N월 N일에 발표할게요",
+        description: "*당첨 결과는 입력한 번호로 연락드릴게요",
     },
 };
 
