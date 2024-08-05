@@ -43,7 +43,10 @@ export default function CasperShowCase() {
 
     return (
         <div className="flex flex-col justify-center items-center gap-800 w-full h-screen bg-n-neutral-950 overflow-hidden pt-1000">
-            <motion.div className="flex flex-col justify-center items-center gap-800" {...DISSOLVE}>
+            <motion.div
+                className="flex flex-col justify-center items-center gap-800 w-full"
+                {...DISSOLVE}
+            >
                 <p className="h-body-1-regular text-n-white">
                     카드 위에 커서를 올리면 기대평을 볼 수 있어요
                 </p>
