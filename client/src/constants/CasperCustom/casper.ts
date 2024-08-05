@@ -277,8 +277,8 @@ export const CASPER_CARD_SIZE = {
         CARD_HEIGHT: 500,
     },
     [CASPER_SIZE_OPTION.SM]: {
-        CARD_WIDTH: 288,
-        CARD_HEIGHT: 375,
+        CARD_WIDTH: 248,
+        CARD_HEIGHT: 325,
     },
 };
 
@@ -295,7 +295,7 @@ export const CASPER_SIZE = {
     [CASPER_SIZE_OPTION.SM]: {
         CASPER_WIDTH: 196,
         CASPER_HEIGHT: 128,
-        CASPER_TOP: 112,
+        CASPER_TOP: 82,
         EYES_WIDTH: 162,
         EYES_HEIGHT: 53,
         EYES_TOP: 22,
