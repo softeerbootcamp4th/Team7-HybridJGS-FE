@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
+import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
@@ -24,7 +26,7 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
     };
 
     return (
-        <>
+        <motion.div className="flex flex-col items-center" {...DISSOLVE}>
             <div className="flex items-center mt-[68px] gap-1000">
                 <MyCasperCardFront hasRandomButton={false} />
                 <div>
@@ -53,6 +55,6 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
             <div className="mt-1000">
                 <CTAButton label="완료" disabled={!canSubmit} onClick={handleSubmitCustomCasper} />
             </div>
-        </>
+        </motion.div>
     );
 }
