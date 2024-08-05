@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
-import { SelectedCasperIdxType } from "@/contexts/casperCustomContext";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
 import CasperCardFrontUI from "../CasperCustom/CasperCardFrontUI";
 
 export interface CasperCardType {
