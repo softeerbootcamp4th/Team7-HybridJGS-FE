@@ -6,7 +6,7 @@ import { SelectedCasperIdxType } from "@/types/casperCustom";
 import CasperFlipCard from "../CasperCustom/CasperFlipCard";
 
 export interface CasperCardType {
-    id: string;
+    id: number;
     casperName: string;
     expectations: string;
     selectedCasperIdx: SelectedCasperIdxType;
@@ -89,7 +89,7 @@ export default function TransitionCasperCards({
                 }
             }}
         >
-            {cardList.map((card) => renderCardItem(card, card.id))}
+            {cardList.map((card) => renderCardItem(card, `${card.id}`))}
             {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
         </motion.div>
     );
