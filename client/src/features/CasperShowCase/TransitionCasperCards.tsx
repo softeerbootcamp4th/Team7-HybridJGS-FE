@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
+import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
+import useLazyLoading from "@/hooks/useLazyLoading";
 import { SelectedCasperIdxType } from "@/types/casperCustom";
 import CasperFlipCard from "../CasperCustom/CasperFlipCard";
 
@@ -55,6 +56,7 @@ export default function TransitionCasperCards({
 
     const renderCardItem = (cardItem: CasperCardType, id: string) => {
         const [isFlipped, setIsFlipped] = useState<boolean>(false);
+        const { isInView, cardRef } = useLazyLoading<HTMLLIElement>();
 
         const handleMouseEnter = () => {
             stopAnimation();
@@ -67,12 +69,23 @@ export default function TransitionCasperCards({
         };
 
         return (
-            <li key={id} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <CasperFlipCard
-                    card={cardItem}
-                    size={CASPER_SIZE_OPTION.SM}
-                    isFlipped={isFlipped}
-                />
+            <li
+                ref={cardRef}
+                key={id}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                    width: CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH,
+                    height: CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_HEIGHT,
+                }}
+            >
+                {isInView && (
+                    <CasperFlipCard
+                        card={cardItem}
+                        size={CASPER_SIZE_OPTION.SM}
+                        isFlipped={isFlipped}
+                    />
+                )}
             </li>
         );
     };

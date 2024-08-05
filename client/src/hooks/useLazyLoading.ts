@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useLazyLoading() {
+export default function useLazyLoading<T extends HTMLElement>() {
     const [isInView, setIsInView] = useState<boolean>(false);
-    const cardRef = useRef<HTMLDivElement>(null);
+    const cardRef = useRef<T>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -12,7 +12,7 @@ export default function useLazyLoading() {
                     observer.disconnect();
                 }
             },
-            { threshold: 0.1, root: document.body }
+            { threshold: 0, root: document.body }
         );
 
         if (cardRef.current) {
