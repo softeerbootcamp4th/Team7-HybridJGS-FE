@@ -32,7 +32,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
             <section
                 ref={ref}
                 id={sectionId}
-                className={`flex flex-col gap-3 justify-center items-center h-screen snap-center ${backgroundColor}`}
+                className={`flex flex-col gap-3 justify-center items-center h-screen snap-start ${backgroundColor}`}
             >
                 <p className={`h-body-1-regular ${titleColor}`}>{title}</p>
                 <p className={`h-heading-2-bold ${titleColor}`}>{subtitle}</p>

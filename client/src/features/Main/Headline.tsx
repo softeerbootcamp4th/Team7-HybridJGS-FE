@@ -12,7 +12,7 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProps>(({ sectionId }, ref) 
         <section
             ref={ref}
             id={sectionId}
-            className="h-screen bg-[url('/assets/main/car-1.jpg')] bg-no-repeat bg-cover flex flex-col justify-center items-center"
+            className="h-screen bg-[url('/assets/main/car-1.jpg')] bg-no-repeat bg-cover flex flex-col justify-center items-center snap-start"
         >
             <Keyword children="CASPER Electric 출시 기념 이벤트" />
             <img

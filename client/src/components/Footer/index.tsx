@@ -38,7 +38,7 @@ const InfoSection: React.FC = () => (
 
 export default function Footer() {
     return (
-        <div className="w-full h-[266px] bg-black pl-[180px] py-[70px]">
+        <div className="w-full h-[266px] bg-black pl-[180px] py-[70px] snap-end">
             <div className="flex h-6 gap-[180px]">
                 <HyundaiLogo fill="#ffffff" width={189} height={27} />
                 <div className="flex flex-col gap-2.5 h-heading-4-regular text-[#949494]">

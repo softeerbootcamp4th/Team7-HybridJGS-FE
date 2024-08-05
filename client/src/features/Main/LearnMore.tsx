@@ -11,7 +11,7 @@ const LearnMore = forwardRef<HTMLDivElement, LearnMoreProps>(({ sectionId }, ref
         <section
             ref={ref}
             id={sectionId}
-            className="flex flex-col gap-6 justify-center items-center h-[76.5vh] bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-cover"
+            className="flex flex-col gap-6 justify-center items-center h-[76.5vh] bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-cover snap-start"
         >
             <span className="flex flex-col gap-3 justify-center items-center">
                 <p className="h-heading-3-bold text-n-white">나의 첫 전기차</p>

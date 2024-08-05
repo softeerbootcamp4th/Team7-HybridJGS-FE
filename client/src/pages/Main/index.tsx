@@ -13,7 +13,7 @@ export default function Main() {
     const { sectionRefs, containerRef } = useScrollAnimationContext();
 
     return (
-        <div ref={containerRef}>
+        <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
             <Headline ref={sectionRefs.HEADLINE} sectionId={SECTIONS.HEADLINE as SectionKey} />
             <Lottery ref={sectionRefs.LOTTERY} sectionId={SECTIONS.LOTTERY as SectionKey} />
             <Rush ref={sectionRefs.RUSH} sectionId={SECTIONS.RUSH as SectionKey} />
