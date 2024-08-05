@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
+import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
 import CasperFlipCard from "./CasperFlipCard";
@@ -30,7 +31,7 @@ export default function CasperCustomFinishing({ navigateNextStep }: CasperCustom
     }, []);
 
     return (
-        <motion.div className="flex">
+        <motion.div className="flex" {...DISSOLVE}>
             <CasperFlipCard size={CASPER_SIZE_OPTION.LG} card={card} isFlipped={isFlipped} />
         </motion.div>
     );

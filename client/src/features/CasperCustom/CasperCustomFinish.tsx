@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
+import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
@@ -41,7 +43,7 @@ export default function CasperCustomFinish({ handleResetStep }: CasperCustomFini
     };
 
     return (
-        <div className="mt-[60px] flex flex-col items-center">
+        <motion.div className="mt-[60px] flex flex-col items-center" {...DISSOLVE}>
             <div className="flex items-center gap-[107px]">
                 <div>
                     <div ref={casperCustomRef}>
@@ -86,6 +88,6 @@ export default function CasperCustomFinish({ handleResetStep }: CasperCustomFini
                 </p>
                 <ArrowIcon stroke="#ffffff" />
             </Link>
-        </div>
+        </motion.div>
     );
 }

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import ListStep from "@/components/ListStep";
 import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
+import { DISSOLVE } from "@/constants/animation";
 import MyCasperCardFront from "@/features/CasperCustom/MyCasperCardFront";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { getCasperOptionDescription } from "@/utils/CasperCustom/getCasperOptionDescription";
@@ -37,7 +39,7 @@ export default function CasperCustomProcess({ handleClickNextStep }: CasperCusto
     };
 
     return (
-        <>
+        <motion.div className="flex flex-col items-center" {...DISSOLVE}>
             <div className="flex items-end gap-1000">
                 <MyCasperCardFront optionDescription={optionDescription} />
 
@@ -60,6 +62,6 @@ export default function CasperCustomProcess({ handleClickNextStep }: CasperCusto
                     onClick={handleClickNextButton}
                 />
             </div>
-        </>
+        </motion.div>
     );
 }
