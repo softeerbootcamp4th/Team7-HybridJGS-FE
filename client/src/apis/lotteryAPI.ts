@@ -1,4 +1,9 @@
-import { GetApplyCountResponse, GetCasperListResponse } from "@/types/lotteryApi";
+import {
+    GetApplyCountResponse,
+    GetCasperListResponse,
+    PostCasperRequestBody,
+    PostCasperResponse,
+} from "@/types/lotteryApi";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/event/lottery`;
 const headers = {
@@ -23,6 +28,19 @@ export const LotteryAPI = {
             const response = await fetch(`${baseURL}/applied`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async postCasper(token: string, body: PostCasperRequestBody): Promise<PostCasperResponse> {
+        try {
+            const response = await fetch(`${baseURL}/applied`, {
+                method: "GET",
+                headers: { ...headers, Authorization: `Bearer ${token}` },
+                body: JSON.stringify(body),
             });
             return response.json();
         } catch (error) {

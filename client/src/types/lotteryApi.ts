@@ -1,4 +1,4 @@
-interface CasperInformation {
+export interface CasperInformationType {
     eyeShape: number;
     eyePosition: number;
     mouthShape: number;
@@ -10,9 +10,13 @@ interface CasperInformation {
 
 export type GetCasperListResponse = ({
     casperId: number;
-} & CasperInformation)[];
+} & CasperInformationType)[];
 
-export interface PostCasperRequestParam extends CasperInformation {}
+export interface PostCasperRequestBody extends CasperInformationType {}
+
+export interface PostCasperResponse extends CasperInformationType {
+    casperId: number;
+}
 
 export interface GetApplyCountResponse {
     appliedCount: number;

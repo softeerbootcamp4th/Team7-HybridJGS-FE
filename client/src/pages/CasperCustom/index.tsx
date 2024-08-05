@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import { LotteryAPI } from "@/apis/lotteryAPI";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import {
     CUSTOM_STEP_HEADLINE,
     CUSTOM_STEP_OPTION,
@@ -11,10 +14,13 @@ import CasperCustomFinish from "@/features/CasperCustom/CasperCustomFinish";
 import CasperCustomFinishing from "@/features/CasperCustom/CasperCustomFinishing";
 import CasperCustomForm from "@/features/CasperCustom/CasperCustomForm";
 import CasperCustomProcess from "@/features/CasperCustom/CasperCustomProcess";
+import { CasperInformationType } from "@/types/lotteryApi";
 
 const INITIAL_STEP = 0;
 
 export default function CasperCustom() {
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+
     const [selectedStepIdx, setSelectedStepIdx] = useState(INITIAL_STEP);
 
     const selectedStep = CUSTOM_STEP_OPTION_ARRAY[selectedStepIdx];
@@ -23,9 +29,8 @@ export default function CasperCustom() {
         setSelectedStepIdx(selectedStepIdx + 1);
     };
 
-    const handleSubmitCustomCasper = () => {
-        // TODO: 제출 로직 구현
-
+    const handleSubmitCustomCasper = async (casper: CasperInformationType) => {
+        await LotteryAPI.postCasper(cookies.token, casper);
         handleClickNextStep();
     };
 

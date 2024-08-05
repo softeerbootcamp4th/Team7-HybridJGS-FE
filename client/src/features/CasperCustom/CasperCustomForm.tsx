@@ -1,18 +1,20 @@
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
+import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
+import { CasperInformationType } from "@/types/lotteryApi";
 import MyCasperCardFront from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
-    handleSubmitCustomCasper: () => void;
+    handleSubmitCustomCasper: (casper: CasperInformationType) => void;
 }
 
 export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
-    const { casperName, expectations } = useCasperCustomStateContext();
+    const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 
     const canSubmit = casperName.length !== 0;
@@ -23,6 +25,19 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
 
     const handleSetExpectations = (value: string) => {
         dispatch({ type: CASPER_ACTION.SET_EXPECTATIONS, payload: value });
+    };
+
+    const handleSubmitCasper = () => {
+        const casper: CasperInformationType = {
+            eyeShape: selectedCasperIdx[CUSTOM_OPTION.EYES],
+            eyePosition: selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION],
+            mouthShape: selectedCasperIdx[CUSTOM_OPTION.MOUTH],
+            color: selectedCasperIdx[CUSTOM_OPTION.COLOR],
+            sticker: selectedCasperIdx[CUSTOM_OPTION.STICKER] || 0,
+            name: casperName,
+            expectation: expectations,
+        };
+        handleSubmitCustomCasper(casper);
     };
 
     return (
@@ -53,7 +68,7 @@ export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCus
             </div>
 
             <div className="mt-1000">
-                <CTAButton label="완료" disabled={!canSubmit} onClick={handleSubmitCustomCasper} />
+                <CTAButton label="완료" disabled={!canSubmit} onClick={handleSubmitCasper} />
             </div>
         </motion.div>
     );
