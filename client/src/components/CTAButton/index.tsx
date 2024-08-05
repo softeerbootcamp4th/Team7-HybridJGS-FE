@@ -68,15 +68,11 @@ export default function CTAButton({
     if (url && !disabled) {
         if (isExternalLink) {
             return (
-                <motion.a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={linkClass}
-                    {...ASCEND}
-                >
-                    {content}
-                </motion.a>
+                <motion.div {...ASCEND}>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                        {content}
+                    </a>
+                </motion.div>
             );
         }
         return (
@@ -88,8 +84,10 @@ export default function CTAButton({
         );
     }
     return (
-        <motion.button onClick={onClick} disabled={disabled} className={baseClass} {...ASCEND}>
-            {content}
-        </motion.button>
+        <motion.div {...ASCEND}>
+            <button onClick={onClick} disabled={disabled} className={baseClass}>
+                {content}
+            </button>
+        </motion.div>
     );
 }
