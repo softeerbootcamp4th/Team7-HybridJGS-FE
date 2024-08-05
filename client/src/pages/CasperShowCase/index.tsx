@@ -6,7 +6,6 @@ import { ASCEND, DISSOLVE } from "@/constants/animation";
 import CasperCards from "@/features/CasperShowCase/CasperCards";
 import { GetCasperListResponse } from "@/types/lotteryApi";
 
-// TODO: 나중에 후처리 부분도 API 폴더에 빼기
 function getCardListData(cardList: GetCasperListResponse) {
     return cardList.map((card) => {
         return {

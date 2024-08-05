@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useCookies } from "react-cookie";
+import { AuthAPI } from "@/apis/authAPI";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import CustomDesign from "@/features/Lottery/CustomDesign";
 import HeadLamp from "@/features/Lottery/HeadLamp";
 import Headline from "@/features/Lottery/Headline";
@@ -20,6 +23,8 @@ import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
 export default function Lottery() {
     useScrollTop();
 
+    const [_cookies, setCookie] = useCookies([COOKIE_TOKEN_KEY]);
+
     const { phoneNumber } = usePhoneNumberStateContext();
     const dispatch = usePhoneNumberDispatchContext();
 
@@ -29,7 +34,10 @@ export default function Lottery() {
         setPhoneNumberState(val);
     };
 
-    const handlePhoneNumberConfirm = (val: string) => {
+    const handlePhoneNumberConfirm = async (val: string) => {
+        const data = await AuthAPI.getAuthToken({ phoneNumber: val });
+
+        setCookie(COOKIE_TOKEN_KEY, data.token);
         dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
     };
 
