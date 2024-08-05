@@ -1,9 +1,19 @@
+import { forwardRef } from "react";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
+import { SectionKey } from "@/types/scrollAnimation.ts";
 
-export default function Headline() {
+interface HeadlineProps {
+    sectionId: SectionKey;
+}
+
+const Headline = forwardRef<HTMLDivElement, HeadlineProps>(({ sectionId }, ref) => {
     return (
-        <section className="h-screen bg-[url('/assets/main/car-1.jpg')] bg-no-repeat bg-cover flex flex-col justify-center items-center">
+        <section
+            ref={ref}
+            id={sectionId}
+            className="h-screen bg-[url('/assets/main/car-1.jpg')] bg-no-repeat bg-cover flex flex-col justify-center items-center"
+        >
             <Keyword children="CASPER Electric 출시 기념 이벤트" />
             <img
                 src="/assets/main/title.webp"
@@ -20,4 +30,6 @@ export default function Headline() {
             </Scroll>
         </section>
     );
-}
+});
+
+export default Headline;

@@ -1,8 +1,18 @@
+import { forwardRef } from "react";
 import CTAButton from "@/components/CTAButton";
+import { SectionKey } from "@/types/scrollAnimation.ts";
 
-export default function LearnMore() {
+interface LearnMoreProps {
+    sectionId: SectionKey;
+}
+
+const LearnMore = forwardRef<HTMLDivElement, LearnMoreProps>(({ sectionId }, ref) => {
     return (
-        <section className="flex flex-col gap-6 justify-center items-center h-[76.5vh] bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-cover">
+        <section
+            ref={ref}
+            id={sectionId}
+            className="flex flex-col gap-6 justify-center items-center h-[76.5vh] bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-cover"
+        >
             <span className="flex flex-col gap-3 justify-center items-center">
                 <p className="h-heading-3-bold text-n-white">나의 첫 전기차</p>
                 <p className="h-heading-1-bold text-n-white">CASPER Electric</p>
@@ -14,4 +24,6 @@ export default function LearnMore() {
             />
         </section>
     );
-}
+});
+
+export default LearnMore;

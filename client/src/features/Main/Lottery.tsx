@@ -1,12 +1,20 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import Section from "@/features/Main/Section.tsx";
+import { SectionKey } from "@/types/scrollAnimation.ts";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
-export default function Lottery() {
+interface LotteryProps {
+    sectionId: SectionKey;
+}
+
+const Lottery = forwardRef<HTMLDivElement, LotteryProps>(({ sectionId }, ref) => {
     return (
         <Section
+            ref={ref}
+            sectionId={sectionId}
             backgroundColor="bg-n-black"
             title="Event 1. 추첨 이벤트"
             titleColor="text-n-white"
@@ -62,4 +70,6 @@ export default function Lottery() {
             </Link>
         </Section>
     );
-}
+});
+
+export default Lottery;

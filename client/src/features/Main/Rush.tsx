@@ -1,5 +1,7 @@
+import { forwardRef } from "react";
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import Section from "@/features/Main/Section.tsx";
+import { SectionKey } from "@/types/scrollAnimation.ts";
 
 // TODO: API로 대체될 데이터
 export const rushEventData: RushEventProps[] = [
@@ -41,9 +43,15 @@ export const rushEventData: RushEventProps[] = [
     },
 ];
 
-export default function Rush() {
+interface RushProps {
+    sectionId: SectionKey;
+}
+
+const Rush = forwardRef<HTMLDivElement, RushProps>(({ sectionId }, ref) => {
     return (
         <Section
+            ref={ref}
+            sectionId={sectionId}
             backgroundColor="bg-n-white"
             title="Event 2. 선착순 이벤트"
             titleColor="text-n-black"
@@ -91,4 +99,6 @@ export default function Rush() {
             </div>
         </Section>
     );
-}
+});
+
+export default Rush;
