@@ -13,3 +13,7 @@ export type GetCasperListResponse = ({
 } & CasperInformation)[];
 
 export interface PostCasperRequestParam extends CasperInformation {}
+
+export interface GetApplyCountResponse {
+    appliedCount: number;
+}
