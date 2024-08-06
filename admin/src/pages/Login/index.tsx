@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import Button from "@/components/Button";
+import Dropdown from "@/components/Dropdown";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import TabHeader from "@/components/TabHeader";
@@ -12,6 +13,8 @@ export default function Login() {
 
     const { handleOpenModal, ModalComponent } = useModal();
 
+    const [selectedDropdownIdx, setSelectedDropdownIdx] = useState(0);
+
     const headers = [
         "ID",
         "이벤트 진행 날짜",
@@ -22,7 +25,11 @@ export default function Login() {
         "경품 관리",
         "선착순 당첨 인원 수",
         "진행 상태",
-        "참여자 리스트 보기",
+        <Dropdown
+            options={["옵션 1 : 총 선택 인원 13,245", "옵션 2 : 총 선택 인원 10,182"]}
+            selectedIdx={selectedDropdownIdx}
+            handleClickOption={(idx: number) => setSelectedDropdownIdx(idx)}
+        />,
         "관리",
     ];
     const data = new Array(20).fill(null).map(() => [
