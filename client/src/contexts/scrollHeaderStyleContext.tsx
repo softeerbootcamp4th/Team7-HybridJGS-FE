@@ -1,85 +1,29 @@
-import { ReactNode, RefObject, createContext, useEffect, useMemo, useRef, useState } from "react";
-import {
-    SECTIONS,
-    ScrollHeaderStyleType,
-    SectionKey,
-    SectionRefs,
-} from "@/types/scrollHeaderStyle.ts";
+import { ReactNode, createContext, useMemo, useState } from "react";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+
+type HeaderType = "light" | "dark";
+
+interface ScrollHeaderStyleType {
+    activeSection: SectionKey;
+    setActiveSection: (section: SectionKey) => void;
+    headerType: HeaderType;
+    setHeaderType: (type: HeaderType) => void;
+}
 
 export const ScrollHeaderStyleContext = createContext<ScrollHeaderStyleType | null>(null);
 
 export const ScrollHeaderStyleProvider = ({ children }: { children: ReactNode }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [activeSection, setActiveSection] = useState<SectionKey>(SECTIONS.HEADLINE as SectionKey);
-
-    const headlineRef = useRef<HTMLDivElement | null>(null);
-    const lotteryRef = useRef<HTMLDivElement | null>(null);
-    const rushRef = useRef<HTMLDivElement | null>(null);
-    const learnMoreRef = useRef<HTMLDivElement | null>(null);
-
-    const sectionRefs = useMemo<SectionRefs>(
-        () =>
-            ({
-                [SECTIONS.HEADLINE]: headlineRef,
-                [SECTIONS.LOTTERY]: lotteryRef,
-                [SECTIONS.RUSH]: rushRef,
-                [SECTIONS.LEARN_MORE]: learnMoreRef,
-            }) as SectionRefs,
-        []
-    );
-
-    // const sectionKeys = ["Headline", "Lottery", "Rush", "LearnMore"];
-    // const sectionRefs: SectionRefs = Object.fromEntries(
-    //     // eslint-disable-next-line react-hooks/rules-of-hooks
-    //     sectionKeys.map((key) => [key, useRef<HTMLDivElement>(null)])
-    // ) as SectionRefs;
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const container = containerRef.current;
-            if (!container) return;
-
-            const scrollPosition = container.scrollTop + container.clientHeight / 2;
-
-            for (const [key, ref] of Object.entries(sectionRefs) as [
-                SectionKey,
-                RefObject<HTMLDivElement>,
-            ][]) {
-                const section = ref.current;
-                if (
-                    section &&
-                    scrollPosition >= section.offsetTop &&
-                    scrollPosition <= section.offsetTop + section.offsetHeight
-                ) {
-                    setActiveSection(key);
-                    console.log(activeSection);
-                    break;
-                }
-            }
-        };
-
-        const container = containerRef.current;
-        container?.addEventListener("scroll", handleScroll);
-
-        return () => {
-            container?.removeEventListener("scroll", handleScroll);
-        };
-    }, [activeSection, sectionRefs]);
-
-    const scrollToRef = (sectionKey: SectionKey) => {
-        const ref = sectionRefs[sectionKey];
-        ref.current?.scrollIntoView({ behavior: "smooth" });
-    };
+    const [activeSection, setActiveSection] = useState<SectionKey>("HEADLINE");
+    const [headerType, setHeaderType] = useState<HeaderType>("light");
 
     const value = useMemo(
         () => ({
-            containerRef,
-            sectionRefs,
-            scrollToRef,
             activeSection,
             setActiveSection,
+            headerType,
+            setHeaderType,
         }),
-        [sectionRefs, activeSection]
+        [activeSection, headerType]
     );
 
     return (

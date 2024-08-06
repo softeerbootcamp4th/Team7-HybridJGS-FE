@@ -1,22 +1,17 @@
-import { RefObject } from "react";
-
 export const SECTIONS = {
-    HEADLINE: "Headline",
-    LOTTERY: "Lottery",
-    RUSH: "Rush",
-    LEARN_MORE: "LearnMore",
+    HEADLINE: "HEADLINE",
+    LOTTERY: "LOTTERY",
+    RUSH: "RUSH",
+    LEARN_MORE: "LEARN_MORE",
 } as const;
 
 export type SectionKey = keyof typeof SECTIONS;
 
-export type SectionRefs = {
-    [key in SectionKey]: RefObject<HTMLDivElement>;
-};
+export type HeaderType = "light" | "dark";
 
 export interface ScrollHeaderStyleType {
-    containerRef: RefObject<HTMLDivElement>;
-    sectionRefs: SectionRefs;
-    scrollToRef: (sectionKey: SectionKey) => void;
     activeSection: SectionKey;
-    setActiveSection: (activeSection: SectionKey) => void;
+    setActiveSection: (section: SectionKey) => void;
+    headerType: HeaderType;
+    setHeaderType: (type: HeaderType) => void;
 }

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
 import Headline from "@/features/Main/Headline.tsx";
@@ -10,14 +11,41 @@ import { SECTIONS, SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 export default function Main() {
     useScrollTop();
-    const { sectionRefs, containerRef } = useScrollHeaderStyleContext();
+    const { setActiveSection, setHeaderType } = useScrollHeaderStyleContext();
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id as SectionKey;
+                        setActiveSection(sectionId);
+                        if (sectionId === SECTIONS.LOTTERY || sectionId === SECTIONS.LEARN_MORE) {
+                            setHeaderType("dark");
+                        } else {
+                            setHeaderType("light");
+                        }
+                    }
+                });
+            },
+            {
+                root: containerRef.current,
+                threshold: 0.5,
+            }
+        );
+        const sections = document.querySelectorAll("section");
+        sections.forEach((section) => observer.observe(section));
+
+        return () => observer.disconnect();
+    }, [setActiveSection, setHeaderType]);
 
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
-            <Headline ref={sectionRefs.HEADLINE} sectionId={SECTIONS.HEADLINE as SectionKey} />
-            <Lottery ref={sectionRefs.LOTTERY} sectionId={SECTIONS.LOTTERY as SectionKey} />
-            <Rush ref={sectionRefs.RUSH} sectionId={SECTIONS.RUSH as SectionKey} />
-            <LearnMore ref={sectionRefs.LEARN_MORE} sectionId={SECTIONS.LEARN_MORE as SectionKey} />
+            <Headline id={SECTIONS.HEADLINE} />
+            <Lottery id={SECTIONS.LOTTERY} />
+            <Rush id={SECTIONS.RUSH} />
+            <LearnMore id={SECTIONS.LEARN_MORE} />
             <Notice />
             <Footer />
         </div>

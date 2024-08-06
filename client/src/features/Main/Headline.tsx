@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
@@ -6,14 +5,13 @@ import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts"
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 interface HeadlineProps {
-    sectionId: SectionKey;
+    id: SectionKey;
 }
 
-const Headline = forwardRef<HTMLDivElement, HeadlineProps>(({ sectionId }, ref) => {
+export default function Headline({ id }: HeadlineProps) {
     return (
         <section
-            ref={ref}
-            id={sectionId}
+            id={id}
             className="h-screen bg-[url('/assets/main/car-1.jpg')] bg-no-repeat bg-cover flex flex-col justify-center items-center snap-start"
         >
             <motion.div
@@ -39,6 +37,4 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProps>(({ sectionId }, ref) 
             </motion.div>
         </section>
     );
-});
-
-export default Headline;
+}

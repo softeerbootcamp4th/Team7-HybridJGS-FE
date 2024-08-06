@@ -1,18 +1,16 @@
-import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 interface LearnMoreProps {
-    sectionId: SectionKey;
+    id: SectionKey;
 }
 
-const LearnMore = forwardRef<HTMLDivElement, LearnMoreProps>(({ sectionId }, ref) => {
+export default function LearnMore({ id }: LearnMoreProps) {
     return (
         <section
-            ref={ref}
-            id={sectionId}
+            id={id}
             className="flex flex-col gap-6 justify-center items-center h-[76.5vh] bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-cover snap-start"
         >
             <motion.div
@@ -29,6 +27,4 @@ const LearnMore = forwardRef<HTMLDivElement, LearnMoreProps>(({ sectionId }, ref
             </motion.div>
         </section>
     );
-});
-
-export default LearnMore;
+}

@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import Section from "@/features/Main/Section.tsx";
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
@@ -44,14 +43,13 @@ export const rushEventData: RushEventProps[] = [
 ];
 
 interface RushProps {
-    sectionId: SectionKey;
+    id: SectionKey;
 }
 
-const Rush = forwardRef<HTMLDivElement, RushProps>(({ sectionId }, ref) => {
+export default function Rush({ id }: RushProps) {
     return (
         <Section
-            ref={ref}
-            sectionId={sectionId}
+            id={id}
             backgroundColor="bg-n-white"
             title="Event 2. 선착순 이벤트"
             titleColor="text-n-black"
@@ -99,6 +97,4 @@ const Rush = forwardRef<HTMLDivElement, RushProps>(({ sectionId }, ref) => {
             </div>
         </Section>
     );
-});
-
-export default Rush;
+}
