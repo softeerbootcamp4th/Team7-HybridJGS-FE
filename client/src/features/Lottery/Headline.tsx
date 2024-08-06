@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
-import { ASCEND } from "@/constants/animation.ts";
+import { ASCEND, ASCEND_DESCEND } from "@/constants/animation.ts";
 
 interface HeadlineProps {
     handleClickShortCutButton: () => void;
@@ -11,10 +11,11 @@ export default function Headline({ handleClickShortCutButton }: HeadlineProps) {
     return (
         <section className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center snap-start">
             <div className="absolute pointer-events-none">
-                <img
+                <motion.img
                     alt="캐스퍼 봇 아이콘"
                     src="/assets/lottery/casper-badges.webp"
                     className="max-w-[1475px]"
+                    {...ASCEND_DESCEND}
                 />
             </div>
             <motion.div className="flex flex-col items-center gap-400" {...ASCEND}>
