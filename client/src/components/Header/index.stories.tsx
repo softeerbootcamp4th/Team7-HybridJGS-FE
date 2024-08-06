@@ -1,6 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { ScrollHeaderStyleContext } from "@/contexts/scrollHeaderStyleContext";
+import { HeaderType } from "@/types/scrollHeaderStyle.ts";
 import Component from "./index";
 
 const meta = {
@@ -14,7 +15,7 @@ const meta = {
 
 export default meta;
 
-const HeaderWrapper: React.FC<{ headerType: "light" | "dark" }> = ({ headerType }) => {
+const HeaderWrapper: React.FC<{ headerType: HeaderType }> = ({ headerType }) => {
     return (
         <ScrollHeaderStyleContext.Provider
             value={{

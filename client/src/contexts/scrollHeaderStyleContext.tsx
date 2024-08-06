@@ -1,14 +1,5 @@
 import { ReactNode, createContext, useMemo, useState } from "react";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
-
-type HeaderType = "light" | "dark";
-
-interface ScrollHeaderStyleType {
-    activeSection: SectionKey;
-    setActiveSection: (section: SectionKey) => void;
-    headerType: HeaderType;
-    setHeaderType: (type: HeaderType) => void;
-}
+import { HeaderType, ScrollHeaderStyleType, SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 export const ScrollHeaderStyleContext = createContext<ScrollHeaderStyleType | null>(null);
 
