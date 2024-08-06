@@ -2,10 +2,10 @@ name: Build and Comment
 
 on:
   pull_request:
-    paths:
-      - 'client/**'
     branches:
       - dev
+    paths:
+      - 'client/**'
 
 jobs:
   build-client:

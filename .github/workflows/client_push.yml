@@ -2,10 +2,10 @@ name: HybridJGS-FE Dev Production
 
 on:
   push:
-    paths:
-      - 'client/**'
     branches:
       - dev
+    paths:
+      - 'client/**'
 
 jobs:
   build-and-deploy-client:

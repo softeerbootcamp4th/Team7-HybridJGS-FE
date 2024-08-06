@@ -2,11 +2,11 @@ name: Build and Comment
 
 on:
   pull_request:
-    paths:
-      - 'admin/**'
     branches:
       - main
       - dev
+    paths:
+      - 'admin/**'
 
 jobs:
   build-admin:
