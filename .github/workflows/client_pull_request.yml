@@ -5,7 +5,6 @@ on:
     paths:
       - './client'
     branches:
-      - main
       - dev
 
 jobs:

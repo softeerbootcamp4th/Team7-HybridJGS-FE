@@ -5,7 +5,7 @@ on:
     paths:
       - './client'
     branches:
-      - dev
+      - feat/#99-deploy
 
 jobs:
   build-and-deploy-client:
