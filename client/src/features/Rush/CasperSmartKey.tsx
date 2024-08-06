@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { DISSOLVE } from "@/constants/animation.ts";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperSubDescription from "@/features/Rush/CasperSubDescription.tsx";
 
 export default function CasperSmartKey() {
@@ -9,7 +9,7 @@ export default function CasperSmartKey() {
                 alt="capser smart key"
                 src="/assets/rush/casper/smart-key.png"
                 className="w-[570px] h-[380px] object-cover rounded-300"
-                {...DISSOLVE}
+                {...SCROLL_MOTION(DISSOLVE)}
             />
             <CasperSubDescription
                 subTitle="스마트 키를 사용할 수 있어요"

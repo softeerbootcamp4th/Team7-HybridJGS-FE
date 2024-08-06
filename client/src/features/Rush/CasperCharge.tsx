@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { DISSOLVE } from "@/constants/animation.ts";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
 
@@ -20,7 +20,7 @@ export default function CasperCharge() {
                     "캐스퍼 일렉트릭만 있으면 언제 어디서든 전자기기 사용이 가능해요.",
                 ]}
             />
-            <motion.div className="flex gap-10" {...DISSOLVE}>
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
                 <div className="flex flex-col gap-2">
                     <img
                         alt="capser charge-1"

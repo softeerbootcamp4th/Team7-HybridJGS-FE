@@ -22,7 +22,7 @@ export const ASCEND_DESCEND: Variants = {
     onscreen: {
         y: 0,
         transition: {
-            duration: 0.5,
+            duration: 0.7,
             repeat: Infinity,
             repeatType: "mirror",
         } as Transition,
@@ -32,6 +32,6 @@ export const ASCEND_DESCEND: Variants = {
 export const SCROLL_MOTION = (animation: Variants) => ({
     initial: "offscreen",
     whileInView: "onscreen",
-    viewport: { once: true, amount: 0.8 },
+    viewport: { once: true, amount: 0.6 },
     variants: animation,
 });

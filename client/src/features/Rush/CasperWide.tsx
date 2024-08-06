@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { DISSOLVE } from "@/constants/animation.ts";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
 
@@ -28,7 +28,7 @@ export default function CasperWide() {
                     </>
                 }
             />
-            <motion.div className="flex gap-10" {...DISSOLVE}>
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
                 <div className="flex flex-col gap-2">
                     <img
                         alt="capser wide-1"
