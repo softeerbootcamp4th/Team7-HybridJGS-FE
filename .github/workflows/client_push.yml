@@ -3,7 +3,7 @@ name: HybridJGS-FE Dev Production
 on:
   push:
     paths:
-      - './client'
+      - 'client/**'
     branches:
       - dev
 
