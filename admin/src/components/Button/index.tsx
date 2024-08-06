@@ -6,15 +6,15 @@ interface ButtonProps extends HTMLProps<HTMLButtonElement> {
     type: "lg" | "sm";
 }
 
-const ButtonVariants = cva(`border-2 py-[16px] transition-all`, {
+const ButtonVariants = cva(`transition-all`, {
     variants: {
         isValid: {
             true: "text-neutral-950 border-neutral-950 bg-white hover:bg-neutral-100",
             false: "text-neutral-300 border-neutral-300 bg-neutral-100",
         },
         type: {
-            lg: "w-[266px] rounded-full",
-            sm: "inline px-[16px] rounded-xl",
+            lg: "w-[266px] rounded-full py-[16px] border-2",
+            sm: "inline px-[12px] py-[8px] rounded-xl border",
         },
     },
 });

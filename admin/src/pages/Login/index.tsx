@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import TabHeader from "@/components/TabHeader";
+import Table from "@/components/Table";
 import useModal from "@/hooks/useModal";
 
 export default function Login() {
@@ -10,6 +11,36 @@ export default function Login() {
     const [value, setValue] = useState<string>("");
 
     const { handleOpenModal, ModalComponent } = useModal();
+
+    const headers = [
+        "ID",
+        "이벤트 진행 날짜",
+        "오픈 시간",
+        "종료 시간",
+        "활성화 시간",
+        "선택지 관리",
+        "경품 관리",
+        "선착순 당첨 인원 수",
+        "진행 상태",
+        "참여자 리스트 보기",
+        "관리",
+    ];
+    const data = new Array(20).fill(null).map(() => [
+        7,
+        "2024-07-19",
+        "22:00:00",
+        "22:10:00",
+        "00시간 10분 00초",
+        <Button type="sm">선택지 관리</Button>,
+        <Button type="sm">경품 관리</Button>,
+        <div className="flex justify-between">
+            <p>315</p>
+            <p>편집</p>
+        </div>,
+        "오픈 전",
+        <Button type="sm">참여자 리스트 보기</Button>,
+        <Button type="sm">삭제</Button>,
+    ]);
 
     return (
         <>
@@ -42,6 +73,8 @@ export default function Login() {
             <ModalComponent>
                 <div className="w-[200px] h-[128px]">hihi</div>
             </ModalComponent>
+
+            <Table headers={headers} data={data} />
         </>
     );
 }
