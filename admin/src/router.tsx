@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
+import LotteryWinner from "./pages/LotteryWinner";
 import Rush from "./pages/Rush";
 
 export const router = createBrowserRouter([
@@ -15,7 +16,16 @@ export const router = createBrowserRouter([
             },
             {
                 path: "lottery/",
-                element: <Lottery />,
+                children: [
+                    {
+                        index: true,
+                        element: <Lottery />,
+                    },
+                    {
+                        path: "winner",
+                        element: <LotteryWinner />,
+                    },
+                ],
             },
             {
                 path: "rush/",

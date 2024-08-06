@@ -1,17 +1,26 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 
 export default function Lottery() {
+    const navigate = useNavigate();
+
     const [giftCount, setGiftCount] = useState<number>(0);
 
     useEffect(() => {
+        // TODO: 추첨 이벤트 정보 불러오기
         setGiftCount(363);
     }, []);
 
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const count = parseInt(e.target.value);
         setGiftCount(count);
+    };
+
+    const handleLottery = () => {
+        // TODO: 당첨자 추첨
+        navigate("/lottery/winner");
     };
 
     return (
@@ -28,7 +37,9 @@ export default function Lottery() {
                     </div>
                 </div>
 
-                <Button buttonSize="lg">당첨자 추첨하기</Button>
+                <Button buttonSize="lg" onClick={handleLottery}>
+                    당첨자 추첨하기
+                </Button>
             </div>
         </div>
     );
