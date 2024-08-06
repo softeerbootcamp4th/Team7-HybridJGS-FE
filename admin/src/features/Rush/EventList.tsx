@@ -97,10 +97,7 @@ export default function EventList() {
 
             <Table headers={header} data={getTableData()} />
 
-            <div className="flex gap-4">
-                <Button buttonSize="lg">임시 저장</Button>
-                <Button buttonSize="lg">수정사항 업데이트</Button>
-            </div>
+            <Button buttonSize="lg">수정사항 업데이트</Button>
         </div>
     );
 }
