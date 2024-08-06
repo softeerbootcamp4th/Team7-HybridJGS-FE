@@ -3,17 +3,36 @@ import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { header } from "@/constants/tabOptions";
+import { RUSH_SECTION, RushSectionType } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 
-export default function EventList() {
+interface EventListProps {
+    handleSelectSection: (idx: number, section: RushSectionType) => void;
+}
+
+const EVENT_LIST_HEADER = [
+    "ID",
+    "이벤트 진행 날짜",
+    "오픈 시간",
+    "종료 시간",
+    "활성화 시간",
+    "선택지 관리",
+    "경품 관리",
+    "선착순 당첨 인원 수",
+    "진행 상태",
+    "참여자 리스트 보기",
+    "관리",
+];
+
+export default function EventList({ handleSelectSection }: EventListProps) {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
     useEffect(() => {
+        // TODO: 데이터 패칭 로직 구현
         dispatch({
             type: RUSH_ACTION.SET_EVENT_LIST,
             payload: [
@@ -83,7 +102,12 @@ export default function EventList() {
                     <p>편집</p>
                 </div>,
                 "오픈 전",
-                <Button buttonSize="sm">참여자 리스트 보기</Button>,
+                <Button
+                    buttonSize="sm"
+                    onClick={() => handleSelectSection(idx, RUSH_SECTION.APPLICANT_LIST)}
+                >
+                    참여자 리스트 보기
+                </Button>,
                 <Button buttonSize="sm">삭제</Button>,
             ];
         });
@@ -95,7 +119,7 @@ export default function EventList() {
                 <Button buttonSize="sm">이벤트 진행 날짜 추가</Button>
             </div>
 
-            <Table headers={header} data={getTableData()} />
+            <Table headers={EVENT_LIST_HEADER} data={getTableData()} />
 
             <Button buttonSize="lg">수정사항 업데이트</Button>
         </div>
