@@ -1,9 +1,9 @@
-import { forwardRef } from "react";
+import { RefObject, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
-import { ASCEND } from "@/constants/animation.ts";
+import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import Section from "@/features/Main/Section.tsx";
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
@@ -15,7 +15,7 @@ interface LotteryProps {
 const Lottery = forwardRef<HTMLDivElement, LotteryProps>(({ sectionId }, ref) => {
     return (
         <Section
-            ref={ref}
+            ref={ref as RefObject<HTMLDivElement>}
             sectionId={sectionId}
             backgroundColor="bg-n-black"
             title="Event 1. 추첨 이벤트"
@@ -26,8 +26,8 @@ const Lottery = forwardRef<HTMLDivElement, LotteryProps>(({ sectionId }, ref) =>
             url="/lottery"
         >
             <motion.div
-                className="flex gap-14	p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950"
-                {...ASCEND}
+                className="flex gap-14 p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950"
+                {...SCROLL_MOTION(ASCEND)}
             >
                 <img
                     src="/assets/common/casper.webp"
@@ -66,7 +66,7 @@ const Lottery = forwardRef<HTMLDivElement, LotteryProps>(({ sectionId }, ref) =>
                     </div>
                 </div>
             </motion.div>
-            <motion.div {...ASCEND}>
+            <motion.div {...SCROLL_MOTION(ASCEND)}>
                 <Link
                     to="/lottery/show-case"
                     className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"

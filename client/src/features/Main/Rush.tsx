@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
-import { ASCEND } from "@/constants/animation.ts";
+import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import Section from "@/features/Main/Section.tsx";
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
@@ -64,7 +64,7 @@ const Rush = forwardRef<HTMLDivElement, RushProps>(({ sectionId }, ref) => {
         >
             <motion.div
                 className="flex flex-col gap-8 py-8 px-14 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-50"
-                {...ASCEND}
+                {...SCROLL_MOTION(ASCEND)}
             >
                 <div className="flex gap-[110px]">
                     <div className="flex flex-col gap-3">

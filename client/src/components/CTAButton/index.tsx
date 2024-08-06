@@ -1,7 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ASCEND } from "@/constants/animation.ts";
 import "@/index.css";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 import ShareIcon from "/public/assets/icons/share.svg?react";
@@ -68,26 +66,20 @@ export default function CTAButton({
     if (url && !disabled) {
         if (isExternalLink) {
             return (
-                <motion.div {...ASCEND}>
-                    <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                        {content}
-                    </a>
-                </motion.div>
+                <a href={url} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                    {content}
+                </a>
             );
         }
         return (
-            <motion.div {...ASCEND}>
-                <Link to={url} className={linkClass}>
-                    {content}
-                </Link>
-            </motion.div>
+            <Link to={url} className={linkClass}>
+                {content}
+            </Link>
         );
     }
     return (
-        <motion.div {...ASCEND}>
-            <button onClick={onClick} disabled={disabled} className={baseClass}>
-                {content}
-            </button>
-        </motion.div>
+        <button onClick={onClick} disabled={disabled} className={baseClass}>
+            {content}
+        </button>
     );
 }
