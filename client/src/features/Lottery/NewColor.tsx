@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { DISSOLVE } from "@/constants/animation.ts";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -19,7 +19,7 @@ export default function NewColor() {
                 }
             />
 
-            <motion.div className="mt-[86px]" {...DISSOLVE}>
+            <motion.div className="mt-[86px]" {...SCROLL_MOTION(DISSOLVE)}>
                 <img
                     alt="캐스퍼 신규 컬러 목록"
                     src="/assets/lottery/casper-list.webp"

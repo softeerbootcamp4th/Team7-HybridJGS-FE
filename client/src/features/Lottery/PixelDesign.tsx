@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { DISSOLVE } from "@/constants/animation.ts";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -27,7 +27,7 @@ export default function PixelDesign() {
                     }
                 />
 
-                <motion.div className="mt-[98px] flex gap-700" {...DISSOLVE}>
+                <motion.div className="mt-[98px] flex gap-700" {...SCROLL_MOTION(DISSOLVE)}>
                     <img
                         alt="픽셀 디자인 첫번째 이미지"
                         src="/assets/lottery/pixel-design-1.jpg"

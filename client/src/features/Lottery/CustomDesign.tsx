@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { DISSOLVE } from "@/constants/animation.ts";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import Description from "./Description";
 import Section from "./Section";
 
@@ -21,7 +21,7 @@ export default function CustomDesign() {
                     }
                 />
 
-                <motion.div className="mt-[98px] flex gap-700" {...DISSOLVE}>
+                <motion.div className="mt-[98px] flex gap-700" {...SCROLL_MOTION(DISSOLVE)}>
                     <img
                         alt="커스텀 디자인 첫번째 이미지"
                         src="/assets/lottery/custom-design-1.jpg"

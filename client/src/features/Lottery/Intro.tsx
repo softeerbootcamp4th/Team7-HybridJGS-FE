@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { ASCEND, DISSOLVE } from "@/constants/animation.ts";
+import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 
 export default function Intro() {
     return (
         <section className="h-screen relative flex flex-col snap-start">
             <motion.div
                 className="mt-[112px] flex flex-col items-center gap-400 text-n-neutral-950"
-                {...ASCEND}
+                {...SCROLL_MOTION(ASCEND)}
             >
                 <p className="h-body-1-regular">CASPER Electric Design</p>
                 <h2 className="h-heading-2-bold text-center">
@@ -20,7 +20,7 @@ export default function Intro() {
                 </p>
             </motion.div>
 
-            <motion.div className="absolute bottom-0" {...DISSOLVE}>
+            <motion.div className="absolute bottom-0" {...SCROLL_MOTION(DISSOLVE)}>
                 <img
                     alt="인트로 차 이미지"
                     src="/assets/lottery/car-intro.jpg"
