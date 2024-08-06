@@ -7,7 +7,7 @@ export default function Layout() {
     return (
         <ScrollHeaderStyleProvider>
             <PhoneNumberProvider>
-                <Header type="light" />
+                <Header type="dark" />
                 <Outlet />
             </PhoneNumberProvider>
         </ScrollHeaderStyleProvider>
