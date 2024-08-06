@@ -29,9 +29,9 @@ export const ASCEND_DESCEND: Variants = {
     },
 };
 
-export const SCROLL_MOTION = (animation: Variants) => ({
+export const SCROLL_MOTION = (animation: Variants, amount: number = 0.8) => ({
     initial: "offscreen",
     whileInView: "onscreen",
-    viewport: { once: true, amount: 0.6 },
+    viewport: { once: true, amount: amount },
     variants: animation,
 });

@@ -14,7 +14,7 @@ export default function CasperFar() {
                     "한 번만 충전해도 서울에서 인천까지 9번 운전할 수 있을 정도로, 수도권에 산다면 서울 출퇴근에 활용하기 좋아요.",
                 ]}
             />
-            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE, 0.5)}>
                 <img
                     alt="capser far-1"
                     src="/assets/rush/casper/far-1.png"

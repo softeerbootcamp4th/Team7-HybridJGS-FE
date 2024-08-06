@@ -28,7 +28,7 @@ export default function CasperWide() {
                     </>
                 }
             />
-            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE, 0.5)}>
                 <div className="flex flex-col gap-2">
                     <img
                         alt="capser wide-1"
