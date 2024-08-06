@@ -2,10 +2,15 @@ import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function CasperWide() {
+interface CasperWideProps {
+    id: SectionKey;
+}
+
+export default function CasperWide({ id }: CasperWideProps) {
     return (
-        <CasperSection className="items-end">
+        <CasperSection id={id} className="items-end">
             <CasperDescription
                 title={
                     <>

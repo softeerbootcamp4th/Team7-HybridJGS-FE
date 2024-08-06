@@ -1,8 +1,14 @@
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function ElectricAdvantage() {
+interface ElectricAdvantageProps {
+    id: SectionKey;
+}
+
+export default function ElectricAdvantage({ id }: ElectricAdvantageProps) {
     return (
         <ElectricSection
+            id={id}
             tooltipContent="캐스퍼 일렉트릭은 첫 차로도, 세컨드 카로도 딱이에요"
             tooltipChildren={
                 <span className="flex flex-col justify-center items-center h-heading-2-bold">

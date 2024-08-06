@@ -1,8 +1,13 @@
 import ReasonSection from "@/features/Rush/ReasonSection.tsx";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function ReasonSecond() {
+interface ReasonSecondProps {
+    id: SectionKey;
+}
+
+export default function ReasonSecond({ id }: ReasonSecondProps) {
     return (
-        <ReasonSection subtitle="캐스퍼 일렉트릭으로 전기차를 입문해야하는 이유">
+        <ReasonSection id={id} subtitle="캐스퍼 일렉트릭으로 전기차를 입문해야하는 이유">
             <p className="text-s-blue">라이프스타일 그대로</p>
             <p>캐스퍼 일렉트릭과 함께해요</p>
         </ReasonSection>

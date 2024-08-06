@@ -1,9 +1,14 @@
 import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function Intro() {
+interface IntroProps {
+    id: SectionKey;
+}
+
+export default function Intro({ id }: IntroProps) {
     return (
-        <section className="h-screen relative flex flex-col snap-start">
+        <section id={id} className="h-screen relative flex flex-col snap-start">
             <motion.div
                 className="mt-[112px] flex flex-col items-center gap-400 text-n-neutral-950"
                 {...SCROLL_MOTION(ASCEND)}

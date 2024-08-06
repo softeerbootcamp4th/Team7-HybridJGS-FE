@@ -1,9 +1,17 @@
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function Intro() {
+interface IntroProps {
+    id: SectionKey;
+}
+
+export default function Intro({ id }: IntroProps) {
     return (
-        <section className="flex flex-col justify-center items-center gap-3 h-screen bg-[url('/assets/rush/car.jpg')] bg-no-repeat bg-cover snap-start">
+        <section
+            id={id}
+            className="flex flex-col justify-center items-center gap-3 h-screen bg-[url('/assets/rush/car.jpg')] bg-no-repeat bg-cover snap-start"
+        >
             <motion.p className="h-body-1-regular text-n-white" {...SCROLL_MOTION(ASCEND)}>
                 나의 첫 전기차 CASPER Electric
             </motion.p>

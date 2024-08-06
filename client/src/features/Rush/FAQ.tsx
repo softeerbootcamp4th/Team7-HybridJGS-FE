@@ -1,9 +1,17 @@
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function FAQ() {
+interface FAQProps {
+    id: SectionKey;
+}
+
+export default function FAQ({ id }: FAQProps) {
     return (
-        <section className="h-screen flex flex-col justify-center items-center gap-3 bg-n-neutral-300 snap-start">
+        <section
+            id={id}
+            className="h-screen flex flex-col justify-center items-center gap-3 bg-n-neutral-300 snap-start"
+        >
             <motion.span
                 className="h-heading-2-bold text-n-neutral-950 flex flex-col justify-center items-center"
                 {...SCROLL_MOTION(ASCEND)}

@@ -1,11 +1,14 @@
-export const SECTIONS = {
-    HEADLINE: "HEADLINE",
-    LOTTERY: "LOTTERY",
-    RUSH: "RUSH",
-    LEARN_MORE: "LEARN_MORE",
-} as const;
+import {
+    LOTTERY_SECTIONS,
+    MAIN_SECTIONS,
+    RUSH_SECTIONS,
+} from "@/constants/PageSections/sections.ts";
 
-export type SectionKey = keyof typeof SECTIONS;
+export type MainSectionKey = keyof typeof MAIN_SECTIONS;
+export type LotterySectionKey = keyof typeof LOTTERY_SECTIONS;
+export type RushSectionKey = keyof typeof RUSH_SECTIONS;
+
+export type SectionKey = MainSectionKey | LotterySectionKey | RushSectionKey;
 
 export type HeaderType = "light" | "dark";
 

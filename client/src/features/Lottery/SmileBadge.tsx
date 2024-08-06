@@ -1,12 +1,17 @@
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-export default function SmileBadge() {
+interface SmileBadgeProps {
+    id: SectionKey;
+}
+
+export default function SmileBadge({ id }: SmileBadgeProps) {
     return (
-        <Section className="bg-n-neutral-50 overflow-hidden relative">
+        <Section id={id} className="bg-n-neutral-50 overflow-hidden relative">
             <img
                 alt="캐스퍼 뒷면 이미지"
                 src="/assets/lottery/casper-back.jpg"

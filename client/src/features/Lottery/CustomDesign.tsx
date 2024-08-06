@@ -1,11 +1,16 @@
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-export default function CustomDesign() {
+interface CustomDesignProps {
+    id: SectionKey;
+}
+
+export default function CustomDesign({ id }: CustomDesignProps) {
     return (
-        <Section>
+        <Section id={id}>
             <div className="w-[1200px]">
                 <Description
                     label={<>커스텀 디자인</>}

@@ -2,14 +2,19 @@ import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 interface HeadlineProps {
+    id: SectionKey;
     handleClickShortCutButton: () => void;
 }
 
-export default function Headline({ handleClickShortCutButton }: HeadlineProps) {
+export default function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
     return (
-        <section className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center snap-start">
+        <section
+            id={id}
+            className="h-screen bg-[url('/assets/lottery/electric-line.webp')] bg-no-repeat bg-cover w-full relative flex flex-col items-center justify-center snap-start"
+        >
             <div className="absolute pointer-events-none">
                 <motion.img
                     alt="캐스퍼 봇 아이콘"

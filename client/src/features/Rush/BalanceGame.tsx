@@ -3,10 +3,18 @@ import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import Background from "@/features/Rush/Background.tsx";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function BalanceGame() {
+interface BalanceGameProps {
+    id: SectionKey;
+}
+
+export default function BalanceGame({ id }: BalanceGameProps) {
     return (
-        <section className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start">
+        <section
+            id={id}
+            className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start"
+        >
             <motion.p className="h-heading-2-bold pt-10" {...SCROLL_MOTION(ASCEND)}>
                 이제 곧 하단에 밸런스 게임 주제가 공개돼요!
             </motion.p>

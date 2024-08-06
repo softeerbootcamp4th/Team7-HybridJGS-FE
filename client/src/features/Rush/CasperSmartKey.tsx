@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperSubDescription from "@/features/Rush/CasperSubDescription.tsx";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
-export default function CasperSmartKey() {
+interface CasperSmartKeyProps {
+    id: SectionKey;
+}
+
+export default function CasperSmartKey({ id }: CasperSmartKeyProps) {
     return (
-        <section className="h-[800px] flex gap-10 justify-center items-center snap-start">
+        <section id={id} className="h-[800px] flex gap-10 justify-center items-center snap-start">
             <motion.img
                 alt="capser smart key"
                 src="/assets/rush/casper/smart-key.png"

@@ -2,8 +2,10 @@ import { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
 interface ElectricSectionProps {
+    id: SectionKey;
     tooltipContent: string;
     tooltipChildren: ReactNode;
     children: ReactNode;
@@ -12,6 +14,7 @@ interface ElectricSectionProps {
 }
 
 export function ElectricSection({
+    id,
     tooltipContent,
     tooltipChildren,
     children,
@@ -19,7 +22,10 @@ export function ElectricSection({
     descriptionChildren,
 }: ElectricSectionProps) {
     return (
-        <section className="h-screen bg-n-white flex flex-col justify-center items-center pt-32 snap-start">
+        <section
+            id={id}
+            className="h-screen bg-n-white flex flex-col justify-center items-center pt-32 snap-start"
+        >
             <motion.div {...SCROLL_MOTION(ASCEND)}>
                 <Tooltip content={tooltipContent} tooltipPosition="right">
                     {tooltipChildren}
