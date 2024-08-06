@@ -44,7 +44,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
                     <p className={`h-heading-2-bold ${titleColor}`}>{subtitle}</p>
                     <p className={`h-body-1-medium ${descriptionColor}`}>{description}</p>
                 </motion.div>
-                {children}
+                <motion.div {...SCROLL_MOTION(ASCEND)}>{children}</motion.div>
                 <motion.div {...SCROLL_MOTION(ASCEND)}>
                     <CTAButton label="이벤트 참여하기" hasArrowIcon={true} url={url} />
                 </motion.div>

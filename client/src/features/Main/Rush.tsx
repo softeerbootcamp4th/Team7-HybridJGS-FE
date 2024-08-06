@@ -1,7 +1,5 @@
 import { forwardRef } from "react";
-import { motion } from "framer-motion";
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
-import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import Section from "@/features/Main/Section.tsx";
 import { SectionKey } from "@/types/scrollHeaderStyle.ts";
 
@@ -62,10 +60,7 @@ const Rush = forwardRef<HTMLDivElement, RushProps>(({ sectionId }, ref) => {
             descriptionColor="text-s-red"
             url="/rush"
         >
-            <motion.div
-                className="flex flex-col gap-8 py-8 px-14 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-50"
-                {...SCROLL_MOTION(ASCEND)}
-            >
+            <div className="flex flex-col gap-8 py-8 px-14 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-50">
                 <div className="flex gap-[110px]">
                     <div className="flex flex-col gap-3">
                         <p className="h-heading-4-bold text-n-black">이벤트 기간</p>
@@ -101,7 +96,7 @@ const Rush = forwardRef<HTMLDivElement, RushProps>(({ sectionId }, ref) => {
                         ))}
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </Section>
     );
 });
