@@ -3,42 +3,42 @@ name: HybridJGS-FE Dev Production
 on:
   push:
     branches:
-      - feat/#99-deploy
+      - dev
 
 jobs:
-#  build-and-deploy-client:
-#    runs-on: ubuntu-latest
-#    env:
-#      working-directory: ./client
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Setup node
-#        uses: actions/setup-node@v2
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ap-northeast-2
-#
-#      #       dependency 설치
-#      - name: Install dependencies
-#        run: yarn
-#        working-directory: ${{ env.working-directory }}
-#
-#      #       build
-#      - name: Build project
-#        run: yarn build
-#        working-directory: ${{ env.working-directory }}
-#
-#      #       S3 버킷에 배포
-#      - name: Deploy static site to S3 bucket
-#        run: aws s3 sync ./client/dist s3://hybridjgs-frontend
-#
-#      #       CloudFront 삭제
-#      - name: Invalidate CloudFront Cache
-#        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_AWS_DISTRIBUTION_ID }} --paths '/*'
+  build-and-deploy-client:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./client
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      #       dependency 설치
+      - name: Install dependencies
+        run: yarn
+        working-directory: ${{ env.working-directory }}
+
+      #       build
+      - name: Build project
+        run: yarn build
+        working-directory: ${{ env.working-directory }}
+
+      #       S3 버킷에 배포
+      - name: Deploy static site to S3 bucket
+        run: aws s3 sync ./client/dist s3://hybridjgs-frontend
+
+      #       CloudFront 삭제
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_AWS_DISTRIBUTION_ID }} --paths '/*'
