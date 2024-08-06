@@ -15,7 +15,7 @@ export default function Lottery() {
 
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const count = parseInt(e.target.value);
-        setGiftCount(count);
+        setGiftCount(count || 0);
     };
 
     const handleLottery = () => {
