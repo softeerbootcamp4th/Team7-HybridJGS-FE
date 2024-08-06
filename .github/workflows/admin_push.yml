@@ -5,7 +5,7 @@ on:
     paths:
       - './admin'
     branches:
-      - feat/#99-deploy
+      - dev
 
 jobs:
   build-and-deploy-admin:
