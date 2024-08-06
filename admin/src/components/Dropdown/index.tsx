@@ -28,8 +28,11 @@ export default function Dropdown({ options, selectedIdx, handleClickOption }: Dr
     };
 
     return (
-        <div className="relative inline-block text-left" ref={dropdownRef}>
-            <div onClick={() => setIsVisibleOptions(!isVisibleOptions)}>{options[selectedIdx]}</div>
+        <div className="relative inline-block text-left z-10 cursor-pointer" ref={dropdownRef}>
+            <div onClick={() => setIsVisibleOptions(!isVisibleOptions)} className="flex gap-1">
+                <p>{options[selectedIdx]}</p>
+                <img alt="드롭다운 토글 아이콘" src="/assets/icons/down-arrow.svg" />
+            </div>
             {isVisibleOptions && (
                 <div className="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="p-[16px] flex flex-col gap-2">

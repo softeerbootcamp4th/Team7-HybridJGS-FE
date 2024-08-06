@@ -5,13 +5,10 @@ import Table from "@/components/Table";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RushApplicantType, RushSelectionType } from "@/types/rush";
 
-interface ApplicantListProps {
-    navigatePrevSection: () => void;
-    selectedIdx: number | null;
-}
-
-export default function ApplicantList({ navigatePrevSection, selectedIdx }: ApplicantListProps) {
+export default function ApplicantList() {
     const { rushList } = useRushEventStateContext();
+
+    const [selectedRush, setSelectedRush] = useState<number>(0);
 
     const [selectionList, setSelectionList] = useState<RushSelectionType[]>([]);
     const [applicantList, setApplicantList] = useState<RushApplicantType[]>([]);
@@ -70,13 +67,8 @@ export default function ApplicantList({ navigatePrevSection, selectedIdx }: Appl
                 image_url: "left_image.png",
             },
         ]);
-    }, []);
+    }, [selectedRush]);
 
-    if (selectedIdx === null) {
-        return <></>;
-    }
-
-    const selectedRushItem = rushList[selectedIdx];
     const data = applicantList.map((applicant, idx) => {
         const selectedOptionIdx = parseInt(applicant.balance_game_choice) - 1;
         return [
@@ -91,15 +83,12 @@ export default function ApplicantList({ navigatePrevSection, selectedIdx }: Appl
     return (
         <div className="w-[1560px] flex flex-col mt-10 gap-4">
             <div className="flex items-center gap-4">
-                <img
-                    alt="뒤로 가기 버튼"
-                    src="/assets/icons/left-arrow.svg"
-                    className="cursor-pointer"
-                    onClick={navigatePrevSection}
+                <Dropdown
+                    options={rushList.map((rush) => rush.event_date)}
+                    selectedIdx={selectedRush}
+                    handleClickOption={(idx) => setSelectedRush(idx)}
                 />
-                <p className="h-body-1-medium">
-                    {selectedRushItem.event_date} 선착순 참여자 리스트 {applicantList.length} 명
-                </p>
+                <p className="h-body-1-medium">선착순 참여자 리스트 {applicantList.length} 명</p>
                 <Button buttonSize="sm">당첨자 수만 보기 ON</Button>
             </div>
 
