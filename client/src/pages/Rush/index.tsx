@@ -14,7 +14,7 @@ import FAQ from "@/features/Rush/FAQ.tsx";
 import Intro from "@/features/Rush/Intro.tsx";
 import ReasonFirst from "@/features/Rush/ReasonFirst.tsx";
 import ReasonSecond from "@/features/Rush/ReasonSecond.tsx";
-import { useHeaderStyleObserver } from "@/hooks/useHeaderStyleObserver.ts";
+import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import useScrollTop from "@/hooks/useScrollTop.tsx";
 
 export default function Rush() {

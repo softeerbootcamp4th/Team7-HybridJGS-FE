@@ -5,7 +5,7 @@ import Headline from "@/features/Main/Headline.tsx";
 import LearnMore from "@/features/Main/LearnMore.tsx";
 import Lottery from "@/features/Main/Lottery.tsx";
 import Rush from "@/features/Main/Rush.tsx";
-import { useHeaderStyleObserver } from "@/hooks/useHeaderStyleObserver.ts";
+import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import useScrollTop from "@/hooks/useScrollTop.tsx";
 
 export default function Main() {

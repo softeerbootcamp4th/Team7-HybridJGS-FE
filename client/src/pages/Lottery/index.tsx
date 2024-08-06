@@ -11,7 +11,7 @@ import PixelDesign from "@/features/Lottery/PixelDesign";
 import ShortCut from "@/features/Lottery/ShortCut";
 import SmileBadge from "@/features/Lottery/SmileBadge";
 import WheelDesign from "@/features/Lottery/WheelDesign";
-import { useHeaderStyleObserver } from "@/hooks/useHeaderStyleObserver.ts";
+import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
 import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
