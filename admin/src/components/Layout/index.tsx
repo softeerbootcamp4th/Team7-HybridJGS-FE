@@ -3,9 +3,9 @@ import Header from "../Header";
 
 export default function Layout() {
     return (
-        <div>
+        <div className="overflow-hidden h-screen">
             <Header />
-            <div className="h-screen overflow-hidden pb-[80px]">
+            <div className="mb-[80px]">
                 <Outlet />
             </div>
         </div>

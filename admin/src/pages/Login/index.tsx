@@ -21,14 +21,17 @@ export default function Login() {
     };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        // TODO: 로그인 로직
         e.preventDefault();
+
+        // TODO: 로그인 로직
+
+        setErrorMessage("");
         navigate("/lottery");
     };
 
     return (
         <form
-            className="flex flex-col gap-12 w-full h-full justify-center items-center"
+            className="flex flex-col gap-12 w-full h-screen justify-center items-center"
             onSubmit={handleSubmit}
         >
             <div className="flex flex-col gap-8 items-end">
