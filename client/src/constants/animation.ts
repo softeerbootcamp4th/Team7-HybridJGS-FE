@@ -32,6 +32,6 @@ export const ASCEND_DESCEND: Variants = {
 export const SCROLL_MOTION = (animation: Variants) => ({
     initial: "offscreen",
     whileInView: "onscreen",
-    viewport: { once: true, amount: 0.8 },
+    viewport: { once: true, amount: 0.95 },
     variants: animation,
 });
