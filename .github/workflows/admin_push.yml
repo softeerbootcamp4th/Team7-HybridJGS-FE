@@ -2,8 +2,10 @@ name: HybridJGS-FE Dev Production
 
 on:
   push:
+    paths:
+      - './admin'
     branches:
-      - dev
+      - feat/#99-deploy
 
 jobs:
   build-and-deploy-admin:

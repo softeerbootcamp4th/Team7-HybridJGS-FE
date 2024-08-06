@@ -2,6 +2,8 @@ name: Build and Comment
 
 on:
   pull_request:
+    paths:
+      - './client'
     branches:
       - main
       - dev
