@@ -7,5 +7,3 @@ export { ShortCut } from "./ShortCut";
 export { SmileBadge } from "./SmileBadge";
 export { WheelDesign } from "./WheelDesign";
 export { CustomDesign } from "./CustomDesign";
-
-df;
