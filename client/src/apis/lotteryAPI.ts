@@ -1,6 +1,7 @@
 import {
     GetApplyCountResponse,
     GetCasperListResponse,
+    GetLotteryResponse,
     PostCasperRequestBody,
     PostCasperResponse,
 } from "@/types/lotteryApi";
@@ -11,6 +12,18 @@ const headers = {
 };
 
 export const LotteryAPI = {
+    async getLottery(): Promise<GetLotteryResponse> {
+        try {
+            const response = await fetch(`${baseURL}`, {
+                method: "GET",
+                headers: headers,
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
     async getCasperList(): Promise<GetCasperListResponse> {
         try {
             const response = await fetch(`${baseURL}/caspers`, {

@@ -19,7 +19,7 @@ import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
-import { GetLotteryResponse } from "@/types/adminApi";
+import { GetLotteryResponse } from "@/types/lotteryApi";
 import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
 import { getMsTime } from "@/utils/getMsTime";
 
