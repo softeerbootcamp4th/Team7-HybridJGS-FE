@@ -23,7 +23,7 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
 
     const dispatch = useCasperCustomDispatchContext();
-    const { casperName, selectedCasperIdx } = useCasperCustomStateContext();
+    const { casperName } = useCasperCustomStateContext();
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
