@@ -1,7 +1,7 @@
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function ElectricAdvantage({ id }: SectionKeyProps) {
+export function ElectricAdvantage({ id }: SectionKeyProps) {
     return (
         <ElectricSection
             id={id}

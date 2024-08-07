@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import CasperSubDescription from "@/features/Rush/CasperSubDescription.tsx";
+import { CasperSubDescription } from "@/features/Rush/CasperSubDescription.tsx";
 
 interface CasperDescriptionProps {
     title: ReactNode;
@@ -9,11 +9,7 @@ interface CasperDescriptionProps {
     description?: string[] | ReactNode;
 }
 
-export default function CasperDescription({
-    title,
-    subTitle,
-    description,
-}: CasperDescriptionProps) {
+export function CasperDescription({ title, subTitle, description }: CasperDescriptionProps) {
     return (
         <div className="flex gap-[42px]">
             <motion.h2 className="h-heading-2-bold text-s-blue" {...SCROLL_MOTION(ASCEND)}>

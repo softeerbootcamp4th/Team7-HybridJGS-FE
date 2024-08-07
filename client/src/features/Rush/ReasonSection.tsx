@@ -8,7 +8,7 @@ interface ReasonSectionProps extends SectionKeyProps {
     children: ReactNode;
 }
 
-export default function ReasonSection({ id, subtitle, children }: ReasonSectionProps) {
+export function ReasonSection({ id, subtitle, children }: ReasonSectionProps) {
     return (
         <section
             id={id}
