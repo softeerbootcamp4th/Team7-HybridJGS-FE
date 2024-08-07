@@ -7,7 +7,7 @@ interface ShortCutProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
 }
 
-export default function ShortCut({ id, handleClickShortCutButton }: ShortCutProps) {
+export function ShortCut({ id, handleClickShortCutButton }: ShortCutProps) {
     return (
         <motion.section
             id={id}

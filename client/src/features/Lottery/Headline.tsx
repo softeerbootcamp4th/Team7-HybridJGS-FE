@@ -8,7 +8,7 @@ interface HeadlineProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
 }
 
-export default function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
+export function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
     return (
         <section
             id={id}

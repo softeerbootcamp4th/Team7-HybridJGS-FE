@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
-import Description from "./Description";
-import Section from "./Section";
+import { Description } from "./Description";
+import { Section } from "./Section";
 
-export default function WheelDesign({ id }: SectionKeyProps) {
+export function WheelDesign({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px] flex flex-col items-end">

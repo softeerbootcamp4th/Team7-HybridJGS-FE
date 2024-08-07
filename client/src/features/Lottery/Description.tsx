@@ -19,7 +19,7 @@ const titleContainerVariants = cva(`flex`, {
     },
 });
 
-export default function Description({
+export function Description({
     direction = "horizontal",
     label,
     title,

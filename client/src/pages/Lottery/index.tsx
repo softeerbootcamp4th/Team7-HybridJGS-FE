@@ -2,15 +2,17 @@ import { useState } from "react";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
 import { LOTTERY_SECTIONS } from "@/constants/PageSections/sections.ts";
-import CustomDesign from "@/features/Lottery/CustomDesign";
-import HeadLamp from "@/features/Lottery/HeadLamp";
-import Headline from "@/features/Lottery/Headline";
-import Intro from "@/features/Lottery/Intro";
-import NewColor from "@/features/Lottery/NewColor";
-import PixelDesign from "@/features/Lottery/PixelDesign";
-import ShortCut from "@/features/Lottery/ShortCut";
-import SmileBadge from "@/features/Lottery/SmileBadge";
-import WheelDesign from "@/features/Lottery/WheelDesign";
+import {
+    CustomDesign,
+    HeadLamp,
+    Headline,
+    Intro,
+    NewColor,
+    PixelDesign,
+    ShortCut,
+    SmileBadge,
+    WheelDesign,
+} from "@/features/Lottery";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
 import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
