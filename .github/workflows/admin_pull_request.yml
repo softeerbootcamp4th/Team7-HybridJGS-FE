@@ -6,7 +6,7 @@ on:
       - main
       - dev
     paths:
-      - 'admin/**'
+      - "admin/**"
 
 jobs:
   build-admin:

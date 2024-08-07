@@ -14,6 +14,7 @@ export interface CasperCustomStateType {
 }
 
 export const CASPER_ACTION = {
+    SET_CASPER: "SET_CASPER",
     SET_CASPER_NAME: "SET_CASPER_NAME",
     SET_EXPECTATIONS: "SET_EXPECTATIONS",
     SELECT_OPTION: "SELECT_OPTION",
@@ -22,6 +23,10 @@ export const CASPER_ACTION = {
 } as const;
 
 export type CasperCustomAction =
+    | {
+          type: typeof CASPER_ACTION.SET_CASPER;
+          payload: { option: SelectedCasperIdxType; casperName: string; expectations: string };
+      }
     | { type: typeof CASPER_ACTION.SET_CASPER_NAME; payload: string }
     | { type: typeof CASPER_ACTION.SET_EXPECTATIONS; payload: string }
     | {

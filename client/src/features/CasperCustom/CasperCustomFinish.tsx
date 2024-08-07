@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
@@ -17,6 +20,8 @@ interface CasperCustomFinishProps {
 }
 
 export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
 
@@ -25,9 +30,16 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
     const [applyCount, setApplyCount] = useState<number>(0);
 
     useEffect(() => {
-        // TODO: apply count 받아와야함
-        setApplyCount(3);
+        if (!cookies[COOKIE_TOKEN_KEY]) {
+            return;
+        }
+        getApplyCount();
     }, []);
+
+    const getApplyCount = async () => {
+        const data = await LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY]);
+        setApplyCount(data.appliedCount);
+    };
 
     const handleSaveImage = () => {
         if (!casperCustomRef.current) {

@@ -2,44 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "HyundaiSansHeadOffice-Bold";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFBold.otf")
-    format("opentype");
+input:focus {
+    outline: none;
 }
 
 @font-face {
-  font-family: "HyundaiSansHeadOffice-Medium";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFMedium.otf")
-    format("opentype");
+    font-family: "HyundaiSansHeadOffice-Bold";
+    src: url("/public/fonts/HyundaiSansHeadKROTFBold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "HyundaiSansHeadOffice-Regular";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFRegular.otf")
-    format("opentype");
+    font-family: "HyundaiSansHeadOffice-Medium";
+    src: url("/public/fonts/HyundaiSansHeadKROTFMedium.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "HyundaiSansHeadOffice-Light";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFLight.otf")
-    format("opentype");
+    font-family: "HyundaiSansHeadOffice-Regular";
+    src: url("/public/fonts/HyundaiSansHeadKROTFRegular.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "HyundaiSansTextOffice-Bold";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFBold.otf")
-    format("opentype");
+    font-family: "HyundaiSansHeadOffice-Light";
+    src: url("/public/fonts/HyundaiSansHeadKROTFLight.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "HyundaiSansTextOffice-Medium";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFMedium.otf")
-    format("opentype");
+    font-family: "HyundaiSansTextOffice-Bold";
+    src: url("/public/fonts/HyundaiSansTextKROTFBold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "HyundaiSansTextOffice-Regular";
-  src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFRegular.otf")
-    format("opentype");
+    font-family: "HyundaiSansTextOffice-Medium";
+    src: url("/public/fonts/HyundaiSansTextKROTFMedium.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansTextOffice-Regular";
+    src: url("/public/fonts/HyundaiSansTextKROTFRegular.otf") format("opentype");
 }

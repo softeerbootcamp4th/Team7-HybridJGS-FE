@@ -1,18 +1,25 @@
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
+import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
+import { CasperInformationType } from "@/types/lotteryApi";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
-    handleSubmitCustomCasper: () => void;
+    navigateNextStep: () => void;
 }
 
-export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
-    const { casperName, expectations } = useCasperCustomStateContext();
+export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+
+    const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 
     const canSubmit = casperName.length !== 0;
@@ -23,6 +30,42 @@ export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormP
 
     const handleSetExpectations = (value: string) => {
         dispatch({ type: CASPER_ACTION.SET_EXPECTATIONS, payload: value });
+    };
+
+    const handleSubmitCasper = async () => {
+        const casper: CasperInformationType = {
+            eyeShape: selectedCasperIdx[CUSTOM_OPTION.EYES],
+            eyePosition: selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION],
+            mouthShape: selectedCasperIdx[CUSTOM_OPTION.MOUTH],
+            color: selectedCasperIdx[CUSTOM_OPTION.COLOR],
+            sticker: selectedCasperIdx[CUSTOM_OPTION.STICKER] || 0,
+            name: casperName,
+            expectation: expectations,
+        };
+
+        const data = await LotteryAPI.postCasper(cookies[COOKIE_TOKEN_KEY], casper);
+
+        /**
+         * 서버 상태 동기화
+         */
+        const { name, expectation, ...selectedOption } = data;
+        const option = {
+            [CUSTOM_OPTION.EYES]: selectedOption.eyeShape,
+            [CUSTOM_OPTION.EYES_DIRECTION]: selectedOption.eyePosition,
+            [CUSTOM_OPTION.MOUTH]: selectedOption.mouthShape,
+            [CUSTOM_OPTION.COLOR]: selectedOption.color,
+            [CUSTOM_OPTION.STICKER]: selectedOption.sticker,
+        };
+        dispatch({
+            type: CASPER_ACTION.SET_CASPER,
+            payload: {
+                option,
+                casperName: name,
+                expectations: expectation,
+            },
+        });
+
+        navigateNextStep();
     };
 
     return (
@@ -53,7 +96,7 @@ export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormP
             </div>
 
             <div className="mt-1000">
-                <CTAButton label="완료" disabled={!canSubmit} onClick={handleSubmitCustomCasper} />
+                <CTAButton label="완료" disabled={!canSubmit} onClick={handleSubmitCasper} />
             </div>
         </motion.div>
     );

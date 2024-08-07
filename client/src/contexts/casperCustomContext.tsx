@@ -30,6 +30,11 @@ const casperCustomReducer = (
     action: CasperCustomAction
 ): CasperCustomStateType => {
     switch (action.type) {
+        case CASPER_ACTION.SET_CASPER: {
+            const { option, casperName, expectations } = action.payload;
+            return { ...state, selectedCasperIdx: option, casperName, expectations };
+        }
+
         case CASPER_ACTION.SET_CASPER_NAME:
             return { ...state, casperName: action.payload };
         case CASPER_ACTION.SET_EXPECTATIONS:

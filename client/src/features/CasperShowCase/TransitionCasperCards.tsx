@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
 import useLazyLoading from "@/hooks/useLazyLoading";
@@ -7,7 +7,7 @@ import { SelectedCasperIdxType } from "@/types/casperCustom";
 import { CasperFlipCard } from "../CasperCustom/CasperFlipCard";
 
 export interface CasperCardType {
-    id: string;
+    id: number;
     casperName: string;
     expectations: string;
     selectedCasperIdx: SelectedCasperIdxType;
@@ -91,19 +91,21 @@ export function TransitionCasperCards({
     };
 
     return (
-        <motion.ul
-            ref={containerRef}
-            className="flex"
-            animate={transitionControls}
-            style={{ gap: `${gap}px` }}
-            onUpdate={(latest) => {
-                if (isEndCard(parseInt(String(latest.x)))) {
-                    startAnimation(initialX);
-                }
-            }}
-        >
-            {cardList.map((card) => renderCardItem(card, card.id))}
-            {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
-        </motion.ul>
+        <AnimatePresence>
+            <motion.ul
+                ref={containerRef}
+                className="flex"
+                animate={transitionControls}
+                style={{ gap: `${gap}px` }}
+                onUpdate={(latest) => {
+                    if (isEndCard(parseInt(String(latest.x)))) {
+                        startAnimation(initialX);
+                    }
+                }}
+            >
+                {cardList.map((card) => renderCardItem(card, `${card.id}`))}
+                {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
+            </motion.ul>
+        </AnimatePresence>
     );
 }
