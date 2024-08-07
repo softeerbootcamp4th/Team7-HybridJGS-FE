@@ -21,7 +21,7 @@ interface TransitionCasperCardsProps {
     isEndCard: (latestX: number) => boolean;
 }
 
-export default function TransitionCasperCards({
+export function TransitionCasperCards({
     cardList,
     initialX,
     diffX,

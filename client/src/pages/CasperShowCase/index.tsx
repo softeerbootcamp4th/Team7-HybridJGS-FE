@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { ASCEND, DISSOLVE } from "@/constants/animation";
-import CasperCards from "@/features/CasperShowCase/CasperCards";
+import { CasperCards } from "@/features/CasperShowCase";
 
 // TODO: 나중에 후처리 부분도 API 폴더에 빼기
 function getCardListData() {
