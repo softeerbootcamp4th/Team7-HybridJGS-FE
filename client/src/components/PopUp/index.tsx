@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CTAButton from "../CTAButton";
@@ -41,7 +41,8 @@ export default function PopUp({
         handlePhoneNumberChange(formattedPhoneNumber);
     };
 
-    const handleConfirm = () => {
+    const handleConfirm = (e: FormEvent) => {
+        e.preventDefault();
         handlePhoneNumberConfirm(phoneNumber);
         navigate(confirmUrl);
     };
@@ -52,8 +53,11 @@ export default function PopUp({
                 className="absolute left-0 top-0 w-[100%] h-[100%] bg-n-black/[.4]"
                 onClick={handleClose}
             />
-            <div className="px-[80px] py-[81px] bg-n-white rounded-800 absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
-                <button className="absolute right-700 top-700" onClick={handleClose}>
+            <form
+                className="px-[80px] py-[81px] bg-n-white rounded-800 absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]"
+                onSubmit={handleConfirm}
+            >
+                <button className="absolute right-700 top-700" type="button" onClick={handleClose}>
                     <img alt="팝업 닫기 버튼" src="/assets/icons/close.svg" />
                 </button>
 
@@ -105,10 +109,10 @@ export default function PopUp({
                         disabled={canConfirm ? false : true}
                         color="blue"
                         label="다음"
-                        onClick={handleConfirm}
+                        type="submit"
                     />
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

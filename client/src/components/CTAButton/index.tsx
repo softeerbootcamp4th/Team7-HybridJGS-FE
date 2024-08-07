@@ -32,6 +32,7 @@ export interface CTAButtonProps extends VariantProps<typeof buttonVariants> {
     url?: string;
     hasArrowIcon?: boolean;
     hasShareIcon?: boolean;
+    type?: "button" | "submit";
 }
 
 export default function CTAButton({
@@ -42,6 +43,7 @@ export default function CTAButton({
     url,
     hasArrowIcon = false,
     hasShareIcon = false,
+    type,
 }: CTAButtonProps) {
     const strokeColor = disabled ? "#637381" : color === "blue" ? "#FFFFFF" : "#04AAD2";
     const status = disabled
@@ -78,7 +80,7 @@ export default function CTAButton({
         );
     }
     return (
-        <button onClick={onClick} disabled={disabled} className={baseClass}>
+        <button onClick={onClick} disabled={disabled} className={baseClass} type={type}>
             {content}
         </button>
     );
