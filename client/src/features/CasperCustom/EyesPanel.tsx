@@ -5,12 +5,15 @@ import {
     OPTION_TYPE,
     POSITION_OPTION,
 } from "@/constants/CasperCustom/casper";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
-import CasperCustomPanelLayout from "./CasperCustomPanelLayout";
-import EyesOptionImageItem from "./EyesOptionImageItem";
+import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import { CASPER_ACTION } from "@/types/casperCustom";
+import { CasperCustomPanelLayout } from "./CasperCustomPanelLayout";
+import { EyesOptionImageItem } from "./EyesOptionImageItem";
 
-export default function EyesPanel() {
-    const { selectedCasperIdx, handleSelectOption } = useCasperCustomContext();
+export function EyesPanel() {
+    const { selectedCasperIdx } = useCasperCustomStateContext();
+    const dispatch = useCasperCustomDispatchContext();
 
     const eyesOptions = CASPER_OPTION[CUSTOM_OPTION.EYES];
     const eyesDirectionOptions = CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION];
@@ -28,11 +31,17 @@ export default function EyesPanel() {
     ];
 
     const handleClickEyes = (id: string) => {
-        handleSelectOption(CUSTOM_OPTION.EYES, id);
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.EYES, id },
+        });
     };
 
     const handleClickEyesDirection = (id: string) => {
-        handleSelectOption(CUSTOM_OPTION.EYES_DIRECTION, id);
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.EYES_DIRECTION, id },
+        });
     };
 
     return (

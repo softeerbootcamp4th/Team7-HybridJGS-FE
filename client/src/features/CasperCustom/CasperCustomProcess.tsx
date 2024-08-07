@@ -1,196 +1,67 @@
 import { useState } from "react";
-import { cva } from "class-variance-authority";
+import { motion } from "framer-motion";
+import CTAButton from "@/components/CTAButton";
 import ListStep from "@/components/ListStep";
-import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/CasperCustom/casper";
-import CasperCardFront from "@/features/CasperCustom/CasperCardFront";
-import CustomOptionImageItem from "@/features/CasperCustom/CustomOptionImageItem";
-import EyesPanel from "@/features/CasperCustom/EyesPanel";
-import SharedPanel from "@/features/CasperCustom/SharedPanel";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
-import CasperCardBack from "./CasperCardBack";
+import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
+import { DISSOLVE } from "@/constants/animation";
+import { MyCasperCardFront } from "@/features/CasperCustom/MyCasperCardFront";
+import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import { getCasperOptionDescription } from "@/utils/CasperCustom/getCasperOptionDescription";
 
-export default function CasperCustomProcess() {
-    const { selectedCasperIdx, handleSelectOption } = useCasperCustomContext();
-    const [selectedOption, setSelectedOption] = useState<number>(0);
+interface CasperCustomProcessProps {
+    handleClickNextStep: () => void;
+}
 
-    const mouthOptions = CASPER_OPTION[CUSTOM_OPTION.MOUTH];
-    const mouthSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.MOUTH];
-    const mouthSelectedOption = mouthOptions[mouthSelectedIdx];
+export function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcessProps) {
+    const { selectedCasperIdx } = useCasperCustomStateContext();
+    const [selectedStepIdx, setSelectedStepIdx] = useState<number>(0);
 
-    const colorOptions = CASPER_OPTION[CUSTOM_OPTION.COLOR];
-    const colorSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.COLOR];
-    const colorSelectedOption = colorOptions[colorSelectedIdx];
+    const optionDescription = getCasperOptionDescription({ selectedStepIdx, selectedCasperIdx });
 
-    const stickerOptions = CASPER_OPTION[CUSTOM_OPTION.STICKER];
-    const stickerSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.STICKER];
-    const stickerSelectedOption =
-        stickerSelectedIdx !== null ? stickerOptions[stickerSelectedIdx] : null;
+    const PanelComponent = CUSTOM_OPTION_ARRAY[selectedStepIdx].component;
 
-    const mouthLimited = CASPER_OPTION[CUSTOM_OPTION.MOUTH]
-        .filter((option) => option.type === OPTION_TYPE.LIMITED)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            mouthSelectedOption !== null
-                                ? mouthSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id)}
-                    />
-                ),
-            };
-        });
-    const mouthBasic = CASPER_OPTION[CUSTOM_OPTION.MOUTH]
-        .filter((option) => option.type === OPTION_TYPE.BASIC)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            mouthSelectedOption !== null
-                                ? mouthSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() => handleSelectOption(CUSTOM_OPTION.MOUTH, option.id)}
-                    />
-                ),
-            };
-        });
+    const customOptionLabels = CUSTOM_OPTION_ARRAY.map((option) => option.label);
+    const isFirstOption = selectedStepIdx === 0;
+    const isLastOption = selectedStepIdx === CUSTOM_OPTION_ARRAY.length - 1;
 
-    const colorVariants = cva(`rounded-1000 border-[2px] w-[72px] h-[72px] cursor-pointer`, {
-        variants: {
-            selected: {
-                true: "border-s-red",
-                false: "border-transparent",
-            },
-        },
-    });
+    const handleClickPrevButton = () => {
+        if (!isFirstOption) {
+            setSelectedStepIdx(selectedStepIdx - 1);
+        }
+    };
 
-    const colorLimited = CASPER_OPTION[CUSTOM_OPTION.COLOR]
-        .filter((option) => option.type === OPTION_TYPE.LIMITED)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <div
-                        className={colorVariants({
-                            selected:
-                                colorSelectedOption !== null
-                                    ? colorSelectedOption.id === option.id
-                                    : false,
-                        })}
-                        style={{ backgroundColor: option.id }}
-                        onClick={() => handleSelectOption(CUSTOM_OPTION.COLOR, option.id)}
-                    />
-                ),
-            };
-        });
-    const colorBasic = CASPER_OPTION[CUSTOM_OPTION.COLOR]
-        .filter((option) => option.type === OPTION_TYPE.BASIC)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <div
-                        className={colorVariants({
-                            selected:
-                                colorSelectedOption !== null
-                                    ? colorSelectedOption.id === option.id
-                                    : false,
-                        })}
-                        style={{ backgroundColor: option.id }}
-                        onClick={() => handleSelectOption(CUSTOM_OPTION.COLOR, option.id)}
-                    />
-                ),
-            };
-        });
-
-    const stickerLimited = CASPER_OPTION[CUSTOM_OPTION.STICKER]
-        .filter((option) => option.type === OPTION_TYPE.LIMITED)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            stickerSelectedOption !== null
-                                ? stickerSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() =>
-                            handleSelectOption(CUSTOM_OPTION.STICKER, option.id)
-                        }
-                    />
-                ),
-            };
-        });
-    const stickerBasic = CASPER_OPTION[CUSTOM_OPTION.STICKER]
-        .filter((option) => option.type === OPTION_TYPE.BASIC)
-        .map((option) => {
-            return {
-                id: option.id,
-                component: (
-                    <CustomOptionImageItem
-                        key={option.id}
-                        optionId={option.id}
-                        selected={
-                            stickerSelectedOption !== null
-                                ? stickerSelectedOption.id === option.id
-                                : false
-                        }
-                        handleClickOption={() =>
-                            handleSelectOption(CUSTOM_OPTION.STICKER, option.id)
-                        }
-                    />
-                ),
-            };
-        });
+    const handleClickNextButton = () => {
+        if (!isLastOption) {
+            setSelectedStepIdx(selectedStepIdx + 1);
+        } else {
+            handleClickNextStep();
+        }
+    };
 
     return (
-        <>
-            <ListStep
-                options={["눈", "입", "색상", "스티커"]}
-                selectedIdx={selectedOption}
-                handleClickOption={(idx) => setSelectedOption(idx)}
-            />
-            <CasperCardFront optionDescription="정면을 보는 15인치 알로이 휠 눈" />
-            <CasperCardFront size="sm" />
-            <CasperCardBack
-                casperName="가다나라마바사"
-                expectations="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십"
-            />
-            <CasperCardBack
-                size="sm"
-                casperName="가다나라마바사"
-                expectations="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십"
-            />
+        <motion.div className="flex flex-col items-center" {...DISSOLVE}>
+            <div className="flex items-end gap-1000">
+                <MyCasperCardFront optionDescription={optionDescription} />
 
-            <EyesPanel />
-            <SharedPanel
-                selectedPanel={CUSTOM_OPTION.MOUTH}
-                limitedOptions={mouthLimited}
-                basicOptions={mouthBasic}
-            />
-            <SharedPanel
-                selectedPanel={CUSTOM_OPTION.COLOR}
-                limitedOptions={colorLimited}
-                basicOptions={colorBasic}
-            />
-            <SharedPanel
-                selectedPanel={CUSTOM_OPTION.STICKER}
-                limitedOptions={stickerLimited}
-                basicOptions={stickerBasic}
-            />
-        </>
+                <div className="flex flex-col gap-400 mt-[42px]">
+                    <ListStep
+                        options={customOptionLabels}
+                        selectedIdx={selectedStepIdx}
+                        handleClickOption={(idx) => setSelectedStepIdx(idx)}
+                    />
+                    {PanelComponent}
+                </div>
+            </div>
+
+            <div className="flex gap-500 mt-1000">
+                {!isFirstOption && (
+                    <CTAButton label="이전으로" color="white" onClick={handleClickPrevButton} />
+                )}
+                <CTAButton
+                    label={isLastOption ? "최종 완료" : "다음으로"}
+                    onClick={handleClickNextButton}
+                />
+            </div>
+        </motion.div>
     );
 }

@@ -128,13 +128,9 @@ close #{issue number}
 
 [notion](https://www.notion.so/bside/0bdf55edcf9f417b8536803cac02339d)
 
-## 기획 링크
+## 기획/디자인 링크
 
-[Figma](https://www.figma.com/design/RjcSZf0akqXegZpLM400IJ/Handoff_%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C%EC%A0%95%EA%B0%81%EC%84%B8?node-id=1216-1405&t=6yNT6Xn926EUb7VQ-1)
-
-## 디자인 링크
-
-[Figma](https://www.figma.com/design/rt4g2VwFF4icjxvj7ZFG0W/Design?node-id=700-18097&t=08P3U4XuXCvULXoW-1)
+[Figma](https://www.figma.com/design/RjcSZf0akqXegZpLM400IJ/Handoff_%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C%EC%A0%95%EA%B0%81%EC%84%B8?node-id=1-6&t=GbJed1IvHO97CNtt-1)
 
 ## Git Project
 

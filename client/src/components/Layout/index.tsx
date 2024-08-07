@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { PhoneNumberProvider } from "@/contexts/phoneNumberContext";
+import { ScrollHeaderStyleProvider } from "@/contexts/scrollHeaderStyleContext.tsx";
 import Header from "../Header";
 
 export default function Layout() {
     return (
-        <>
-            <Header type="light" />
-            <Outlet />
-        </>
+        <ScrollHeaderStyleProvider>
+            <PhoneNumberProvider>
+                <Header />
+                <Outlet />
+            </PhoneNumberProvider>
+        </ScrollHeaderStyleProvider>
     );
 }

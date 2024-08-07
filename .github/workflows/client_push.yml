@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - 'client/**'
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-client:
     runs-on: ubuntu-latest
     env:
       working-directory: ./client

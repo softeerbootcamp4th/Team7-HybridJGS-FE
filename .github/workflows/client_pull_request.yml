@@ -3,11 +3,12 @@ name: Build and Comment
 on:
   pull_request:
     branches:
-      - main
       - dev
+    paths:
+      - 'client/**'
 
 jobs:
-  build:
+  build-client:
     runs-on: ubuntu-latest
     env:
       working-directory: ./client
@@ -27,8 +28,8 @@ jobs:
         run: yarn build
         working-directory: ${{ env.working-directory }}
 
-  comment:
-    needs: build
+  comment-client:
+    needs: build-client
     runs-on: ubuntu-latest
     if: always()
 

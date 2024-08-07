@@ -14,19 +14,19 @@ export const EYES_OPTION = {
     SMILE: "smile",
     CUTE: "cute",
     HEART: "heart",
-};
+} as const;
 export const POSITION_OPTION = {
     LEFT: "left",
     CENTER: "center",
     RIGHT: "right",
-};
+} as const;
 export const MOUTH_OPTION = {
     SMILE: "smile",
     CLOUDY: "cloudy",
     MOCKING: "mocking",
     LAUGH: "laugh",
     EXPRESSIONLESS: "expressionless",
-};
+} as const;
 export const COLOR_OPTION = {
     C_CREAM: "#D8D2BC",
     C_ORANGE: "#CA7349",
@@ -46,18 +46,18 @@ export const COLOR_OPTION = {
     R_ORANGE: "#FF875C",
     R_AMBER: "#FFD96B",
     R_YELLOW: "#FEFF78",
-};
+} as const;
 const STICKER_OPTION = {
     ELECTRIC: "electric",
     CHARGE_MAX: "charge-max",
     CHARGE_NONE: "charge-none",
     LOVELY: "lovely",
     TWINKLE: "twinkle",
-};
+} as const;
 export const OPTION_TYPE = {
     LIMITED: "limited",
     BASIC: "basic",
-};
+} as const;
 
 export const COLOR_BACKGROUND_MAP = [
     COLOR_OPTION.R_BLUE,
@@ -78,13 +78,13 @@ export const COLOR_BACKGROUND_MAP = [
     COLOR_OPTION.R_LIME,
     COLOR_OPTION.R_MAGENTA,
     COLOR_OPTION.R_LIGHTBLUE,
-];
+] as const;
 
 export const CASPER_Z_INDEX = {
     CASPER: 2,
     UNDER_CASPER: 1,
     UPPER_CASPER: 3,
-};
+} as const;
 
 export const CASPER_OPTION = {
     [CUSTOM_OPTION.EYES]: [
@@ -269,7 +269,7 @@ export const OPTION_MAX_COUNT = {
 export const CASPER_SIZE_OPTION = {
     LG: "lg",
     SM: "sm",
-};
+} as const;
 
 export const CASPER_CARD_SIZE = {
     [CASPER_SIZE_OPTION.LG]: {
@@ -277,8 +277,8 @@ export const CASPER_CARD_SIZE = {
         CARD_HEIGHT: 500,
     },
     [CASPER_SIZE_OPTION.SM]: {
-        CARD_WIDTH: 288,
-        CARD_HEIGHT: 375,
+        CARD_WIDTH: 248,
+        CARD_HEIGHT: 325,
     },
 };
 
@@ -295,7 +295,7 @@ export const CASPER_SIZE = {
     [CASPER_SIZE_OPTION.SM]: {
         CASPER_WIDTH: 196,
         CASPER_HEIGHT: 128,
-        CASPER_TOP: 112,
+        CASPER_TOP: 82,
         EYES_WIDTH: 162,
         EYES_HEIGHT: 53,
         EYES_TOP: 22,

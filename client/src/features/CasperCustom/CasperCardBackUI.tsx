@@ -8,17 +8,18 @@ import {
     MINI_CASPER_MOUTH_SIZE,
     MINI_CASPER_SIZE,
 } from "@/constants/CasperCustom/casper";
-import useCasperCustomContext from "@/hooks/useCasperCustomContext";
-import { getCasperEyesComponent } from "@/utils/getCasperEyesComponent";
-import { getCasperMouthComponent } from "@/utils/getCasperMouthComponent";
+import { SelectedCasperIdxType } from "@/types/casperCustom";
+import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
+import { getCasperMouthComponent } from "@/utils/CasperCustom/getCasperMouthComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/casper-custom/face.svg?react";
 import HyundaiLogo from "/public/assets/hyundai-logo.svg?react";
 
-interface CasperCardBackProps {
+interface CasperCardBackUIProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
     casperName: string;
     expectations?: string;
+    selectedCasperIdx: SelectedCasperIdxType;
 }
 
 const casperCardContainerVariants = cva(`relative`, {
@@ -59,22 +60,24 @@ const INNER_STYLE = {
     },
 };
 
-export default function CasperCardBack({
+export function CasperCardBackUI({
     size = CASPER_SIZE_OPTION.LG,
     casperName,
     expectations,
-}: CasperCardBackProps) {
-    const { selectedCasperIdx } = useCasperCustomContext();
+    selectedCasperIdx,
+}: CasperCardBackUIProps) {
+    const {
+        [CUSTOM_OPTION.EYES]: selectedEyesIdx,
+        [CUSTOM_OPTION.EYES_DIRECTION]: selectedEyesDirectionIdx,
+        [CUSTOM_OPTION.MOUTH]: selectedMouthIdx,
+        [CUSTOM_OPTION.COLOR]: selectedColorIdx,
+    } = selectedCasperIdx;
 
-    const selectedColor =
-        CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedCasperIdx[CUSTOM_OPTION.COLOR]];
-    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedCasperIdx[CUSTOM_OPTION.EYES]];
+    const selectedEyes = CASPER_OPTION[CUSTOM_OPTION.EYES][selectedEyesIdx];
     const selectedEyesDirection =
-        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][
-            selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION]
-        ];
-    const selectedMouth =
-        CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedCasperIdx[CUSTOM_OPTION.MOUTH]];
+        CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedEyesDirectionIdx];
+    const selectedMouth = CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedMouthIdx];
+    const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedColorIdx];
 
     const { CARD_WIDTH, CARD_HEIGHT } = CASPER_CARD_SIZE[size];
     const { CASPER_WIDTH, CASPER_HEIGHT, EYES_WIDTH, EYES_HEIGHT, EYES_TOP, BOTTOM_BAR_HEIGHT } =

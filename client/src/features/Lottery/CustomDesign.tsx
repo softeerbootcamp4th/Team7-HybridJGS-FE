@@ -1,9 +1,12 @@
-import Description from "./Description";
-import Section from "./Section";
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
+import { Description } from "./Description";
+import { Section } from "./Section";
 
-export default function CustomDesign() {
+export function CustomDesign({ id }: SectionKeyProps) {
     return (
-        <Section>
+        <Section id={id}>
             <div className="w-[1200px]">
                 <Description
                     label={<>커스텀 디자인</>}
@@ -19,7 +22,7 @@ export default function CustomDesign() {
                     }
                 />
 
-                <div className="mt-[98px] flex gap-700">
+                <motion.div className="mt-[98px] flex gap-700" {...SCROLL_MOTION(DISSOLVE)}>
                     <img
                         alt="커스텀 디자인 첫번째 이미지"
                         src="/assets/lottery/custom-design-1.jpg"
@@ -30,7 +33,7 @@ export default function CustomDesign() {
                         src="/assets/lottery/custom-design-2.jpg"
                         className="w-[588px] object-cover rounded-300"
                     />
-                </div>
+                </motion.div>
             </div>
         </Section>
     );

@@ -15,7 +15,7 @@ const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, 
     },
 });
 
-export default function EyesOptionImageItem({
+export function EyesOptionImageItem({
     isSelected,
     handleClickOption,
     previewUrl,

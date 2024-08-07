@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import CasperCustom from "./pages/CasperCustom";
-import CasperCustomResult from "./pages/CasperCustomResult";
 import CasperShowCase from "./pages/CasperShowCase";
 import Lottery from "./pages/Lottery";
 import Main from "./pages/Main";
@@ -30,10 +29,6 @@ export const router = createBrowserRouter([
                     {
                         path: "custom",
                         element: <CasperCustom />,
-                    },
-                    {
-                        path: "result",
-                        element: <CasperCustomResult />,
                     },
                     {
                         path: "show-case",
