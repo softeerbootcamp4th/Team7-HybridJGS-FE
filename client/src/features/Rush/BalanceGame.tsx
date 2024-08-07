@@ -3,13 +3,9 @@ import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import Background from "@/features/Rush/Background.tsx";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface BalanceGameProps {
-    id: SectionKey;
-}
-
-export default function BalanceGame({ id }: BalanceGameProps) {
+export default function BalanceGame({ id }: SectionKeyProps) {
     return (
         <section
             id={id}

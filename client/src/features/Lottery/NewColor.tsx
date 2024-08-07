@@ -1,14 +1,10 @@
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-interface NewColorProps {
-    id: SectionKey;
-}
-
-export default function NewColor({ id }: NewColorProps) {
+export default function NewColor({ id }: SectionKeyProps) {
     return (
         <Section id={id} className="bg-n-neutral-50">
             <Description

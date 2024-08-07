@@ -3,13 +3,9 @@ import Toggle from "@/components/Toggle";
 import { CARD_DATA, TOGGLE_OPTIONS } from "@/constants/Rush/electricCardData.tsx";
 import ElectricReasonCard from "@/features/Rush/ElectricReasonCard.tsx";
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface ElectricReasonProps {
-    id: SectionKey;
-}
-
-export default function ElectricReason({ id }: ElectricReasonProps) {
+export default function ElectricReason({ id }: SectionKeyProps) {
     const [selectedIdx, setSelectedIdx] = useState(0);
 
     const handleToggle = (idx: number) => {

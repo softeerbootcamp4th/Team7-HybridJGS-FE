@@ -1,12 +1,8 @@
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface FAQProps {
-    id: SectionKey;
-}
-
-export default function FAQ({ id }: FAQProps) {
+export default function FAQ({ id }: SectionKeyProps) {
     return (
         <section
             id={id}

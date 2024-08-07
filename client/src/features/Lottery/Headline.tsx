@@ -2,10 +2,9 @@ import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface HeadlineProps {
-    id: SectionKey;
+interface HeadlineProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
 }
 
@@ -42,7 +41,7 @@ export default function Headline({ id, handleClickShortCutButton }: HeadlineProp
                 />
             </motion.div>
 
-            <div className="mt-[146px]" />
+            <div className="mt-[100px]" />
 
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
                 <Scroll type="light">

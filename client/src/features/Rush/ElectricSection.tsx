@@ -2,10 +2,9 @@ import { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface ElectricSectionProps {
-    id: SectionKey;
+interface ElectricSectionProps extends SectionKeyProps {
     tooltipContent: string;
     tooltipChildren: ReactNode;
     children: ReactNode;

@@ -2,13 +2,9 @@ import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface CasperFarProps {
-    id: SectionKey;
-}
-
-export default function CasperFar({ id }: CasperFarProps) {
+export default function CasperFar({ id }: SectionKeyProps) {
     return (
         <CasperSection id={id}>
             <CasperDescription

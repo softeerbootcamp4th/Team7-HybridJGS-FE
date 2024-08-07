@@ -1,8 +1,7 @@
 import { PropsWithChildren } from "react";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface CasperSectionProps extends PropsWithChildren {
-    id: SectionKey;
+interface CasperSectionProps extends PropsWithChildren, SectionKeyProps {
     className?: string;
 }
 export default function CasperSection({ id, children, className }: CasperSectionProps) {

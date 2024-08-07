@@ -1,6 +1,6 @@
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import Section from "@/features/Main/Section.tsx";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
 // TODO: API로 대체될 데이터
 export const rushEventData: RushEventProps[] = [
@@ -42,11 +42,7 @@ export const rushEventData: RushEventProps[] = [
     },
 ];
 
-interface RushProps {
-    id: SectionKey;
-}
-
-export default function Rush({ id }: RushProps) {
+export default function Rush({ id }: SectionKeyProps) {
     return (
         <Section
             id={id}

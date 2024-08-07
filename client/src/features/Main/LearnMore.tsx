@@ -1,13 +1,9 @@
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface LearnMoreProps {
-    id: SectionKey;
-}
-
-export default function LearnMore({ id }: LearnMoreProps) {
+export default function LearnMore({ id }: SectionKeyProps) {
     return (
         <section
             id={id}

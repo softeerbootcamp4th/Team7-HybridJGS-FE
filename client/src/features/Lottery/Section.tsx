@@ -1,8 +1,7 @@
 import { PropsWithChildren } from "react";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface SectionProps extends PropsWithChildren {
-    id: SectionKey;
+interface SectionProps extends PropsWithChildren, SectionKeyProps {
     className?: string;
 }
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useScrollHeaderStyleContext from "@/hooks/useScrollHeaderStyleContext";
-import { HeaderType, SectionKey } from "@/types/scrollHeaderStyle";
+import { HeaderType } from "@/types/scrollHeaderStyle";
+import { SectionKey } from "@/types/sections.ts";
 
 interface HeaderStyleConfig {
     darkSections: SectionKey[];

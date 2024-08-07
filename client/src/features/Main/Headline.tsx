@@ -2,13 +2,9 @@ import { motion } from "framer-motion";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface HeadlineProps {
-    id: SectionKey;
-}
-
-export default function Headline({ id }: HeadlineProps) {
+export default function Headline({ id }: SectionKeyProps) {
     return (
         <section
             id={id}

@@ -1,15 +1,11 @@
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-interface HeadLampProps {
-    id: SectionKey;
-}
-
-export default function HeadLamp({ id }: HeadLampProps) {
+export default function HeadLamp({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px]">

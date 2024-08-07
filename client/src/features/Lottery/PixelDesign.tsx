@@ -1,14 +1,10 @@
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-interface PixelDesignProps {
-    id: SectionKey;
-}
-
-export default function PixelDesign({ id }: PixelDesignProps) {
+export default function PixelDesign({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px]">

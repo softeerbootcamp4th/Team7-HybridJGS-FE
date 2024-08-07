@@ -1,15 +1,11 @@
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-interface SmileBadgeProps {
-    id: SectionKey;
-}
-
-export default function SmileBadge({ id }: SmileBadgeProps) {
+export default function SmileBadge({ id }: SectionKeyProps) {
     return (
         <Section id={id} className="bg-n-neutral-50 overflow-hidden relative">
             <img

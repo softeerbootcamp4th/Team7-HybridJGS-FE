@@ -1,11 +1,7 @@
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
-import { SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface ElectricAdvantageProps {
-    id: SectionKey;
-}
-
-export default function ElectricAdvantage({ id }: ElectricAdvantageProps) {
+export default function ElectricAdvantage({ id }: SectionKeyProps) {
     return (
         <ElectricSection
             id={id}

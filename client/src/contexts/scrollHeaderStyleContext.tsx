@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useMemo, useState } from "react";
-import { HeaderType, ScrollHeaderStyleType, SectionKey } from "@/types/scrollHeaderStyle.ts";
+import { HeaderType, ScrollHeaderStyleType } from "@/types/scrollHeaderStyle.ts";
+import { SectionKey } from "@/types/sections.ts";
 
 export const ScrollHeaderStyleContext = createContext<ScrollHeaderStyleType | null>(null);
 
