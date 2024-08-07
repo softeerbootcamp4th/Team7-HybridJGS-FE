@@ -1,11 +1,11 @@
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import TransitionCasperCards, { CasperCardType } from "./TransitionCasperCards";
+import { CasperCardType, TransitionCasperCards } from "./TransitionCasperCards";
 
 interface CasperCardsProps {
     cardList: CasperCardType[];
 }
 
-export default function CasperCards({ cardList }: CasperCardsProps) {
+export function CasperCards({ cardList }: CasperCardsProps) {
     const cardLength = cardList.length;
     const cardLengthHalf = Math.floor(cardLength / 2);
     const topCardList = cardList.slice(0, cardLengthHalf);

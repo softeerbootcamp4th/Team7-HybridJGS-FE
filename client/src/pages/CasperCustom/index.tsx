@@ -7,10 +7,12 @@ import {
 } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
 import { CasperCustomProvider } from "@/contexts/casperCustomContext";
-import CasperCustomFinish from "@/features/CasperCustom/CasperCustomFinish";
-import CasperCustomFinishing from "@/features/CasperCustom/CasperCustomFinishing";
-import CasperCustomForm from "@/features/CasperCustom/CasperCustomForm";
-import CasperCustomProcess from "@/features/CasperCustom/CasperCustomProcess";
+import {
+    CasperCustomFinish,
+    CasperCustomFinishing,
+    CasperCustomForm,
+    CasperCustomProcess,
+} from "@/features/CasperCustom";
 
 const INITIAL_STEP = 0;
 

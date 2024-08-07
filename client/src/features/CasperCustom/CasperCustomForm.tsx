@@ -5,13 +5,13 @@ import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
-import MyCasperCardFront from "./MyCasperCardFront";
+import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
     handleSubmitCustomCasper: () => void;
 }
 
-export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
+export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
     const { casperName, expectations } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 

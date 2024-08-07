@@ -60,7 +60,7 @@ const INNER_STYLE = {
     },
 };
 
-export default function CasperCardBackUI({
+export function CasperCardBackUI({
     size = CASPER_SIZE_OPTION.LG,
     casperName,
     expectations,

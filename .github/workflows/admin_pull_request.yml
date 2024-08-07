@@ -3,15 +3,16 @@ name: Build and Comment
 on:
   pull_request:
     branches:
+      - main
       - dev
     paths:
-      - 'client/**'
+      - 'admin/**'
 
 jobs:
-  build-client:
+  build-admin:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./client
+      working-directory: ./admin
 
     steps:
       - name: Checkout code
@@ -28,8 +29,8 @@ jobs:
         run: yarn build
         working-directory: ${{ env.working-directory }}
 
-  comment-client:
-    needs: build-client
+  comment-admin:
+    needs: build-admin
     runs-on: ubuntu-latest
     if: always()
 

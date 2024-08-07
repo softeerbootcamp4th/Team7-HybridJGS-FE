@@ -1,9 +1,12 @@
-import CasperDescription from "@/features/Rush/CasperDescription.tsx";
-import CasperSection from "@/features/Rush/CasperSection.tsx";
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { CasperDescription } from "@/features/Rush/CasperDescription.tsx";
+import { CasperSection } from "@/features/Rush/CasperSection.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function CasperWide() {
+export function CasperWide({ id }: SectionKeyProps) {
     return (
-        <CasperSection className="items-end">
+        <CasperSection id={id} className="items-end">
             <CasperDescription
                 title={
                     <>
@@ -26,7 +29,7 @@ export default function CasperWide() {
                     </>
                 }
             />
-            <div className="flex gap-10">
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE, 0.5)}>
                 <div className="flex flex-col gap-2">
                     <img
                         alt="capser wide-1"
@@ -45,7 +48,7 @@ export default function CasperWide() {
                     />
                     <p className="h-heading-4-bold text-n-neutral-950">풀 폴딩 시트(전좌석)</p>
                 </div>
-            </div>
+            </motion.div>
         </CasperSection>
     );
 }

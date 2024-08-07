@@ -1,12 +1,16 @@
-import CasperSubDescription from "@/features/Rush/CasperSubDescription.tsx";
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { CasperSubDescription } from "@/features/Rush/CasperSubDescription.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function CasperSmartKey() {
+export function CasperSmartKey({ id }: SectionKeyProps) {
     return (
-        <section className="h-[800px] flex gap-10 justify-center items-center">
-            <img
+        <section id={id} className="h-[800px] flex gap-10 justify-center items-center snap-start">
+            <motion.img
                 alt="capser smart key"
                 src="/assets/rush/casper/smart-key.png"
                 className="w-[570px] h-[380px] object-cover rounded-300"
+                {...SCROLL_MOTION(DISSOLVE)}
             />
             <CasperSubDescription
                 subTitle="스마트 키를 사용할 수 있어요"

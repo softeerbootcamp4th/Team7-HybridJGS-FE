@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Toggle from "@/components/Toggle";
 import { CARD_DATA, TOGGLE_OPTIONS } from "@/constants/Rush/electricCardData.tsx";
-import ElectricReasonCard from "@/features/Rush/ElectricReasonCard.tsx";
+import { ElectricReasonCard } from "@/features/Rush/ElectricReasonCard.tsx";
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function ElectricReason() {
+export function ElectricReason({ id }: SectionKeyProps) {
     const [selectedIdx, setSelectedIdx] = useState(0);
 
     const handleToggle = (idx: number) => {
@@ -13,6 +14,7 @@ export default function ElectricReason() {
 
     return (
         <ElectricSection
+            id={id}
             tooltipContent="현대는 왜 전기차에 집중할까요?"
             tooltipChildren={<p className="h-heading-2-bold">전기차를 사야 하는 5가지 이유</p>}
             descriptionChildren={

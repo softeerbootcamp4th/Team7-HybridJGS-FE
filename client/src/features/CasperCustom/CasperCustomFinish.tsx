@@ -8,15 +8,15 @@ import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchConte
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { saveDomImage } from "@/utils/saveDomImage";
-import Battery from "./Battery";
-import MyCasperCardFront from "./MyCasperCardFront";
+import { Battery } from "./Battery";
+import { MyCasperCardFront } from "./MyCasperCardFront";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 interface CasperCustomFinishProps {
     handleResetStep: () => void;
 }
 
-export default function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
+export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
 

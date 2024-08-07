@@ -18,7 +18,7 @@ const selectableVariants = cva(
     }
 );
 
-export default function CustomOptionImageItem({
+export function CustomOptionImageItem({
     optionId,
     selected,
     handleClickOption,

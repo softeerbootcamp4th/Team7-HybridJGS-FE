@@ -50,7 +50,7 @@ export default function Notice() {
     };
 
     return (
-        <div className="w-full h-[756px] flex flex-col gap-y-5 bg-n-neutral-100 py-20 px-[180px] text-n-black">
+        <div className="w-full h-[756px] flex flex-col gap-y-5 bg-n-neutral-100 py-20 px-[180px] text-n-black snap-center">
             <h3 className="!leading-9 h-heading-3-bold">유의사항</h3>
             <Section
                 title="이벤트 참여"
