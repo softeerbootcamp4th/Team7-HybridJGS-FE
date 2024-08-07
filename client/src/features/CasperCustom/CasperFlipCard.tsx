@@ -2,8 +2,8 @@ import { memo } from "react";
 import { motion } from "framer-motion";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
-import CasperCardBackUI from "./CasperCardBackUI";
-import CasperCardFrontUI from "./CasperCardFrontUI";
+import { CasperCardBackUI } from "./CasperCardBackUI";
+import { CasperCardFrontUI } from "./CasperCardFrontUI";
 
 interface CasperFlipCardProps {
     size: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
@@ -56,4 +56,5 @@ function CasperFlipCard({ size, card, isFlipped }: CasperFlipCardProps) {
     );
 }
 
-export default memo(CasperFlipCard);
+const MemoizedCasperFlipCard = memo(CasperFlipCard);
+export { MemoizedCasperFlipCard as CasperFlipCard };

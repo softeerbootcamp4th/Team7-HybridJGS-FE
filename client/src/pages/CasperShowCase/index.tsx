@@ -3,7 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { ASCEND, DISSOLVE } from "@/constants/animation";
-import CasperCards from "@/features/CasperShowCase/CasperCards";
+import { CasperCards } from "@/features/CasperShowCase";
 import { GetCasperListResponse } from "@/types/lotteryApi";
 
 function getCardListData(cardList: GetCasperListResponse) {

@@ -7,13 +7,13 @@ import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchConte
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { CasperInformationType } from "@/types/lotteryApi";
-import MyCasperCardFront from "./MyCasperCardFront";
+import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
     handleSubmitCustomCasper: (casper: CasperInformationType) => void;
 }
 
-export default function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
+export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 

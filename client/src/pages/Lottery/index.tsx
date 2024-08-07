@@ -5,15 +5,19 @@ import { AuthAPI } from "@/apis/authAPI";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
-import CustomDesign from "@/features/Lottery/CustomDesign";
-import HeadLamp from "@/features/Lottery/HeadLamp";
-import Headline from "@/features/Lottery/Headline";
-import Intro from "@/features/Lottery/Intro";
-import NewColor from "@/features/Lottery/NewColor";
-import PixelDesign from "@/features/Lottery/PixelDesign";
-import ShortCut from "@/features/Lottery/ShortCut";
-import SmileBadge from "@/features/Lottery/SmileBadge";
-import WheelDesign from "@/features/Lottery/WheelDesign";
+import { LOTTERY_SECTIONS } from "@/constants/PageSections/sections.ts";
+import {
+    CustomDesign,
+    HeadLamp,
+    Headline,
+    Intro,
+    NewColor,
+    PixelDesign,
+    ShortCut,
+    SmileBadge,
+    WheelDesign,
+} from "@/features/Lottery";
+import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
 import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
@@ -25,6 +29,9 @@ import { getMsTime } from "@/utils/getMsTime";
 
 export default function Lottery() {
     useScrollTop();
+    const containerRef = useHeaderStyleObserver({
+        darkSections: [LOTTERY_SECTIONS.HEADLINE, LOTTERY_SECTIONS.SHORT_CUT],
+    });
 
     const [_cookies, setCookie] = useCookies([COOKIE_TOKEN_KEY]);
 
@@ -75,16 +82,22 @@ export default function Lottery() {
     };
 
     return (
-        <div className="overflow-x-hidden">
-            <Headline handleClickShortCutButton={handleClickShortCut} />
-            <Intro />
-            <HeadLamp />
-            <PixelDesign />
-            <WheelDesign />
-            <CustomDesign />
-            <NewColor />
-            <SmileBadge />
-            <ShortCut handleClickShortCutButton={handleClickShortCut} />
+        <div ref={containerRef} className="h-screen overflow-x-hidden snap-y snap-mandatory">
+            <Headline
+                id={LOTTERY_SECTIONS.HEADLINE}
+                handleClickShortCutButton={handleClickShortCut}
+            />
+            <Intro id={LOTTERY_SECTIONS.INTRO} />
+            <HeadLamp id={LOTTERY_SECTIONS.HEADLAMP} />
+            <PixelDesign id={LOTTERY_SECTIONS.PIXEL_DESIGN} />
+            <WheelDesign id={LOTTERY_SECTIONS.WHEEL_DESIGN} />
+            <CustomDesign id={LOTTERY_SECTIONS.CUSTOM_DESIGN} />
+            <NewColor id={LOTTERY_SECTIONS.NEW_COLOR} />
+            <SmileBadge id={LOTTERY_SECTIONS.SMILE_BADGE} />
+            <ShortCut
+                id={LOTTERY_SECTIONS.SHORT_CUT}
+                handleClickShortCutButton={handleClickShortCut}
+            />
             <Notice />
             <Footer />
 

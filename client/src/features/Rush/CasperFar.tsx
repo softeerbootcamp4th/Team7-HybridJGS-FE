@@ -1,9 +1,12 @@
-import CasperDescription from "@/features/Rush/CasperDescription.tsx";
-import CasperSection from "@/features/Rush/CasperSection.tsx";
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { CasperDescription } from "@/features/Rush/CasperDescription.tsx";
+import { CasperSection } from "@/features/Rush/CasperSection.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function CasperFar() {
+export function CasperFar({ id }: SectionKeyProps) {
     return (
-        <CasperSection>
+        <CasperSection id={id}>
             <CasperDescription
                 title="315km"
                 subTitle="한 번만 충전해도 멀리 갈 수 있어요"
@@ -12,7 +15,7 @@ export default function CasperFar() {
                     "한 번만 충전해도 서울에서 인천까지 9번 운전할 수 있을 정도로, 수도권에 산다면 서울 출퇴근에 활용하기 좋아요.",
                 ]}
             />
-            <div className="flex gap-10">
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE, 0.5)}>
                 <img
                     alt="capser far-1"
                     src="/assets/rush/casper/far-1.png"
@@ -23,7 +26,7 @@ export default function CasperFar() {
                     src="/assets/rush/casper/far-2.jpeg"
                     className="w-[516px] h-[380px] object-cover rounded-300"
                 />
-            </div>
+            </motion.div>
         </CasperSection>
     );
 }

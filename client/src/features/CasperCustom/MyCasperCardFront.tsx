@@ -2,7 +2,7 @@ import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
-import CasperCardFrontUI from "./CasperCardFrontUI";
+import { CasperCardFrontUI } from "./CasperCardFrontUI";
 
 interface MyCasperCardFrontProps {
     size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
@@ -11,7 +11,7 @@ interface MyCasperCardFrontProps {
     hasRandomButton?: boolean;
 }
 
-export default function MyCasperCardFront({
+export function MyCasperCardFront({
     size,
     optionDescription,
     casperName,

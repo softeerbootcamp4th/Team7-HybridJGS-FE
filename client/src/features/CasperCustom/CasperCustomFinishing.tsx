@@ -5,13 +5,13 @@ import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useToast from "@/hooks/useToast";
 import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
-import CasperFlipCard from "./CasperFlipCard";
+import { CasperFlipCard } from "./CasperFlipCard";
 
 interface CasperCustomFinishingProps {
     navigateNextStep: () => void;
 }
 
-export default function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishingProps) {
+export function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishingProps) {
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
 

@@ -1,24 +1,29 @@
+import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
-import Description from "./Description";
-import Section from "./Section";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
+import { Description } from "./Description";
+import { Section } from "./Section";
 
-export default function SmileBadge() {
+export function SmileBadge({ id }: SectionKeyProps) {
     return (
-        <Section className="bg-n-neutral-50 overflow-hidden relative">
+        <Section id={id} className="bg-n-neutral-50 overflow-hidden relative">
             <img
                 alt="캐스퍼 뒷면 이미지"
                 src="/assets/lottery/casper-back.jpg"
                 className="w-[648px] absolute left-0 top-[197px]"
             />
-            <img
+            <motion.img
                 alt="확대 아이콘"
                 src="/assets/lottery/scale-triangle.svg"
                 className="w-[490px] absolute left-[182px] top-[393px]"
+                {...SCROLL_MOTION(DISSOLVE)}
             />
-            <img
+            <motion.img
                 alt="캐스퍼 확대 이미지"
                 src="/assets/lottery/casper-badge.jpg"
                 className="absolute left-[668px] top-[393px] w-[792px] h-[460px] rounded-300"
+                {...SCROLL_MOTION(DISSOLVE)}
             />
             <div className="absolute left-[668px] top-[156px]">
                 <Description
@@ -45,18 +50,20 @@ export default function SmileBadge() {
                     }
                 />
             </div>
-            <Tooltip
-                content={
-                    <>
-                        나를 예쁘게 꾸미고 공유하면
-                        <br />
-                        캐스퍼 일렉트릭을 가질 수 있어
-                    </>
-                }
-                isVisible
-                tooltipPosition="right"
-                absolutePosition={{ left: 884, top: 568 }}
-            />
+            <motion.div {...SCROLL_MOTION(DISSOLVE)}>
+                <Tooltip
+                    content={
+                        <>
+                            나를 예쁘게 꾸미고 공유하면
+                            <br />
+                            캐스퍼 일렉트릭을 가질 수 있어
+                        </>
+                    }
+                    isVisible
+                    tooltipPosition="right"
+                    absolutePosition={{ left: 884, top: 568 }}
+                />
+            </motion.div>
         </Section>
     );
 }

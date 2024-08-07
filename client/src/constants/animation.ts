@@ -1,19 +1,37 @@
 import { Transition, Variants } from "framer-motion";
 
-export const DISSOLVE: Variants | Transition = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    transition: { duration: 0.5 },
+export const DISSOLVE: Variants = {
+    offscreen: { opacity: 0 },
+    onscreen: {
+        opacity: 1,
+        transition: { duration: 0.5 } as Transition,
+    },
 };
 
-export const ASCEND: Variants | Transition = {
-    initial: { y: 40, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    transition: { duration: 0.5 },
+export const ASCEND: Variants = {
+    offscreen: { opacity: 0, y: 40 },
+    onscreen: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5 } as Transition,
+    },
 };
 
-export const ASCEND_DESCEND: Variants | Transition = {
-    initial: { y: 40 },
-    animate: { y: 0 },
-    transition: { duration: 0.5, repeat: Infinity, repeatType: "mirror" },
+export const ASCEND_DESCEND: Variants = {
+    offscreen: { y: 40 },
+    onscreen: {
+        y: 0,
+        transition: {
+            duration: 0.7,
+            repeat: Infinity,
+            repeatType: "mirror",
+        } as Transition,
+    },
 };
+
+export const SCROLL_MOTION = (animation: Variants, amount: number = 0.8) => ({
+    initial: "offscreen",
+    whileInView: "onscreen",
+    viewport: { once: true, amount: amount },
+    variants: animation,
+});

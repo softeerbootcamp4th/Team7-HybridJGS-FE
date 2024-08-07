@@ -5,14 +5,13 @@ on:
     branches:
       - dev
     paths:
-      - 'client/**'
+      - 'admin/**'
 
 jobs:
-  build-and-deploy-client:
+  build-and-deploy-admin:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./client
-
+      working-directory: ./admin
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,8 +38,8 @@ jobs:
 
       #       S3 버킷에 배포
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./client/dist s3://hybridjgs-frontend
+        run: aws s3 sync ./admin/dist s3://hybridjgs-admin
 
       #       CloudFront 삭제
       - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_AWS_DISTRIBUTION_ID }} --paths '/*'
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_AWS_DISTRIBUTION_ID_ADMIN }} --paths '/*'
