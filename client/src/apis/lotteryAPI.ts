@@ -50,7 +50,7 @@ export const LotteryAPI = {
     },
     async postCasper(token: string, body: PostCasperRequestBody): Promise<PostCasperResponse> {
         try {
-            const response = await fetch(`${baseURL}/applied`, {
+            const response = await fetch(`${baseURL}`, {
                 method: "POST",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
                 body: JSON.stringify(body),

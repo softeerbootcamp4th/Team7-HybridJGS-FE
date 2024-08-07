@@ -3,5 +3,5 @@ export interface PostAuthRequestBody {
 }
 
 export interface PostAuthResponse {
-    token: string;
+    accessToken: string;
 }

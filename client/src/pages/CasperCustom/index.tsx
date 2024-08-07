@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useCookies } from "react-cookie";
-import { LotteryAPI } from "@/apis/lotteryAPI";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import {
     CUSTOM_STEP_HEADLINE,
     CUSTOM_STEP_OPTION,
@@ -16,23 +13,15 @@ import {
     CasperCustomForm,
     CasperCustomProcess,
 } from "@/features/CasperCustom";
-import { CasperInformationType } from "@/types/lotteryApi";
 
 const INITIAL_STEP = 0;
 
 export default function CasperCustom() {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-
     const [selectedStepIdx, setSelectedStepIdx] = useState(INITIAL_STEP);
     const selectedStep = CUSTOM_STEP_OPTION_ARRAY[selectedStepIdx];
 
     const handleClickNextStep = () => {
         setSelectedStepIdx(selectedStepIdx + 1);
-    };
-
-    const handleSubmitCustomCasper = async (casper: CasperInformationType) => {
-        await LotteryAPI.postCasper(cookies.token, casper);
-        handleClickNextStep();
     };
 
     const handleResetStep = () => {
@@ -43,7 +32,7 @@ export default function CasperCustom() {
         if (selectedStep === CUSTOM_STEP_OPTION.PROCESS) {
             return <CasperCustomProcess handleClickNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FORM) {
-            return <CasperCustomForm handleSubmitCustomCasper={handleSubmitCustomCasper} />;
+            return <CasperCustomForm navigateNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISHING) {
             return <CasperCustomFinishing navigateNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISH) {

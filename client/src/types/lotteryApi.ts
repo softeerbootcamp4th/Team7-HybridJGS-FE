@@ -20,6 +20,7 @@ export interface PostCasperResponse extends CasperInformationType {
 
 export interface GetApplyCountResponse {
     appliedCount: number;
+    casperBot: CasperInformationType;
 }
 
 export type GetLotteryResponse = {

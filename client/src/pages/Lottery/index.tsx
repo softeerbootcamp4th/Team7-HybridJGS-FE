@@ -49,7 +49,7 @@ export default function Lottery() {
     const handlePhoneNumberConfirm = async (val: string) => {
         const data = await AuthAPI.getAuthToken({ phoneNumber: val });
 
-        setCookie(COOKIE_TOKEN_KEY, data.token);
+        setCookie(COOKIE_TOKEN_KEY, data.accessToken);
         dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
     };
 

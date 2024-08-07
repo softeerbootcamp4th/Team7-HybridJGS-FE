@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
@@ -10,10 +13,12 @@ import { CasperInformationType } from "@/types/lotteryApi";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
-    handleSubmitCustomCasper: (casper: CasperInformationType) => void;
+    navigateNextStep: () => void;
 }
 
-export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormProps) {
+export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 
@@ -27,7 +32,7 @@ export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormP
         dispatch({ type: CASPER_ACTION.SET_EXPECTATIONS, payload: value });
     };
 
-    const handleSubmitCasper = () => {
+    const handleSubmitCasper = async () => {
         const casper: CasperInformationType = {
             eyeShape: selectedCasperIdx[CUSTOM_OPTION.EYES],
             eyePosition: selectedCasperIdx[CUSTOM_OPTION.EYES_DIRECTION],
@@ -37,7 +42,30 @@ export function CasperCustomForm({ handleSubmitCustomCasper }: CasperCustomFormP
             name: casperName,
             expectation: expectations,
         };
-        handleSubmitCustomCasper(casper);
+
+        const data = await LotteryAPI.postCasper(cookies.token, casper);
+
+        /**
+         * 서버 상태 동기화
+         */
+        const { name, expectation, ...selectedOption } = data;
+        const option = {
+            [CUSTOM_OPTION.EYES]: selectedOption.eyeShape,
+            [CUSTOM_OPTION.EYES_DIRECTION]: selectedOption.eyePosition,
+            [CUSTOM_OPTION.MOUTH]: selectedOption.mouthShape,
+            [CUSTOM_OPTION.COLOR]: selectedOption.color,
+            [CUSTOM_OPTION.STICKER]: selectedOption.sticker,
+        };
+        dispatch({
+            type: CASPER_ACTION.SET_CASPER,
+            payload: {
+                option,
+                casperName: name,
+                expectations: expectation,
+            },
+        });
+
+        navigateNextStep();
     };
 
     return (
