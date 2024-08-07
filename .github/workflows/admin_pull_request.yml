@@ -37,7 +37,7 @@ jobs:
     steps:
       #       성공 시 코멘트
       - name: Add a comment on success
-        if: ${{ needs.build-admin.result == 'success' }}
+        if: ${{ needs.build.result == 'success' }}
         uses: actions/github-script@v6
         with:
           script: |
@@ -50,7 +50,7 @@ jobs:
 
       #       실패 시 코멘트
       - name: Add a comment on failure
-        if: ${{ needs.build-admin.result == 'failure' }}
+        if: ${{ needs.build.result == 'failure' }}
         uses: actions/github-script@v6
         with:
           script: |
