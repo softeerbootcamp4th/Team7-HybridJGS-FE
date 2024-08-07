@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { useCookies } from "react-cookie";
+import { useLoaderData } from "react-router-dom";
+import { AuthAPI } from "@/apis/authAPI";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { LOTTERY_SECTIONS } from "@/constants/PageSections/sections.ts";
 import {
     CustomDesign,
@@ -19,7 +23,9 @@ import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
+import { GetLotteryResponse } from "@/types/lotteryApi";
 import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
+import { getMsTime } from "@/utils/getMsTime";
 
 export default function Lottery() {
     useScrollTop();
@@ -27,16 +33,23 @@ export default function Lottery() {
         darkSections: [LOTTERY_SECTIONS.HEADLINE, LOTTERY_SECTIONS.SHORT_CUT],
     });
 
+    const [_cookies, setCookie] = useCookies([COOKIE_TOKEN_KEY]);
+
     const { phoneNumber } = usePhoneNumberStateContext();
     const dispatch = usePhoneNumberDispatchContext();
 
     const [phoneNumberState, setPhoneNumberState] = useState(phoneNumber);
 
+    const data = useLoaderData() as GetLotteryResponse;
+
     const handlePhoneNumberChange = (val: string) => {
         setPhoneNumberState(val);
     };
 
-    const handlePhoneNumberConfirm = (val: string) => {
+    const handlePhoneNumberConfirm = async (val: string) => {
+        const data = await AuthAPI.getAuthToken({ phoneNumber: val });
+
+        setCookie(COOKIE_TOKEN_KEY, data.accessToken);
         dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
     };
 
@@ -48,12 +61,13 @@ export default function Lottery() {
     });
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
 
-    /**
-     * TODO: 이벤트 기간 맞는지 확인하는 로직 필요
-     */
-    const isEventPeriod = true;
-
     const handleClickShortCut = () => {
+        const startDate = getMsTime(data.startDate);
+        const endDate = getMsTime(data.endDate);
+        const currentDate = new Date().getTime();
+
+        const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
+
         if (isEventPeriod) {
             handleOpenPopup();
         } else {
