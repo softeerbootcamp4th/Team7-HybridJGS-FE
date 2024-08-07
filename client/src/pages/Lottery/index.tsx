@@ -55,16 +55,17 @@ export default function Lottery() {
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
 
     const handleClickShortCut = () => {
-        if (data.length === 0) {
-            return;
-        }
+        // if (data.length === 0) {
+        //     return;
+        // }
 
-        const currentEvent = data[0];
-        const startDate = getMsTime(currentEvent.start_date);
-        const endDate = getMsTime(currentEvent.end_date);
-        const currentDate = new Date().getTime();
+        // const currentEvent = data[0];
+        // const startDate = getMsTime(currentEvent.start_date);
+        // const endDate = getMsTime(currentEvent.end_date);
+        // const currentDate = new Date().getTime();
 
-        const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
+        // const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
+        const isEventPeriod = true;
 
         if (isEventPeriod) {
             handleOpenPopup();
