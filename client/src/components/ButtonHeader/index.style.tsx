@@ -6,7 +6,7 @@ export const buttonVariants = cva(
         variants: {
             isSelected: {
                 true: "",
-                false: "text-n-neutral-500 border-transparent",
+                false: "border-transparent",
             },
             type: {
                 light: "",
@@ -23,6 +23,16 @@ export const buttonVariants = cva(
                 isSelected: true,
                 type: "dark",
                 className: "border-n-white text-n-white",
+            },
+            {
+                isSelected: false,
+                type: "light",
+                className: "text-n-neutral-500",
+            },
+            {
+                isSelected: false,
+                type: "dark",
+                className: "text-n-neutral-300",
             },
         ],
     }

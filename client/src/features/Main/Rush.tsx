@@ -1,5 +1,6 @@
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import Section from "@/features/Main/Section.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
 // TODO: API로 대체될 데이터
 export const rushEventData: RushEventProps[] = [
@@ -41,9 +42,10 @@ export const rushEventData: RushEventProps[] = [
     },
 ];
 
-export default function Rush() {
+export default function Rush({ id }: SectionKeyProps) {
     return (
         <Section
+            id={id}
             backgroundColor="bg-n-white"
             title="Event 2. 선착순 이벤트"
             titleColor="text-n-black"

@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import Section from "@/features/Main/Section.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
-export default function Lottery() {
+export default function Lottery({ id }: SectionKeyProps) {
     return (
         <Section
+            id={id}
             backgroundColor="bg-n-black"
             title="Event 1. 추첨 이벤트"
             titleColor="text-n-white"
@@ -15,7 +17,7 @@ export default function Lottery() {
             descriptionColor="text-s-blue"
             url="/lottery"
         >
-            <div className="flex gap-14	p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950">
+            <div className="flex gap-14 p-8 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-950">
                 <img
                     src="/assets/common/casper.webp"
                     alt="casper"

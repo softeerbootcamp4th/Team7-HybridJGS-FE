@@ -1,8 +1,9 @@
 import ReasonSection from "@/features/Rush/ReasonSection.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function ReasonFirst() {
+export default function ReasonFirst({ id }: SectionKeyProps) {
     return (
-        <ReasonSection subtitle="캐스퍼 일렉트릭으로 전기차를 입문해야하는 이유">
+        <ReasonSection id={id} subtitle="캐스퍼 일렉트릭으로 전기차를 입문해야하는 이유">
             <p>전기차가 처음이라면</p>
             <span>
                 <p>캐스퍼 일렉트릭의 뛰어난 </p>

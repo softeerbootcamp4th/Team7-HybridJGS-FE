@@ -1,9 +1,12 @@
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function CasperFast() {
+export default function CasperFast({ id }: SectionKeyProps) {
     return (
-        <CasperSection>
+        <CasperSection id={id}>
             <CasperDescription
                 title={
                     <>
@@ -19,7 +22,7 @@ export default function CasperFast() {
                     "대부분의 아이폰보다도 빠른 속도죠!",
                 ]}
             />
-            <div className="flex gap-10">
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
                 <img
                     alt="capser fast-1"
                     src="/assets/rush/casper/fast-1.png"
@@ -30,7 +33,7 @@ export default function CasperFast() {
                     src="/assets/rush/casper/fast-2.png"
                     className="w-[620px] h-[380px] object-cover rounded-300"
                 />
-            </div>
+            </motion.div>
         </CasperSection>
     );
 }

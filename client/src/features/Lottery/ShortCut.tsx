@@ -1,12 +1,19 @@
+import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
+import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-interface ShortCutProps {
+interface ShortCutProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
 }
 
-export default function ShortCut({ handleClickShortCutButton }: ShortCutProps) {
+export default function ShortCut({ id, handleClickShortCutButton }: ShortCutProps) {
     return (
-        <div className="h-[623px] bg-n-black flex flex-col justify-center items-center text-center">
+        <motion.section
+            id={id}
+            className="h-[623px] bg-n-black flex flex-col justify-center items-center text-center snap-start"
+            {...SCROLL_MOTION(ASCEND)}
+        >
             <img
                 alt="캐스퍼 아이콘"
                 src="/assets/common/casper.webp"
@@ -24,6 +31,6 @@ export default function ShortCut({ handleClickShortCutButton }: ShortCutProps) {
                 hasArrowIcon
                 onClick={handleClickShortCutButton}
             />
-        </div>
+        </motion.section>
     );
 }

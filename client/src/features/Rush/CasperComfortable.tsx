@@ -1,9 +1,12 @@
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import CasperDescription from "@/features/Rush/CasperDescription.tsx";
 import CasperSection from "@/features/Rush/CasperSection.tsx";
+import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function CasperComfortable() {
+export default function CasperComfortable({ id }: SectionKeyProps) {
     return (
-        <CasperSection>
+        <CasperSection id={id}>
             <CasperDescription
                 title={
                     <>
@@ -20,7 +23,7 @@ export default function CasperComfortable() {
                     </>
                 }
             />
-            <div className="flex gap-10">
+            <motion.div className="flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
                 <div className="flex flex-col gap-2">
                     <img
                         alt="capser comfortable-1"
@@ -55,7 +58,7 @@ export default function CasperComfortable() {
                         </p>
                     </span>
                 </div>
-            </div>
+            </motion.div>
         </CasperSection>
     );
 }

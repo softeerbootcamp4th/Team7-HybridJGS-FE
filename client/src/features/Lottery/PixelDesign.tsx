@@ -1,9 +1,12 @@
+import { motion } from "framer-motion";
+import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import { SectionKeyProps } from "@/types/sections.ts";
 import Description from "./Description";
 import Section from "./Section";
 
-export default function PixelDesign() {
+export default function PixelDesign({ id }: SectionKeyProps) {
     return (
-        <Section>
+        <Section id={id}>
             <div className="w-[1200px]">
                 <Description
                     label={
@@ -25,7 +28,7 @@ export default function PixelDesign() {
                     }
                 />
 
-                <div className="mt-[98px] flex gap-700">
+                <motion.div className="mt-[98px] flex gap-700" {...SCROLL_MOTION(DISSOLVE)}>
                     <img
                         alt="픽셀 디자인 첫번째 이미지"
                         src="/assets/lottery/pixel-design-1.jpg"
@@ -36,7 +39,7 @@ export default function PixelDesign() {
                         src="/assets/lottery/pixel-design-2.jpg"
                         className="w-[502px] object-cover rounded-300"
                     />
-                </div>
+                </motion.div>
             </div>
         </Section>
     );
