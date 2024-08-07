@@ -4,9 +4,9 @@ import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/CasperCus
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
-import CustomOptionImageItem from "./CustomOptionImageItem";
-import EyesPanelComponent from "./EyesPanel";
-import SharedPanel from "./SharedPanel";
+import { CustomOptionImageItem } from "./CustomOptionImageItem";
+import { EyesPanel as EyesPanelComponent } from "./EyesPanel";
+import { SharedPanel } from "./SharedPanel";
 
 interface GetCustomOptionImageItemProps {
     optionId: string;

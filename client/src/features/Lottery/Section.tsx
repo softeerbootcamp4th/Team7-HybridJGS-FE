@@ -5,7 +5,7 @@ interface SectionProps extends PropsWithChildren, SectionKeyProps {
     className?: string;
 }
 
-export default function Section({ id, children, className }: SectionProps) {
+export function Section({ id, children, className }: SectionProps) {
     return (
         <section
             id={id}

@@ -4,7 +4,7 @@ import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function Headline({ id }: SectionKeyProps) {
+export function Headline({ id }: SectionKeyProps) {
     return (
         <section
             id={id}

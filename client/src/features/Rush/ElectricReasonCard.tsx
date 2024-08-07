@@ -12,7 +12,7 @@ interface ElectricReasonCardProps {
     data: CardData;
 }
 
-export default function ElectricReasonCard({ data }: ElectricReasonCardProps) {
+export function ElectricReasonCard({ data }: ElectricReasonCardProps) {
     return (
         <motion.div
             className="flex flex-col justify-center items-center p-8 h-[600px] w-[730px] mt-8 gap-8 rounded-500 border-2"

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function Intro({ id }: SectionKeyProps) {
+export function Intro({ id }: SectionKeyProps) {
     return (
         <section id={id} className="h-screen relative flex flex-col snap-start">
             <motion.div

@@ -1,7 +1,7 @@
 import { Fragment, ReactNode } from "react";
 import Category from "@/components/Category";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
-import CasperCustomPanelLayout from "./CasperCustomPanelLayout";
+import { CasperCustomPanelLayout } from "./CasperCustomPanelLayout";
 
 type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
 type OptionListItemType = {
@@ -14,7 +14,7 @@ interface SharedPanelProps {
     basicOptions?: OptionListItemType[];
 }
 
-export default function SharedPanel({ limitedOptions, basicOptions }: SharedPanelProps) {
+export function SharedPanel({ limitedOptions, basicOptions }: SharedPanelProps) {
     const hasLimitedOptions = limitedOptions && limitedOptions.length !== 0;
     const hasBasicOptions = basicOptions && basicOptions.length !== 0;
 

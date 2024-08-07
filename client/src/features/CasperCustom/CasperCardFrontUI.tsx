@@ -45,7 +45,7 @@ const casperNameVariants = cva(
     }
 );
 
-export default function CasperCardFrontUI({
+export function CasperCardFrontUI({
     size = CASPER_SIZE_OPTION.LG,
     optionDescription,
     casperName,

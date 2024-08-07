@@ -1,10 +1,7 @@
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
 import { MAIN_SECTIONS } from "@/constants/PageSections/sections.ts";
-import Headline from "@/features/Main/Headline.tsx";
-import LearnMore from "@/features/Main/LearnMore.tsx";
-import Lottery from "@/features/Main/Lottery.tsx";
-import Rush from "@/features/Main/Rush.tsx";
+import { Headline, LearnMore, Lottery, Rush } from "@/features/Main";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import useScrollTop from "@/hooks/useScrollTop.tsx";
 
