@@ -33,11 +33,9 @@ jobs:
         working-directory: ${{ env.working-directory }}
       
 
-      - name: Set Environment Variables
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-        run:
-          echo "VITE_API_URL=${VITE_API_URL}" >> .env
+      - name: Create .env file
+        run: echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > ./client/.env
+        working-directory: ${{ env.working-directory }}
 
       #       build
       - name: Build project
