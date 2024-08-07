@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function NewColor({ id }: SectionKeyProps) {
+function NewColor({ id }: SectionKeyProps) {
     return (
         <Section id={id} className="bg-n-neutral-50">
             <Description
@@ -30,3 +31,6 @@ export function NewColor({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedNewColor = memo(NewColor);
+export { MemoizedNewColor as NewColor };
