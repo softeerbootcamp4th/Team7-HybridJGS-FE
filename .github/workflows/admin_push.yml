@@ -35,6 +35,12 @@ jobs:
       - name: Build project
         run: yarn build
         working-directory: ${{ env.working-directory }}
+        
+      - name: Set Environment Variables
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run:
+          echo "VITE_API_URL=${VITE_API_URL}" >> .env
 
       #       S3 버킷에 배포
       - name: Deploy static site to S3 bucket
