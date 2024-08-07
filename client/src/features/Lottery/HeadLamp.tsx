@@ -37,19 +37,17 @@ export default function HeadLamp({ id }: HeadLampProps) {
                         src="/assets/lottery/head-lamp-1.jpg"
                         className="w-[666px] object-cover rounded-300"
                     />
-                    <div>
-                        <Tooltip
-                            content="충전 포트는 헤드라이트 옆에 있어요"
-                            isVisible
-                            tooltipPosition="right"
-                        >
-                            <img
-                                alt="헤드램프 두번째 이미지"
-                                src="/assets/lottery/head-lamp-2.jpg"
-                                className="w-[510px] object-cover rounded-300"
-                            />
-                        </Tooltip>
-                    </div>
+                    <Tooltip
+                        content="충전 포트는 헤드라이트 옆에 있어요"
+                        isVisible
+                        tooltipPosition="right"
+                    >
+                        <img
+                            alt="헤드램프 두번째 이미지"
+                            src="/assets/lottery/head-lamp-2.jpg"
+                            className="w-[510px] object-cover rounded-300"
+                        />
+                    </Tooltip>
                 </motion.div>
             </div>
         </Section>
