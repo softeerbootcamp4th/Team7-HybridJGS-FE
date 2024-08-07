@@ -3,7 +3,7 @@ import CTAButton from "@/components/CTAButton";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export default function LearnMore({ id }: SectionKeyProps) {
+export function LearnMore({ id }: SectionKeyProps) {
     return (
         <section
             id={id}

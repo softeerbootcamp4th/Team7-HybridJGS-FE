@@ -14,7 +14,7 @@ interface SectionProps extends PropsWithChildren, SectionKeyProps {
     url?: string;
 }
 
-export default function Section({
+export function Section({
     id,
     backgroundColor,
     title,
