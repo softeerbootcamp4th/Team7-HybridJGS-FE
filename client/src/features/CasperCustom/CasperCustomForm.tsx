@@ -43,7 +43,7 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
             expectation: expectations,
         };
 
-        const data = await LotteryAPI.postCasper(cookies.token, casper);
+        const data = await LotteryAPI.postCasper(cookies[COOKIE_TOKEN_KEY], casper);
 
         /**
          * 서버 상태 동기화

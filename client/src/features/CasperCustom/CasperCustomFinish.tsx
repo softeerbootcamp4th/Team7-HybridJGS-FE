@@ -30,14 +30,14 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
     const [applyCount, setApplyCount] = useState<number>(0);
 
     useEffect(() => {
-        if (!cookies.token) {
+        if (!cookies[COOKIE_TOKEN_KEY]) {
             return;
         }
         getApplyCount();
     }, []);
 
     const getApplyCount = async () => {
-        const data = await LotteryAPI.getApplyCount(cookies.token);
+        const data = await LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY]);
         setApplyCount(data.appliedCount);
     };
 
