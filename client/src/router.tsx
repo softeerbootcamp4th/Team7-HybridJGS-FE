@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Lottery />,
-                        // loader: LotteryAPI.getLottery,
+                        loader: LotteryAPI.getLottery,
                     },
                     {
                         path: "custom",

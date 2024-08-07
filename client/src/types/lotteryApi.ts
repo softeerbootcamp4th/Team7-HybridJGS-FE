@@ -23,9 +23,9 @@ export interface GetApplyCountResponse {
     casperBot: CasperInformationType;
 }
 
-export type GetLotteryResponse = {
-    lottery_event_id: number;
-    start_date: string;
-    end_date: string;
-    winner_count: number;
-}[];
+export interface GetLotteryResponse {
+    lotteryEventId: number;
+    startDate: string;
+    endDate: string;
+    winnerCount: number;
+}
