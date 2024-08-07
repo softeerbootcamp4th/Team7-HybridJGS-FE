@@ -8,7 +8,7 @@ interface BatteryProps {
     applyCount: number;
 }
 
-export default function Battery({ applyCount }: BatteryProps) {
+export function Battery({ applyCount }: BatteryProps) {
     const [batteryApplyArray, setBatteryApplyArray] = useState<boolean[]>(batteryArray);
 
     useEffect(() => {

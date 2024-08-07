@@ -4,7 +4,7 @@ import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/c
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
 import useLazyLoading from "@/hooks/useLazyLoading";
 import { SelectedCasperIdxType } from "@/types/casperCustom";
-import CasperFlipCard from "../CasperCustom/CasperFlipCard";
+import { CasperFlipCard } from "../CasperCustom/CasperFlipCard";
 
 export interface CasperCardType {
     id: string;

@@ -8,10 +8,10 @@ import {
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
-import CasperCustomPanelLayout from "./CasperCustomPanelLayout";
-import EyesOptionImageItem from "./EyesOptionImageItem";
+import { CasperCustomPanelLayout } from "./CasperCustomPanelLayout";
+import { EyesOptionImageItem } from "./EyesOptionImageItem";
 
-export default function EyesPanel() {
+export function EyesPanel() {
     const { selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 
