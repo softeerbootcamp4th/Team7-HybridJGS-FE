@@ -44,12 +44,10 @@ export default function Rush() {
     }, []);
 
     return (
-        <>
-            <div className="flex flex-col items-center">
-                <TabHeader />
+        <div className="flex flex-col items-center">
+            <TabHeader />
 
-                <ApplicantList />
-            </div>
-        </>
+            <ApplicantList />
+        </div>
     );
 }
