@@ -37,7 +37,7 @@ export default function useHeaderStyleObserver(config: HeaderStyleConfig) {
             },
             {
                 root: containerRef.current,
-                threshold: 0.5,
+                threshold: 0.8,
             }
         );
 
