@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import ListStep from "@/components/ListStep";
@@ -13,6 +13,8 @@ interface CasperCustomProcessProps {
     handleClickNextStep: () => void;
 }
 
+const CUSTOM_OPTION_LABELS = CUSTOM_OPTION_ARRAY.map((option) => option.label);
+
 export function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcessProps) {
     const { selectedCasperIdx } = useCasperCustomStateContext();
     const [selectedStepIdx, setSelectedStepIdx] = useState<number>(0);
@@ -21,23 +23,26 @@ export function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcess
 
     const PanelComponent = CUSTOM_OPTION_ARRAY[selectedStepIdx].component;
 
-    const customOptionLabels = CUSTOM_OPTION_ARRAY.map((option) => option.label);
     const isFirstOption = selectedStepIdx === 0;
     const isLastOption = selectedStepIdx === CUSTOM_OPTION_ARRAY.length - 1;
 
-    const handleClickPrevButton = () => {
+    const handleClickPrevButton = useCallback(() => {
         if (!isFirstOption) {
             setSelectedStepIdx(selectedStepIdx - 1);
         }
-    };
+    }, [selectedStepIdx]);
 
-    const handleClickNextButton = () => {
+    const handleClickNextButton = useCallback(() => {
         if (!isLastOption) {
             setSelectedStepIdx(selectedStepIdx + 1);
         } else {
             handleClickNextStep();
         }
-    };
+    }, [selectedStepIdx, isLastOption]);
+
+    const handleClickOption = useCallback((idx: number) => {
+        setSelectedStepIdx(idx);
+    }, []);
 
     return (
         <motion.div className="flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
@@ -46,9 +51,9 @@ export function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcess
 
                 <div className="flex flex-col gap-400 mt-[42px]">
                     <ListStep
-                        options={customOptionLabels}
+                        options={CUSTOM_OPTION_LABELS}
                         selectedIdx={selectedStepIdx}
-                        handleClickOption={(idx) => setSelectedStepIdx(idx)}
+                        handleClickOption={handleClickOption}
                     />
                     {PanelComponent}
                 </div>

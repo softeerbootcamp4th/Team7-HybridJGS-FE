@@ -1,8 +1,10 @@
+import { memo } from "react";
 import { cva } from "class-variance-authority";
 
 interface EyesOptionImageItemProps {
+    id: string;
     isSelected: boolean;
-    handleClickOption: () => void;
+    handleClickOption: (val: string) => void;
     previewUrl: string;
 }
 
@@ -15,7 +17,8 @@ const selectableImageVariants = cva(`rounded-1000 border-[2px] cursor-pointer`, 
     },
 });
 
-export function EyesOptionImageItem({
+function EyesOptionImageItem({
+    id,
     isSelected,
     handleClickOption,
     previewUrl,
@@ -25,9 +28,12 @@ export function EyesOptionImageItem({
             className={selectableImageVariants({
                 selected: isSelected,
             })}
-            onClick={handleClickOption}
+            onClick={() => handleClickOption(id)}
         >
             <img src={`/assets/casper-custom/preview/${previewUrl}`} className="w-[148px] h-12" />
         </li>
     );
 }
+
+const MemoizedEyesOptionImageItem = memo(EyesOptionImageItem);
+export { MemoizedEyesOptionImageItem as EyesOptionImageItem };

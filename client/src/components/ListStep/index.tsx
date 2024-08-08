@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, memo } from "react";
 import { cva } from "class-variance-authority";
 
 export interface ListStepProps {
@@ -19,7 +19,7 @@ const stepVariants = cva(
     }
 );
 
-export default function ListStep({ options, selectedIdx, handleClickOption }: ListStepProps) {
+function ListStep({ options, selectedIdx, handleClickOption }: ListStepProps) {
     const lastOptionIndex = options.length - 1;
 
     return (
@@ -38,3 +38,5 @@ export default function ListStep({ options, selectedIdx, handleClickOption }: Li
         </ul>
     );
 }
+
+export default memo(ListStep);
