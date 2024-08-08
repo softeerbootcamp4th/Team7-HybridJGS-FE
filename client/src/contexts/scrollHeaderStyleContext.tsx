@@ -6,7 +6,7 @@ export const ScrollHeaderStyleContext = createContext<ScrollHeaderStyleType | nu
 
 export const ScrollHeaderStyleProvider = ({ children }: { children: ReactNode }) => {
     const [activeSection, setActiveSection] = useState<SectionKey>("HEADLINE");
-    const [headerType, setHeaderType] = useState<HeaderType>("light");
+    const [headerType, setHeaderType] = useState<HeaderType>("dark");
 
     const value = useMemo(
         () => ({

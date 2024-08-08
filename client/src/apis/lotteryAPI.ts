@@ -5,6 +5,7 @@ import {
     PostCasperRequestBody,
     PostCasperResponse,
 } from "@/types/lotteryApi";
+import { fetchWithTimeout } from "../utils/fetchWithTimeout";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/event/lottery`;
 const headers = {
@@ -14,7 +15,7 @@ const headers = {
 export const LotteryAPI = {
     async getLottery(): Promise<GetLotteryResponse> {
         try {
-            const response = await fetch(`${baseURL}`, {
+            const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
                 headers: headers,
             });
@@ -26,7 +27,7 @@ export const LotteryAPI = {
     },
     async getCasperList(): Promise<GetCasperListResponse> {
         try {
-            const response = await fetch(`${baseURL}/caspers`, {
+            const response = await fetchWithTimeout(`${baseURL}/caspers`, {
                 method: "GET",
                 headers: headers,
             });
@@ -38,7 +39,7 @@ export const LotteryAPI = {
     },
     async getApplyCount(token: string): Promise<GetApplyCountResponse> {
         try {
-            const response = await fetch(`${baseURL}/applied`, {
+            const response = await fetchWithTimeout(`${baseURL}/applied`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -50,7 +51,7 @@ export const LotteryAPI = {
     },
     async postCasper(token: string, body: PostCasperRequestBody): Promise<PostCasperResponse> {
         try {
-            const response = await fetch(`${baseURL}/casperBot`, {
+            const response = await fetchWithTimeout(`${baseURL}/casperBot`, {
                 method: "POST",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
                 body: JSON.stringify(body),
