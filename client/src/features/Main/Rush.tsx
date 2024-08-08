@@ -11,16 +11,19 @@ export function Rush({ id }: SectionKeyProps) {
     useEffect(() => {
         async function loadRushData() {
             const data = await RushAPI.getRush();
+            const serverDateTime = new Date(data.serverDateTime);
 
             const events = data.events.map((event) => {
                 const rushEvent = rushEventData.find((re) => re.id === event.rushEventId);
+                const eventEndTime = new Date(event.endDateTime);
                 return {
                     id: event.rushEventId,
                     date: event.startDateTime,
                     image: rushEvent.image,
                     prizeName: rushEvent.prizeName,
-                    isPastEvent: new Date(event.endDateTime) < new Date(data.serverDateTime),
-                    isTodayEvent: event.rushEventId === data.todayEventId,
+                    isPastEvent: serverDateTime > eventEndTime,
+                    isTodayEvent:
+                        event.rushEventId === data.todayEventId && serverDateTime <= eventEndTime,
                 };
             });
 
