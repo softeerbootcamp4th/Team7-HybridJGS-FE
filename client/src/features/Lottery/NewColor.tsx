@@ -22,11 +22,7 @@ function NewColor({ id }: SectionKeyProps) {
             />
 
             <motion.div className="mt-[86px]" {...SCROLL_MOTION(DISSOLVE)}>
-                <img
-                    alt="캐스퍼 신규 컬러 목록"
-                    src="/assets/lottery/casper-list.webp"
-                    className="max-w-[1800px]"
-                />
+                <img alt="캐스퍼 신규 컬러 목록" src="/assets/lottery/casper-list.webp" />
             </motion.div>
         </Section>
     );
