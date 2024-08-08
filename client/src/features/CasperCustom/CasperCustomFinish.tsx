@@ -11,6 +11,7 @@ import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchConte
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { saveDomImage } from "@/utils/saveDomImage";
+import { SCROLL_MOTION } from "../../constants/animation";
 import { Battery } from "./Battery";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
@@ -55,7 +56,7 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
     };
 
     return (
-        <motion.div className="mt-[60px] flex flex-col items-center" {...DISSOLVE}>
+        <motion.div className="mt-[60px] flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
             <div className="flex items-center gap-[107px]">
                 <div>
                     <div ref={casperCustomRef}>

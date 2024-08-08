@@ -13,6 +13,7 @@ import {
     CasperCustomForm,
     CasperCustomProcess,
 } from "@/features/CasperCustom";
+import { SCROLL_MOTION } from "../../constants/animation";
 
 const INITIAL_STEP = 0;
 
@@ -48,7 +49,7 @@ export default function CasperCustom() {
                     <motion.div
                         key={CUSTOM_STEP_HEADLINE[selectedStep]?.title}
                         className="flex flex-col items-center gap-300"
-                        {...DISSOLVE}
+                        {...SCROLL_MOTION(DISSOLVE)}
                     >
                         <h3 className="text-n-white h-heading-3-bold">
                             {CUSTOM_STEP_HEADLINE[selectedStep]?.title}

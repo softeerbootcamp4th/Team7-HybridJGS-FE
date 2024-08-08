@@ -10,6 +10,7 @@ import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchConte
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { CasperInformationType } from "@/types/lotteryApi";
+import { SCROLL_MOTION } from "../../constants/animation";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
@@ -69,7 +70,7 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
     };
 
     return (
-        <motion.div className="flex flex-col items-center" {...DISSOLVE}>
+        <motion.div className="flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
             <div className="flex items-center mt-[68px] gap-1000">
                 <MyCasperCardFront hasRandomButton={false} />
                 <div>

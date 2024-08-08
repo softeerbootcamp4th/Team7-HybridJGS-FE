@@ -7,6 +7,7 @@ import { DISSOLVE } from "@/constants/animation";
 import { MyCasperCardFront } from "@/features/CasperCustom/MyCasperCardFront";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { getCasperOptionDescription } from "@/utils/CasperCustom/getCasperOptionDescription";
+import { SCROLL_MOTION } from "../../constants/animation";
 
 interface CasperCustomProcessProps {
     handleClickNextStep: () => void;
@@ -39,7 +40,7 @@ export function CasperCustomProcess({ handleClickNextStep }: CasperCustomProcess
     };
 
     return (
-        <motion.div className="flex flex-col items-center" {...DISSOLVE}>
+        <motion.div className="flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
             <div className="flex items-end gap-1000">
                 <MyCasperCardFront optionDescription={optionDescription} />
 
