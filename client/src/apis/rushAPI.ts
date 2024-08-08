@@ -60,14 +60,7 @@ export const RushAPI = {
                 headers: { ...headers, Authorization: `Bearer ${token}` },
                 body: JSON.stringify({}),
             });
-            switch (response.status) {
-                case 204:
-                    return 204;
-                case 404:
-                    return 404;
-                default:
-                    throw new Error(`Unexpected response status: ${response.status}`);
-            }
+            return response.json();
         } catch (error) {
             console.error("Error:", error);
             throw error;
