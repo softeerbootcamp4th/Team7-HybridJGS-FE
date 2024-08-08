@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, memo, useState } from "react";
 import {
     inputVariants,
     labelVariants,
@@ -16,7 +16,7 @@ export interface TextFieldProps {
     handleValueChange: (val: string) => void;
 }
 
-export default function TextField({
+function TextField({
     label,
     isRequired,
     size,
@@ -76,3 +76,5 @@ export default function TextField({
         </div>
     );
 }
+
+export default memo(TextField);

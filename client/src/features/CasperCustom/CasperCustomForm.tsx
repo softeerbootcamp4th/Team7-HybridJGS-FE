@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { LotteryAPI } from "@/apis/lotteryAPI";
@@ -25,13 +26,13 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
 
     const canSubmit = casperName.length !== 0;
 
-    const handleSetCasperName = (value: string) => {
+    const handleSetCasperName = useCallback((value: string) => {
         dispatch({ type: CASPER_ACTION.SET_CASPER_NAME, payload: value });
-    };
+    }, []);
 
-    const handleSetExpectations = (value: string) => {
+    const handleSetExpectations = useCallback((value: string) => {
         dispatch({ type: CASPER_ACTION.SET_EXPECTATIONS, payload: value });
-    };
+    }, []);
 
     const handleSubmitCasper = async () => {
         const casper: CasperInformationType = {
