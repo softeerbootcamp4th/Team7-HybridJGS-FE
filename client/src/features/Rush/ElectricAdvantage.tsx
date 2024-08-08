@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function ElectricAdvantage({ id }: SectionKeyProps) {
+function ElectricAdvantage({ id }: SectionKeyProps) {
     return (
         <ElectricSection
             id={id}
@@ -69,3 +70,6 @@ export function ElectricAdvantage({ id }: SectionKeyProps) {
         </ElectricSection>
     );
 }
+
+const MemoizedElectricAdvantage = memo(ElectricAdvantage);
+export { MemoizedElectricAdvantage as ElectricAdvantage };

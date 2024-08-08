@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import Toggle from "@/components/Toggle";
 import { CARD_DATA, TOGGLE_OPTIONS } from "@/constants/Rush/electricCardData.tsx";
 import { ElectricReasonCard } from "@/features/Rush/ElectricReasonCard.tsx";
 import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function ElectricReason({ id }: SectionKeyProps) {
+function ElectricReason({ id }: SectionKeyProps) {
     const [selectedIdx, setSelectedIdx] = useState(0);
 
     const handleToggle = (idx: number) => {
@@ -34,3 +34,6 @@ export function ElectricReason({ id }: SectionKeyProps) {
         </ElectricSection>
     );
 }
+
+const MemoizedElectricReason = memo(ElectricReason);
+export { MemoizedElectricReason as ElectricReason };
