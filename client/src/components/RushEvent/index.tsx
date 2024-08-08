@@ -1,27 +1,19 @@
-import { useMemo } from "react";
+import { RushEventProps } from "@/constants/Main/rushEventData.ts";
 import { formatDate } from "@/utils/formatDate.ts";
 
-export interface RushEventProps {
-    id: number;
+export interface TotalRushEventsProps extends RushEventProps {
     date: string;
-    image: string;
-    prizeName: string;
+    isPastEvent: boolean;
+    isTodayEvent: boolean;
 }
 
-export default function RushEvent({ date, image, prizeName }: RushEventProps) {
-    // TODO: 백엔드와 상의 후 게임 진행 상태 값 받는 걸로 변경
-    const { isPastEvent, isTodayEvent } = useMemo(() => {
-        const eventDate = new Date(date.split(" ")[0]);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        eventDate.setHours(0, 0, 0, 0);
-
-        return {
-            isPastEvent: eventDate.getTime() < today.getTime(),
-            isTodayEvent: eventDate.getTime() === today.getTime(),
-        };
-    }, [date]);
-
+export default function RushEvent({
+    date,
+    image,
+    prizeName,
+    isPastEvent,
+    isTodayEvent,
+}: Omit<TotalRushEventsProps, "id">) {
     const borderClass = isTodayEvent ? "border-s-red" : "border-n-neutral-300";
     const opacityClass = isPastEvent && "opacity-50";
     const textClass = isTodayEvent ? "text-s-red" : "text-n-neutral-950";

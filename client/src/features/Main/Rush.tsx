@@ -1,48 +1,34 @@
-import RushEvent, { RushEventProps } from "@/components/RushEvent";
+import { useEffect, useState } from "react";
+import { RushAPI } from "@/apis/rushAPI.ts";
+import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
+import { rushEventData } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-// TODO: API로 대체될 데이터
-export const rushEventData: RushEventProps[] = [
-    {
-        id: 1,
-        date: "2024-07-28 09:00:00.000000",
-        image: "/assets/main/rush/prize-1.png",
-        prizeName: "영화 예매권",
-    },
-    {
-        id: 2,
-        date: "2024-07-29 09:00:00.000000",
-        image: "/assets/main/rush/prize-2.png",
-        prizeName: "야구 관람권",
-    },
-    {
-        id: 3,
-        date: "2024-07-30 09:00:00.000000",
-        image: "/assets/main/rush/prize-3.jpg",
-        prizeName: "올리브영 상품권",
-    },
-    {
-        id: 4,
-        date: "2024-07-31 09:00:00.000000",
-        image: "/assets/main/rush/prize-4.jpeg",
-        prizeName: "쿠팡 기프트카드",
-    },
-    {
-        id: 5,
-        date: "2024-08-01 09:00:00.000000",
-        image: "/assets/main/rush/prize-5.jpg",
-        prizeName: "배달의민족 기프트카드",
-    },
-    {
-        id: 6,
-        date: "2024-08-02 09:00:00.000000",
-        image: "/assets/main/rush/prize-6.jpg",
-        prizeName: "BBQ 기프트카드",
-    },
-];
-
 export function Rush({ id }: SectionKeyProps) {
+    const [rushEvents, setRushEvents] = useState<TotalRushEventsProps[]>([]);
+
+    useEffect(() => {
+        async function loadRushData() {
+            const data = await RushAPI.getRush();
+
+            const events = data.events.map((event) => {
+                const rushEvent = rushEventData.find((re) => re.id === event.rushEventId);
+                return {
+                    id: event.rushEventId,
+                    date: event.startDateTime,
+                    image: rushEvent.image,
+                    prizeName: rushEvent.prizeName,
+                    isPastEvent: new Date(event.endDateTime) < new Date(data.serverDateTime),
+                    isTodayEvent: event.rushEventId === data.todayEventId,
+                };
+            });
+
+            setRushEvents(events);
+        }
+        loadRushData();
+    }, []);
+
     return (
         <Section
             id={id}
@@ -79,13 +65,14 @@ export function Rush({ id }: SectionKeyProps) {
                 <div className="flex flex-col gap-4">
                     <p className="h-heading-4-bold text-n-black">이벤트 경품</p>
                     <div className="flex gap-6">
-                        {rushEventData.map((event) => (
+                        {rushEvents.map((event) => (
                             <RushEvent
                                 key={event.id}
-                                id={event.id}
                                 date={event.date}
                                 image={event.image}
                                 prizeName={event.prizeName}
+                                isPastEvent={event.isPastEvent}
+                                isTodayEvent={event.isTodayEvent}
                             />
                         ))}
                     </div>
