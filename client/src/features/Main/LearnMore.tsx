@@ -1,9 +1,10 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function LearnMore({ id }: SectionKeyProps) {
+function LearnMore({ id }: SectionKeyProps) {
     return (
         <section
             id={id}
@@ -24,3 +25,6 @@ export function LearnMore({ id }: SectionKeyProps) {
         </section>
     );
 }
+
+const MemoizedLearnMore = memo(LearnMore);
+export { MemoizedLearnMore as LearnMore };
