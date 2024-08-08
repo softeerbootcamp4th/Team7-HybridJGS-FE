@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function PixelDesign({ id }: SectionKeyProps) {
+function PixelDesign({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px]">
@@ -44,3 +45,6 @@ export function PixelDesign({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedPixelDesign = memo(PixelDesign);
+export { MemoizedPixelDesign as PixelDesign };

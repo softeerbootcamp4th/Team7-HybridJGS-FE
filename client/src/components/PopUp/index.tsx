@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CTAButton from "../CTAButton";
@@ -32,14 +32,21 @@ export default function PopUp({
         setCanConfirm(isUserInfoCheck && isMarketingInfoCheck && isPhoneNumberFormat);
     }, [isUserInfoCheck, isMarketingInfoCheck, phoneNumber]);
 
-    const handleTextFieldChange = (val: string) => {
+    const handleTextFieldChange = useCallback((val: string) => {
         if (val.length > 13) {
             return;
         }
 
         const formattedPhoneNumber = formatPhoneNumber(val);
         handlePhoneNumberChange(formattedPhoneNumber);
-    };
+    }, []);
+
+    const handleUserInfoCheckChange = useCallback((isChecked: boolean) => {
+        setIsUserInfoCheck(isChecked);
+    }, []);
+    const handleMarketingCheckChange = useCallback((isChecked: boolean) => {
+        setIsMarketingInfoCheck(isChecked);
+    }, []);
 
     const handleConfirm = (e: FormEvent) => {
         e.preventDefault();
@@ -90,14 +97,14 @@ export default function PopUp({
                         <CheckBox
                             label="개인정보 수집 및 활용 동의"
                             isChecked={isUserInfoCheck}
-                            handleChangeCheck={(isChecked) => setIsUserInfoCheck(isChecked)}
+                            handleChangeCheck={handleUserInfoCheckChange}
                         />
                     </div>
                     <div className="flex gap-500">
                         <CheckBox
                             label="마케팅 정보 수신 동의"
                             isChecked={isMarketingInfoCheck}
-                            handleChangeCheck={(isChecked) => setIsMarketingInfoCheck(isChecked)}
+                            handleChangeCheck={handleMarketingCheckChange}
                         />
                     </div>
                 </div>

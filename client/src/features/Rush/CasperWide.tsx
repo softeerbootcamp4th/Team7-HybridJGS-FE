@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { CasperDescription } from "@/features/Rush/CasperDescription.tsx";
 import { CasperSection } from "@/features/Rush/CasperSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function CasperWide({ id }: SectionKeyProps) {
+function CasperWide({ id }: SectionKeyProps) {
     return (
         <CasperSection id={id} className="items-end">
             <CasperDescription
@@ -52,3 +53,6 @@ export function CasperWide({ id }: SectionKeyProps) {
         </CasperSection>
     );
 }
+
+const MemoizedCasperWide = memo(CasperWide);
+export { MemoizedCasperWide as CasperWide };

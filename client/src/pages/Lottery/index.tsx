@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useLoaderData } from "react-router-dom";
 import { AuthAPI } from "@/apis/authAPI";
@@ -61,7 +61,7 @@ export default function Lottery() {
     });
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
 
-    const handleClickShortCut = () => {
+    const handleClickShortCut = useCallback(() => {
         const startDate = getMsTime(data.startDate);
         const endDate = getMsTime(data.endDate);
         const currentDate = new Date().getTime();
@@ -73,7 +73,7 @@ export default function Lottery() {
         } else {
             showToast();
         }
-    };
+    }, [data]);
 
     return (
         <div ref={containerRef} className="h-screen overflow-x-hidden snap-y snap-mandatory">

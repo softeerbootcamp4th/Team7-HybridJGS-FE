@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/CasperCustom/casper";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
@@ -11,7 +11,7 @@ import { SharedPanel } from "./SharedPanel";
 interface GetCustomOptionImageItemProps {
     optionId: string;
     isSelected: boolean;
-    handleClickOption: () => void;
+    handleClickOption: (id: string) => void;
 }
 
 function getCustomOptionImageItem({
@@ -50,7 +50,7 @@ function getFilteredOptions({
             getCustomOptionImageItem({
                 optionId: option.id,
                 isSelected: selectedOptionId === option.id || false,
-                handleClickOption: () => handleClickOption(option.id),
+                handleClickOption,
             })
         );
 }
@@ -67,25 +67,24 @@ export function MouthPanel() {
     const mouthSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.MOUTH];
     const mouthSelectedOption = mouthOptions[mouthSelectedIdx];
 
+    const handleDispatchOption = useCallback((id: string) => {
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.MOUTH, id },
+        });
+    }, []);
+
     const mouthLimited = getFilteredOptions({
         optionType: OPTION_TYPE.LIMITED,
         options: mouthOptions,
         selectedOptionId: mouthSelectedOption?.id,
-        handleClickOption: (optionId) =>
-            dispatch({
-                type: CASPER_ACTION.SELECT_OPTION,
-                payload: { option: CUSTOM_OPTION.MOUTH, id: optionId },
-            }),
+        handleClickOption: handleDispatchOption,
     });
     const mouthBasic = getFilteredOptions({
         optionType: OPTION_TYPE.BASIC,
         options: mouthOptions,
         selectedOptionId: mouthSelectedOption?.id,
-        handleClickOption: (optionId) =>
-            dispatch({
-                type: CASPER_ACTION.SELECT_OPTION,
-                payload: { option: CUSTOM_OPTION.MOUTH, id: optionId },
-            }),
+        handleClickOption: handleDispatchOption,
     });
 
     return (
@@ -113,6 +112,13 @@ export function ColorPanel() {
     const colorSelectedIdx = selectedCasperIdx[CUSTOM_OPTION.COLOR];
     const colorSelectedOption = colorOptions[colorSelectedIdx];
 
+    const handleDispatchOption = useCallback((id: string) => {
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.COLOR, id },
+        });
+    }, []);
+
     const colorLimited = colorOptions
         .filter((option) => option.type === OPTION_TYPE.LIMITED)
         .map((option) => {
@@ -124,12 +130,7 @@ export function ColorPanel() {
                             selected: colorSelectedOption?.id === option.id || false,
                         })}
                         style={{ backgroundColor: option.id }}
-                        onClick={() =>
-                            dispatch({
-                                type: CASPER_ACTION.SELECT_OPTION,
-                                payload: { option: CUSTOM_OPTION.COLOR, id: option.id },
-                            })
-                        }
+                        onClick={() => handleDispatchOption(option.id)}
                     />
                 ),
             };
@@ -145,12 +146,7 @@ export function ColorPanel() {
                             selected: colorSelectedOption?.id === option.id || false,
                         })}
                         style={{ backgroundColor: option.id }}
-                        onClick={() =>
-                            dispatch({
-                                type: CASPER_ACTION.SELECT_OPTION,
-                                payload: { option: CUSTOM_OPTION.COLOR, id: option.id },
-                            })
-                        }
+                        onClick={() => handleDispatchOption(option.id)}
                     />
                 ),
             };
@@ -185,25 +181,24 @@ export function StickerPanel() {
         });
     }, []);
 
+    const handleDispatchOption = useCallback((id: string) => {
+        dispatch({
+            type: CASPER_ACTION.SELECT_OPTION,
+            payload: { option: CUSTOM_OPTION.STICKER, id },
+        });
+    }, []);
+
     const stickerLimited = getFilteredOptions({
         optionType: OPTION_TYPE.LIMITED,
         options: stickerOptions,
         selectedOptionId: stickerSelectedOption?.id,
-        handleClickOption: (optionId) =>
-            dispatch({
-                type: CASPER_ACTION.SELECT_OPTION,
-                payload: { option: CUSTOM_OPTION.STICKER, id: optionId },
-            }),
+        handleClickOption: handleDispatchOption,
     });
     const stickerBasic = getFilteredOptions({
         optionType: OPTION_TYPE.BASIC,
         options: stickerOptions,
         selectedOptionId: stickerSelectedOption?.id,
-        handleClickOption: (optionId) =>
-            dispatch({
-                type: CASPER_ACTION.SELECT_OPTION,
-                payload: { option: CUSTOM_OPTION.STICKER, id: optionId },
-            }),
+        handleClickOption: handleDispatchOption,
     });
 
     return (

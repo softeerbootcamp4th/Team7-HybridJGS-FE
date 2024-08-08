@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function NewColor({ id }: SectionKeyProps) {
+function NewColor({ id }: SectionKeyProps) {
     return (
         <Section id={id} className="bg-n-neutral-50">
             <Description
@@ -21,12 +22,11 @@ export function NewColor({ id }: SectionKeyProps) {
             />
 
             <motion.div className="mt-[86px]" {...SCROLL_MOTION(DISSOLVE)}>
-                <img
-                    alt="캐스퍼 신규 컬러 목록"
-                    src="/assets/lottery/casper-list.webp"
-                    className="max-w-[1800px]"
-                />
+                <img alt="캐스퍼 신규 컬러 목록" src="/assets/lottery/casper-list.webp" />
             </motion.div>
         </Section>
     );
 }
+
+const MemoizedNewColor = memo(NewColor);
+export { MemoizedNewColor as NewColor };

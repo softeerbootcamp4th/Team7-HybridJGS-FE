@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function Intro({ id }: SectionKeyProps) {
+function Intro({ id }: SectionKeyProps) {
     return (
         <section
             id={id}
@@ -29,3 +30,6 @@ export function Intro({ id }: SectionKeyProps) {
         </section>
     );
 }
+
+const MemoizedIntro = memo(Intro);
+export { MemoizedIntro as Intro };

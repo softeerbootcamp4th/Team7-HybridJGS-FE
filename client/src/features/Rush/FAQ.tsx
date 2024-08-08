@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function FAQ({ id }: SectionKeyProps) {
+function FAQ({ id }: SectionKeyProps) {
     return (
         <section
             id={id}
@@ -47,3 +48,6 @@ export function FAQ({ id }: SectionKeyProps) {
         </section>
     );
 }
+
+const MemoizedFAQ = memo(FAQ);
+export { MemoizedFAQ as FAQ };

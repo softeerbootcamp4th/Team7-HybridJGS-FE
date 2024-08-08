@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function WheelDesign({ id }: SectionKeyProps) {
+function WheelDesign({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px] flex flex-col items-end">
@@ -42,3 +43,6 @@ export function WheelDesign({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedWheelDesign = memo(WheelDesign);
+export { MemoizedWheelDesign as WheelDesign };
