@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, memo, useState } from "react";
 import { cva } from "class-variance-authority";
 
 export interface InputProps {
@@ -21,13 +21,7 @@ const inputContainerVariants = cva(
     }
 );
 
-export default function Input({
-    type,
-    label,
-    placeholder,
-    value = "",
-    handleValueChange,
-}: InputProps) {
+function Input({ type, label, placeholder, value = "", handleValueChange }: InputProps) {
     const [isFocused, setIsFocused] = useState(false);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,3 +46,5 @@ export default function Input({
         </label>
     );
 }
+
+export default memo(Input);

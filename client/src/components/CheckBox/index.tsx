@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, memo } from "react";
 import { checkBoxContainerVariants, checkBoxVariants } from "./index.style";
 
 export interface CheckBoxProps {
@@ -7,7 +7,7 @@ export interface CheckBoxProps {
     handleChangeCheck: (val: boolean) => void;
 }
 
-export default function CheckBox({ label = "", isChecked, handleChangeCheck }: CheckBoxProps) {
+function CheckBox({ label = "", isChecked, handleChangeCheck }: CheckBoxProps) {
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         handleChangeCheck(e.target.checked);
     };
@@ -32,3 +32,5 @@ export default function CheckBox({ label = "", isChecked, handleChangeCheck }: C
         </label>
     );
 }
+
+export default memo(CheckBox);
