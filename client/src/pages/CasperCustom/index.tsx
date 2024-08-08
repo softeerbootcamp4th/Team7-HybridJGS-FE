@@ -18,17 +18,10 @@ const INITIAL_STEP = 0;
 
 export default function CasperCustom() {
     const [selectedStepIdx, setSelectedStepIdx] = useState(INITIAL_STEP);
-
     const selectedStep = CUSTOM_STEP_OPTION_ARRAY[selectedStepIdx];
 
     const handleClickNextStep = () => {
         setSelectedStepIdx(selectedStepIdx + 1);
-    };
-
-    const handleSubmitCustomCasper = () => {
-        // TODO: 제출 로직 구현
-
-        handleClickNextStep();
     };
 
     const handleResetStep = () => {
@@ -39,7 +32,7 @@ export default function CasperCustom() {
         if (selectedStep === CUSTOM_STEP_OPTION.PROCESS) {
             return <CasperCustomProcess handleClickNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FORM) {
-            return <CasperCustomForm handleSubmitCustomCasper={handleSubmitCustomCasper} />;
+            return <CasperCustomForm navigateNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISHING) {
             return <CasperCustomFinishing navigateNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISH) {
