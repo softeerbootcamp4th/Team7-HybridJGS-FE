@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import useScrollHeaderStyleContext from "@/hooks/useScrollHeaderStyleContext";
 import { HeaderType } from "@/types/scrollHeaderStyle";
 import { SectionKey } from "@/types/sections.ts";
@@ -10,7 +10,7 @@ interface HeaderStyleConfig {
 export default function useHeaderStyleObserver(config: HeaderStyleConfig) {
     const { setActiveSection, setHeaderType } = useScrollHeaderStyleContext();
     const containerRef = useRef<HTMLDivElement>(null);
-    const [visibleSections, setVisibleSections] = useState<Set<SectionKey>>(new Set());
+    const visibleSectionsRef = useRef<Set<SectionKey>>(new Set());
 
     const updateVisibleSections = (
         entries: IntersectionObserverEntry[],
@@ -21,7 +21,7 @@ export default function useHeaderStyleObserver(config: HeaderStyleConfig) {
             if (entry.isIntersecting) newVisibleSections.add(sectionId);
             else newVisibleSections.delete(sectionId);
         });
-        setVisibleSections(newVisibleSections);
+        visibleSectionsRef.current = newVisibleSections;
     };
 
     const updateHeaderStyle = (newVisibleSections: Set<SectionKey>) => {
@@ -38,7 +38,7 @@ export default function useHeaderStyleObserver(config: HeaderStyleConfig) {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                const newVisibleSections = new Set(visibleSections);
+                const newVisibleSections = new Set(visibleSectionsRef.current);
                 updateVisibleSections(entries, newVisibleSections);
                 updateHeaderStyle(newVisibleSections);
             },
@@ -52,7 +52,7 @@ export default function useHeaderStyleObserver(config: HeaderStyleConfig) {
         sections.forEach((section) => observer.observe(section));
 
         return () => observer.disconnect();
-    }, [setActiveSection, setHeaderType, config.darkSections, visibleSections]);
+    }, [setActiveSection, setHeaderType, config.darkSections]);
 
     return containerRef;
 }

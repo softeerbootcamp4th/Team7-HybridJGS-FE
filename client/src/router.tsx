@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
                         index: true,
                         element: <Lottery />,
                         loader: LotteryAPI.getLottery,
-                        errorElement: <ErrorBoundary />,
+                        errorElement: <ErrorBoundary isError />,
                     },
                     {
                         path: "custom",
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
                         path: "show-case",
                         element: <CasperShowCase />,
                         loader: LotteryAPI.getCasperList,
-                        errorElement: <ErrorBoundary />,
+                        errorElement: <ErrorBoundary isError />,
                     },
                 ],
             },
