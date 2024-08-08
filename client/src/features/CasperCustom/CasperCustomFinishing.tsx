@@ -27,13 +27,18 @@ export function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishin
     useEffect(() => {
         showToast();
 
-        setTimeout(() => {
+        const flipTimer = setTimeout(() => {
             setIsFlipped(true);
         }, 3000);
 
-        setTimeout(() => {
+        const navigateTimer = setTimeout(() => {
             navigateNextStep();
         }, 6000);
+
+        return () => {
+            clearTimeout(flipTimer);
+            clearTimeout(navigateTimer);
+        };
     }, []);
 
     return (
