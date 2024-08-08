@@ -57,11 +57,12 @@ export default function Lottery() {
     const lotteryData = useLoaderData() as GetLotteryResponse;
 
     useEffect(() => {
-        if (isSuccessGetAuthToken && authToken) {
+        if (authToken && isSuccessGetAuthToken) {
             setCookie(COOKIE_TOKEN_KEY, authToken.accessToken);
+            dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: phoneNumberState });
             navigate("/lottery/custom");
         }
-    }, [isSuccessGetAuthToken, authToken]);
+    }, [authToken, isSuccessGetAuthToken]);
 
     const handlePhoneNumberChange = (val: string) => {
         setPhoneNumberState(val);
@@ -69,7 +70,6 @@ export default function Lottery() {
 
     const handlePhoneNumberConfirm = async (val: string) => {
         await getAuthToken(val);
-        dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
     };
 
     const { handleOpenPopup, PopupComponent } = usePopup({
