@@ -5,6 +5,7 @@ import CasperCustom from "./pages/CasperCustom";
 import CasperShowCase from "./pages/CasperShowCase";
 import Lottery from "./pages/Lottery";
 import Main from "./pages/Main";
+import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
 
 export const router = createBrowserRouter([
@@ -40,5 +41,9 @@ export const router = createBrowserRouter([
                 ],
             },
         ],
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
 ]);
