@@ -14,8 +14,6 @@ const headers = {
 };
 
 export const RushAPI = {
-    // 밸런스 게임 전체 조회 : 서버 시간 연동 (GET) /event/rush
-    // (서버 시간) - (이벤트 시작 시간) => 카운트 다운 진행
     async getRush(): Promise<GetTotalRushEventsResponse> {
         try {
             const response = await fetch(`${baseURL}`, {
@@ -28,7 +26,6 @@ export const RushAPI = {
             throw error;
         }
     },
-    // 밸런스 게임 참여 여부 조회 (GET) /event/rush/applied
     async getRushParticipationStatus(token: string): Promise<GetRushParticipationStatusResponse> {
         try {
             const response = await fetch(`${baseURL}/applied`, {
@@ -41,7 +38,6 @@ export const RushAPI = {
             throw error;
         }
     },
-    // 밸런스 게임 옵션 선택지 정보 조회 (GET) /event/rush/today
     async getTodayRushEvent(token: string): Promise<GetTodayRushEventResponse> {
         try {
             const response = await fetch(`${baseURL}/today`, {
@@ -54,7 +50,6 @@ export const RushAPI = {
             throw error;
         }
     },
-    // 밸런스 게임 옵션 선택 (응모) (POST) /event/rush/options/{optionId}/apply
     async postSelectedRushOptionApply(
         token: string,
         optionId: number
@@ -78,7 +73,6 @@ export const RushAPI = {
             throw error;
         }
     },
-    // 밸런스 게임 카드 선택 결과 (GET) /event/rush/options/{optionId}/result
     async getRushOptionResult(
         token: string,
         optionId: number
@@ -94,7 +88,6 @@ export const RushAPI = {
             throw error;
         }
     },
-    // 밸런스 게임 선택 비율 조회 (GET) /event/rush/balance
     async getRushBalance(token: string): Promise<GetRushBalanceResponse> {
         try {
             const response = await fetch(`${baseURL}/balance`, {
@@ -107,7 +100,6 @@ export const RushAPI = {
             throw error;
         }
     },
-    // 밸런스 게임 결과 조회 (GET) /event/rush/result
     async getRushResult(token: string): Promise<GetRushResultResponse> {
         try {
             const response = await fetch(`${baseURL}/result`, {
