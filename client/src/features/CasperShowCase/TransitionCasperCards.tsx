@@ -37,7 +37,7 @@ export function TransitionCasperCards({
     const startAnimation = (x: number) => {
         transitionControls.start({
             x: [x, x + diffX],
-            transition: CARD_TRANSITION,
+            transition: CARD_TRANSITION(cardList.length),
         });
     };
 
