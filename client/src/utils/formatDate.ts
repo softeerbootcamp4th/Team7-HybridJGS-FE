@@ -1,3 +1,5 @@
+import { EventDateData } from "@/components/Notice";
+
 export const parseDate = (dateString: string): Date | null => {
     const date = new Date(dateString);
     return isNaN(date.getTime()) ? null : date;
@@ -70,4 +72,16 @@ export const formatEventDateRangeWithDotNoDayOfWeek = (
     const endFormatted = formatDateWithDotNoDayOfWeek(endDate);
 
     return `${startFormatted} ~ ${endFormatted}`;
+};
+
+export const formatEventDate = (
+    eventName: string,
+    eventKey: keyof EventDateData,
+    eventDetails: EventDateData
+) => {
+    const event = eventDetails[eventKey];
+    if (event) {
+        return `${eventName} : ${formatEventDateRangeWithDotNoDayOfWeek(event.startDate, event.endDate)} (${event.activePeriod}일)`;
+    }
+    return `${eventName} : 날짜를 불러오는 중입니다...`;
 };

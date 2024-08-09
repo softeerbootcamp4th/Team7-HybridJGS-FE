@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import { formatEventDateRangeWithDotNoDayOfWeek } from "@/utils/formatDate.ts";
+import { formatEventDate } from "@/utils/formatDate.ts";
 
-interface EventDetails {
+interface EventDateDetails {
     startDate: string;
     endDate: string;
     activePeriod: number;
 }
 
-interface EventData {
-    [key: string]: EventDetails;
+export interface EventDateData {
+    [key: string]: EventDateDetails;
 }
 
 interface SectionProps {
@@ -31,7 +31,7 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
 );
 
 export default function Notice() {
-    const [eventDetails, setEventDetails] = useState<EventData>({});
+    const [eventDetails, setEventDetails] = useState<EventDateData>({});
 
     useEffect(() => {
         (async () => {
@@ -41,13 +41,13 @@ export default function Notice() {
                     LotteryAPI.getLottery(),
                 ]);
 
-                const rushEventDetails: EventDetails = {
+                const rushEventDetails: EventDateDetails = {
                     startDate: rushData.eventsStartDate,
                     endDate: rushData.eventsEndDate,
                     activePeriod: rushData.activePeriod,
                 };
 
-                const lotteryEventDetails: EventDetails = {
+                const lotteryEventDetails: EventDateDetails = {
                     startDate: lotteryData.eventStartDate,
                     endDate: lotteryData.eventEndDate,
                     activePeriod: lotteryData.activePeriod,
@@ -63,14 +63,6 @@ export default function Notice() {
         })();
     }, []);
 
-    const formatEventItem = (eventName: string, eventKey: keyof EventData) => {
-        const event = eventDetails[eventKey];
-        if (event) {
-            return `${eventName} : ${formatEventDateRangeWithDotNoDayOfWeek(event.startDate, event.endDate)} (${event.activePeriod}일)`;
-        }
-        return `${eventName} : 날짜를 불러오는 중입니다...`;
-    };
-
     return (
         <div className="w-full h-[756px] flex flex-col gap-y-5 bg-n-neutral-100 py-20 px-[180px] text-n-black snap-center">
             <h3 className="!leading-9 h-heading-3-bold">유의사항</h3>
@@ -78,8 +70,8 @@ export default function Notice() {
                 title="이벤트 참여"
                 items={[
                     "이벤트 기간",
-                    formatEventItem("캐스퍼봇 뱃지 추첨 이벤트", "rush"),
-                    formatEventItem("선착순 밸런스 게임 이벤트", "lottery"),
+                    formatEventDate("캐스퍼봇 뱃지 추첨 이벤트", "rush", eventDetails),
+                    formatEventDate("선착순 밸런스 게임 이벤트", "lottery", eventDetails),
                     "선착순 밸런스 게임 이벤트는 이벤트 기간 내 매일 하루에 한 번씩, 기간 내 최대 6번 참여 가능합니다.",
                     "이벤트 참여 시 당첨자 연락을 위해 전화번호 기재와 개인정보 수집 동의, 마케팅 정보 수신 동의가 필수로 요구됩니다.",
                     "본 이벤트에서 제작해주신 캐스퍼봇 이미지는 추후 마케팅에 이용될 수 있습니다.",
