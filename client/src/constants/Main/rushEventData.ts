@@ -4,7 +4,7 @@ export interface RushEventProps {
     prizeName: string;
 }
 
-export const rushEventData: RushEventProps[] = [
+export const RUSH_EVENT_DATA: RushEventProps[] = [
     {
         id: 1,
         image: "/assets/main/rush/prize-1.png",

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
-import { rushEventData } from "@/constants/Main/rushEventData.ts";
+import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
@@ -19,7 +19,7 @@ export function Rush({ id }: SectionKeyProps) {
             setEndDateTime(data.eventsEndDate);
 
             const events = data.events.map((event) => {
-                const rushEvent = rushEventData.find((re) => re.id === event.rushEventId) || {
+                const rushEvent = RUSH_EVENT_DATA.find((re) => re.id === event.rushEventId) || {
                     image: "",
                     prizeName: "",
                 };
