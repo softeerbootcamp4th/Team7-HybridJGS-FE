@@ -19,7 +19,11 @@ export function Rush({ id }: SectionKeyProps) {
             setEndDateTime(data.eventsEndDate);
 
             const events = data.events.map((event) => {
-                const rushEvent = rushEventData.find((re) => re.id === event.rushEventId);
+                const rushEvent = rushEventData.find((re) => re.id === event.rushEventId) || {
+                    image: "",
+                    prizeName: "",
+                };
+
                 const eventEndTime = new Date(event.endDateTime);
                 return {
                     id: event.rushEventId,

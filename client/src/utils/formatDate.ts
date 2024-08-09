@@ -23,6 +23,11 @@ export const formatDateWithDot = (date: Date): string => {
     return `${year}. ${month}. ${day}. (${dayOfWeek})`;
 };
 
+export const formatDateWithDotNoDayOfWeek = (date: Date): string => {
+    const { year, month, day } = getFormattedDateComponents(date);
+    return `${year}. ${month}. ${day}.`;
+};
+
 export const formatSingleDateWithSlash = (dateString: string): string => {
     const date = parseDate(dateString);
     if (!date) return "";
@@ -48,6 +53,21 @@ export const formatEventDateRangeWithDot = (
 
     const startFormatted = formatDateWithDot(startDate);
     const endFormatted = formatDateWithDot(endDate);
+
+    return `${startFormatted} ~ ${endFormatted}`;
+};
+
+export const formatEventDateRangeWithDotNoDayOfWeek = (
+    startDateString: string,
+    endDateString: string
+): string => {
+    const startDate = parseDate(startDateString);
+    const endDate = parseDate(endDateString);
+
+    if (!startDate || !endDate) return "";
+
+    const startFormatted = formatDateWithDotNoDayOfWeek(startDate);
+    const endFormatted = formatDateWithDotNoDayOfWeek(endDate);
 
     return `${startFormatted} ~ ${endFormatted}`;
 };

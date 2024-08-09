@@ -62,8 +62,8 @@ export default function Lottery() {
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
 
     const handleClickShortCut = () => {
-        const startDate = getMsTime(data.startDate);
-        const endDate = getMsTime(data.endDate);
+        const startDate = getMsTime(data.eventStartDate);
+        const endDate = getMsTime(data.eventEndDate);
         const currentDate = new Date().getTime();
 
         const isEventPeriod = currentDate >= startDate && currentDate <= endDate;

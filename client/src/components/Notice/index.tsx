@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { LotteryAPI } from "@/apis/lotteryAPI.ts";
+import { RushAPI } from "@/apis/rushAPI.ts";
+import { formatEventDateRangeWithDotNoDayOfWeek } from "@/utils/formatDate.ts";
 
 interface EventDetails {
     startDate: string;
     endDate: string;
-    days: number;
+    activePeriod: number;
 }
 
 interface EventData {
@@ -28,23 +31,42 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
 );
 
 export default function Notice() {
-    const eventDetails: EventData = {
-        // TODO: 임시 데이터 -> API로 변경 필요
-        badgeDraw: {
-            startDate: "2024.08.23.",
-            endDate: "2024.09.05.",
-            days: 14,
-        },
-        balanceGame: {
-            startDate: "2024.08.31.",
-            endDate: "2024.09.05.",
-            days: 6,
-        },
-    };
+    const [eventDetails, setEventDetails] = useState<EventData>({});
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const [rushData, lotteryData] = await Promise.all([
+                    RushAPI.getRush(),
+                    LotteryAPI.getLottery(),
+                ]);
+
+                const rushEventDetails: EventDetails = {
+                    startDate: rushData.eventsStartDate,
+                    endDate: rushData.eventsEndDate,
+                    activePeriod: rushData.activePeriod,
+                };
+
+                const lotteryEventDetails: EventDetails = {
+                    startDate: lotteryData.eventStartDate,
+                    endDate: lotteryData.eventEndDate,
+                    activePeriod: lotteryData.activePeriod,
+                };
+
+                setEventDetails({
+                    rush: lotteryEventDetails,
+                    lottery: rushEventDetails,
+                });
+            } catch (error) {
+                console.error("Error: ", error);
+            }
+        })();
+    }, []);
+
     const formatEventItem = (eventName: string, eventKey: keyof EventData) => {
         const event = eventDetails[eventKey];
         if (event) {
-            return `${eventName} : ${event.startDate} ~ ${event.endDate} (${event.days}일)`;
+            return `${eventName} : ${formatEventDateRangeWithDotNoDayOfWeek(event.startDate, event.endDate)} (${event.activePeriod}일)`;
         }
         return `${eventName} : 날짜를 불러오는 중입니다...`;
     };
@@ -56,8 +78,8 @@ export default function Notice() {
                 title="이벤트 참여"
                 items={[
                     "이벤트 기간",
-                    formatEventItem("캐스퍼봇 뱃지 추첨 이벤트", "badgeDraw"),
-                    formatEventItem("선착순 밸런스 게임 이벤트", "balanceGame"),
+                    formatEventItem("캐스퍼봇 뱃지 추첨 이벤트", "rush"),
+                    formatEventItem("선착순 밸런스 게임 이벤트", "lottery"),
                     "선착순 밸런스 게임 이벤트는 이벤트 기간 내 매일 하루에 한 번씩, 기간 내 최대 6번 참여 가능합니다.",
                     "이벤트 참여 시 당첨자 연락을 위해 전화번호 기재와 개인정보 수집 동의, 마케팅 정보 수신 동의가 필수로 요구됩니다.",
                     "본 이벤트에서 제작해주신 캐스퍼봇 이미지는 추후 마케팅에 이용될 수 있습니다.",
