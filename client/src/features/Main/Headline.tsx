@@ -1,10 +1,23 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
+import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
 export function Headline({ id }: SectionKeyProps) {
+    const [startDateTime, setStartDateTime] = useState<string | null>(null);
+    const [endDateTime, setEndDateTime] = useState<string | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const data = await LotteryAPI.getLottery();
+            setStartDateTime(data.eventStartDate);
+            setEndDateTime(data.eventEndDate);
+        })();
+    }, []);
     return (
         <section
             id={id}
@@ -21,7 +34,9 @@ export function Headline({ id }: SectionKeyProps) {
                     className="w-[667px] h-[300px] mt-10"
                 />
                 <p className="h-heading-3-medium text-n-white pb-28">
-                    2024. 08. 21. (수) ~ 2024. 09. 03. (화)
+                    {startDateTime && endDateTime
+                        ? formatEventDateRangeWithDot(startDateTime, endDateTime)
+                        : ""}
                 </p>
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
