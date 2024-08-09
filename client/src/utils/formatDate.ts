@@ -1,5 +1,7 @@
 import { EventDateData } from "@/components/Notice";
 
+const LOADING_DATE_MESSAGE = "날짜를 불러오는 중입니다...";
+
 export const parseDate = (dateString: string): Date | null => {
     const date = new Date(dateString);
     return isNaN(date.getTime()) ? null : date;
@@ -32,14 +34,14 @@ export const formatDateWithDotNoDayOfWeek = (date: Date): string => {
 
 export const formatSingleDateWithSlash = (dateString: string): string => {
     const date = parseDate(dateString);
-    if (!date) return "";
+    if (!date) return LOADING_DATE_MESSAGE;
 
     return formatDateWithSlash(date);
 };
 
 export const formatSingleDateWithDot = (dateString: string): string => {
     const date = parseDate(dateString);
-    if (!date) return "";
+    if (!date) return LOADING_DATE_MESSAGE;
 
     return formatDateWithDot(date);
 };
@@ -51,7 +53,7 @@ export const formatEventDateRangeWithDot = (
     const startDate = parseDate(startDateString);
     const endDate = parseDate(endDateString);
 
-    if (!startDate || !endDate) return "";
+    if (!startDate || !endDate) return LOADING_DATE_MESSAGE;
 
     const startFormatted = formatDateWithDot(startDate);
     const endFormatted = formatDateWithDot(endDate);
@@ -66,7 +68,7 @@ export const formatEventDateRangeWithDotNoDayOfWeek = (
     const startDate = parseDate(startDateString);
     const endDate = parseDate(endDateString);
 
-    if (!startDate || !endDate) return "";
+    if (!startDate || !endDate) return LOADING_DATE_MESSAGE;
 
     const startFormatted = formatDateWithDotNoDayOfWeek(startDate);
     const endFormatted = formatDateWithDotNoDayOfWeek(endDate);
@@ -83,5 +85,5 @@ export const formatEventDate = (
     if (event && event.startDate && event.endDate) {
         return `${eventName} : ${formatEventDateRangeWithDotNoDayOfWeek(event.startDate, event.endDate)} (${event.activePeriod}일)`;
     }
-    return `${eventName} : 날짜를 불러오는 중입니다...`;
+    return `${eventName} : ${LOADING_DATE_MESSAGE}`;
 };
