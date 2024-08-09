@@ -26,8 +26,7 @@ export const CARD_DAYS = {
     DAY6: 6,
 } as const;
 
-// TODO: 추후 API 연동
-// 색상은 클라이언트측에서 픽스
+// TODO: 추후 API 연동 / 색상은 클라이언트 측에서 픽스
 export const CARD_COLORS: {
     [key in (typeof CARD_DAYS)[keyof typeof CARD_DAYS]]: {
         FIRST_CARD: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
