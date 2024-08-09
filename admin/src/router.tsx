@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Lottery />,
+                        loader: LotteryAPI.getLottery,
                     },
                     {
                         path: "winner",
