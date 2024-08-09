@@ -32,7 +32,7 @@ export default function LotteryWinner() {
             LotteryAPI.getLotteryWinner({ id: lotteryId, size: 10, page: pageParam }),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
-            return lastPage.isLastPage ? currentPageParam + 1 : undefined;
+            return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
     });
     const winnerList = useMemo(

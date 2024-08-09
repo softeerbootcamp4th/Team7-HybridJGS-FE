@@ -80,7 +80,7 @@ export const LotteryAPI = {
                             appliedCount: 3,
                         },
                     ],
-                    isLastPage: false,
+                    isLastPage: true,
                 })
             );
             const response = await fetchWithTimeout(

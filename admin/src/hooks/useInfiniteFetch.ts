@@ -27,7 +27,7 @@ export default function useInfiniteFetch<T>({
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
     const fetchNextPage = useCallback(async () => {
-        if (!hasNextPage || isLoading || !currentPageParam) return;
+        if (!hasNextPage || isLoading || currentPageParam === undefined) return;
 
         setIsLoading(true);
         try {
@@ -42,11 +42,11 @@ export default function useInfiniteFetch<T>({
         } finally {
             setIsLoading(false);
         }
-    }, [fetch, getNextPageParam, currentPageParam, data, hasNextPage, isLoading]);
+    }, [fetch, getNextPageParam, currentPageParam, data, hasNextPage]);
 
     useEffect(() => {
         fetchNextPage();
-    }, [fetchNextPage]);
+    }, []);
 
     return {
         data,
