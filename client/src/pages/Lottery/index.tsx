@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthAPI } from "@/apis/authAPI";
@@ -79,9 +79,9 @@ export default function Lottery() {
     });
     const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
 
-    const handleClickShortCut = () => {
-        const startDate = getMsTime(lotteryData.startDate);
-        const endDate = getMsTime(lotteryData.endDate);
+    const handleClickShortCut = useCallback(() => {
+        const startDate = getMsTime(lotteryData.eventStartDate);
+        const endDate = getMsTime(lotteryData.eventEndDate);
         const currentDate = new Date().getTime();
 
         const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
@@ -91,7 +91,7 @@ export default function Lottery() {
         } else {
             showToast();
         }
-    };
+    }, [lotteryData]);
 
     return (
         <ErrorBoundary isError={isErrorGetAuthToken}>

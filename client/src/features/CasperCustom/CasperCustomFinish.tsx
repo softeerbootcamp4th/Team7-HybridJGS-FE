@@ -14,15 +14,20 @@ import ErrorBoundary from "@/pages/ErrorBoundary";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
+import { SCROLL_MOTION } from "../../constants/animation";
 import { Battery } from "./Battery";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 interface CasperCustomFinishProps {
     handleResetStep: () => void;
+    unblockNavigation: () => void;
 }
 
-export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
+export function CasperCustomFinish({
+    handleResetStep,
+    unblockNavigation,
+}: CasperCustomFinishProps) {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
 
     const {
@@ -40,6 +45,8 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
         if (!cookies[COOKIE_TOKEN_KEY]) {
             return;
         }
+
+        unblockNavigation();
         getApplyCount();
     }, [cookies]);
 
@@ -58,7 +65,10 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
 
     return (
         <ErrorBoundary isError={isErrorgetApplyCount}>
-            <motion.div className="mt-[60px] flex flex-col items-center" {...DISSOLVE}>
+            <motion.div
+                className="mt-[60px] flex flex-col items-center"
+                {...SCROLL_MOTION(DISSOLVE)}
+            >
                 <div className="flex items-center gap-[107px]">
                     <div>
                         <div ref={casperCustomRef}>

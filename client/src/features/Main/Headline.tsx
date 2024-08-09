@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function Headline({ id }: SectionKeyProps) {
+function Headline({ id }: SectionKeyProps) {
     return (
         <section
             id={id}
@@ -34,3 +35,6 @@ export function Headline({ id }: SectionKeyProps) {
         </section>
     );
 }
+
+const MemoizedHeadline = memo(Headline);
+export { MemoizedHeadline as Headline };

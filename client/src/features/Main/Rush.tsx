@@ -1,3 +1,4 @@
+import { memo } from "react";
 import RushEvent, { RushEventProps } from "@/components/RushEvent";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
@@ -42,7 +43,7 @@ export const rushEventData: RushEventProps[] = [
     },
 ];
 
-export function Rush({ id }: SectionKeyProps) {
+function Rush({ id }: SectionKeyProps) {
     return (
         <Section
             id={id}
@@ -94,3 +95,6 @@ export function Rush({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedRush = memo(Rush);
+export { MemoizedRush as Rush };

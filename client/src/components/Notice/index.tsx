@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 interface EventDetails {
     startDate: string;
@@ -27,7 +27,7 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
     </div>
 );
 
-export default function Notice() {
+function Notice() {
     const eventDetails: EventData = {
         // TODO: 임시 데이터 -> API로 변경 필요
         badgeDraw: {
@@ -82,3 +82,5 @@ export default function Notice() {
         </div>
     );
 }
+
+export default memo(Notice);

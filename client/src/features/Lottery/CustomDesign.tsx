@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function CustomDesign({ id }: SectionKeyProps) {
+function CustomDesign({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px]">
@@ -38,3 +39,6 @@ export function CustomDesign({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedCustomDesign = memo(CustomDesign);
+export { MemoizedCustomDesign as CustomDesign };

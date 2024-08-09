@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -5,7 +6,7 @@ import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function SmileBadge({ id }: SectionKeyProps) {
+function SmileBadge({ id }: SectionKeyProps) {
     return (
         <Section id={id} className="bg-n-neutral-50 overflow-hidden relative">
             <img
@@ -67,3 +68,6 @@ export function SmileBadge({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedSmileBadge = memo(SmileBadge);
+export { MemoizedSmileBadge as SmileBadge };

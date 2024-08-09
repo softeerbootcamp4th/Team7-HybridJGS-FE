@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import HyundaiLogo from "/public/assets/hyundai-logo.svg?react";
 
 const LinkSection: React.FC = () => (
@@ -36,7 +36,7 @@ const InfoSection: React.FC = () => (
     </>
 );
 
-export default function Footer() {
+function Footer() {
     return (
         <div className="w-full h-[266px] bg-black pl-[180px] py-[70px] snap-end">
             <div className="flex h-6 gap-[180px]">
@@ -49,3 +49,5 @@ export default function Footer() {
         </div>
     );
 }
+
+export default memo(Footer);

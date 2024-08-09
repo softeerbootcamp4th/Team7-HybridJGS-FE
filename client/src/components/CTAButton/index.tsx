@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { VariantProps, cva } from "class-variance-authority";
 import { Link } from "react-router-dom";
 import "@/index.css";
@@ -35,7 +36,7 @@ export interface CTAButtonProps extends VariantProps<typeof buttonVariants> {
     type?: "button" | "submit";
 }
 
-export default function CTAButton({
+function CTAButton({
     label,
     onClick,
     disabled = false,
@@ -85,3 +86,5 @@ export default function CTAButton({
         </button>
     );
 }
+
+export default memo(CTAButton);

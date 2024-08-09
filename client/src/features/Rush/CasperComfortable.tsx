@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { CasperDescription } from "@/features/Rush/CasperDescription.tsx";
 import { CasperSection } from "@/features/Rush/CasperSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function CasperComfortable({ id }: SectionKeyProps) {
+function CasperComfortable({ id }: SectionKeyProps) {
     return (
         <CasperSection id={id}>
             <CasperDescription
@@ -62,3 +63,6 @@ export function CasperComfortable({ id }: SectionKeyProps) {
         </CasperSection>
     );
 }
+
+const MemoizedCasperComfortable = memo(CasperComfortable);
+export { MemoizedCasperComfortable as CasperComfortable };

@@ -1,3 +1,4 @@
+import { memo, useCallback } from "react";
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
@@ -11,7 +12,7 @@ interface MyCasperCardFrontProps {
     hasRandomButton?: boolean;
 }
 
-export function MyCasperCardFront({
+function MyCasperCardFront({
     size,
     optionDescription,
     casperName,
@@ -20,6 +21,10 @@ export function MyCasperCardFront({
     const { selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 
+    const handleDispatchShuffle = useCallback(() => {
+        dispatch({ type: CASPER_ACTION.SHUFFLE_CASPER });
+    }, []);
+
     return (
         <CasperCardFrontUI
             size={size}
@@ -27,7 +32,10 @@ export function MyCasperCardFront({
             casperName={casperName}
             hasRandomButton={hasRandomButton}
             selectedCasperIdx={selectedCasperIdx}
-            handleShuffleCasper={() => dispatch({ type: CASPER_ACTION.SHUFFLE_CASPER })}
+            handleShuffleCasper={handleDispatchShuffle}
         />
     );
 }
+
+const MemoizedMyCasperCardFront = memo(MyCasperCardFront);
+export { MemoizedMyCasperCardFront as MyCasperCardFront };

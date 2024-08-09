@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
@@ -8,7 +9,7 @@ interface HeadlineProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
 }
 
-export function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
+function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
     return (
         <section
             id={id}
@@ -53,3 +54,6 @@ export function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
         </section>
     );
 }
+
+const MemoizedHeadline = memo(Headline);
+export { MemoizedHeadline as Headline };

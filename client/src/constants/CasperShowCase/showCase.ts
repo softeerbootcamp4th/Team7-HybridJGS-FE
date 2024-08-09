@@ -1,8 +1,8 @@
-export const CARD_TRANSITION = {
+export const CARD_TRANSITION = (itemLength: number) => ({
     x: {
         repeat: Infinity,
         repeatType: "loop",
-        duration: 100,
+        duration: itemLength * 2,
         ease: "linear",
     },
-};
+});
