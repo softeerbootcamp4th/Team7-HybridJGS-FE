@@ -18,9 +18,13 @@ import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 interface CasperCustomFinishProps {
     handleResetStep: () => void;
+    unblockNavigation: () => void;
 }
 
-export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
+export function CasperCustomFinish({
+    handleResetStep,
+    unblockNavigation,
+}: CasperCustomFinishProps) {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
 
     const dispatch = useCasperCustomDispatchContext();
@@ -34,6 +38,8 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
         if (!cookies[COOKIE_TOKEN_KEY]) {
             return;
         }
+
+        unblockNavigation();
         getApplyCount();
     }, []);
 
