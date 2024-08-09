@@ -77,10 +77,10 @@ export const formatEventDateRangeWithDotNoDayOfWeek = (
 export const formatEventDate = (
     eventName: string,
     eventKey: keyof EventDateData,
-    eventDetails: EventDateData
+    eventDateDetails: EventDateData
 ) => {
-    const event = eventDetails[eventKey];
-    if (event) {
+    const event = eventDateDetails[eventKey];
+    if (event && event.startDate && event.endDate) {
         return `${eventName} : ${formatEventDateRangeWithDotNoDayOfWeek(event.startDate, event.endDate)} (${event.activePeriod}일)`;
     }
     return `${eventName} : 날짜를 불러오는 중입니다...`;

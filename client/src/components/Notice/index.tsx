@@ -30,36 +30,48 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
     </div>
 );
 
+const getEventsDateDetails = async (): Promise<{
+    rush: EventDateDetails;
+    lottery: EventDateDetails;
+}> => {
+    try {
+        const [rushData, lotteryData] = await Promise.all([
+            RushAPI.getRush(),
+            LotteryAPI.getLottery(),
+        ]);
+
+        const rushEventDetails: EventDateDetails = {
+            startDate: rushData.eventsStartDate,
+            endDate: rushData.eventsEndDate,
+            activePeriod: rushData.activePeriod,
+        };
+
+        const lotteryEventDetails: EventDateDetails = {
+            startDate: lotteryData.eventStartDate,
+            endDate: lotteryData.eventEndDate,
+            activePeriod: lotteryData.activePeriod,
+        };
+
+        return {
+            rush: lotteryEventDetails,
+            lottery: rushEventDetails,
+        };
+    } catch (error) {
+        console.error("Error: ", error);
+        return {
+            rush: { startDate: "", endDate: "", activePeriod: 0 },
+            lottery: { startDate: "", endDate: "", activePeriod: 0 },
+        };
+    }
+};
+
 export default function Notice() {
-    const [eventDetails, setEventDetails] = useState<EventDateData>({});
+    const [eventDateDetails, setEventDateDetails] = useState<EventDateData>({});
 
     useEffect(() => {
         (async () => {
-            try {
-                const [rushData, lotteryData] = await Promise.all([
-                    RushAPI.getRush(),
-                    LotteryAPI.getLottery(),
-                ]);
-
-                const rushEventDetails: EventDateDetails = {
-                    startDate: rushData.eventsStartDate,
-                    endDate: rushData.eventsEndDate,
-                    activePeriod: rushData.activePeriod,
-                };
-
-                const lotteryEventDetails: EventDateDetails = {
-                    startDate: lotteryData.eventStartDate,
-                    endDate: lotteryData.eventEndDate,
-                    activePeriod: lotteryData.activePeriod,
-                };
-
-                setEventDetails({
-                    rush: lotteryEventDetails,
-                    lottery: rushEventDetails,
-                });
-            } catch (error) {
-                console.error("Error: ", error);
-            }
+            const details = await getEventsDateDetails();
+            setEventDateDetails(details);
         })();
     }, []);
 
@@ -70,8 +82,8 @@ export default function Notice() {
                 title="이벤트 참여"
                 items={[
                     "이벤트 기간",
-                    formatEventDate("캐스퍼봇 뱃지 추첨 이벤트", "rush", eventDetails),
-                    formatEventDate("선착순 밸런스 게임 이벤트", "lottery", eventDetails),
+                    formatEventDate("캐스퍼봇 뱃지 추첨 이벤트", "rush", eventDateDetails),
+                    formatEventDate("선착순 밸런스 게임 이벤트", "lottery", eventDateDetails),
                     "선착순 밸런스 게임 이벤트는 이벤트 기간 내 매일 하루에 한 번씩, 기간 내 최대 6번 참여 가능합니다.",
                     "이벤트 참여 시 당첨자 연락을 위해 전화번호 기재와 개인정보 수집 동의, 마케팅 정보 수신 동의가 필수로 요구됩니다.",
                     "본 이벤트에서 제작해주신 캐스퍼봇 이미지는 추후 마케팅에 이용될 수 있습니다.",
