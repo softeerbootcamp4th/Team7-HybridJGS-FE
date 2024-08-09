@@ -7,9 +7,7 @@ export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>) 
 
     const fetchData = async (params?: P) => {
         try {
-            console.log("hohi");
             const data = await fetch(params as P);
-            console.log(data);
             setData(data);
             setIsSuccess(!!data);
         } catch (error) {

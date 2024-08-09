@@ -1,24 +1,35 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
-import { GetLotteryResponse } from "@/types/lottery";
+import useFetch from "@/hooks/useFetch";
+import { GetLotteryResponse, PostLotteryResponse } from "@/types/lottery";
 
 export default function Lottery() {
-    const data = useLoaderData() as GetLotteryResponse;
+    const lottery = useLoaderData() as GetLotteryResponse;
+    const lotteryId = lottery.length !== 0 ? lottery[0].lotteryEventId : -1;
 
     const navigate = useNavigate();
 
     const [totalCount, setTotalCount] = useState<number>(0);
     const [giftCount, setGiftCount] = useState<number>(0);
 
+    const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
+        useFetch<PostLotteryResponse>(() => LotteryAPI.postLotteryWinner({ id: lotteryId }));
+
     useEffect(() => {
-        if (data.length !== 0) {
-            const currentLotttery = data[0];
+        if (lottery.length !== 0) {
+            const currentLotttery = lottery[0];
             setGiftCount(currentLotttery.winnerCount);
             setTotalCount(currentLotttery.appliedCount);
         }
-    }, [data]);
+    }, [lottery]);
+    useEffect(() => {
+        if (isSuccessPostLottery) {
+            navigate("/lottery/winner");
+        }
+    }, [isSuccessPostLottery]);
 
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const count = parseInt(e.target.value);
@@ -26,8 +37,7 @@ export default function Lottery() {
     };
 
     const handleLottery = () => {
-        // TODO: 당첨자 추첨
-        navigate("/lottery/winner");
+        postLottery();
     };
 
     return (

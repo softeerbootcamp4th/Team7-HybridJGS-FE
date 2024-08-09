@@ -5,3 +5,11 @@ export type GetLotteryResponse = {
     appliedCount: number;
     winnerCount: number;
 }[];
+
+export interface PostLotteryParams {
+    id: number;
+}
+
+export interface PostLotteryResponse {
+    message: string;
+}
