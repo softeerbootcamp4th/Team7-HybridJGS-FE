@@ -1,5 +1,4 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CTAButton from "../CTAButton";
 import CheckBox from "../CheckBox";
@@ -10,7 +9,6 @@ export interface PopUpProps {
     handlePhoneNumberChange: (val: string) => void;
     handlePhoneNumberConfirm: (val: string) => void;
     handleClose: () => void;
-    confirmUrl: string;
 }
 
 export default function PopUp({
@@ -18,10 +16,7 @@ export default function PopUp({
     handlePhoneNumberChange,
     handlePhoneNumberConfirm,
     handleClose,
-    confirmUrl,
 }: PopUpProps) {
-    const navigate = useNavigate();
-
     const [isUserInfoCheck, setIsUserInfoCheck] = useState(true);
     const [isMarketingInfoCheck, setIsMarketingInfoCheck] = useState(true);
     const [canConfirm, setCanConfirm] = useState(false);
@@ -51,7 +46,6 @@ export default function PopUp({
     const handleConfirm = (e: FormEvent) => {
         e.preventDefault();
         handlePhoneNumberConfirm(phoneNumber);
-        navigate(confirmUrl);
     };
 
     return (

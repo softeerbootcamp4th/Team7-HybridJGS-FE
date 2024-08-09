@@ -30,8 +30,8 @@ export default function CasperShowCase() {
         darkSections: [CASPER_SHOWCASE_SECTIONS.SHOWCASE],
     });
 
-    const data = useLoaderData() as GetCasperListResponse;
-    const cardListData = getCardListData(data);
+    const casperList = useLoaderData() as GetCasperListResponse;
+    const cardListData = getCardListData(casperList);
 
     const handleClickShare = () => {
         // TODO: 이벤트 링크 공유 로직
