@@ -1,11 +1,25 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
+import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 export function Lottery({ id }: SectionKeyProps) {
+    const [startDateTime, setStartDateTime] = useState<string | null>(null);
+    const [endDateTime, setEndDateTime] = useState<string | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const data = await LotteryAPI.getLottery();
+            setStartDateTime(data.eventStartDate);
+            setEndDateTime(data.eventEndDate);
+        })();
+    }, []);
+
     return (
         <Section
             id={id}
@@ -27,7 +41,9 @@ export function Lottery({ id }: SectionKeyProps) {
                     <div className="flex flex-col gap-4">
                         <p className="h-heading-4-bold text-n-white">이벤트 기간</p>
                         <p className="h-body-1-regular text-[#A6B2BA]">
-                            2024. 08. 23. (금) ~ 2024. 09. 05 (목)
+                            {startDateTime && endDateTime
+                                ? formatEventDateRangeWithDot(startDateTime, endDateTime)
+                                : ""}
                         </p>
                     </div>
                     <div className="flex flex-col gap-4">

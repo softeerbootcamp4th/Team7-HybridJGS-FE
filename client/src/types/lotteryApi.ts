@@ -24,8 +24,8 @@ export interface GetApplyCountResponse {
 }
 
 export interface GetLotteryResponse {
-    lotteryEventId: number;
-    startDate: string;
-    endDate: string;
-    winnerCount: number;
+    serverDateTime: string;
+    eventStartDate: string;
+    eventEndDate: string;
+    activePeriod: number;
 }

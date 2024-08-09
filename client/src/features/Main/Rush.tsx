@@ -12,7 +12,7 @@ export function Rush({ id }: SectionKeyProps) {
     const [endDateTime, setEndDateTime] = useState<string | null>(null);
 
     useEffect(() => {
-        async function loadRushData() {
+        (async () => {
             const data = await RushAPI.getRush();
             const serverDateTime = new Date(data.serverDateTime);
             setStartDateTime(data.eventsStartDate);
@@ -33,8 +33,7 @@ export function Rush({ id }: SectionKeyProps) {
             });
 
             setRushEvents(events);
-        }
-        loadRushData();
+        })();
     }, []);
 
     return (
