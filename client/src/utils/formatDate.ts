@@ -4,12 +4,13 @@ export const parseDate = (dateString: string): Date | null => {
 };
 
 export const getFormattedDateComponents = (date: Date) => {
+    const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
     const DAY_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
     const dayOfWeek = DAY_OF_WEEK[date.getDay()];
 
-    return { month, day, dayOfWeek };
+    return { year, month, day, dayOfWeek };
 };
 
 export const formatDateWithSlash = (date: Date): string => {
@@ -18,8 +19,8 @@ export const formatDateWithSlash = (date: Date): string => {
 };
 
 export const formatDateWithDot = (date: Date): string => {
-    const { month, day, dayOfWeek } = getFormattedDateComponents(date);
-    return `${month}. ${day}. (${dayOfWeek})`;
+    const { year, month, day, dayOfWeek } = getFormattedDateComponents(date);
+    return `${year}. ${month}. ${day}. (${dayOfWeek})`;
 };
 
 export const formatSingleDateWithSlash = (dateString: string): string => {
