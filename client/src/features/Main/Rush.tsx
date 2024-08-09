@@ -4,14 +4,19 @@ import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
 import { rushEventData } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
+import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
 export function Rush({ id }: SectionKeyProps) {
     const [rushEvents, setRushEvents] = useState<TotalRushEventsProps[]>([]);
+    const [startDateTime, setStartDateTime] = useState<string | null>(null);
+    const [endDateTime, setEndDateTime] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadRushData() {
             const data = await RushAPI.getRush();
             const serverDateTime = new Date(data.serverDateTime);
+            setStartDateTime(data.eventsStartDate);
+            setEndDateTime(data.eventsEndDate);
 
             const events = data.events.map((event) => {
                 const rushEvent = rushEventData.find((re) => re.id === event.rushEventId);
@@ -49,7 +54,9 @@ export function Rush({ id }: SectionKeyProps) {
                         <p className="h-heading-4-bold text-n-black">이벤트 기간</p>
                         <span className="flex flex-col">
                             <p className="h-body-1-regular text-n-neutral-500">
-                                2024. 08. 25. (목) ~ 2024. 09. 01. (일)
+                                {startDateTime && endDateTime
+                                    ? formatEventDateRangeWithDot(startDateTime, endDateTime)
+                                    : ""}
                             </p>
                             <p className="h-body-1-regular text-s-red">매일 오후 10시!</p>
                         </span>

@@ -1,5 +1,5 @@
 import { RushEventProps } from "@/constants/Main/rushEventData.ts";
-import { formatDate } from "@/utils/formatDate.ts";
+import { formatSingleDateWithSlash } from "@/utils/formatDate.ts";
 
 export interface TotalRushEventsProps extends RushEventProps {
     date: string;
@@ -23,7 +23,7 @@ export default function RushEvent({
             className={`relative w-[160px] h-[200px] py-7 px-5 rounded-500 bg-n-white flex flex-col gap-4 justify-between items-center border ${borderClass} ${opacityClass}`}
         >
             <p className={`h-body-2-bold ${textClass} text-nowrap`}>
-                {isTodayEvent ? "Today" : formatDate(date)}
+                {isTodayEvent ? "Today" : formatSingleDateWithSlash(date)}
             </p>
             <img src={image} alt="event prize" className="object-cover" />
             <p className="h-body-2-medium text-n-neutral-950 text-nowrap">{prizeName}</p>
