@@ -4,7 +4,7 @@ import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import useFetch from "@/hooks/useFetch";
-import { GetLotteryResponse, PostLotteryResponse } from "@/types/lottery";
+import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lottery";
 
 export default function Lottery() {
     const lottery = useLoaderData() as GetLotteryResponse;
@@ -16,7 +16,7 @@ export default function Lottery() {
     const [giftCount, setGiftCount] = useState<number>(0);
 
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PostLotteryResponse>(() => LotteryAPI.postLotteryWinner({ id: lotteryId }));
+        useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner({ id: lotteryId }));
 
     useEffect(() => {
         if (lottery.length !== 0) {
@@ -27,7 +27,7 @@ export default function Lottery() {
     }, [lottery]);
     useEffect(() => {
         if (isSuccessPostLottery) {
-            navigate("/lottery/winner");
+            navigate("/lottery/winner", { state: { id: lotteryId } });
         }
     }, [isSuccessPostLottery]);
 

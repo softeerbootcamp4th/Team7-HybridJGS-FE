@@ -1,4 +1,10 @@
-import { GetLotteryResponse, PostLotteryParams, PostLotteryResponse } from "@/types/lottery";
+import {
+    GetLotteryResponse,
+    GetLotteryWinnerResponse,
+    PostLotteryWinnerParams,
+    PostLotteryWinnerResponse,
+    getLotteryWinnerParams,
+} from "@/types/lottery";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/admin/event/lottery`;
@@ -30,13 +36,60 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async postLotteryWinner({ id }: PostLotteryParams): Promise<PostLotteryResponse> {
+    async postLotteryWinner({ id }: PostLotteryWinnerParams): Promise<PostLotteryWinnerResponse> {
         try {
             return new Promise((resolve) => resolve({ message: "요청에 성공하였습니다." }));
             const response = await fetchWithTimeout(`${baseURL}/${id}/winner`, {
                 method: "POST",
                 headers: headers,
             });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async getLotteryWinner({
+        id,
+        size,
+        page,
+    }: getLotteryWinnerParams): Promise<GetLotteryWinnerResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve({
+                    data: [
+                        {
+                            id: 1,
+                            phoneNumber: "010-1111-2222",
+                            linkClickedCounts: 1,
+                            expectation: 1,
+                            appliedCount: 3,
+                        },
+                        {
+                            id: 2,
+                            phoneNumber: "010-1111-2223",
+                            linkClickedCounts: 1,
+                            expectation: 1,
+                            appliedCount: 3,
+                        },
+                        {
+                            id: 3,
+                            phoneNumber: "010-1111-2224",
+                            linkClickedCounts: 1,
+                            expectation: 1,
+                            appliedCount: 3,
+                        },
+                    ],
+                    isLastPage: false,
+                })
+            );
+            const response = await fetchWithTimeout(
+                `${baseURL}/${id}/winner?size=${size}&page=${page}`,
+                {
+                    method: "GET",
+                    headers: headers,
+                }
+            );
             return response.json();
         } catch (error) {
             console.error("Error:", error);

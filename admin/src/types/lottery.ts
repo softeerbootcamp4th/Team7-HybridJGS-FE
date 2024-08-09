@@ -1,3 +1,5 @@
+import { InfiniteListData } from "./common";
+
 export type GetLotteryResponse = {
     lotteryEventId: number;
     startDate: string;
@@ -6,10 +8,25 @@ export type GetLotteryResponse = {
     winnerCount: number;
 }[];
 
-export interface PostLotteryParams {
+export interface PostLotteryWinnerParams {
     id: number;
 }
 
-export interface PostLotteryResponse {
+export interface PostLotteryWinnerResponse {
     message: string;
 }
+
+export interface getLotteryWinnerParams {
+    id: number;
+    size: number;
+    page: number;
+}
+
+export interface LotteryWinnerType {
+    id: number;
+    phoneNumber: string;
+    linkClickedCounts: number;
+    expectation: number;
+    appliedCount: number;
+}
+export interface GetLotteryWinnerResponse extends InfiniteListData<LotteryWinnerType> {}

@@ -1,59 +1,55 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
+import useInfiniteFetch from "@/hooks/useInfiniteFetch";
+import { GetLotteryWinnerResponse } from "@/types/lottery";
 
 const LOTTERY_WINNER_HEADER = [
     "등수",
     "ID",
-    "생성 시간",
     "전화번호",
     "공유 링크 클릭 횟수",
     "기대평 작성 여부",
     "총 응모 횟수",
 ];
-const data = [
-    {
-        phone_number: "010-1111-2222",
-        link_clicked_counts: "1",
-        expectation: "1",
-    },
-    {
-        phone_number: "010-1111-2223",
-        link_clicked_counts: "3",
-        expectation: "1",
-    },
-    {
-        phone_number: "010-1111-2224",
-        link_clicked_counts: "4",
-        expectation: "0",
-    },
-];
 
 export default function LotteryWinner() {
+    const location = useLocation();
     const navigate = useNavigate();
 
-    const [winnerList, setWinnerList] = useState([] as any);
+    const lotteryId = location.state.id;
 
-    useEffect(() => {
-        setWinnerList(
-            data.map((d, idx) => {
-                return [
-                    idx + 1,
-                    d.phone_number,
-                    d.phone_number,
-                    d.phone_number,
-                    d.link_clicked_counts,
-                    d.link_clicked_counts,
-                    d.link_clicked_counts,
-                ];
-            })
-        );
-    }, []);
+    if (!lotteryId) {
+        navigate("/");
+        return null;
+    }
+
+    const { data: winnerInfo } = useInfiniteFetch({
+        fetch: (pageParam: number) =>
+            LotteryAPI.getLotteryWinner({ id: lotteryId, size: 10, page: pageParam }),
+        initialPageParam: 1,
+        getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
+            return lastPage.isLastPage ? currentPageParam + 1 : undefined;
+        },
+    });
+    const winnerList = useMemo(
+        () =>
+            winnerInfo.map((winner, idx) => [
+                idx + 1,
+                winner.id,
+                winner.phoneNumber,
+                winner.linkClickedCounts,
+                winner.expectation,
+                winner.appliedCount,
+            ]),
+        [winnerInfo]
+    );
 
     const handleLottery = () => {
-        // TODO: 다시 추첨하는 로직 구현
+        navigate("/lottery");
     };
 
     return (
