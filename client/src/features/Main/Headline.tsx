@@ -13,11 +13,12 @@ export function Headline({ id }: SectionKeyProps) {
 
     useEffect(() => {
         (async () => {
-            const data = await LotteryAPI.getLottery();
-            setStartDateTime(data.eventStartDate);
-            setEndDateTime(data.eventEndDate);
+            const lotteryData = await LotteryAPI.getLottery();
+            setStartDateTime(lotteryData.eventStartDate);
+            setEndDateTime(lotteryData.eventEndDate);
         })();
     }, []);
+
     return (
         <section
             id={id}

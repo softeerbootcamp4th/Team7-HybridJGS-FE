@@ -13,12 +13,12 @@ export function Rush({ id }: SectionKeyProps) {
 
     useEffect(() => {
         (async () => {
-            const data = await RushAPI.getRush();
-            const serverDateTime = new Date(data.serverDateTime);
-            setStartDateTime(data.eventsStartDate);
-            setEndDateTime(data.eventsEndDate);
+            const rushData = await RushAPI.getRush();
+            const serverDateTime = new Date(rushData.serverDateTime);
+            setStartDateTime(rushData.eventsStartDate);
+            setEndDateTime(rushData.eventsEndDate);
 
-            const events = data.events.map((event) => {
+            const events = rushData.events.map((event) => {
                 const rushEvent = RUSH_EVENT_DATA.find((re) => re.id === event.rushEventId) || {
                     image: "",
                     prizeName: "",
@@ -32,7 +32,8 @@ export function Rush({ id }: SectionKeyProps) {
                     prizeName: rushEvent.prizeName,
                     isPastEvent: serverDateTime > eventEndTime,
                     isTodayEvent:
-                        event.rushEventId === data.todayEventId && serverDateTime <= eventEndTime,
+                        event.rushEventId === rushData.todayEventId &&
+                        serverDateTime <= eventEndTime,
                 };
             });
 
