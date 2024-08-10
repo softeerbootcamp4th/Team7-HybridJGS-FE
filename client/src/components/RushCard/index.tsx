@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
 import { cva } from "class-variance-authority";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.tsx";
 
 interface RushCardProps {
     color: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
     title: string;
-    description: ReactNode[];
+    description: string;
 }
 
 const backgroundGradients = cva(
@@ -29,11 +28,7 @@ export default function RushCard({ color, title, description }: RushCardProps) {
     return (
         <div className={backgroundGradients({ color })}>
             <h2 className="h-heading-2-bold text-center">{title}</h2>
-            {description.map((text, index) => (
-                <p key={index} className="h-body-1-regular text-center">
-                    {text}
-                </p>
-            ))}
+            <p className="h-body-1-regular text-center">{description}</p>
         </div>
     );
 }
