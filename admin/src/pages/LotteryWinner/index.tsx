@@ -1,92 +1,61 @@
-import { useMemo, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
-import Table from "@/components/Table";
-import useInfiniteFetch from "@/hooks/useInfiniteFetch";
-import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { GetLotteryWinnerResponse } from "@/types/lottery";
-
-const LOTTERY_WINNER_HEADER = [
-    "등수",
-    "ID",
-    "전화번호",
-    "공유 링크 클릭 횟수",
-    "기대평 작성 여부",
-    "총 응모 횟수",
-];
+import useFetch from "@/hooks/useFetch";
+import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lottery";
 
 export default function LotteryWinner() {
-    const location = useLocation();
+    const lottery = useLoaderData() as GetLotteryResponse;
+    const lotteryId = lottery.length !== 0 ? lottery[0].lotteryEventId : -1;
+
     const navigate = useNavigate();
 
-    const lotteryId = location.state.id;
+    const [totalCount, setTotalCount] = useState<number>(0);
+    const [giftCount, setGiftCount] = useState<number>(0);
 
-    if (!lotteryId) {
-        navigate("/");
-        return null;
-    }
+    const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
+        useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner({ id: lotteryId }));
 
-    const {
-        data: winnerInfo,
-        isSuccess: isSuccessGetLotteryWinner,
-        fetchNextPage: getWinnerInfo,
-    } = useInfiniteFetch({
-        fetch: (pageParam: number) =>
-            LotteryAPI.getLotteryWinner({ id: lotteryId, size: 10, page: pageParam }),
-        initialPageParam: 1,
-        getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
-            return lastPage.isLastPage ? undefined : currentPageParam + 1;
-        },
-    });
-    const winnerList = useMemo(
-        () =>
-            winnerInfo.map((winner, idx) => [
-                idx + 1,
-                winner.id,
-                winner.phoneNumber,
-                winner.linkClickedCounts,
-                winner.expectation,
-                winner.appliedCount,
-            ]),
-        [winnerInfo]
-    );
+    useEffect(() => {
+        if (lottery.length !== 0) {
+            const currentLotttery = lottery[0];
+            setGiftCount(currentLotttery.winnerCount);
+            setTotalCount(currentLotttery.appliedCount);
+        }
+    }, [lottery]);
+    useEffect(() => {
+        if (isSuccessPostLottery) {
+            navigate("/lottery/winner-list", { state: { id: lotteryId } });
+        }
+    }, [isSuccessPostLottery]);
 
-    const tableContainerRef = useRef<HTMLDivElement>(null);
-    const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
-        onIntersect: getWinnerInfo,
-        enabled: isSuccessGetLotteryWinner,
-    });
+    const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+        const count = parseInt(e.target.value);
+        setGiftCount(count || 0);
+    };
 
     const handleLottery = () => {
-        navigate("/lottery");
+        postLottery();
     };
 
     return (
         <div className="flex flex-col items-center h-screen">
             <TabHeader />
 
-            <div className="w-[1560px] flex flex-col items-center justify-center gap-8 mt-10">
-                <div className="flex items-center gap-2 self-start">
-                    <img
-                        alt="뒤로 가기 버튼"
-                        src="/assets/icons/left-arrow.svg"
-                        className="cursor-pointer"
-                        onClick={() => navigate(-1)}
-                    />
-                    <p className="h-body-1-medium">당첨자 추첨</p>
+            <div className="flex flex-col h-full items-center justify-center gap-8 pb-40">
+                <div className="flex border">
+                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">전체 참여자 수</p>
+                    <p className="px-6 py-4 w-[200px] h-body-1-regular">{totalCount}</p>
+                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
+                    <div className="self-center px-4">
+                        <input value={giftCount} onChange={handleChangeInput} />
+                    </div>
                 </div>
 
-                <Table
-                    ref={tableContainerRef}
-                    headers={LOTTERY_WINNER_HEADER}
-                    data={winnerList}
-                    dataLastItem={targetRef}
-                />
-
                 <Button buttonSize="lg" onClick={handleLottery}>
-                    당첨자 다시 추첨하기
+                    당첨자 추첨하기
                 </Button>
             </div>
         </div>

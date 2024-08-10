@@ -30,25 +30,6 @@ export default function Login() {
         navigate("/lottery");
     };
 
-    const data = [
-        [
-            "메인 문구",
-            <div>
-                첫 차로
-                <br />
-                저렴한 차 사기
-            </div>,
-        ],
-        [
-            "서브 문구",
-            <div>
-                첫 차로
-                <br />
-                저렴한 차 사기
-            </div>,
-        ],
-    ];
-
     return (
         <form
             className="flex flex-col gap-12 w-full h-screen justify-center items-center"
@@ -69,8 +50,6 @@ export default function Login() {
             <Button buttonSize="lg" isValid={isValidButton} type="submit">
                 로그인
             </Button>
-
-            <SelectForm header="옵션 1 선택지" data={data} />
         </form>
     );
 }
