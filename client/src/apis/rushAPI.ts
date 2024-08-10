@@ -1,8 +1,8 @@
 import {
     GetRushBalanceResponse,
     GetRushOptionResultResponse,
-    GetRushParticipationStatusResponse,
     GetRushResultResponse,
+    GetRushUserParticipationStatusResponse,
     GetTodayRushEventResponse,
     GetTotalRushEventsResponse,
     PostSelectedRushCardOptionResponse,
@@ -26,7 +26,9 @@ export const RushAPI = {
             throw error;
         }
     },
-    async getRushParticipationStatus(token: string): Promise<GetRushParticipationStatusResponse> {
+    async getRushUserParticipationStatus(
+        token: string
+    ): Promise<GetRushUserParticipationStatusResponse> {
         try {
             const response = await fetch(`${baseURL}/applied`, {
                 method: "GET",

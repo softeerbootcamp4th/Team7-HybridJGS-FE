@@ -18,7 +18,7 @@ export interface GetTotalRushEventsResponse {
     events: RushEventType[];
 }
 
-export interface GetRushParticipationStatusResponse {
+export interface GetRushUserParticipationStatusResponse {
     result: boolean;
 }
 
