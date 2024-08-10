@@ -1,42 +1,80 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import { RushAPI } from "@/apis/rushAPI.ts";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { Background } from "@/features/Rush/Background.tsx";
+import CardOptions from "@/features/Rush/BalanceGame/CardOptions.tsx";
+import CountDown from "@/features/Rush/BalanceGame/CountDown.tsx";
+import FinalResult from "@/features/Rush/BalanceGame/FinalResult.tsx";
+import SelectedCard from "@/features/Rush/BalanceGame/SelectedCard.tsx";
+import { useBalanceGameContext } from "@/hooks/useBalanceGameContext.ts";
+import useCountDown from "@/hooks/useCountDown.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 export function BalanceGame({ id }: SectionKeyProps) {
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const { gameState, setGameState, updateUserParticipationStatus } = useBalanceGameContext();
+    const [initialCountdown, setInitialCountdown] = useState<number | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const rushData = await RushAPI.getRush();
+                const currentEvent = rushData.events.find(
+                    (event) => event.rushEventId === rushData.todayEventId
+                );
+
+                if (rushData.serverDateTime && currentEvent?.startDateTime) {
+                    const serverTime = new Date(rushData.serverDateTime).getTime();
+                    const startTime = new Date(currentEvent.startDateTime).getTime();
+                    const countdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
+                    setInitialCountdown(countdown);
+                }
+
+                const userParticipated = await RushAPI.getRushUserParticipationStatus(
+                    cookies[COOKIE_TOKEN_KEY]
+                );
+                updateUserParticipationStatus(userParticipated);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        })();
+    }, []);
+
+    const countdown = useCountDown(initialCountdown || 0);
+
+    useEffect(() => {
+        if (countdown === 0 && gameState.phase === "PRE_EVENT") {
+            setGameState((prev) => ({ ...prev, phase: "EVENT_RUNNING" }));
+        }
+    }, [countdown, gameState.phase, setGameState]);
+
+    const renderBalanceGameContent = () => {
+        switch (gameState.phase) {
+            case "PRE_EVENT":
+                return <CountDown countdown={countdown} />;
+            case "EVENT_RUNNING":
+                if (!gameState.userParticipated) {
+                    return <CardOptions />;
+                } else {
+                    return <SelectedCard />;
+                }
+            case "EVENT_ENDED":
+                return <FinalResult />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <section
             id={id}
             className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start"
         >
-            <motion.p className="h-heading-2-bold pt-10" {...SCROLL_MOTION(ASCEND)}>
-                이제 곧 하단에 밸런스 게임 주제가 공개돼요!
-            </motion.p>
-            <Background>
-                <div className="flex flex-col gap-6 justify-center items-center w-[800px] h-[390px] bg-n-white rounded-[29px] relative z-20">
-                    <p className="h-body-1-regular text-n-neutral-500">
-                        밸런스 게임 주제 공개까지 남은 시간
-                    </p>
-                    <div className="flex items-end gap-6 font-['HyundaiSansTextOffice-Bold'] font-normal text-[100px] text-n-neutral-950">
-                        <span className="flex flex-col justify-center items-center gap-4 w-[116px]">
-                            <p className="h-body-2-regular text-n-neutral-500">Hours</p>
-                            <p className="leading-[100px]">04</p>
-                        </span>
-                        <p className="leading-[100px]">:</p>
-                        <span className="flex flex-col justify-center items-center gap-4 w-[116px]">
-                            <p className="h-body-2-regular text-n-neutral-500">Minutes</p>
-                            <p className="leading-[100px]">21</p>
-                        </span>
-                        <p className="leading-[100px]">:</p>
-                        <span className="flex flex-col justify-center items-center gap-4 w-[116px]">
-                            <p className="h-body-2-regular text-n-neutral-500">Seconds</p>
-                            <p className="leading-[100px]">32</p>
-                        </span>
-                    </div>
-                </div>
-            </Background>
+            {renderBalanceGameContent()}
             <motion.div
                 className="flex flex-col justify-center items-center gap-4 my-3"
                 {...SCROLL_MOTION(ASCEND)}
