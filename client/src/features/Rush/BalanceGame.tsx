@@ -15,36 +15,37 @@ import useCountDown from "@/hooks/useCountDown.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 export function BalanceGame({ id }: SectionKeyProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    // const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
     const { gameState, setGameState, updateUserParticipationStatus } = useBalanceGameContext();
-    const [initialCountdown, setInitialCountdown] = useState<number | null>(null);
+    // const [initialCountdown, setInitialCountdown] = useState<number | null>(null);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const rushData = await RushAPI.getRush();
-                const currentEvent = rushData.events.find(
-                    (event) => event.rushEventId === rushData.todayEventId
-                );
+    // useEffect(() => {
+    //     (async () => {
+    //         try {
+    //             const rushData = await RushAPI.getRush();
+    //             const currentEvent = rushData.events.find(
+    //                 (event) => event.rushEventId === rushData.todayEventId
+    //             );
+    //
+    //             if (rushData.serverDateTime && currentEvent?.startDateTime) {
+    //                 const serverTime = new Date(rushData.serverDateTime).getTime();
+    //                 const startTime = new Date(currentEvent.startDateTime).getTime();
+    //                 const countdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
+    //                 setInitialCountdown(countdown);
+    //             }
+    //
+    //             const userParticipated = await RushAPI.getRushUserParticipationStatus(
+    //                 cookies[COOKIE_TOKEN_KEY]
+    //             );
+    //             updateUserParticipationStatus(userParticipated);
+    //         } catch (error) {
+    //             console.error("Error:", error);
+    //         }
+    //     })();
+    // }, []);
 
-                if (rushData.serverDateTime && currentEvent?.startDateTime) {
-                    const serverTime = new Date(rushData.serverDateTime).getTime();
-                    const startTime = new Date(currentEvent.startDateTime).getTime();
-                    const countdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
-                    setInitialCountdown(countdown);
-                }
-
-                const userParticipated = await RushAPI.getRushUserParticipationStatus(
-                    cookies[COOKIE_TOKEN_KEY]
-                );
-                updateUserParticipationStatus(userParticipated);
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        })();
-    }, []);
-
-    const countdown = useCountDown(initialCountdown || 0);
+    // const countdown = useCountDown(initialCountdown || 0);
+    const countdown = useCountDown(20);
 
     useEffect(() => {
         if (countdown === 0 && gameState.phase === "PRE_EVENT") {

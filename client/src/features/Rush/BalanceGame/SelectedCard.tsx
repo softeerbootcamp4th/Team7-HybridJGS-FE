@@ -1,3 +1,3 @@
 export default function SelectedCard() {
-    return <></>;
+    return <div></div>;
 }
