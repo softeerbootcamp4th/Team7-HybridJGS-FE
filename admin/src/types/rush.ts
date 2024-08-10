@@ -39,3 +39,13 @@ export interface RushSelectionType {
     result_sub_text: string;
     image_url: string;
 }
+
+export interface GetRushParticipantListParams {
+    id: number;
+    size: number;
+    page: number;
+    option: number;
+    number: string;
+}
+
+export type GetRushParticipantListResponse = {};
