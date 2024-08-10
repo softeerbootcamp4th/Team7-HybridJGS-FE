@@ -23,11 +23,6 @@ export default function LotteryWinnerList() {
 
     const lotteryId = location.state.id;
 
-    if (!lotteryId) {
-        navigate("/");
-        return null;
-    }
-
     const {
         data: winnerInfo,
         isSuccess: isSuccessGetLotteryWinner,

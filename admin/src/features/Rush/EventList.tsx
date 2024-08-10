@@ -37,31 +37,31 @@ export default function EventList({ handleSelectSection }: EventListProps) {
             type: RUSH_ACTION.SET_EVENT_LIST,
             payload: [
                 {
-                    rush_event_id: 1,
-                    event_date: "2024-07-25",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize1.png",
-                    prize_description: "스타벅스 1만원 기프트카드",
+                    rushEventId: 1,
+                    eventDate: "2024-07-25",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize1.png",
+                    prizeDescription: "스타벅스 1만원 기프트카드",
                 },
                 {
-                    rush_event_id: 2,
-                    event_date: "2024-07-26",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize2.png",
-                    prize_description: "올리브영 1만원 기프트카드",
+                    rushEventId: 2,
+                    eventDate: "2024-07-26",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize2.png",
+                    prizeDescription: "올리브영 1만원 기프트카드",
                 },
                 {
-                    rush_event_id: 2,
-                    event_date: "2024-07-27",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize3.png",
-                    prize_description: "배달의 민족 1만원 기프트카드",
+                    rushEventId: 2,
+                    eventDate: "2024-07-27",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize3.png",
+                    prizeDescription: "배달의 민족 1만원 기프트카드",
                 },
             ],
         });
@@ -81,24 +81,24 @@ export default function EventList({ handleSelectSection }: EventListProps) {
     const getTableData = () => {
         return rushList.map((item, idx) => {
             return [
-                item.rush_event_id,
+                item.rushEventId,
                 <DatePicker
-                    date={item.event_date}
+                    date={item.eventDate}
                     onChangeDate={(date) => handleChangeItem("event_date", idx, date)}
                 />,
                 <TimePicker
-                    time={item.open_time}
+                    time={item.openTime}
                     onChangeTime={(time) => handleChangeItem("open_time", idx, time)}
                 />,
                 <TimePicker
-                    time={item.close_time}
+                    time={item.closeTime}
                     onChangeTime={(time) => handleChangeItem("close_time", idx, time)}
                 />,
-                getTimeDifference(item.open_time, item.close_time),
+                getTimeDifference(item.openTime, item.closeTime),
                 <Button buttonSize="sm">선택지 관리</Button>,
                 <Button buttonSize="sm">경품 관리</Button>,
                 <div className="flex justify-between">
-                    <p>{item.winner_count}</p>
+                    <p>{item.winnerCount}</p>
                     <p>편집</p>
                 </div>,
                 "오픈 전",

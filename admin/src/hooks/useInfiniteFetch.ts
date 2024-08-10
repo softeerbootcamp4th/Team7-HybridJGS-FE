@@ -5,6 +5,7 @@ interface UseInfiniteFetchProps<R> {
     fetch: (pageParam: number) => Promise<R>;
     initialPageParam?: number;
     getNextPageParam: (currentPageParam: number, lastPage: R) => number | undefined;
+    startFetching?: boolean;
 }
 
 interface InfiniteScrollData<T> {
@@ -19,6 +20,7 @@ export default function useInfiniteFetch<T>({
     fetch,
     initialPageParam,
     getNextPageParam,
+    startFetching = true,
 }: UseInfiniteFetchProps<InfiniteListData<T>>): InfiniteScrollData<T> {
     const [data, setData] = useState<T[]>([]);
     const [currentPageParam, setCurrentPageParam] = useState<number | undefined>(initialPageParam);
@@ -34,7 +36,6 @@ export default function useInfiniteFetch<T>({
         try {
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
-            console.log(lastPage);
 
             setData([...data, ...lastPage.data]);
             setCurrentPageParam(nextPageParam);
@@ -49,8 +50,10 @@ export default function useInfiniteFetch<T>({
     }, [fetch, getNextPageParam, currentPageParam, data, hasNextPage]);
 
     useEffect(() => {
-        fetchNextPage();
-    }, []);
+        if (startFetching) {
+            fetchNextPage();
+        }
+    }, [startFetching]);
 
     return {
         data,
