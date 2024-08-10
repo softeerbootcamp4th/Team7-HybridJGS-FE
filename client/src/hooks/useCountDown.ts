@@ -7,7 +7,13 @@ export default function useCountDown(initialTime: number) {
         if (time <= 0) return;
 
         const timer = setInterval(() => {
-            setTime((prevTime) => prevTime - 1);
+            setTime((prevTime) => {
+                if (prevTime <= 0) {
+                    clearInterval(timer);
+                    return 0;
+                }
+                return prevTime - 1;
+            });
         }, 1000);
 
         return () => clearInterval(timer);
