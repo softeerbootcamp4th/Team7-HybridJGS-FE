@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { InfiniteListData } from "@/types/common";
 
 interface UseInfiniteFetchProps<R> {
@@ -33,8 +33,9 @@ export default function useInfiniteFetch<T>({
         try {
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
+            console.log(lastPage);
 
-            setData((prevData) => [...prevData, ...lastPage.data]);
+            setData([...data, ...lastPage.data]);
             setCurrentPageParam(nextPageParam);
             setHasNextPage(nextPageParam !== undefined);
         } catch (error) {

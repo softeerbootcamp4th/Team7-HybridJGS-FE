@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
@@ -27,7 +27,7 @@ export default function LotteryWinner() {
         return null;
     }
 
-    const { data: winnerInfo } = useInfiniteFetch({
+    const { data: winnerInfo, fetchNextPage: getWinnerInfo } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             LotteryAPI.getLotteryWinner({ id: lotteryId, size: 10, page: pageParam }),
         initialPageParam: 1,
