@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
 import { RUSH_SECTIONS } from "@/constants/PageSections/sections.ts";
+import { BalanceGameProvider } from "@/contexts/balanceGameContext.tsx";
 import {
     BalanceGame,
     CasperCharge,
@@ -24,9 +25,12 @@ export default function Rush() {
     const containerRef = useHeaderStyleObserver({
         darkSections: [RUSH_SECTIONS.INTRO],
     });
+
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
-            <BalanceGame id={RUSH_SECTIONS.BALANCE_GAME} />
+            <BalanceGameProvider>
+                <BalanceGame id={RUSH_SECTIONS.BALANCE_GAME} />
+            </BalanceGameProvider>
             <Intro id={RUSH_SECTIONS.INTRO} />
             <FAQ id={RUSH_SECTIONS.FAQ} />
             <ElectricReason id={RUSH_SECTIONS.ELECTRIC_REASON} />
