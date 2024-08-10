@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { GetLotteryWinnerResponse } from "@/types/lottery";
 
 const LOTTERY_WINNER_HEADER = [
@@ -27,7 +28,11 @@ export default function LotteryWinner() {
         return null;
     }
 
-    const { data: winnerInfo, fetchNextPage: getWinnerInfo } = useInfiniteFetch({
+    const {
+        data: winnerInfo,
+        isSuccess: isSuccessGetLotteryWinner,
+        fetchNextPage: getWinnerInfo,
+    } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             LotteryAPI.getLotteryWinner({ id: lotteryId, size: 10, page: pageParam }),
         initialPageParam: 1,
@@ -48,6 +53,12 @@ export default function LotteryWinner() {
         [winnerInfo]
     );
 
+    const tableContainerRef = useRef<HTMLDivElement>(null);
+    const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
+        onIntersect: getWinnerInfo,
+        enabled: isSuccessGetLotteryWinner,
+    });
+
     const handleLottery = () => {
         navigate("/lottery");
     };
@@ -67,7 +78,12 @@ export default function LotteryWinner() {
                     <p className="h-body-1-medium">당첨자 추첨</p>
                 </div>
 
-                <Table headers={LOTTERY_WINNER_HEADER} data={winnerList} />
+                <Table
+                    ref={tableContainerRef}
+                    headers={LOTTERY_WINNER_HEADER}
+                    data={winnerList}
+                    dataLastItem={targetRef}
+                />
 
                 <Button buttonSize="lg" onClick={handleLottery}>
                     당첨자 다시 추첨하기

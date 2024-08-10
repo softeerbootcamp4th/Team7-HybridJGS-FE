@@ -11,7 +11,7 @@ interface InfiniteScrollData<T> {
     data: T[];
     fetchNextPage: () => void;
     hasNextPage: boolean;
-    isLoading: boolean;
+    isSuccess: boolean;
     isError: boolean;
 }
 
@@ -23,6 +23,7 @@ export default function useInfiniteFetch<T>({
     const [data, setData] = useState<T[]>([]);
     const [currentPageParam, setCurrentPageParam] = useState<number | undefined>(initialPageParam);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
@@ -38,8 +39,10 @@ export default function useInfiniteFetch<T>({
             setData([...data, ...lastPage.data]);
             setCurrentPageParam(nextPageParam);
             setHasNextPage(nextPageParam !== undefined);
+            setIsSuccess(true);
         } catch (error) {
             setIsError(true);
+            setIsSuccess(false);
         } finally {
             setIsLoading(false);
         }
@@ -53,7 +56,7 @@ export default function useInfiniteFetch<T>({
         data,
         fetchNextPage,
         hasNextPage,
-        isLoading,
+        isSuccess,
         isError,
     };
 }
