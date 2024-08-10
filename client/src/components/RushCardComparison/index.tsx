@@ -1,43 +1,32 @@
 import RushCard from "@/components/RushCard/index.tsx";
-import {
-    CARD_COLORS,
-    CARD_DAYS,
-    CARD_DESCRIPTION,
-    CARD_SELECTED_STATUS,
-    CARD_TITLES,
-    CARD_TYPE,
-} from "@/constants/Rush/rushCard.tsx";
+import { CARD_COLORS, CARD_DAYS, CARD_OPTIONS, CARD_TYPE } from "@/constants/Rush/rushCard";
 
 export default function RushCardComparison() {
     const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
-    const firstCardType: (typeof CARD_TYPE)[keyof typeof CARD_TYPE] = CARD_TYPE.FIRST_CARD;
-    const secondCardType: (typeof CARD_TYPE)[keyof typeof CARD_TYPE] = CARD_TYPE.SECOND_CARD;
-    const cardStatus: (typeof CARD_SELECTED_STATUS)[keyof typeof CARD_SELECTED_STATUS] =
-        CARD_SELECTED_STATUS.FALSE;
 
-    const firstCardColor = CARD_COLORS[currentDay][firstCardType];
-    const secondCardColor = CARD_COLORS[currentDay][secondCardType];
+    const leftOptionColor = CARD_COLORS[currentDay][CARD_TYPE.LEFT_OPTIONS];
+    const rightOptionColor = CARD_COLORS[currentDay][CARD_TYPE.RIGHT_OPTIONS];
 
-    const firstCardTitle = CARD_TITLES[currentDay][firstCardType];
-    const secondCardTitle = CARD_TITLES[currentDay][secondCardType];
+    const leftOptionTitle = CARD_OPTIONS[currentDay][CARD_TYPE.LEFT_OPTIONS].title;
+    const rightOptionTitle = CARD_OPTIONS[currentDay][CARD_TYPE.RIGHT_OPTIONS].title;
 
-    const firstCardDescription = CARD_DESCRIPTION[currentDay][firstCardType][cardStatus];
-    const secondCardDescription = CARD_DESCRIPTION[currentDay][secondCardType][cardStatus];
+    const leftOptionDescription = CARD_OPTIONS[currentDay][CARD_TYPE.LEFT_OPTIONS].description;
+    const rightOptionDescription = CARD_OPTIONS[currentDay][CARD_TYPE.RIGHT_OPTIONS].description;
 
     return (
         <div className="flex gap-10 justify-center items-center">
             <RushCard
-                color={firstCardColor}
-                title={firstCardTitle}
-                description={firstCardDescription}
+                color={leftOptionColor}
+                title={leftOptionTitle}
+                description={leftOptionDescription}
             />
             <p className="h-heading-2-bold text-n-neutral-500 bg-n-neutral-50 rounded-800 w-[90px] h-[78px] flex justify-center items-center">
                 VS
             </p>
             <RushCard
-                color={secondCardColor}
-                title={secondCardTitle}
-                description={secondCardDescription}
+                color={rightOptionColor}
+                title={rightOptionTitle}
+                description={rightOptionDescription}
             />
         </div>
     );
