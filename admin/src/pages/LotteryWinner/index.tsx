@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";

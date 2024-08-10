@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
-interface UseIntersectionObserverOptions<T> {
+// @ts-expect-error: props로 Generic을 받아서 target 타입 선언 필요
+interface UseIntersectionObserverOptions<T extends HTMLElement> {
     onIntersect: () => void;
     enabled: boolean;
     root?: Element | null;
