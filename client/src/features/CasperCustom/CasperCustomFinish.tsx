@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
@@ -44,6 +44,7 @@ export function CasperCustomFinish({
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
 
+    const [isErrorCopy, setIsErrorCopy] = useState<boolean>(false);
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -75,12 +76,13 @@ export function CasperCustomFinish({
             await navigator.clipboard.writeText(link.shortenLocalUrl);
             showToast();
         } catch (err) {
+            setIsErrorCopy(true);
             console.error("Failed to copy: ", err);
         }
     };
 
     return (
-        <ErrorBoundary isError={isErrorGetApplyCount}>
+        <ErrorBoundary isError={isErrorGetApplyCount || isErrorCopy}>
             <motion.div
                 className="mt-[60px] flex flex-col items-center"
                 {...SCROLL_MOTION(DISSOLVE)}
