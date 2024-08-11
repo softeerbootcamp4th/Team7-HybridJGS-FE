@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import RushCardComparison from "@/features/Rush/BalanceGameCard/RushCardComparison.tsx";
-import RushCountDown from "@/features/Rush/BalanceGameCard/RushCountDown.tsx";
+import RushCardComparison from "@/features/Rush/BalanceGame/BalanceGameCard/RushCardComparison.tsx";
+import RushCountDown from "@/features/Rush/BalanceGame/BalanceGameCard/RushCountDown.tsx";
 import useCountDown from "@/hooks/useCountDown.ts";
 
 export default function CardOptions() {

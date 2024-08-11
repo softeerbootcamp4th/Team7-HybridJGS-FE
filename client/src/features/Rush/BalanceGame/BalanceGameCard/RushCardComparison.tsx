@@ -2,7 +2,7 @@ import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLORS, CARD_DAYS, CARD_OPTIONS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
-import RushCard from "@/features/Rush/BalanceGameCard/RushCard.tsx";
+import RushCard from "@/features/Rush/BalanceGame/BalanceGameCard/RushCard.tsx";
 
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);

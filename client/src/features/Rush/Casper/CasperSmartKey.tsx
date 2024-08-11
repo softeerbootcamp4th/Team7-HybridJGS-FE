@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import { CasperSubDescription } from "@/features/Rush/CasperSubDescription.tsx";
+import { CasperSubDescription } from "@/features/Rush/Casper/CasperSubDescription.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 export function CasperSmartKey({ id }: SectionKeyProps) {

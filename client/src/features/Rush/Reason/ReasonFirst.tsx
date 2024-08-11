@@ -1,4 +1,4 @@
-import { ReasonSection } from "@/features/Rush/ReasonSection.tsx";
+import { ReasonSection } from "@/features/Rush/Reason/ReasonSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 export function ReasonFirst({ id }: SectionKeyProps) {

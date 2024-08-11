@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { Background } from "@/features/Rush/Background.tsx";
+import { Background } from "@/features/Rush/BalanceGame/Background.tsx";
 
 interface CountDownProps {
     countdown: number;
