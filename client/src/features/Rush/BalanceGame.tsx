@@ -45,7 +45,7 @@ export function BalanceGame({ id }: SectionKeyProps) {
     // }, []);
 
     // const countdown = useCountDown(initialCountdown || 0);
-    const countdown = useCountDown(5);
+    const countdown = useCountDown(1);
 
     useEffect(() => {
         if (countdown === 0 && gameState.phase === "PRE_EVENT") {
