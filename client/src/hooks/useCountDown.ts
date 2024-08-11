@@ -4,11 +4,11 @@ export default function useCountDown(initialTime: number) {
     const [time, setTime] = useState(initialTime);
 
     useEffect(() => {
-        if (time <= 0) return;
+        if (time < 0) return;
 
         const timer = setInterval(() => {
             setTime((prevTime) => {
-                if (prevTime <= 0) {
+                if (prevTime < 0) {
                     clearInterval(timer);
                     return 0;
                 }

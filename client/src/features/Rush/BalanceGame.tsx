@@ -48,7 +48,7 @@ export function BalanceGame({ id }: SectionKeyProps) {
     const countdown = useCountDown(1);
 
     useEffect(() => {
-        if (countdown === 0 && gameState.phase === "PRE_EVENT") {
+        if (countdown < 0 && gameState.phase === "PRE_EVENT") {
             setGameState((prev) => ({ ...prev, phase: "EVENT_RUNNING" }));
         }
     }, [countdown, gameState.phase, setGameState]);
@@ -59,7 +59,8 @@ export function BalanceGame({ id }: SectionKeyProps) {
                 return <CountDown countdown={countdown} />;
             case "EVENT_RUNNING":
                 if (!gameState.userParticipated) {
-                    return <CardOptions />;
+                    // return <CardOptions />;
+                    return <SelectedCard />;
                 } else {
                     return <SelectedCard />;
                 }
