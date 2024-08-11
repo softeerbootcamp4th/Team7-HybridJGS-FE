@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
+import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
 import LotteryWinner from "./pages/LotteryWinner";
@@ -14,37 +15,47 @@ export const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                path: "login/",
-                element: <Login />,
-            },
-            {
-                path: "lottery/",
+                element: <UnProtectedRoute />,
                 children: [
                     {
-                        index: true,
-                        element: <Lottery />,
-                    },
-                    {
-                        path: "winner",
-                        element: <LotteryWinner />,
-                        loader: LotteryAPI.getLottery,
-                    },
-                    {
-                        path: "winner-list",
-                        element: <LotteryWinnerList />,
+                        path: "login/",
+                        element: <Login />,
                     },
                 ],
             },
             {
-                path: "rush/",
+                element: <ProtectedRoute />,
                 children: [
                     {
-                        index: true,
-                        element: <Rush />,
+                        path: "lottery/",
+                        children: [
+                            {
+                                index: true,
+                                element: <Lottery />,
+                            },
+                            {
+                                path: "winner",
+                                element: <LotteryWinner />,
+                                loader: LotteryAPI.getLottery,
+                            },
+                            {
+                                path: "winner-list",
+                                element: <LotteryWinnerList />,
+                            },
+                        ],
                     },
                     {
-                        path: "winner-list",
-                        element: <RushWinnerList />,
+                        path: "rush/",
+                        children: [
+                            {
+                                index: true,
+                                element: <Rush />,
+                            },
+                            {
+                                path: "winner-list",
+                                element: <RushWinnerList />,
+                            },
+                        ],
                     },
                 ],
             },
