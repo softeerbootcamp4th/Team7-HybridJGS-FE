@@ -30,10 +30,10 @@ export default function EventList({}: EventListProps) {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
-    const handleChangeItem = (key: string, changeIdx: number, date: string) => {
+    const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === changeIdx) {
-                return { ...item, [key]: date };
+                return { ...item, [key]: text };
             }
             return { ...item };
         });
@@ -74,9 +74,13 @@ export default function EventList({}: EventListProps) {
                 >
                     경품 관리
                 </Button>,
-                <div className="flex justify-between">
-                    <p>{item.winnerCount}</p>
-                    <p>편집</p>
+                <div className="flex w-full border-b">
+                    <input
+                        value={item.winnerCount}
+                        onChange={(e) =>
+                            handleChangeItem("winnerCount", idx, parseInt(e.target.value) || 0)
+                        }
+                    />
                 </div>,
                 "오픈 전",
                 <Button
