@@ -3,11 +3,12 @@ import { ReactNode } from "react";
 interface TableProps {
     headers: ReactNode[];
     data: ReactNode[][];
+    height?: string | number;
 }
 
-export default function Table({ headers, data }: TableProps) {
+export default function Table({ headers, data, height = 600 }: TableProps) {
     return (
-        <div className="relative sm:rounded-lg w-[1560px] h-[600px] border">
+        <div className="relative sm:rounded-lg w-[1560px] border" style={{ height }}>
             <div className="overflow-y-auto h-full">
                 <table className="w-full text-sm rtl:text-right text-gray-500 text-center">
                     <thead className="sticky top-0 z-[5] text-gray-700 bg-gray-50">

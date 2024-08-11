@@ -1,26 +1,80 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
+import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
+import Table from "@/components/Table";
+import TimePicker from "@/components/TimePicker";
+import { LotteryType } from "@/types/lottery";
+
+const LOTTERY_HEADER = [
+    "시작 날짜",
+    "시작 시간",
+    "종료 날짜",
+    "종료 시간",
+    "활성화 기간",
+    "추첨 당첨 인원 수",
+    "진행 상태",
+];
 
 export default function Lottery() {
     const navigate = useNavigate();
 
-    const [giftCount, setGiftCount] = useState<number>(0);
+    const [lottery, setLottery] = useState<LotteryType>({} as LotteryType);
 
     useEffect(() => {
-        // TODO: 추첨 이벤트 정보 불러오기
-        setGiftCount(363);
+        const data = {
+            lotteryEventId: 1,
+            startDate: "2024-07-26 00:00",
+            endDate: "2024-08-25 23:59",
+            appliedCount: 1000000,
+            winnerCount: 363,
+        };
+
+        const [startDate, startTime] = data.startDate.split(" ");
+        const [endDate, endTime] = data.startDate.split(" ");
+
+        setLottery({
+            ...data,
+            startDate,
+            startTime,
+            endDate,
+            endTime,
+        });
     }, []);
 
-    const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const count = parseInt(e.target.value);
-        setGiftCount(count || 0);
+    const handleChangeItem = (key: string, text: string | number) => {
+        setLottery({ ...lottery, [key]: text });
     };
 
-    const handleLottery = () => {
-        // TODO: 당첨자 추첨
-        navigate("/lottery/winner");
+    const getLotteryData = () => {
+        return [
+            [
+                <DatePicker
+                    date={lottery.startDate}
+                    onChangeDate={(date) => handleChangeItem("startDate", date)}
+                />,
+                <TimePicker
+                    time={lottery.startTime}
+                    onChangeTime={(time) => handleChangeItem("startTime", time)}
+                />,
+                <DatePicker
+                    date={lottery.endDate}
+                    onChangeDate={(date) => handleChangeItem("endDate", date)}
+                />,
+                <TimePicker
+                    time={lottery.endTime}
+                    onChangeTime={(time) => handleChangeItem("endTime", time)}
+                />,
+                "61일",
+                lottery.winnerCount,
+                "활성화",
+            ],
+        ];
+    };
+
+    const handleUpdate = () => {
+        // TODO: update API 요청
     };
 
     return (
@@ -28,17 +82,19 @@ export default function Lottery() {
             <TabHeader />
 
             <div className="flex flex-col h-full items-center justify-center gap-8 pb-40">
-                <div className="flex border">
-                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">전체 참여자 수</p>
-                    <p className="px-6 py-4 w-[200px] h-body-1-regular">1000</p>
-                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
-                    <div className="self-center px-4">
-                        <input value={giftCount} onChange={handleChangeInput} />
-                    </div>
+                <Table headers={LOTTERY_HEADER} data={getLotteryData()} height="auto" />
+
+                <div className="self-end flex gap-4">
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/participant-list")}>
+                        참여자 리스트 보러가기
+                    </Button>
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/winner-list")}>
+                        당첨자 보러가기
+                    </Button>
                 </div>
 
-                <Button buttonSize="lg" onClick={handleLottery}>
-                    당첨자 추첨하기
+                <Button buttonSize="lg" onClick={handleUpdate}>
+                    수정사항 업데이트
                 </Button>
             </div>
         </div>
