@@ -66,7 +66,14 @@ export default function EventList({}: EventListProps) {
                 >
                     선택지 관리
                 </Button>,
-                <Button buttonSize="sm">경품 관리</Button>,
+                <Button
+                    buttonSize="sm"
+                    onClick={() =>
+                        navigate("/rush/prize-form", { state: { id: item.rushEventId } })
+                    }
+                >
+                    경품 관리
+                </Button>,
                 <div className="flex justify-between">
                     <p>{item.winnerCount}</p>
                     <p>편집</p>
