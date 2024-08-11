@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
@@ -42,7 +43,6 @@ export default function RushWinnerList() {
         data: winners,
         isSuccess: isSuccessGetRushWinnerList,
         fetchNextPage: getRushWinnerList,
-        refetch: refetchRushWinnerList,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             RushAPI.getRushWinnerList({
@@ -71,6 +71,9 @@ export default function RushWinnerList() {
     useEffect(() => {
         return () => handleTableScrollTop();
     }, [isWinnerToggle]);
+    useEffect(() => {
+        refetchRushParticipantList();
+    }, [selectedOptionIdx]);
 
     const handleTableScrollTop = () => {
         if (tableContainerRef.current) {
@@ -87,14 +90,11 @@ export default function RushWinnerList() {
 
     const handleClickOption = (idx: number) => {
         handleTableScrollTop();
-
-        setSelectedOptionIdx(idx);
-        refetchRushParticipantList();
-        refetchRushWinnerList();
+        setSelectedOptionIdx(() => idx);
     };
 
     const optionTitleList = useMemo(
-        () => options.map((option, idx) => `옵션 ${idx + 1} : ${option.mainText}`),
+        () => options.map((option) => `옵션 ${option.rushOptionId} : ${option.mainText}`),
         [options]
     );
     const participantHeader = useMemo(

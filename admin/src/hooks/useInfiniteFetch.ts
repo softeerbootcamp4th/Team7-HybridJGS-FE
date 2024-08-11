@@ -52,18 +52,15 @@ export default function useInfiniteFetch<T>({
     }, [fetch, getNextPageParam, currentPageParam, data, hasNextPage]);
 
     const refetch = useCallback(async () => {
-        flushSync(() => {
-            setCurrentPageParam(initialPageParam);
-            setData([]);
-        });
-        fetchNextPage();
-    }, [fetchNextPage]);
+        setCurrentPageParam(initialPageParam);
+        setData([]);
+    }, []);
 
     useEffect(() => {
-        if (startFetching) {
+        if (startFetching && currentPageParam === initialPageParam) {
             fetchNextPage();
         }
-    }, [startFetching]);
+    }, [startFetching, currentPageParam]);
 
     return {
         data,
