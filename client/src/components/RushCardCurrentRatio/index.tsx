@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
 import Reload from "/public/assets/icons/reload.svg?react";
@@ -10,7 +11,30 @@ const TOOLTIP_CONTENT = () => (
     </>
 );
 
+function ReloadButton() {
+    return (
+        <button
+            // TODO: 새로고침 시 실시간 구현 (getRushBalance, /event/rush/balance)
+            onClick={() => {
+                console.log("새로고침");
+            }}
+        >
+            <Reload />
+        </button>
+    );
+}
+
 export default function RushCardCurrentRatio() {
+    const [showToggle, setShowToggle] = useState<boolean>(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowToggle(false);
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
             <span className="flex flex-col justify-center items-center gap-3">
@@ -36,16 +60,13 @@ export default function RushCardCurrentRatio() {
                 </div>
             </div>
             <div className="absolute right-6 bottom-6">
-                <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left">
-                    <button
-                        // TODO: 새로고침 시 실시간 구현 (getRushBalance, /event/rush/balance)
-                        onClick={() => {
-                            console.log("새로고침");
-                        }}
-                    >
-                        <Reload />
-                    </button>
-                </Tooltip>
+                {showToggle ? (
+                    <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left">
+                        <ReloadButton />
+                    </Tooltip>
+                ) : (
+                    <ReloadButton />
+                )}
             </div>
         </div>
     );
