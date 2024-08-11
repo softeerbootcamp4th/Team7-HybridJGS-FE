@@ -67,7 +67,14 @@ export default function Lottery() {
                     onChangeTime={(time) => handleChangeItem("endTime", time)}
                 />,
                 "61일",
-                lottery.winnerCount,
+                <div className="border-b flex w-full">
+                    <input
+                        value={lottery.winnerCount}
+                        onChange={(e) =>
+                            handleChangeItem("winnerCount", parseInt(e.target.value) || 0)
+                        }
+                    />
+                </div>,
                 "활성화",
             ],
         ];
