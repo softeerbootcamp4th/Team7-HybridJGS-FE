@@ -34,7 +34,6 @@ export default function useInfiniteFetch<T>({
     const fetchNextPage = useCallback(async () => {
         if (!hasNextPage || isLoading || currentPageParam === undefined) return;
 
-        console.log(currentPageParam);
         setIsLoading(true);
         try {
             const lastPage = await fetch(currentPageParam);

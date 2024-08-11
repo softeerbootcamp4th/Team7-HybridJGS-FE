@@ -72,8 +72,8 @@ export default function RushWinnerList() {
     useEffect(() => {
         return () => {
             if (tableContainerRef.current) {
-                console.log("scroll");
-                tableContainerRef.current.scroll({ top: 0 });
+                const table = tableContainerRef.current.querySelector(".table-contents");
+                table?.scrollTo({ top: 0 });
             }
         };
     }, [isWinnerToggle]);

@@ -12,7 +12,7 @@ const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
 ) {
     return (
         <div ref={ref} className="relative sm:rounded-lg w-[1560px] h-[600px] border">
-            <div className="overflow-y-auto h-full">
+            <div className="overflow-y-auto h-full table-contents">
                 <table className="w-full text-sm rtl:text-right text-gray-500 text-center">
                     <thead className="sticky top-0 z-[5] text-gray-700 bg-gray-50">
                         <tr>
