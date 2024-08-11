@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
@@ -6,7 +6,8 @@ import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { GetLotteryWinnerResponse } from "@/types/lottery";
+import useModal from "@/hooks/useModal";
+import { GetLotteryWinnerResponse, LotteryExpectationsType } from "@/types/lottery";
 
 const LOTTERY_WINNER_HEADER = [
     "등수",
@@ -16,12 +17,16 @@ const LOTTERY_WINNER_HEADER = [
     "기대평 작성 여부",
     "총 응모 횟수",
 ];
+const LOTTERY_EXPECTATIONS_HEADER = ["캐스퍼 ID", "기대평"];
 
 export default function LotteryWinnerList() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const lotteryId = location.state.id;
+
+    const { handleOpenModal, ModalComponent } = useModal();
+    const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
 
     const {
         data: winnerInfo,
@@ -35,18 +40,6 @@ export default function LotteryWinnerList() {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
     });
-    const winnerList = useMemo(
-        () =>
-            winnerInfo.map((winner, idx) => [
-                idx + 1,
-                winner.id,
-                winner.phoneNumber,
-                winner.linkClickedCounts,
-                winner.expectation,
-                winner.appliedCount,
-            ]),
-        [winnerInfo]
-    );
 
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
@@ -57,6 +50,39 @@ export default function LotteryWinnerList() {
     const handleLottery = () => {
         navigate("/lottery");
     };
+
+    const handleClickExpectation = async (winnerId: number) => {
+        handleOpenModal();
+
+        const data = await LotteryAPI.getLotteryExpectations({
+            lotteryId,
+            participantId: winnerId,
+        });
+        setSelectedWinner(data);
+    };
+
+    const expectations = selectedWinner.map((winner) => [winner.casperId, winner.expectation]);
+
+    const winnerList = useMemo(
+        () =>
+            winnerInfo.map((winner, idx) => [
+                idx + 1,
+                winner.id,
+                winner.phoneNumber,
+                winner.linkClickedCounts,
+                <div className="flex justify-between">
+                    <span>{winner.expectation}</span>
+                    <span
+                        className="cursor-pointer"
+                        onClick={() => handleClickExpectation(winner.id)}
+                    >
+                        기대평 보기
+                    </span>
+                </div>,
+                winner.appliedCount,
+            ]),
+        [winnerInfo]
+    );
 
     return (
         <div className="flex flex-col items-center h-screen">
@@ -84,6 +110,10 @@ export default function LotteryWinnerList() {
                     당첨자 다시 추첨하기
                 </Button>
             </div>
+
+            <ModalComponent>
+                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} />
+            </ModalComponent>
         </div>
     );
 }

@@ -1,9 +1,11 @@
 import {
+    GetLotteryExpectationsParams,
+    GetLotteryExpectationsResponse,
     GetLotteryResponse,
+    GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
     PostLotteryWinnerParams,
     PostLotteryWinnerResponse,
-    getLotteryWinnerParams,
 } from "@/types/lottery";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
@@ -53,7 +55,7 @@ export const LotteryAPI = {
         id,
         size,
         page,
-    }: getLotteryWinnerParams): Promise<GetLotteryWinnerResponse> {
+    }: GetLotteryWinnerParams): Promise<GetLotteryWinnerResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -85,6 +87,40 @@ export const LotteryAPI = {
             );
             const response = await fetchWithTimeout(
                 `${baseURL}/${id}/winner?size=${size}&page=${page}`,
+                {
+                    method: "GET",
+                    headers: headers,
+                }
+            );
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async getLotteryExpectations({
+        lotteryId,
+        participantId,
+    }: GetLotteryExpectationsParams): Promise<GetLotteryExpectationsResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve([
+                    {
+                        casperId: 1,
+                        expectation: "기대평 1",
+                    },
+                    {
+                        casperId: 2,
+                        expectation: "기대평 2",
+                    },
+                    {
+                        casperId: 3,
+                        expectation: "기대평 3",
+                    },
+                ])
+            );
+            const response = await fetchWithTimeout(
+                `${baseURL}/${lotteryId}/participants/${participantId}/expectations`,
                 {
                     method: "GET",
                     headers: headers,
