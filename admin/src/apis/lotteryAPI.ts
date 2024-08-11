@@ -6,7 +6,7 @@ import {
     GetLotteryWinnerResponse,
     PostLotteryWinnerParams,
     PostLotteryWinnerResponse,
-} from "@/types/lottery";
+} from "@/types/lotteryApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/admin/event/lottery`;

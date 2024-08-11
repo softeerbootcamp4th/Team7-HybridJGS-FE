@@ -4,7 +4,7 @@ import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import useFetch from "@/hooks/useFetch";
-import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lottery";
+import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lotteryApi";
 
 export default function LotteryWinner() {
     const lottery = useLoaderData() as GetLotteryResponse;

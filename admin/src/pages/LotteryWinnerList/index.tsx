@@ -7,7 +7,8 @@ import Table from "@/components/Table";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useModal from "@/hooks/useModal";
-import { GetLotteryWinnerResponse, LotteryExpectationsType } from "@/types/lottery";
+import { LotteryExpectationsType } from "@/types/lottery";
+import { GetLotteryWinnerResponse } from "@/types/lotteryApi";
 
 const LOTTERY_WINNER_HEADER = [
     "등수",

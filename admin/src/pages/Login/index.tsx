@@ -2,7 +2,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import SelectForm from "@/components/SelectForm";
 
 export default function Login() {
     const navigate = useNavigate();
