@@ -48,7 +48,7 @@ export default function LotteryWinnerList() {
     });
 
     const handleLottery = () => {
-        navigate("/lottery");
+        navigate("/lottery/winner");
     };
 
     const handleClickExpectation = async (winnerId: number) => {

@@ -49,7 +49,7 @@ export default function LotteryWinner() {
                     <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">전체 참여자 수</p>
                     <p className="px-6 py-4 w-[200px] h-body-1-regular">{totalCount}</p>
                     <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
-                    <div className="self-center px-4">
+                    <div className="self-center mx-4 border-b">
                         <input value={giftCount} onChange={handleChangeInput} />
                     </div>
                 </div>
