@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
+import Input from "@/components/Input";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import useFetch from "@/hooks/useFetch";
@@ -21,6 +22,8 @@ export default function RushWinnerList() {
     const [options, setOptions] = useState<RushOptionType[]>([]);
     const [selectedOptionIdx, setSelectedOptionIdx] = useState<number>(0);
 
+    const [phoneNumber, setPhoneNumber] = useState<string>("");
+
     const {
         data: participants,
         isSuccess: isSuccessGetRushParticipantList,
@@ -33,6 +36,7 @@ export default function RushWinnerList() {
                 size: 10,
                 page: pageParam,
                 option: options[selectedOptionIdx].rushOptionId,
+                phoneNumber,
             }),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
@@ -44,12 +48,14 @@ export default function RushWinnerList() {
         data: winners,
         isSuccess: isSuccessGetRushWinnerList,
         fetchNextPage: getRushWinnerList,
+        refetch: refetchRushWinnerList,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             RushAPI.getRushWinnerList({
                 id: rushId,
                 size: 10,
                 page: pageParam,
+                phoneNumber,
             }),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
@@ -87,6 +93,14 @@ export default function RushWinnerList() {
     useEffect(() => {
         refetchRushParticipantList();
     }, [selectedOptionIdx]);
+
+    const handleSearchPhoneNumber = () => {
+        if (isWinnerToggle) {
+            refetchRushWinnerList();
+        } else {
+            refetchRushParticipantList();
+        }
+    };
 
     const handleTableScrollTop = () => {
         if (tableContainerRef.current) {
@@ -142,20 +156,35 @@ export default function RushWinnerList() {
             <TabHeader />
 
             <div className="w-[1560px] flex flex-col mt-10 gap-4">
-                <div className="flex items-center gap-4">
-                    <img
-                        alt="뒤로 가기 버튼"
-                        src="/assets/icons/left-arrow.svg"
-                        className="cursor-pointer"
-                        onClick={() => navigate(-1)}
-                    />
-                    <p className="h-body-1-medium">선착순 참여자 리스트 {currentData.length} 명</p>
-                    <Button
-                        buttonSize="sm"
-                        onClick={() => setIsWinnerToggle((prevToggle) => !prevToggle)}
-                    >
-                        당첨자 수만 보기 {isWinnerToggle ? "OFF" : "ON"}
-                    </Button>
+                <div className="flex justify-between">
+                    <div className="flex items-center gap-4">
+                        <img
+                            alt="뒤로 가기 버튼"
+                            src="/assets/icons/left-arrow.svg"
+                            className="cursor-pointer"
+                            onClick={() => navigate(-1)}
+                        />
+                        <p className="h-body-1-medium">
+                            선착순 참여자 리스트 {currentData.length} 명
+                        </p>
+                        <Button
+                            buttonSize="sm"
+                            onClick={() => setIsWinnerToggle((prevToggle) => !prevToggle)}
+                        >
+                            당첨자 수만 보기 {isWinnerToggle ? "OFF" : "ON"}
+                        </Button>
+                    </div>
+
+                    <div className="flex gap-2">
+                        <Input
+                            inputSize="sm"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                        <Button buttonSize="sm" onClick={handleSearchPhoneNumber}>
+                            검색
+                        </Button>
+                    </div>
                 </div>
 
                 <Table
