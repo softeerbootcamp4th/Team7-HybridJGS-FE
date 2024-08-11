@@ -18,11 +18,8 @@ export default function RushCardComparison() {
     const rightOptionDescription = CARD_OPTIONS[currentDay][CARD_TYPE.RIGHT_OPTIONS].description;
 
     const handleCardSelection = async (optionId: number) => {
-        const token = cookies.token;
-        if (!token) return;
-
         try {
-            await RushAPI.postSelectedRushOptionApply(token, optionId);
+            await RushAPI.postSelectedRushOptionApply(cookies[COOKIE_TOKEN_KEY], optionId);
         } catch (error) {
             console.error("Error: ", error);
         }
