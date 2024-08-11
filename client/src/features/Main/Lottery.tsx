@@ -6,7 +6,7 @@ import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
-import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 export function Lottery({ id }: SectionKeyProps) {
     const [startDateTime, setStartDateTime] = useState<string | null>(null);
@@ -76,7 +76,7 @@ export function Lottery({ id }: SectionKeyProps) {
                 className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"
             >
                 <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
-                <ArrowIcon stroke="#637381" />
+                <ArrowRightIcon stroke="#637381" />
             </Link>
         </Section>
     );

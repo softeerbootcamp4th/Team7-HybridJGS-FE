@@ -13,7 +13,7 @@ import { CASPER_ACTION } from "@/types/casperCustom";
 import { saveDomImage } from "@/utils/saveDomImage";
 import { Battery } from "./Battery";
 import { MyCasperCardFront } from "./MyCasperCardFront";
-import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 interface CasperCustomFinishProps {
     handleResetStep: () => void;
@@ -98,7 +98,7 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
                 <p className="h-body-1-regular text-n-white group-hover:underline">
                     다른 사람들의 스마일 로봇 뱃지 보러가기
                 </p>
-                <ArrowIcon stroke="#ffffff" />
+                <ArrowRightIcon stroke="#ffffff" />
             </Link>
         </motion.div>
     );
