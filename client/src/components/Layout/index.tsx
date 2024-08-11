@@ -8,7 +8,7 @@ import Header from "../Header";
 
 export default function Layout() {
     return (
-        <ErrorBoundary fallback={<ErrorElement fallbackUrl="/" />}>
+        <ErrorBoundary fallback={<ErrorElement />}>
             <CookiesProvider>
                 <ScrollHeaderStyleProvider>
                     <PhoneNumberProvider>
