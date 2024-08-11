@@ -4,9 +4,9 @@ import { useCookies } from "react-cookie";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
@@ -21,7 +21,7 @@ interface CasperCustomFormProps {
 }
 
 export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
     const {
         data: casper,
@@ -82,7 +82,8 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
             expectation: expectations,
         };
 
-        await postCasper({ token: cookies[COOKIE_TOKEN_KEY], casper });
+        // TODO: cookie에 담긴 INVITE_USER도 전송
+        await postCasper({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], casper });
     };
 
     return (

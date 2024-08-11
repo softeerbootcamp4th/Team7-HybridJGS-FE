@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { LinkAPI } from "@/apis/linkAPI";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
@@ -30,14 +30,16 @@ export function CasperCustomFinish({
     handleResetStep,
     unblockNavigation,
 }: CasperCustomFinishProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const { showToast, ToastComponent } = useToast("링크가 복사되었어요!");
 
     const {
         data: applyCountData,
-        isError: isErrorgetApplyCount,
+        isError: isErrorGetApplyCount,
         fetchData: getApplyCount,
-    } = useFetch<GetApplyCountResponse>(() => LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY]));
+    } = useFetch<GetApplyCountResponse>(() =>
+        LotteryAPI.getApplyCount(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    );
 
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
@@ -45,7 +47,7 @@ export function CasperCustomFinish({
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!cookies[COOKIE_TOKEN_KEY]) {
+        if (!cookies[COOKIE_KEY.ACCESS_TOKEN]) {
             return;
         }
 
@@ -67,7 +69,7 @@ export function CasperCustomFinish({
     };
 
     const handleClickShareButton = async () => {
-        const link = await LinkAPI.getShareLink(cookies[COOKIE_TOKEN_KEY]);
+        const link = await LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]);
 
         try {
             await navigator.clipboard.writeText(link.shortenLocalUrl);
@@ -78,7 +80,7 @@ export function CasperCustomFinish({
     };
 
     return (
-        <ErrorBoundary isError={isErrorgetApplyCount}>
+        <ErrorBoundary isError={isErrorGetApplyCount}>
             <motion.div
                 className="mt-[60px] flex flex-col items-center"
                 {...SCROLL_MOTION(DISSOLVE)}
