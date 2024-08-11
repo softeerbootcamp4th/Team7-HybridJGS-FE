@@ -4,7 +4,7 @@ import RushCardCurrentRatio from "@/components/RushCardCurrentRatio";
 import RushCardResultDescription from "@/components/RushCardResultDescription";
 import RushCountDown from "@/components/RushCountDown";
 import { CARD_COLOR, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
-import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import useCountDown from "@/hooks/useCountDown.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
@@ -15,13 +15,13 @@ interface SelectedCardProps {
 
 function SelectedCardDescription({ onClick }: SelectedCardProps) {
     return (
-        <div className="relative flex gap-10">
+        <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardResultDescription
                 color={CARD_COLOR.RED}
                 day={CARD_DAYS.DAY4}
                 cardType={CARD_TYPE.LEFT_OPTIONS}
             />
-            <div className="absolute flex items-center justify-center">
+            <div className="absolute flex items-center justify-center top-1/2 right-[-150px]">
                 <button
                     className="flex flex-col gap-1 justify-center items-center text-center cursor-pointer"
                     onClick={onClick}
@@ -32,14 +32,15 @@ function SelectedCardDescription({ onClick }: SelectedCardProps) {
                     <ArrowRightIcon stroke="#22252A" />
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
 function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
     return (
-        <div className="relative flex gap-10">
-            <div className="absolute flex items-center justify-center">
+        <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
+            <RushCardCurrentRatio />
+            <div className="absolute flex items-center justify-center top-1/2 left-[-170px]">
                 <button
                     className="flex flex-col gap-1 justify-center items-center text-center cursor-pointer"
                     onClick={onClick}
@@ -50,8 +51,7 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
                     <ArrowLeftIcon stroke="#22252A" />
                 </button>
             </div>
-            <RushCardCurrentRatio />
-        </div>
+        </motion.div>
     );
 }
 
