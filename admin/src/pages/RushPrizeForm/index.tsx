@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "@/components/Button";
 import SelectForm from "@/components/SelectForm";
 import TabHeader from "@/components/TabHeader";
 import TextField from "@/components/TextField";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
-import { RUSH_ACTION } from "@/types/rush";
+import { RUSH_ACTION, RushPrizeType } from "@/types/rush";
 
 export default function RushPrizeForm() {
     const navigate = useNavigate();
@@ -13,6 +14,11 @@ export default function RushPrizeForm() {
     const { prize } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
+    const [prizeState, setPrizeState] = useState<RushPrizeType>({} as RushPrizeType);
+
+    useEffect(() => {
+        setPrizeState(prize);
+    }, [prize]);
     useEffect(() => {
         dispatch({
             type: RUSH_ACTION.SET_PRIZE,
@@ -23,18 +29,20 @@ export default function RushPrizeForm() {
         });
     }, []);
 
+    const handleUpdate = () => {
+        dispatch({
+            type: RUSH_ACTION.SET_PRIZE,
+            payload: prizeState,
+        });
+    };
+
     const option = [
         ["이미지", <input type="file" />],
         [
             "경품 이름 (20자 이내)",
             <TextField
-                value={prize.prizeDescription}
-                onChange={(e) =>
-                    dispatch({
-                        type: RUSH_ACTION.SET_PRIZE,
-                        payload: { ...prize, prizeDescription: e.target.value },
-                    })
-                }
+                value={prizeState.prizeDescription}
+                onChange={(e) => setPrizeState({ ...prizeState, prizeDescription: e.target.value })}
             />,
         ],
     ];
@@ -55,6 +63,10 @@ export default function RushPrizeForm() {
                 </div>
 
                 <SelectForm header="경품 관리" data={option} />
+
+                <Button buttonSize="lg" onClick={handleUpdate}>
+                    임시 저장
+                </Button>
             </div>
         </div>
     );

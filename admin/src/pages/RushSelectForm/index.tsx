@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "@/components/Button";
 import SelectForm from "@/components/SelectForm";
 import TabHeader from "@/components/TabHeader";
 import TextField from "@/components/TextField";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
-import { RUSH_ACTION } from "@/types/rush";
+import { RUSH_ACTION, RushOptionType } from "@/types/rush";
 
 export default function RushSelectForm() {
     const navigate = useNavigate();
@@ -13,6 +14,11 @@ export default function RushSelectForm() {
     const { selectOptions } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
+    const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
+
+    useEffect(() => {
+        setSelectOptionState(selectOptions);
+    }, [selectOptions]);
     useEffect(() => {
         dispatch({
             type: RUSH_ACTION.SET_OPTION,
@@ -37,31 +43,35 @@ export default function RushSelectForm() {
         });
     }, []);
 
+    const handleUpdate = () => {
+        dispatch({ type: RUSH_ACTION.SET_OPTION, payload: selectOptionState });
+    };
+
     const handleChangeItem = (key: string, changeIdx: number, text: string) => {
-        const updatedItem = selectOptions.map((item, idx) => {
+        const updatedItem = selectOptionState.map((item, idx) => {
             if (idx === changeIdx) {
                 return { ...item, [key]: text };
             }
             return { ...item };
         });
 
-        dispatch({ type: RUSH_ACTION.SET_OPTION, payload: updatedItem });
+        setSelectOptionState(updatedItem);
     };
 
     const getSelectOption = (idx: number) => {
-        if (selectOptions.length >= 2) {
+        if (selectOptionState.length >= 2) {
             return [
                 [
                     "메인 문구 (15자 이내)",
                     <TextField
-                        value={selectOptions[idx].mainText}
+                        value={selectOptionState[idx].mainText}
                         onChange={(e) => handleChangeItem("mainText", idx, e.target.value)}
                     />,
                 ],
                 [
                     "서브 문구 (40자 이내)",
                     <TextField
-                        value={selectOptions[idx].subText}
+                        value={selectOptionState[idx].subText}
                         onChange={(e) => handleChangeItem("subText", idx, e.target.value)}
                     />,
                 ],
@@ -70,20 +80,20 @@ export default function RushSelectForm() {
         return [];
     };
     const getSelectOptionResult = (idx: number) => {
-        if (selectOptions.length >= 2) {
+        if (selectOptionState.length >= 2) {
             return [
                 ["이미지", <input type="file" />],
                 [
                     "메인 문구 (20자 이내)",
                     <TextField
-                        value={selectOptions[idx].resultMainText}
+                        value={selectOptionState[idx].resultMainText}
                         onChange={(e) => handleChangeItem("resultMainText", idx, e.target.value)}
                     />,
                 ],
                 [
                     "서브 문구 (45자 이내)",
                     <TextField
-                        value={selectOptions[idx].resultSubText}
+                        value={selectOptionState[idx].resultSubText}
                         onChange={(e) => handleChangeItem("resultSubText", idx, e.target.value)}
                     />,
                 ],
@@ -123,6 +133,10 @@ export default function RushSelectForm() {
                         />
                     </div>
                 </div>
+
+                <Button buttonSize="lg" onClick={handleUpdate}>
+                    임시 저장
+                </Button>
             </div>
         </div>
     );
