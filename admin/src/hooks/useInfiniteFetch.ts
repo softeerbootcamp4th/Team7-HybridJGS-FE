@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { InfiniteListData } from "@/types/common";
 
 interface UseInfiniteFetchProps<R> {
@@ -11,6 +12,7 @@ interface UseInfiniteFetchProps<R> {
 interface InfiniteScrollData<T> {
     data: T[];
     fetchNextPage: () => void;
+    refetch: () => void;
     hasNextPage: boolean;
     isSuccess: boolean;
     isError: boolean;
@@ -32,6 +34,7 @@ export default function useInfiniteFetch<T>({
     const fetchNextPage = useCallback(async () => {
         if (!hasNextPage || isLoading || currentPageParam === undefined) return;
 
+        console.log(currentPageParam);
         setIsLoading(true);
         try {
             const lastPage = await fetch(currentPageParam);
@@ -49,6 +52,14 @@ export default function useInfiniteFetch<T>({
         }
     }, [fetch, getNextPageParam, currentPageParam, data, hasNextPage]);
 
+    const refetch = useCallback(async () => {
+        flushSync(() => {
+            setCurrentPageParam(initialPageParam);
+            setData([]);
+        });
+        fetchNextPage();
+    }, [fetchNextPage]);
+
     useEffect(() => {
         if (startFetching) {
             fetchNextPage();
@@ -58,6 +69,7 @@ export default function useInfiniteFetch<T>({
     return {
         data,
         fetchNextPage,
+        refetch,
         hasNextPage,
         isSuccess,
         isError,

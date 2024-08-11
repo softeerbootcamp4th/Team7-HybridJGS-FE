@@ -3,6 +3,7 @@ import {
     GetRushOptionsResponse,
     GetRushParticipantListParams,
     GetRushParticipantListResponse,
+    GetRushWinnerListParams,
 } from "@/types/rush";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
@@ -50,6 +51,54 @@ export const RushAPI = {
             );
             const response = await fetchWithTimeout(
                 `${baseURL}/${id}/participants?number=${phoneNumber}&size=${size}&page=${page}&option=${option}`,
+                {
+                    method: "GET",
+                    headers: headers,
+                }
+            );
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async getRushWinnerList({
+        id,
+        phoneNumber,
+        size,
+        page,
+    }: GetRushWinnerListParams): Promise<GetRushParticipantListResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve({
+                    data: [
+                        {
+                            id: 1,
+                            phoneNumber: "010-3843-6999",
+                            balanceGameChoice: 1,
+                            createdAt: "2024-07-25 20:00:123",
+                            rank: 1,
+                        },
+                        {
+                            id: 3,
+                            phoneNumber: "010-1111-2222",
+                            balanceGameChoice: 1,
+                            createdAt: "2024-07-25 20:00:125",
+                            rank: 2,
+                        },
+                        {
+                            id: 4,
+                            phoneNumber: "010-1111-2222",
+                            balanceGameChoice: 1,
+                            createdAt: "2024-07-25 20:00:127",
+                            rank: 3,
+                        },
+                    ],
+                    isLastPage: false,
+                })
+            );
+            const response = await fetchWithTimeout(
+                `${baseURL}/${id}/participants?number=${phoneNumber}&size=${size}&page=${page}`,
                 {
                     method: "GET",
                     headers: headers,

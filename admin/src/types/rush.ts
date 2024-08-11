@@ -49,6 +49,14 @@ export interface RushParticipantType {
 }
 export interface GetRushParticipantListResponse extends InfiniteListData<RushParticipantType> {}
 
+export interface GetRushWinnerListParams {
+    id: number;
+    size: number;
+    page: number;
+    phoneNumber?: string;
+}
+export interface GetRushWinnerListResponse extends InfiniteListData<RushParticipantType> {}
+
 export interface GetRushOptionsParams {
     id: number;
 }
