@@ -2,7 +2,7 @@ import RushCard from "@/components/RushCard/index.tsx";
 import { CARD_COLORS, CARD_DAYS, CARD_OPTIONS, CARD_TYPE } from "@/constants/Rush/rushCard";
 
 export default function RushCardComparison() {
-    const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
+    const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY2;
 
     const leftOptionColor = CARD_COLORS[currentDay][CARD_TYPE.LEFT_OPTIONS];
     const rightOptionColor = CARD_COLORS[currentDay][CARD_TYPE.RIGHT_OPTIONS];
