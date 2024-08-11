@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import RushCardCurrentRatio from "@/components/RushCardCurrentRatio";
-import RushCardResultDescription from "@/components/RushCardResultDescription";
-import RushCountDown from "@/components/RushCountDown";
 import { CARD_COLOR, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
+import RushCardCurrentRatio from "@/features/Rush/BalanceGameCard/RushCardCurrentRatio.tsx";
+import RushCardResultDescription from "@/features/Rush/BalanceGameCard/RushCardResultDescription.tsx";
+import RushCountDown from "@/features/Rush/BalanceGameCard/RushCountDown.tsx";
 import useCountDown from "@/hooks/useCountDown.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";

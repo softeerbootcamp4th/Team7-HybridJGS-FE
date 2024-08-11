@@ -6,7 +6,7 @@ import {
     CARD_OPTIONS,
     CARD_RESULTS,
     CARD_TYPE,
-} from "@/constants/Rush/rushCard";
+} from "@/constants/Rush/rushCard.ts";
 
 interface RushCardDescriptionProps {
     color: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];

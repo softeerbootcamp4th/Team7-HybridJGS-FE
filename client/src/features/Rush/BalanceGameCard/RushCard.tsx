@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { CARD_COLOR } from "@/constants/Rush/rushCard";
+import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
 
 interface RushCardProps {
     color: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
