@@ -1,13 +1,13 @@
 import { Dispatch } from "react";
 
 export interface RushEventType {
-    rush_event_id: number;
-    event_date: string;
-    open_time: string;
-    close_time: string;
-    winner_count: number;
-    prize_image_url: string;
-    prize_description: string;
+    rushEventId: number;
+    eventDate: string;
+    openTime: string;
+    closeTime: string;
+    winnerCount: number;
+    prizeImageUrl: string;
+    prizeDescription: string;
 }
 
 export interface RushEventStateType {

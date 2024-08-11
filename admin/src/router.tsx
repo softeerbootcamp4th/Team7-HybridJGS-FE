@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
+import RushLayout from "./features/Rush/Layout";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
 import LotteryWinner from "./pages/LotteryWinner";
@@ -29,7 +30,13 @@ export const router = createBrowserRouter([
             },
             {
                 path: "rush/",
-                element: <Rush />,
+                element: <RushLayout />,
+                children: [
+                    {
+                        index: true,
+                        element: <Rush />,
+                    },
+                ],
             },
         ],
     },
