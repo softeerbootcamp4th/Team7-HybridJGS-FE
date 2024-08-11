@@ -28,7 +28,7 @@ const backgroundGradients = cva(
 export default function RushCard({ color, title, description, onClick }: RushCardProps) {
     return (
         <div className={backgroundGradients({ color })} onClick={onClick}>
-            <h2 className="h-heading-2-bold text-center max-w-58">{title}</h2>
+            <h2 className="h-heading-2-bold text-center max-w-56">{title}</h2>
             <p className="h-body-1-regular text-center max-w-56">{description}</p>
         </div>
     );

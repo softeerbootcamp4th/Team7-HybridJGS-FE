@@ -15,7 +15,7 @@ interface RushCardDescriptionProps {
 }
 
 const backgroundGradients = cva(
-    `flex gap-[35px] w-[834px] h-[400px] bg-gradient-green rounded-800 py-6 px-[37px] justify-between`,
+    `flex gap-[35px] w-[834px] h-[400px] bg-gradient-green rounded-800 py-6 px-[37px] justify-between break-keep`,
     {
         variants: {
             color: {
@@ -41,7 +41,9 @@ export default function RushCardResultDescription({
         <div className={backgroundGradients({ color })}>
             <div className="flex flex-col gap-2 justify-center items-center w-[245px]">
                 <Category type="limited">당신의 선택</Category>
-                <h2 className="h-heading-2-bold text-center text-n-neutral-950">{mainTitle}</h2>
+                <h2 className="h-heading-2-bold text-center text-n-neutral-950 max-w-56">
+                    {mainTitle}
+                </h2>
                 <span className="h-body-1-regular text-center text-s-red">
                     <p>지금 </p>
                     <p className="h-body-1-bold">63%</p>
@@ -50,8 +52,8 @@ export default function RushCardResultDescription({
             </div>
             <span className="flex flex-col justify-center items-center gap-3 w-[480px] h-[352px] rounded-800 bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-center bg-cover text-n-white">
                 <p className="text-center">CASPER Electric</p>
-                <h2 className="h-heading-2-bold text-center">{title}</h2>
-                <p className="h-body-1-bold text-center">{description}</p>
+                <h2 className="h-heading-2-bold text-center max-w-78">{title}</h2>
+                <p className="h-body-1-bold text-center max-w-72">{description}</p>
             </span>
         </div>
     );
