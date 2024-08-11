@@ -10,4 +10,4 @@ export { Intro } from "./Extra/Intro.tsx";
 export { ReasonFirst } from "./Reason/ReasonFirst.tsx";
 export { ReasonSecond } from "./Reason/ReasonSecond.tsx";
 export { CasperCharge } from "./Casper/CasperCharge.tsx";
-export { BalanceGame } from "./BalanceGame/BalanceGame.tsx";
+export { RushGame } from "@/features/Rush/RushGame/RushGame.tsx";

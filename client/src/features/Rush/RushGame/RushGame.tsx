@@ -6,17 +6,17 @@ import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import CardOptions from "@/features/Rush/BalanceGame/BalanceGameSection/CardOptions.tsx";
-import CountDown from "@/features/Rush/BalanceGame/BalanceGameSection/CountDown.tsx";
-import FinalResult from "@/features/Rush/BalanceGame/BalanceGameSection/FinalResult.tsx";
-import SelectedCard from "@/features/Rush/BalanceGame/BalanceGameSection/SelectedCard.tsx";
-import { useBalanceGameContext } from "@/hooks/useBalanceGameContext.ts";
+import CardOptions from "@/features/Rush/RushGame/RushGameSection/CardOptions.tsx";
+import CountDown from "@/features/Rush/RushGame/RushGameSection/CountDown.tsx";
+import FinalResult from "@/features/Rush/RushGame/RushGameSection/FinalResult.tsx";
+import SelectedCard from "@/features/Rush/RushGame/RushGameSection/SelectedCard.tsx";
 import useCountDown from "@/hooks/useCountDown.ts";
+import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function BalanceGame({ id }: SectionKeyProps) {
+export function RushGame({ id }: SectionKeyProps) {
     // const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const { gameState, setGameState, updateUserParticipationStatus } = useBalanceGameContext();
+    const { gameState, setGameState, updateUserParticipationStatus } = useRushGameContext();
     // const [initialCountdown, setInitialCountdown] = useState<number | null>(null);
 
     // useEffect(() => {
@@ -53,7 +53,7 @@ export function BalanceGame({ id }: SectionKeyProps) {
         }
     }, [countdown, gameState.phase, setGameState]);
 
-    const renderBalanceGameContent = () => {
+    const renderRushGameContent = () => {
         switch (gameState.phase) {
             case "PRE_EVENT":
                 return <CountDown countdown={countdown} />;
@@ -76,7 +76,7 @@ export function BalanceGame({ id }: SectionKeyProps) {
             id={id}
             className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start"
         >
-            {renderBalanceGameContent()}
+            {renderRushGameContent()}
             <motion.div
                 className="flex flex-col justify-center items-center gap-4 my-3"
                 {...SCROLL_MOTION(ASCEND)}

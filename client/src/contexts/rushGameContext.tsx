@@ -1,11 +1,11 @@
 import { ReactNode, createContext, useState } from "react";
-import { BalanceGameContextType } from "@/types/balanceGame";
 import { GetRushUserParticipationStatusResponse } from "@/types/rushApi.ts";
+import { RushGameContextType } from "@/types/rushGame.ts";
 
-export const BalanceGameContext = createContext<BalanceGameContextType | undefined>(undefined);
+export const RushGameContext = createContext<RushGameContextType | undefined>(undefined);
 
-export const BalanceGameProvider = ({ children }: { children: ReactNode }) => {
-    const [gameState, setGameState] = useState<BalanceGameContextType["gameState"]>({
+export const RushGameProvider = ({ children }: { children: ReactNode }) => {
+    const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
         phase: "PRE_EVENT",
         userParticipated: false,
     });
@@ -18,10 +18,10 @@ export const BalanceGameProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <BalanceGameContext.Provider
+        <RushGameContext.Provider
             value={{ gameState, setGameState, updateUserParticipationStatus }}
         >
             {children}
-        </BalanceGameContext.Provider>
+        </RushGameContext.Provider>
     );
 };
