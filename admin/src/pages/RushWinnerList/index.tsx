@@ -5,10 +5,11 @@ import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
+import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { RushOptionType } from "@/types/rush";
-import { GetRushParticipantListResponse } from "@/types/rushApi";
+import { GetRushOptionsResponse, GetRushParticipantListResponse } from "@/types/rushApi";
 
 export default function RushWinnerList() {
     const location = useLocation();
@@ -56,6 +57,12 @@ export default function RushWinnerList() {
         },
     });
 
+    const {
+        data: rushOptions,
+        isSuccess: isSuccessGetRushOptions,
+        fetchData: getRushOptions,
+    } = useFetch<GetRushOptionsResponse>(() => RushAPI.getRushOptions({ id: rushId }));
+
     const currentData = isWinnerToggle ? winners : participants;
 
     const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -65,9 +72,15 @@ export default function RushWinnerList() {
     });
 
     useEffect(() => {
-        handleGetOptions();
+        getRushOptions();
     }, []);
 
+    useEffect(() => {
+        if (isSuccessGetRushOptions && rushOptions) {
+            setOptions(rushOptions);
+            setSelectedOptionIdx(0);
+        }
+    }, [isSuccessGetRushOptions, rushOptions]);
     useEffect(() => {
         return () => handleTableScrollTop();
     }, [isWinnerToggle]);
@@ -80,12 +93,6 @@ export default function RushWinnerList() {
             const table = tableContainerRef.current.querySelector(".table-contents");
             table?.scrollTo({ top: 0 });
         }
-    };
-
-    const handleGetOptions = async () => {
-        const data = await RushAPI.getRushOptions({ id: rushId });
-        setOptions(data);
-        setSelectedOptionIdx(0);
     };
 
     const handleClickOption = (idx: number) => {
