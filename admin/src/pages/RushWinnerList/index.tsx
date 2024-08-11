@@ -65,18 +65,18 @@ export default function RushWinnerList() {
 
     useEffect(() => {
         handleGetOptions();
-        getRushParticipantList();
-        getRushWinnerList();
     }, []);
 
     useEffect(() => {
-        return () => {
-            if (tableContainerRef.current) {
-                const table = tableContainerRef.current.querySelector(".table-contents");
-                table?.scrollTo({ top: 0 });
-            }
-        };
+        return () => handleTableScrollTop();
     }, [isWinnerToggle]);
+
+    const handleTableScrollTop = () => {
+        if (tableContainerRef.current) {
+            const table = tableContainerRef.current.querySelector(".table-contents");
+            table?.scrollTo({ top: 0 });
+        }
+    };
 
     const handleGetOptions = async () => {
         const data = await RushAPI.getRushOptions({ id: rushId });
@@ -85,8 +85,9 @@ export default function RushWinnerList() {
     };
 
     const handleClickOption = (idx: number) => {
-        setSelectedOptionIdx(idx);
+        handleTableScrollTop();
 
+        setSelectedOptionIdx(idx);
         refetchRushParticipantList();
         refetchRushWinnerList();
     };
@@ -101,13 +102,17 @@ export default function RushWinnerList() {
             "전화번호",
             "등수",
             "클릭 시간",
-            <Dropdown
-                options={optionTitleList}
-                selectedIdx={selectedOptionIdx}
-                handleClickOption={handleClickOption}
-            />,
+            isWinnerToggle ? (
+                "선택한 옵션"
+            ) : (
+                <Dropdown
+                    options={optionTitleList}
+                    selectedIdx={selectedOptionIdx}
+                    handleClickOption={handleClickOption}
+                />
+            ),
         ],
-        [optionTitleList, selectedOptionIdx]
+        [optionTitleList, isWinnerToggle, selectedOptionIdx]
     );
     const dataList = useMemo(
         () =>
