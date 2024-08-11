@@ -11,6 +11,7 @@ export const RushEventDispatchContext = createContext<RushEventDispatchType | nu
 
 const initialState: RushEventStateType = {
     rushList: [],
+    selectOptions: [],
 };
 
 const casperCustomReducer = (
@@ -20,7 +21,8 @@ const casperCustomReducer = (
     switch (action.type) {
         case RUSH_ACTION.SET_EVENT_LIST:
             return { ...state, rushList: action.payload };
-
+        case RUSH_ACTION.SET_OPTION:
+            return { ...state, selectOptions: action.payload };
         default:
             return state;
     }

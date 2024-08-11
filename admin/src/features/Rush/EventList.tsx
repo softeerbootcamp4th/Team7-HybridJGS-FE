@@ -58,7 +58,14 @@ export default function EventList({}: EventListProps) {
                     onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
                 />,
                 getTimeDifference(item.openTime, item.closeTime),
-                <Button buttonSize="sm">선택지 관리</Button>,
+                <Button
+                    buttonSize="sm"
+                    onClick={() =>
+                        navigate("/rush/select-form", { state: { id: item.rushEventId } })
+                    }
+                >
+                    선택지 관리
+                </Button>,
                 <Button buttonSize="sm">경품 관리</Button>,
                 <div className="flex justify-between">
                     <p>{item.winnerCount}</p>

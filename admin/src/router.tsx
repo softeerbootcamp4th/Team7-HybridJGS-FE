@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
 import LotteryWinner from "./pages/LotteryWinner";
 import Rush from "./pages/Rush";
+import RushSelectForm from "./pages/RushSelectForm";
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Rush />,
+                    },
+                    {
+                        path: "select-form",
+                        element: <RushSelectForm />,
                     },
                 ],
             },
