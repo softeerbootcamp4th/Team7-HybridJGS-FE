@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TabHeader from "@/components/TabHeader";
-import ApplicantList from "@/features/Rush/ApplicantList";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import { RUSH_ACTION } from "@/types/rush";
 

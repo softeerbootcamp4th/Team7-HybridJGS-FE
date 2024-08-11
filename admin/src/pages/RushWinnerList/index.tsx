@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
@@ -11,6 +11,7 @@ import { GetRushParticipantListResponse, RushOptionType } from "@/types/rush";
 
 export default function RushWinnerList() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const rushId = location.state.id;
 
@@ -130,11 +131,17 @@ export default function RushWinnerList() {
     );
 
     return (
-        <div>
+        <div className="flex flex-col items-center h-screen">
             <TabHeader />
 
             <div className="w-[1560px] flex flex-col mt-10 gap-4">
                 <div className="flex items-center gap-4">
+                    <img
+                        alt="뒤로 가기 버튼"
+                        src="/assets/icons/left-arrow.svg"
+                        className="cursor-pointer"
+                        onClick={() => navigate(-1)}
+                    />
                     <p className="h-body-1-medium">선착순 참여자 리스트 {currentData.length} 명</p>
                     <Button
                         buttonSize="sm"
