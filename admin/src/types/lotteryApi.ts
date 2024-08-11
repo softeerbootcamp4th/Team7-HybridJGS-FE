@@ -15,6 +15,7 @@ export interface GetLotteryWinnerParams {
     id: number;
     size: number;
     page: number;
+    phoneNumber?: string;
 }
 
 export interface GetLotteryExpectationsParams {

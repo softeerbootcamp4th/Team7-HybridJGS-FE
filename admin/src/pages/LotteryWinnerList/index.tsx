@@ -28,14 +28,22 @@ export default function LotteryWinnerList() {
 
     const { handleOpenModal, ModalComponent } = useModal();
     const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
+    const phoneNumberRef = useRef<string>("");
+    const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
     const {
         data: winnerInfo,
         isSuccess: isSuccessGetLotteryWinner,
         fetchNextPage: getWinnerInfo,
+        refetch: refetchWinnerInfo,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
-            LotteryAPI.getLotteryWinner({ id: lotteryId, size: 10, page: pageParam }),
+            LotteryAPI.getLotteryWinner({
+                id: lotteryId,
+                size: 10,
+                page: pageParam,
+                phoneNumber: phoneNumberRef.current,
+            }),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
@@ -47,6 +55,11 @@ export default function LotteryWinnerList() {
         onIntersect: getWinnerInfo,
         enabled: isSuccessGetLotteryWinner,
     });
+
+    const handleRefetch = () => {
+        phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
+        refetchWinnerInfo();
+    };
 
     const handleLottery = () => {
         navigate("/lottery/winner");
@@ -90,14 +103,26 @@ export default function LotteryWinnerList() {
             <TabHeader />
 
             <div className="w-[1560px] flex flex-col items-center justify-center gap-8 mt-10">
-                <div className="flex items-center gap-2 self-start">
-                    <img
-                        alt="뒤로 가기 버튼"
-                        src="/assets/icons/left-arrow.svg"
-                        className="cursor-pointer"
-                        onClick={() => navigate(-1)}
-                    />
-                    <p className="h-body-1-medium">당첨자 추첨</p>
+                <div className="flex w-full justify-between">
+                    <div className="flex items-center gap-2">
+                        <img
+                            alt="뒤로 가기 버튼"
+                            src="/assets/icons/left-arrow.svg"
+                            className="cursor-pointer"
+                            onClick={() => navigate(-1)}
+                        />
+                        <p className="h-body-1-medium">당첨자 추첨</p>
+                    </div>
+
+                    <div className="flex gap-2">
+                        <input
+                            ref={phoneNumberInputRef}
+                            className="border border-neutral-950 rounded-lg text-neutral-950 h-body-1-medium"
+                        />
+                        <Button buttonSize="sm" onClick={handleRefetch}>
+                            검색
+                        </Button>
+                    </div>
                 </div>
 
                 <Table

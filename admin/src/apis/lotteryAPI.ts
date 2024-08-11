@@ -55,6 +55,7 @@ export const LotteryAPI = {
         id,
         size,
         page,
+        phoneNumber,
     }: GetLotteryWinnerParams): Promise<GetLotteryWinnerResponse> {
         try {
             return new Promise((resolve) =>
@@ -82,11 +83,11 @@ export const LotteryAPI = {
                             appliedCount: 3,
                         },
                     ],
-                    isLastPage: true,
+                    isLastPage: false,
                 })
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${id}/winner?size=${size}&page=${page}`,
+                `${baseURL}/${id}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
                     headers: headers,

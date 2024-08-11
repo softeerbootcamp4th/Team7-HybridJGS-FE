@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
-import Input from "@/components/Input";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import useFetch from "@/hooks/useFetch";
@@ -22,7 +21,8 @@ export default function RushWinnerList() {
     const [options, setOptions] = useState<RushOptionType[]>([]);
     const [selectedOptionIdx, setSelectedOptionIdx] = useState<number>(0);
 
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const phoneNumberRef = useRef<string>("");
+    const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
     const {
         data: participants,
@@ -36,7 +36,7 @@ export default function RushWinnerList() {
                 size: 10,
                 page: pageParam,
                 option: options[selectedOptionIdx].rushOptionId,
-                phoneNumber,
+                phoneNumber: phoneNumberRef.current,
             }),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
@@ -55,7 +55,7 @@ export default function RushWinnerList() {
                 id: rushId,
                 size: 10,
                 page: pageParam,
-                phoneNumber,
+                phoneNumber: phoneNumberRef.current,
             }),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
@@ -95,6 +95,8 @@ export default function RushWinnerList() {
     }, [selectedOptionIdx]);
 
     const handleSearchPhoneNumber = () => {
+        phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
+
         if (isWinnerToggle) {
             refetchRushWinnerList();
         } else {
@@ -176,10 +178,9 @@ export default function RushWinnerList() {
                     </div>
 
                     <div className="flex gap-2">
-                        <Input
-                            inputSize="sm"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        <input
+                            ref={phoneNumberInputRef}
+                            className="border border-neutral-950 rounded-lg text-neutral-950 h-body-1-medium"
                         />
                         <Button buttonSize="sm" onClick={handleSearchPhoneNumber}>
                             검색
