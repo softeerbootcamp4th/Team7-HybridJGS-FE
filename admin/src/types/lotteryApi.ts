@@ -1,7 +1,7 @@
 import { InfiniteListData } from "./common";
-import { LotteryExpectationsType, LotteryType, LotteryWinnerType } from "./lottery";
+import { LotteryEventType, LotteryExpectationsType, LotteryWinnerType } from "./lottery";
 
-export type GetLotteryResponse = LotteryType[];
+export type GetLotteryResponse = LotteryEventType[];
 
 export interface PostLotteryWinnerParams {
     id: number;

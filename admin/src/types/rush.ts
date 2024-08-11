@@ -1,5 +1,4 @@
 import { Dispatch } from "react";
-import { InfiniteListData } from "./common";
 
 export interface RushEventType {
     rushEventId: number;
@@ -32,33 +31,12 @@ export interface RushApplicantType {
     created_at: string;
 }
 
-export interface GetRushParticipantListParams {
-    id: number;
-    size: number;
-    page: number;
-    option: number;
-    phoneNumber?: string;
-}
-
 export interface RushParticipantType {
     id: number;
     phoneNumber: string;
     balanceGameChoice: number;
     createdAt: string;
     rank: number;
-}
-export interface GetRushParticipantListResponse extends InfiniteListData<RushParticipantType> {}
-
-export interface GetRushWinnerListParams {
-    id: number;
-    size: number;
-    page: number;
-    phoneNumber?: string;
-}
-export interface GetRushWinnerListResponse extends InfiniteListData<RushParticipantType> {}
-
-export interface GetRushOptionsParams {
-    id: number;
 }
 
 export interface RushOptionType {
@@ -69,5 +47,3 @@ export interface RushOptionType {
     resultSubText: string;
     imageUrl: string;
 }
-
-export type GetRushOptionsResponse = RushOptionType[];

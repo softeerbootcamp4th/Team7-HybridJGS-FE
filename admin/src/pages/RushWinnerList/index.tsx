@@ -7,7 +7,8 @@ import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { GetRushParticipantListResponse, RushOptionType } from "@/types/rush";
+import { RushOptionType } from "@/types/rush";
+import { GetRushParticipantListResponse } from "@/types/rushApi";
 
 export default function RushWinnerList() {
     const location = useLocation();

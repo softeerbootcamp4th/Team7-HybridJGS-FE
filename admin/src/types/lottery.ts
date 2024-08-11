@@ -1,4 +1,4 @@
-export interface LotteryType {
+export interface LotteryEventType {
     lotteryEventId: number;
     startDate: string;
     endDate: string;

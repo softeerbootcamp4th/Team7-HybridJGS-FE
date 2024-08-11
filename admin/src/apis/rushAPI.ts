@@ -4,7 +4,7 @@ import {
     GetRushParticipantListParams,
     GetRushParticipantListResponse,
     GetRushWinnerListParams,
-} from "@/types/rush";
+} from "@/types/rushApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/admin/event/rush`;
