@@ -14,12 +14,17 @@ import {
     CasperCustomForm,
     CasperCustomProcess,
 } from "@/features/CasperCustom";
+import { useBlockNavigation } from "@/hooks/useBlockNavigation";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver";
 import { SCROLL_MOTION } from "../../constants/animation";
 
 const INITIAL_STEP = 0;
 
 export default function CasperCustom() {
+    const { unblockNavigation } = useBlockNavigation(
+        "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
+    );
+
     const containerRef = useHeaderStyleObserver({
         darkSections: [CASPER_CUSTOM_SECTIONS.CUSTOM],
     });
@@ -28,7 +33,7 @@ export default function CasperCustom() {
     const selectedStep = CUSTOM_STEP_OPTION_ARRAY[selectedStepIdx];
 
     const handleClickNextStep = () => {
-        setSelectedStepIdx(selectedStepIdx + 1);
+        setSelectedStepIdx((prevSelectedIdx) => prevSelectedIdx + 1);
     };
 
     const handleResetStep = () => {
@@ -43,7 +48,12 @@ export default function CasperCustom() {
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISHING) {
             return <CasperCustomFinishing navigateNextStep={handleClickNextStep} />;
         } else if (selectedStep === CUSTOM_STEP_OPTION.FINISH) {
-            return <CasperCustomFinish handleResetStep={handleResetStep} />;
+            return (
+                <CasperCustomFinish
+                    handleResetStep={handleResetStep}
+                    unblockNavigation={unblockNavigation}
+                />
+            );
         }
         return <></>;
     };
