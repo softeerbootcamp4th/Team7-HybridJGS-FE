@@ -10,7 +10,6 @@ import { DISSOLVE } from "@/constants/animation";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
-import ErrorBoundary from "@/pages/ErrorBoundary";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
@@ -30,11 +29,9 @@ export function CasperCustomFinish({
 }: CasperCustomFinishProps) {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
 
-    const {
-        data: applyCountData,
-        isError: isErrorgetApplyCount,
-        fetchData: getApplyCount,
-    } = useFetch<GetApplyCountResponse>(() => LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY]));
+    const { data: applyCountData, fetchData: getApplyCount } = useFetch<GetApplyCountResponse>(() =>
+        LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY])
+    );
 
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
@@ -64,62 +61,57 @@ export function CasperCustomFinish({
     };
 
     return (
-        <ErrorBoundary isError={isErrorgetApplyCount}>
-            <motion.div
-                className="mt-[60px] flex flex-col items-center"
-                {...SCROLL_MOTION(DISSOLVE)}
-            >
-                <div className="flex items-center gap-[107px]">
-                    <div>
-                        <div ref={casperCustomRef}>
-                            <MyCasperCardFront casperName={casperName} hasRandomButton={false} />
-                        </div>
-
-                        <div className="flex gap-500 h-body-1-bold text-n-white mt-[30px]">
-                            <button
-                                className="py-[18px] rounded-[48px] border border-n-white flex-1 bg-n-white/[.24]"
-                                onClick={handleSaveImage}
-                            >
-                                이미지 저장
-                            </button>
-                            <button
-                                className="py-[18px] rounded-[48px] border border-n-white flex-1 bg-n-white/[.24]"
-                                onClick={handleReset}
-                            >
-                                다시 만들기
-                            </button>
-                        </div>
+        <motion.div className="mt-[60px] flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
+            <div className="flex items-center gap-[107px]">
+                <div>
+                    <div ref={casperCustomRef}>
+                        <MyCasperCardFront casperName={casperName} hasRandomButton={false} />
                     </div>
 
-                    <div className="flex flex-col items-center gap-[56px]">
-                        {applyCountData && (
-                            <div className="flex flex-col items-center gap-800">
-                                <p className="text-n-neutral-500">응모한 횟수</p>
-
-                                <Battery applyCount={applyCountData.appliedCount} />
-
-                                <div className="flex items-center gap-300">
-                                    <h2 className="h-heading-2-bold text-n-white">
-                                        {applyCountData.appliedCount}회
-                                    </h2>{" "}
-                                    <p className="h-body-2-regular text-n-neutral-300">
-                                        /{MAX_APPLY}회
-                                    </p>
-                                </div>
-                            </div>
-                        )}
-
-                        <CTAButton label="이벤트 공유해서 추가 응모하기" />
+                    <div className="flex gap-500 h-body-1-bold text-n-white mt-[30px]">
+                        <button
+                            className="py-[18px] rounded-[48px] border border-n-white flex-1 bg-n-white/[.24]"
+                            onClick={handleSaveImage}
+                        >
+                            이미지 저장
+                        </button>
+                        <button
+                            className="py-[18px] rounded-[48px] border border-n-white flex-1 bg-n-white/[.24]"
+                            onClick={handleReset}
+                        >
+                            다시 만들기
+                        </button>
                     </div>
                 </div>
 
-                <Link className="flex gap-300 mt-[60px] group" to="/lottery/show-case">
-                    <p className="h-body-1-regular text-n-white group-hover:underline">
-                        다른 사람들의 스마일 로봇 뱃지 보러가기
-                    </p>
-                    <ArrowIcon stroke="#ffffff" />
-                </Link>
-            </motion.div>
-        </ErrorBoundary>
+                <div className="flex flex-col items-center gap-[56px]">
+                    {applyCountData && (
+                        <div className="flex flex-col items-center gap-800">
+                            <p className="text-n-neutral-500">응모한 횟수</p>
+
+                            <Battery applyCount={applyCountData.appliedCount} />
+
+                            <div className="flex items-center gap-300">
+                                <h2 className="h-heading-2-bold text-n-white">
+                                    {applyCountData.appliedCount}회
+                                </h2>{" "}
+                                <p className="h-body-2-regular text-n-neutral-300">
+                                    /{MAX_APPLY}회
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    <CTAButton label="이벤트 공유해서 추가 응모하기" />
+                </div>
+            </div>
+
+            <Link className="flex gap-300 mt-[60px] group" to="/lottery/show-case">
+                <p className="h-body-1-regular text-n-white group-hover:underline">
+                    다른 사람들의 스마일 로봇 뱃지 보러가기
+                </p>
+                <ArrowIcon stroke="#ffffff" />
+            </Link>
+        </motion.div>
     );
 }
