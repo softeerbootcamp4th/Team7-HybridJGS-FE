@@ -3,28 +3,13 @@ import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
+import { EVENT_LIST_HEADER } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 
-interface EventListProps {}
-
-const EVENT_LIST_HEADER = [
-    "ID",
-    "이벤트 진행 날짜",
-    "오픈 시간",
-    "종료 시간",
-    "활성화 시간",
-    "선택지 관리",
-    "경품 관리",
-    "선착순 당첨 인원 수",
-    "진행 상태",
-    "참여자 리스트 보기",
-    "관리",
-];
-
-export default function EventList({}: EventListProps) {
+export default function EventList() {
     const navigate = useNavigate();
 
     const { rushList } = useRushEventStateContext();

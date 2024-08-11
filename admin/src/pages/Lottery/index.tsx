@@ -5,17 +5,8 @@ import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
+import { LOTTERY_HEADER } from "@/constants/lottery";
 import { LotteryType } from "@/types/lottery";
-
-const LOTTERY_HEADER = [
-    "시작 날짜",
-    "시작 시간",
-    "종료 날짜",
-    "종료 시간",
-    "활성화 기간",
-    "추첨 당첨 인원 수",
-    "진행 상태",
-];
 
 export default function Lottery() {
     const navigate = useNavigate();
