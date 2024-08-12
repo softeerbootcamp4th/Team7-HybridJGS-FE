@@ -21,15 +21,18 @@ interface CasperCustomFormProps {
 }
 
 export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
-    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN, COOKIE_KEY.INVITE_USER]);
 
     const {
         data: casper,
         isSuccess: isSuccessPostCasper,
         isError: isErrorPostCasper,
         fetchData: postCasper,
-    } = useFetch<PostCasperResponse, { token: string; casper: CasperInformationType }>(
-        ({ token, casper }) => LotteryAPI.postCasper(token, casper)
+    } = useFetch<
+        PostCasperResponse,
+        { token: string; referrerId: string; casper: CasperInformationType }
+    >(({ token, referrerId, casper }) =>
+        LotteryAPI.postCasper(token, { ...casper, [COOKIE_KEY.INVITE_USER]: referrerId })
     );
 
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
@@ -82,8 +85,13 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
             expectation: expectations,
         };
 
-        // TODO: cookie에 담긴 INVITE_USER도 전송
-        await postCasper({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], casper });
+        console.log(cookies[COOKIE_KEY.INVITE_USER]);
+
+        await postCasper({
+            token: cookies[COOKIE_KEY.ACCESS_TOKEN],
+            referrerId: cookies[COOKIE_KEY.INVITE_USER],
+            casper,
+        });
     };
 
     return (

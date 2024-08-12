@@ -1,3 +1,5 @@
+import { COOKIE_KEY } from "@/constants/cookie";
+
 export interface CasperInformationType {
     eyeShape: number;
     eyePosition: number;
@@ -12,7 +14,9 @@ export type GetCasperListResponse = ({
     casperId: number;
 } & CasperInformationType)[];
 
-export interface PostCasperRequestBody extends CasperInformationType {}
+export interface PostCasperRequestBody extends CasperInformationType {
+    [COOKIE_KEY.INVITE_USER]: string;
+}
 
 export interface PostCasperResponse extends CasperInformationType {
     casperId: number;

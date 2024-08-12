@@ -36,7 +36,7 @@ export default function Lottery() {
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const inviteUser = queryParams.get("user");
+    const inviteUser = queryParams.get(COOKIE_KEY.INVITE_USER);
 
     const lotteryData = useLoaderData() as GetLotteryResponse;
 
