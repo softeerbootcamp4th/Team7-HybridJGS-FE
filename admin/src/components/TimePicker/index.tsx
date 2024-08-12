@@ -8,7 +8,12 @@ interface TimePickerProps {
 
 export default function TimePicker({ time, disabled = false, onChangeTime }: TimePickerProps) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        onChangeTime(e.target.value);
+        /**
+         * 시간-분 까지만 선택 가능
+         * 초는 0초를 디폴트로 넣는다
+         */
+        const time = `${e.target.value}:00`;
+        onChangeTime(time);
     };
 
     return (

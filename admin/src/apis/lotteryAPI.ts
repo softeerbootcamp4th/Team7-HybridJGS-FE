@@ -22,9 +22,9 @@ export const LotteryAPI = {
                 resolve([
                     {
                         startDate: "2024-07-26",
-                        startTime: "00:00",
+                        startTime: "00:00:00",
                         endDate: "2024-08-25",
-                        endTime: "23:59",
+                        endTime: "23:59:00",
                         appliedCount: 1000000,
                         winnerCount: 363,
                         status: "BEFORE",
@@ -46,9 +46,9 @@ export const LotteryAPI = {
             return new Promise((resolve) =>
                 resolve({
                     startDate: "2024-08-26",
-                    startTime: "00:00:000",
+                    startTime: "00:00:00",
                     endDate: "2024-09-25 23:59",
-                    endTime: "00:00:000",
+                    endTime: "00:00:00",
                     winnerCount: 363,
                 })
             );

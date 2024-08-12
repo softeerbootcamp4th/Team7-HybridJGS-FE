@@ -1,4 +1,3 @@
-import { RushEventType } from "@/types/rush";
 import {
     GetRushEventResponse,
     GetRushOptionsParams,
