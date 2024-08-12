@@ -1,5 +1,5 @@
 import { InfiniteListData } from "./common";
-import { RushOptionType, RushParticipantType } from "./rush";
+import { RushEventType, RushOptionType, RushParticipantType } from "./rush";
 
 export interface GetRushParticipantListParams {
     id: number;
@@ -8,6 +8,8 @@ export interface GetRushParticipantListParams {
     option: number;
     phoneNumber?: string;
 }
+
+export type GetRushEventResponse = RushEventType[];
 
 export type GetRushOptionsResponse = RushOptionType[];
 

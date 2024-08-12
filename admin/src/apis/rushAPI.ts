@@ -1,4 +1,5 @@
 import {
+    GetRushEventResponse,
     GetRushOptionsParams,
     GetRushOptionsResponse,
     GetRushParticipantListParams,
@@ -13,6 +14,52 @@ const headers = {
 };
 
 export const RushAPI = {
+    async getRush(): Promise<GetRushEventResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve([
+                    {
+                        rushEventId: 1,
+                        eventDate: "2024-07-25",
+                        openTime: "20:00:00",
+                        closeTime: "20:10:00",
+                        winnerCount: 315,
+                        prizeImageUrl: "prize1.png",
+                        prizeDescription: "스타벅스 1만원 기프트카드",
+                        isActivated: true,
+                    },
+                    {
+                        rushEventId: 2,
+                        eventDate: "2024-07-26",
+                        openTime: "20:00:00",
+                        closeTime: "20:10:00",
+                        winnerCount: 315,
+                        prizeImageUrl: "prize2.png",
+                        prizeDescription: "올리브영 1만원 기프트카드",
+                        isActivated: true,
+                    },
+                    {
+                        rushEventId: 3,
+                        eventDate: "2024-07-27",
+                        openTime: "20:00:00",
+                        closeTime: "20:10:00",
+                        winnerCount: 315,
+                        prizeImageUrl: "prize3.png",
+                        prizeDescription: "배달의 민족 1만원 기프트카드",
+                        isActivated: true,
+                    },
+                ])
+            );
+            const response = await fetchWithTimeout(`${baseURL}`, {
+                method: "GET",
+                headers: headers,
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
     async getRushParticipantList({
         id,
         phoneNumber,
