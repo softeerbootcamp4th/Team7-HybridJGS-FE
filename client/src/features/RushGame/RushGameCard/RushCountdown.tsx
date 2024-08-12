@@ -1,4 +1,4 @@
-interface RushCountDownProps {
+interface RushCountdownProps {
     countdown: number;
 }
 
@@ -11,7 +11,7 @@ function TimeDisplay({ label, value }: { label: string; value: string }) {
     );
 }
 
-export default function RushCountDown({ countdown }: RushCountDownProps) {
+export default function RushCountdown({ countdown }: RushCountdownProps) {
     const minutes = Math.floor((countdown % 3600) / 60);
     const seconds = countdown % 60;
 

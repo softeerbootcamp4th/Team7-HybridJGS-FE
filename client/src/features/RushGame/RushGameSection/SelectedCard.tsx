@@ -4,16 +4,19 @@ import { CARD_COLOR, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameCard/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameCard/RushCardResultDescription.tsx";
-import RushCountDown from "@/features/RushGame/RushGameCard/RushCountDown.tsx";
-import useCountDown from "@/hooks/useCountDown.ts";
+import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 interface SelectedCardProps {
+    countdown: number;
+}
+
+interface SelectedCardChangeProps {
     onClick: () => void;
 }
 
-function SelectedCardDescription({ onClick }: SelectedCardProps) {
+function SelectedCardDescription({ onClick }: SelectedCardChangeProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardResultDescription
@@ -36,7 +39,7 @@ function SelectedCardDescription({ onClick }: SelectedCardProps) {
     );
 }
 
-function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
+function SelectedCardCurrentRatio({ onClick }: SelectedCardChangeProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardCurrentRatio />
@@ -55,9 +58,8 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
     );
 }
 
-export default function SelectedCard() {
+export default function SelectedCard({ countdown }: SelectedCardProps) {
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(true);
-    const countdown = useCountDown(5);
 
     const handleChangeCardResult = () => {
         setIsDescriptionVisible((prev) => !prev);
@@ -68,7 +70,7 @@ export default function SelectedCard() {
             className="flex flex-col gap-3 justify-center items-center pt-14"
             {...SCROLL_MOTION(ASCEND)}
         >
-            <RushCountDown countdown={countdown} />
+            <RushCountdown countdown={countdown} />
             {isDescriptionVisible ? (
                 <SelectedCardDescription onClick={handleChangeCardResult} />
             ) : (

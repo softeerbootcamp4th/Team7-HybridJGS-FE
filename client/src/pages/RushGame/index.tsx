@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
+import { useLoaderData } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import CardOptions from "@/features/RushGame/RushGameSection/CardOptions.tsx";
-import CountDown from "@/features/RushGame/RushGameSection/CountDown.tsx";
+import Countdown from "@/features/RushGame/RushGameSection/Countdown.tsx";
 import FinalResult from "@/features/RushGame/RushGameSection/FinalResult.tsx";
 import SelectedCard from "@/features/RushGame/RushGameSection/SelectedCard.tsx";
-import useCountDown from "@/hooks/useCountDown.ts";
+import useCountdown from "@/hooks/useCountdown.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 
 export default function RushGame() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
     const { gameState, setGameState, updateUserParticipationStatus } = useRushGameContext();
-    const [initialCountdown, setInitialCountdown] = useState<number | null>(null);
+    const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
+    const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
+
+    // TODO: loader 사용으로 바꾸기
+    // const data = useLoaderData() as GetTotalRushEventsResponse;
 
     useEffect(() => {
         (async () => {
@@ -29,8 +35,13 @@ export default function RushGame() {
                 if (rushData.serverTime && currentEvent?.startDateTime) {
                     const serverTime = new Date(rushData.serverTime).getTime();
                     const startTime = new Date(currentEvent.startDateTime).getTime();
-                    const countdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
-                    setInitialCountdown(countdown);
+                    const endTime = new Date(currentEvent.endDateTime).getTime();
+
+                    const preCountdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
+                    const runCountdown = Math.max(0, Math.floor((endTime - serverTime) / 1000));
+
+                    setInitialPreCountdown(preCountdown);
+                    setInitialRunCountdown(runCountdown);
                 }
 
                 const userParticipated = await RushAPI.getRushUserParticipationStatus(
@@ -43,25 +54,28 @@ export default function RushGame() {
         })();
     }, []);
 
-    const countdown = useCountDown(initialCountdown || 0);
+    // const preCountdown = useCountdown(initialPreCountdown || 0);
+    // const runCountdown = useCountdown(initialRunCountdown || 0);
+    const preCountdown = useCountdown(3 || 0);
+    const runCountdown = useCountdown(3 || 0);
 
     useEffect(() => {
-        if (countdown < 0 && gameState.phase === "PRE_EVENT") {
+        if (preCountdown < 0 && gameState.phase === "PRE_EVENT") {
             setGameState((prev) => ({ ...prev, phase: "EVENT_RUNNING" }));
         }
-    }, [countdown, gameState.phase, setGameState]);
+    }, [preCountdown, gameState.phase, setGameState]);
 
     const renderRushGameContent = () => {
         switch (gameState.phase) {
             case "PRE_EVENT":
-                return <CountDown countdown={countdown} />;
+                return <Countdown countdown={preCountdown} />;
             case "EVENT_RUNNING":
                 if (!gameState.userParticipated) {
-                    return <CardOptions />;
-                    // return <SelectedCard />;
+                    // return <CardOptions countdown={runCountdown} />;
+                    return <SelectedCard countdown={runCountdown} />;
                     // return <FinalResult />;
                 } else {
-                    return <SelectedCard />;
+                    return <SelectedCard countdown={runCountdown} />;
                 }
             case "EVENT_ENDED":
                 return <FinalResult />;

@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { Background } from "@/components/Background";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 
-interface CountDownProps {
+interface CountdownProps {
     countdown: number;
 }
 
-function CountDownTimer({ countdown }: CountDownProps) {
+function CountdownTimer({ countdown }: CountdownProps) {
     const hours = Math.floor(countdown / 3600);
     const minutes = Math.floor((countdown % 3600) / 60);
     const seconds = countdown % 60;
@@ -38,13 +38,13 @@ function TimeDisplay({ label, value }: { label: string; value: string }) {
     );
 }
 
-export default function CountDown({ countdown }: CountDownProps) {
+export default function Countdown({ countdown }: CountdownProps) {
     return (
         <>
             <motion.p className="h-heading-2-bold pt-10" {...SCROLL_MOTION(ASCEND)}>
                 이제 곧 하단에 밸런스 게임 주제가 공개돼요!
             </motion.p>
-            <CountDownTimer countdown={countdown} />
+            <CountdownTimer countdown={countdown} />
         </>
     );
 }

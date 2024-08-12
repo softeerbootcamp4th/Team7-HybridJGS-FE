@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { RushAPI } from "@/apis/rushAPI.ts";
 import { RushGameProvider } from "@/contexts/rushGameContext.tsx";
 import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
                                 <RushGame />
                             </RushGameProvider>
                         ),
+                        loader: RushAPI.getRush,
                     },
                 ],
             },

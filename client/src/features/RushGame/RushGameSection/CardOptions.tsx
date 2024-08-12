@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardComparison from "@/features/RushGame/RushGameCard/RushCardComparison.tsx";
-import RushCountDown from "@/features/RushGame/RushGameCard/RushCountDown.tsx";
-import useCountDown from "@/hooks/useCountDown.ts";
+import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
 import useTimer from "@/hooks/useTimer.ts";
 
-export default function CardOptions() {
-    const countdown = useCountDown(50);
+interface CardOptionsProps {
+    countdown: number;
+}
+
+export default function CardOptions({ countdown }: CardOptionsProps) {
     const { toggleContents } = useTimer();
 
     return (
@@ -23,7 +25,7 @@ export default function CardOptions() {
                 </motion.p>
             ) : (
                 <motion.div {...SCROLL_MOTION(DISSOLVE)}>
-                    <RushCountDown countdown={countdown} />
+                    <RushCountdown countdown={countdown} />
                 </motion.div>
             )}
             <RushCardComparison />
