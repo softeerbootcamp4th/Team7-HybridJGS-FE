@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
@@ -12,10 +12,7 @@ import { LotteryExpectationsType } from "@/types/lottery";
 import { GetLotteryParticipantResponse } from "@/types/lotteryApi";
 
 export default function LotteryParticipantList() {
-    const location = useLocation();
     const navigate = useNavigate();
-
-    const lotteryId = location.state.id;
 
     const { handleOpenModal, ModalComponent } = useModal();
     const [selectedParticipant, setSelectedParticipant] = useState<LotteryExpectationsType[]>([]);
@@ -31,7 +28,6 @@ export default function LotteryParticipantList() {
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             LotteryAPI.getLotteryParticipant({
-                id: lotteryId,
                 size: 10,
                 page: pageParam,
                 phoneNumber: phoneNumberRef.current,
@@ -54,14 +50,13 @@ export default function LotteryParticipantList() {
     };
 
     const handleLotteryWinner = () => {
-        navigate("/lottery/winner-list", { state: { id: lotteryId } });
+        navigate("/lottery/winner-list");
     };
 
     const handleClickExpectation = async (participantId: number) => {
         handleOpenModal();
 
         const data = await LotteryAPI.getLotteryExpectations({
-            lotteryId,
             participantId: participantId,
         });
         setSelectedParticipant(data);

@@ -91,14 +91,7 @@ export default function Lottery() {
                 <Table headers={LOTTERY_HEADER} data={getLotteryData()} height="auto" />
 
                 <div className="self-end flex gap-4">
-                    <Button
-                        buttonSize="sm"
-                        onClick={() =>
-                            navigate("/lottery/participant-list", {
-                                state: { id: lottery.lotteryEventId },
-                            })
-                        }
-                    >
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/participant-list")}>
                         참여자 리스트 보러가기
                     </Button>
                     <Button buttonSize="sm" onClick={() => navigate("/lottery/winner")}>

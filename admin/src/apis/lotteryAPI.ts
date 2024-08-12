@@ -78,7 +78,6 @@ export const LotteryAPI = {
         }
     },
     async getLotteryParticipant({
-        id,
         size,
         page,
         phoneNumber,
@@ -86,7 +85,7 @@ export const LotteryAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    data: [
+                    participants: [
                         {
                             id: 1,
                             phoneNumber: "010-1111-2222",
@@ -120,7 +119,7 @@ export const LotteryAPI = {
                 })
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${id}/participants?size=${size}&page=${page}&number=${phoneNumber}`,
+                `${baseURL}/participants?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
                     headers: headers,
