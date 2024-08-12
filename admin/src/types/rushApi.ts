@@ -1,4 +1,4 @@
-import { InfiniteListData } from "./common";
+import { InfiniteParticipantListData } from "./common";
 import { RushEventType, RushOptionType, RushParticipantType } from "./rush";
 
 export interface GetRushParticipantListParams {
@@ -13,7 +13,7 @@ export type GetRushEventResponse = RushEventType[];
 
 export type GetRushOptionsResponse = RushOptionType[];
 
-export type GetRushParticipantListResponse = InfiniteListData<RushParticipantType>;
+export type GetRushParticipantListResponse = InfiniteParticipantListData<RushParticipantType>;
 
 export interface GetRushWinnerListParams {
     id: number;
@@ -21,7 +21,7 @@ export interface GetRushWinnerListParams {
     page: number;
     phoneNumber?: string;
 }
-export type GetRushWinnerListResponse = InfiniteListData<RushParticipantType>;
+export type GetRushWinnerListResponse = InfiniteParticipantListData<RushParticipantType>;
 
 export interface GetRushOptionsParams {
     id: number;

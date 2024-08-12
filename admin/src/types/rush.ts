@@ -8,7 +8,7 @@ export interface RushEventType {
     winnerCount: number;
     prizeImageUrl: string;
     prizeDescription: string;
-    isActivated: boolean;
+    status: boolean;
 }
 
 export interface RushOptionType {

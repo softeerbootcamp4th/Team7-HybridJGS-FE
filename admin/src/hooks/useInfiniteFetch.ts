@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { InfiniteListData } from "@/types/common";
+import { InfiniteParticipantListData } from "@/types/common";
 
 interface UseInfiniteFetchProps<R> {
     fetch: (pageParam: number) => Promise<R>;
@@ -23,7 +23,7 @@ export default function useInfiniteFetch<T>({
     initialPageParam,
     getNextPageParam,
     startFetching = true,
-}: UseInfiniteFetchProps<InfiniteListData<T>>): InfiniteScrollData<T> {
+}: UseInfiniteFetchProps<InfiniteParticipantListData<T>>): InfiniteScrollData<T> {
     const [data, setData] = useState<T[]>([]);
     const [currentPageParam, setCurrentPageParam] = useState<number | undefined>(initialPageParam);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -40,7 +40,7 @@ export default function useInfiniteFetch<T>({
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
 
-            setData([...data, ...lastPage.data]);
+            setData([...data, ...lastPage.participants]);
             setCurrentPageParam(nextPageParam);
             setHasNextPage(nextPageParam !== undefined);
             setTotalLength(lastPage.totalParticipants);

@@ -1,9 +1,10 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import useFetch from "@/hooks/useFetch";
+import { LotteryEventType } from "@/types/lottery";
 import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lotteryApi";
 
 export default function LotteryWinner() {
@@ -12,17 +13,14 @@ export default function LotteryWinner() {
 
     const navigate = useNavigate();
 
-    const [totalCount, setTotalCount] = useState<number>(0);
-    const [giftCount, setGiftCount] = useState<number>(0);
+    const [currentLottery, setCurrentLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
         useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner());
 
     useEffect(() => {
         if (lottery.length !== 0) {
-            const currentLotttery = lottery[0];
-            setGiftCount(currentLotttery.winnerCount);
-            setTotalCount(currentLotttery.appliedCount);
+            setCurrentLottery(lottery[0]);
         }
     }, [lottery]);
     useEffect(() => {
@@ -30,11 +28,6 @@ export default function LotteryWinner() {
             navigate("/lottery/winner-list", { state: { id: lotteryId } });
         }
     }, [isSuccessPostLottery]);
-
-    const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const count = parseInt(e.target.value);
-        setGiftCount(count || 0);
-    };
 
     const handleLottery = () => {
         postLottery();
@@ -47,11 +40,13 @@ export default function LotteryWinner() {
             <div className="flex flex-col h-full items-center justify-center gap-8 pb-40">
                 <div className="flex border">
                     <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">전체 참여자 수</p>
-                    <p className="px-6 py-4 w-[200px] h-body-1-regular">{totalCount}</p>
+                    <p className="px-6 py-4 w-[200px] h-body-1-regular">
+                        {currentLottery.appliedCount}
+                    </p>
                     <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
-                    <div className="self-center mx-4 border-b">
-                        <input value={giftCount} onChange={handleChangeInput} />
-                    </div>
+                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">
+                        {currentLottery.winnerCount}
+                    </p>
                 </div>
 
                 <Button buttonSize="lg" onClick={handleLottery}>

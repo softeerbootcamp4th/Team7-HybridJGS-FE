@@ -61,7 +61,7 @@ export const LotteryAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    data: [
+                    participants: [
                         {
                             id: 1,
                             phoneNumber: "010-1111-2222",

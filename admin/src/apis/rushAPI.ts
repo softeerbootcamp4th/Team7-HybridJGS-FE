@@ -26,7 +26,7 @@ export const RushAPI = {
                         winnerCount: 315,
                         prizeImageUrl: "prize1.png",
                         prizeDescription: "스타벅스 1만원 기프트카드",
-                        isActivated: true,
+                        status: true,
                     },
                     {
                         rushEventId: 2,
@@ -36,7 +36,7 @@ export const RushAPI = {
                         winnerCount: 315,
                         prizeImageUrl: "prize2.png",
                         prizeDescription: "올리브영 1만원 기프트카드",
-                        isActivated: true,
+                        status: true,
                     },
                     {
                         rushEventId: 3,
@@ -46,7 +46,7 @@ export const RushAPI = {
                         winnerCount: 315,
                         prizeImageUrl: "prize3.png",
                         prizeDescription: "배달의 민족 1만원 기프트카드",
-                        isActivated: true,
+                        status: true,
                     },
                 ])
             );
@@ -70,7 +70,7 @@ export const RushAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    data: [
+                    participants: [
                         {
                             id: 1,
                             phoneNumber: "010-1111-2222",
@@ -119,7 +119,7 @@ export const RushAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    data: [
+                    participants: [
                         {
                             id: 1,
                             phoneNumber: "010-3843-6999",
