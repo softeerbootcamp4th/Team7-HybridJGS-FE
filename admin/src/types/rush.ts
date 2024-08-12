@@ -1,5 +1,7 @@
 import { Dispatch } from "react";
+import { RUSH_STATUS } from "@/constants/rush";
 
+export type RushEventStatusType = (typeof RUSH_STATUS)[keyof typeof RUSH_STATUS];
 export interface RushEventType {
     rushEventId: number;
     eventDate: string;
@@ -8,7 +10,7 @@ export interface RushEventType {
     winnerCount: number;
     prizeImageUrl: string;
     prizeDescription: string;
-    status: boolean;
+    status: RushEventStatusType;
 }
 
 export interface RushOptionType {

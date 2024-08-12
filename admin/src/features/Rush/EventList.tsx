@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { EVENT_LIST_HEADER } from "@/constants/rush";
+import { EVENT_LIST_HEADER, RUSH_STATUS_MAP } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
@@ -67,7 +67,7 @@ export default function EventList() {
                         }
                     />
                 </div>,
-                "오픈 전",
+                RUSH_STATUS_MAP[item.status],
                 <Button
                     buttonSize="sm"
                     onClick={() =>
@@ -76,7 +76,6 @@ export default function EventList() {
                 >
                     참여자 리스트 보기
                 </Button>,
-                <Button buttonSize="sm">삭제</Button>,
             ];
         });
     };

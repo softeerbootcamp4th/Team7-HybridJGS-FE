@@ -26,7 +26,7 @@ export const RushAPI = {
                         winnerCount: 315,
                         prizeImageUrl: "prize1.png",
                         prizeDescription: "스타벅스 1만원 기프트카드",
-                        status: true,
+                        status: "BEFORE",
                     },
                     {
                         rushEventId: 2,
@@ -36,7 +36,7 @@ export const RushAPI = {
                         winnerCount: 315,
                         prizeImageUrl: "prize2.png",
                         prizeDescription: "올리브영 1만원 기프트카드",
-                        status: true,
+                        status: "DURING",
                     },
                     {
                         rushEventId: 3,
@@ -46,7 +46,7 @@ export const RushAPI = {
                         winnerCount: 315,
                         prizeImageUrl: "prize3.png",
                         prizeDescription: "배달의 민족 1만원 기프트카드",
-                        status: true,
+                        status: "AFTER",
                     },
                 ])
             );
