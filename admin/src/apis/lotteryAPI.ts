@@ -4,9 +4,9 @@ import {
     GetLotteryResponse,
     GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
-    PostLotteryParams,
-    PostLotteryResponse,
     PostLotteryWinnerResponse,
+    PutLotteryParams,
+    PutLotteryResponse,
 } from "@/types/lotteryApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
@@ -41,7 +41,7 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async postLottery(body: PostLotteryParams): Promise<PostLotteryResponse> {
+    async putLottery(body: PutLotteryParams): Promise<PutLotteryResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -53,7 +53,7 @@ export const LotteryAPI = {
                 })
             );
             const response = await fetchWithTimeout(`${baseURL}`, {
-                method: "POST",
+                method: "PUT",
                 headers: headers,
                 body: JSON.stringify(body),
             });

@@ -26,3 +26,7 @@ export type GetRushWinnerListResponse = InfiniteParticipantListData<RushParticip
 export interface GetRushOptionsParams {
     id: number;
 }
+
+export type PutRushEventParams = RushEventType[];
+
+export type PutRushEventResponse = RushEventType[];

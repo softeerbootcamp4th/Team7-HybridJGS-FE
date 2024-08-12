@@ -10,7 +10,7 @@ import { STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
 import { LotteryEventType } from "@/types/lottery";
-import { PostLotteryResponse } from "@/types/lotteryApi";
+import { PutLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
 
 export default function Lottery() {
@@ -20,8 +20,8 @@ export default function Lottery() {
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PostLotteryResponse>(() =>
-            LotteryAPI.postLottery({
+        useFetch<PutLotteryResponse>(() =>
+            LotteryAPI.putLottery({
                 startDateTime: `${lottery.startDate} ${lottery.startTime}`,
                 endDateTime: `${lottery.endDate} ${lottery.endTime}`,
                 winnerCount: lottery.winnerCount,

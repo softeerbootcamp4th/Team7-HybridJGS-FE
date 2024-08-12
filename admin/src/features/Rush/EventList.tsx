@@ -1,13 +1,17 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
 import { STATUS_MAP } from "@/constants/common";
 import { EVENT_LIST_HEADER, QUERY_OPTION } from "@/constants/rush";
+import useFetch from "@/hooks/useFetch";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
+import { PutRushEventResponse } from "@/types/rushApi";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 
 export default function EventList() {
@@ -15,6 +19,15 @@ export default function EventList() {
 
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
+
+    const { isSuccess: isSuccessPutRush } = useFetch<PutRushEventResponse>(() =>
+        RushAPI.putRush(rushList)
+    );
+
+    useEffect(() => {
+        if (isSuccessPutRush) {
+        }
+    }, [isSuccessPutRush]);
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {

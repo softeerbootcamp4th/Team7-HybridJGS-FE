@@ -1,3 +1,4 @@
+import { RushEventType } from "@/types/rush";
 import {
     GetRushEventResponse,
     GetRushOptionsParams,
@@ -5,6 +6,8 @@ import {
     GetRushParticipantListParams,
     GetRushParticipantListResponse,
     GetRushWinnerListParams,
+    PutRushEventParams,
+    PutRushEventResponse,
 } from "@/types/rushApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
@@ -101,6 +104,20 @@ export const RushAPI = {
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
                 headers: headers,
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async putRush(body: PutRushEventParams): Promise<PutRushEventResponse> {
+        try {
+            return new Promise((resolve) => resolve([]));
+            const response = await fetchWithTimeout(`${baseURL}`, {
+                method: "PUT",
+                headers: headers,
+                body: JSON.stringify(body),
             });
             return response.json();
         } catch (error) {
