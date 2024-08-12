@@ -55,7 +55,6 @@ export function Rush({ id }: SectionKeyProps) {
             subtitle="매일 315명에게! 짜릿짜릿 선착순 밸런스 게임"
             description="매일 오후 10시! 선착순 밸런스 게임 참여하고 선물 받자!"
             descriptionColor="text-s-red"
-            url="/rush"
             onClick={handleClickShortCut}
         >
             <div className="flex flex-col gap-8 py-8 px-14 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-50">

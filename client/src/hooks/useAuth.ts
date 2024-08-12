@@ -30,7 +30,7 @@ export default function useAuth({ eventStartDate, eventEndDate, confirmUrl }: Us
     const handlePhoneNumberConfirm = async (val: string) => {
         const data = await AuthAPI.getAuthToken({ phoneNumber: val });
 
-        setCookie(COOKIE_TOKEN_KEY, data.accessToken);
+        setCookie(COOKIE_TOKEN_KEY, data.accessToken, { path: "/" });
         dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
     };
 
