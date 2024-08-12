@@ -9,6 +9,9 @@ export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>) 
     const { showBoundary } = useErrorBoundary();
 
     const fetchData = async (params?: P) => {
+        setIsError(false);
+        setIsSuccess(false);
+
         try {
             const data = await fetch(params as P);
             setData(data);
