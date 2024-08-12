@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { RushAPI } from "@/apis/rushAPI.ts";
+import { Background } from "@/components/Background";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { Background } from "@/features/RushGame/Background.tsx";
 import useAuth from "@/hooks/useAuth.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
