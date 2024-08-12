@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 
 interface ErrorElementProps {
@@ -6,7 +5,9 @@ interface ErrorElementProps {
 }
 
 export default function ErrorElement({ fallbackUrl = "/" }: ErrorElementProps) {
-    const navigate = useNavigate();
+    const handleClickButton = () => {
+        window.location.href = fallbackUrl;
+    };
 
     return (
         <div className="fixed z-10 h-screen w-full bg-n-neutral-950 flex flex-col justify-center items-center">
@@ -14,7 +15,7 @@ export default function ErrorElement({ fallbackUrl = "/" }: ErrorElementProps) {
                 문제가 발생했습니다. 잠시 후 다시 시도해 보세요.
             </h3>
             <div className="mt-12" />
-            <Button buttonSize="lg" onClick={() => navigate(fallbackUrl)}>
+            <Button buttonSize="lg" onClick={handleClickButton}>
                 돌아가기
             </Button>
         </div>
