@@ -85,8 +85,6 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
             expectation: expectations,
         };
 
-        console.log(cookies[COOKIE_KEY.INVITE_USER]);
-
         await postCasper({
             token: cookies[COOKIE_KEY.ACCESS_TOKEN],
             referrerId: cookies[COOKIE_KEY.INVITE_USER],
