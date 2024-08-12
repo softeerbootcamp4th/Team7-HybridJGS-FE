@@ -170,7 +170,10 @@ export default function RushWinnerList() {
                         />
                         <p className="h-body-1-medium">
                             선착순 참여자 리스트{" "}
-                            {isWinnerToggle ? winnersLength : participantsLength} 명
+                            {(isWinnerToggle ? winnersLength : participantsLength).toLocaleString(
+                                "en-US"
+                            )}{" "}
+                            명
                         </p>
                         <Button
                             buttonSize="sm"

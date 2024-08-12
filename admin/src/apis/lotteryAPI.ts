@@ -1,6 +1,7 @@
 import {
     GetLotteryExpectationsParams,
     GetLotteryExpectationsResponse,
+    GetLotteryParticipantResponse,
     GetLotteryResponse,
     GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
@@ -46,6 +47,61 @@ export const LotteryAPI = {
                 method: "POST",
                 headers: headers,
             });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async getLotteryParticipant({
+        id,
+        size,
+        page,
+        phoneNumber,
+    }: GetLotteryWinnerParams): Promise<GetLotteryParticipantResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve({
+                    data: [
+                        {
+                            id: 1,
+                            phoneNumber: "010-1111-2222",
+                            linkClickedCounts: 1,
+                            expectation: 1,
+                            appliedCount: 3,
+                            createdAt: "2024-08-12T02:10:37.279369",
+                            updatedAt: "2024-08-12T02:13:48.390954",
+                        },
+                        {
+                            id: 2,
+                            phoneNumber: "010-1111-2223",
+                            linkClickedCounts: 1,
+                            expectation: 1,
+                            appliedCount: 3,
+                            createdAt: "2024-08-12T02:10:37.279369",
+                            updatedAt: "2024-08-12T02:13:48.390954",
+                        },
+                        {
+                            id: 3,
+                            phoneNumber: "010-1111-2224",
+                            linkClickedCounts: 1,
+                            expectation: 1,
+                            appliedCount: 3,
+                            createdAt: "2024-08-12T02:10:37.279369",
+                            updatedAt: "2024-08-12T02:13:48.390954",
+                        },
+                    ],
+                    isLastPage: true,
+                    totalParticipants: 10000,
+                })
+            );
+            const response = await fetchWithTimeout(
+                `${baseURL}/${id}/participants?size=${size}&page=${page}&number=${phoneNumber}`,
+                {
+                    method: "GET",
+                    headers: headers,
+                }
+            );
             return response.json();
         } catch (error) {
             console.error("Error:", error);

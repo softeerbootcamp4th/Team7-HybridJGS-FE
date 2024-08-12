@@ -5,6 +5,7 @@ import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import RushLayout from "./features/Rush/Layout";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
+import LotteryParticipantList from "./pages/LotteryParticipantList";
 import LotteryWinner from "./pages/LotteryWinner";
 import LotteryWinnerList from "./pages/LotteryWinnerList";
 import Rush from "./pages/Rush";
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
                                 path: "winner",
                                 element: <LotteryWinner />,
                                 loader: LotteryAPI.getLottery,
+                            },
+                            {
+                                path: "participant-list",
+                                element: <LotteryParticipantList />,
                             },
                             {
                                 path: "winner-list",

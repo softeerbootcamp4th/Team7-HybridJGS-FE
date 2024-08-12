@@ -4,89 +4,94 @@ import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
-import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_WINNER_HEADER } from "@/constants/lottery";
+import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_PARTICIPANT_HEADER } from "@/constants/lottery";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useModal from "@/hooks/useModal";
 import { LotteryExpectationsType } from "@/types/lottery";
-import { GetLotteryWinnerResponse } from "@/types/lotteryApi";
+import { GetLotteryParticipantResponse } from "@/types/lotteryApi";
 
-export default function LotteryWinnerList() {
+export default function LotteryParticipantList() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const lotteryId = location.state.id;
 
     const { handleOpenModal, ModalComponent } = useModal();
-    const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
+    const [selectedParticipant, setSelectedParticipant] = useState<LotteryExpectationsType[]>([]);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
     const {
-        data: winnerInfo,
-        isSuccess: isSuccessGetLotteryWinner,
-        fetchNextPage: getWinnerInfo,
-        refetch: refetchWinnerInfo,
+        data: participantInfo,
+        totalLength: participantLength,
+        isSuccess: isSuccessGetParticipant,
+        fetchNextPage: getParticipantInfo,
+        refetch: refetchParticipantInfo,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
-            LotteryAPI.getLotteryWinner({
+            LotteryAPI.getLotteryParticipant({
                 id: lotteryId,
                 size: 10,
                 page: pageParam,
                 phoneNumber: phoneNumberRef.current,
             }),
         initialPageParam: 1,
-        getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
+        getNextPageParam: (currentPageParam: number, lastPage: GetLotteryParticipantResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
     });
 
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
-        onIntersect: getWinnerInfo,
-        enabled: isSuccessGetLotteryWinner,
+        onIntersect: getParticipantInfo,
+        enabled: isSuccessGetParticipant,
     });
 
     const handleRefetch = () => {
         phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
-        refetchWinnerInfo();
+        refetchParticipantInfo();
     };
 
-    const handleLottery = () => {
-        navigate("/lottery/winner");
+    const handleLotteryWinner = () => {
+        navigate("/lottery/winner-list", { state: { id: lotteryId } });
     };
 
-    const handleClickExpectation = async (winnerId: number) => {
+    const handleClickExpectation = async (participantId: number) => {
         handleOpenModal();
 
         const data = await LotteryAPI.getLotteryExpectations({
             lotteryId,
-            participantId: winnerId,
+            participantId: participantId,
         });
-        setSelectedWinner(data);
+        setSelectedParticipant(data);
     };
 
-    const expectations = selectedWinner.map((winner) => [winner.casperId, winner.expectation]);
+    const expectations = selectedParticipant.map((participant) => [
+        participant.casperId,
+        participant.expectation,
+    ]);
 
-    const winnerList = useMemo(
+    const participantList = useMemo(
         () =>
-            winnerInfo.map((winner, idx) => [
-                idx + 1,
-                winner.id,
-                winner.phoneNumber,
-                winner.linkClickedCounts,
+            participantInfo.map((participant) => [
+                participant.id,
+                participant.createdAt,
+                participant.createdAt,
+                participant.phoneNumber,
+                participant.linkClickedCounts,
                 <div className="flex justify-between">
-                    <span>{winner.expectation}</span>
+                    <span>{participant.expectation}</span>
                     <span
                         className="cursor-pointer"
-                        onClick={() => handleClickExpectation(winner.id)}
+                        onClick={() => handleClickExpectation(participant.id)}
                     >
                         기대평 보기
                     </span>
                 </div>,
-                winner.appliedCount,
+                participant.appliedCount,
             ]),
-        [winnerInfo]
+        [participantInfo]
     );
 
     return (
@@ -102,7 +107,9 @@ export default function LotteryWinnerList() {
                             className="cursor-pointer"
                             onClick={() => navigate(-1)}
                         />
-                        <p className="h-body-1-medium">당첨자 리스트</p>
+                        <p className="h-body-1-medium">
+                            전체 참여자 리스트 {participantLength.toLocaleString("en-US")} 명
+                        </p>
                     </div>
 
                     <div className="flex gap-2">
@@ -118,18 +125,18 @@ export default function LotteryWinnerList() {
 
                 <Table
                     ref={tableContainerRef}
-                    headers={LOTTERY_WINNER_HEADER}
-                    data={winnerList}
+                    headers={LOTTERY_PARTICIPANT_HEADER}
+                    data={participantList}
                     dataLastItem={targetRef}
                 />
 
-                <Button buttonSize="lg" onClick={handleLottery}>
-                    당첨자 다시 추첨하기
+                <Button buttonSize="lg" onClick={handleLotteryWinner}>
+                    당첨자 보러가기
                 </Button>
             </div>
 
             <ModalComponent>
-                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} />
+                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} height="auto" />
             </ModalComponent>
         </div>
     );
