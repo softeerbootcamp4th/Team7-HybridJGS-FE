@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 interface FileInputProps {
     selectedFile: File | string | null;
-    setSelectedFile: (file: File | null) => void;
+    setSelectedFile: (file: File) => void;
 }
 
 export default function FileInput({ selectedFile, setSelectedFile }: FileInputProps) {

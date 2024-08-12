@@ -8,7 +8,7 @@ export interface RushEventType {
     openTime: string;
     closeTime: string;
     winnerCount: number;
-    prizeImageUrl: string;
+    prizeImageUrl: File | string;
     prizeDescription: string;
     status: RushEventStatusType;
     leftOption: RushOptionType;
@@ -21,11 +21,11 @@ export interface RushOptionType {
     subText: string;
     resultMainText: string;
     resultSubText: string;
-    imageUrl: string;
+    imageUrl: File | string;
 }
 
 export interface RushPrizeType {
-    prizeImageUrl: string;
+    prizeImageUrl: File | string;
     prizeDescription: string;
 }
 
@@ -56,13 +56,4 @@ export interface RushParticipantType {
     balanceGameChoice: number;
     createdAt: string;
     rank: number;
-}
-
-export interface RushOptionType {
-    rushOptionId: number;
-    mainText: string;
-    subText: string;
-    resultMainText: string;
-    resultSubText: string;
-    imageUrl: string;
 }

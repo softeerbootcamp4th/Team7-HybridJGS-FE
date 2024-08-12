@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
+import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
 import TextField from "@/components/TextField";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
@@ -47,7 +48,13 @@ export default function RushPrizeForm() {
     };
 
     const option = [
-        ["이미지", <input type="file" />],
+        [
+            "이미지",
+            <FileInput
+                selectedFile={prizeState.prizeImageUrl}
+                setSelectedFile={(file) => setPrizeState({ ...prizeState, prizeImageUrl: file })}
+            />,
+        ],
         [
             "경품 이름 (20자 이내)",
             <TextField

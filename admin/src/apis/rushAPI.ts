@@ -5,7 +5,6 @@ import {
     GetRushParticipantListParams,
     GetRushParticipantListResponse,
     GetRushWinnerListParams,
-    PutRushEventParams,
     PutRushEventResponse,
 } from "@/types/rushApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
@@ -110,7 +109,7 @@ export const RushAPI = {
             throw error;
         }
     },
-    async putRush(body: PutRushEventParams): Promise<PutRushEventResponse> {
+    async putRush(body: FormData[]): Promise<PutRushEventResponse> {
         try {
             return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {

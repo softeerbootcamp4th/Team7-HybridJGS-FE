@@ -21,15 +21,10 @@ export default function RushSelectForm() {
     const { showToast, ToastComponent } = useToast("입력한 내용이 임시 저장되었습니다!");
 
     const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
-    const [selectedFile, setSelectedFile] = useState<(File | string | null)[]>([]);
 
     useEffect(() => {
         if (rushIdx !== undefined) {
             setSelectOptionState([rushList[rushIdx].leftOption, rushList[rushIdx].rightOption]);
-            setSelectedFile([
-                rushList[rushIdx].leftOption.imageUrl,
-                rushList[rushIdx].rightOption.imageUrl,
-            ]);
         }
     }, [rushList]);
 
@@ -53,7 +48,7 @@ export default function RushSelectForm() {
         showToast();
     };
 
-    const handleChangeItem = (key: string, changeIdx: number, text: string) => {
+    const handleChangeItem = (key: string, changeIdx: number, text: string | File) => {
         const updatedItem = selectOptionState.map((item, idx) => {
             if (idx === changeIdx) {
                 return { ...item, [key]: text };
@@ -62,16 +57,6 @@ export default function RushSelectForm() {
         });
 
         setSelectOptionState(updatedItem);
-    };
-
-    const handleSelectFile = (idx: number, file: File | null) => {
-        const updatedSelectedFile = selectedFile.map((selected, selectedIdx) => {
-            if (selectedIdx === idx) {
-                return file;
-            }
-            return selected;
-        });
-        setSelectedFile(updatedSelectedFile);
     };
 
     const getSelectOption = (idx: number) => {
@@ -101,8 +86,8 @@ export default function RushSelectForm() {
                 [
                     "이미지",
                     <FileInput
-                        selectedFile={selectedFile[idx]}
-                        setSelectedFile={(file) => handleSelectFile(idx, file)}
+                        selectedFile={selectOptionState[idx].imageUrl}
+                        setSelectedFile={(file) => handleChangeItem("imageUrl", idx, file)}
                     />,
                 ],
                 [

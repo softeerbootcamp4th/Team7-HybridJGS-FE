@@ -24,7 +24,7 @@ export default function EventList() {
     const dispatch = useRushEventDispatchContext();
 
     const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(() =>
-        RushAPI.putRush([])
+        RushAPI.putRush(getFormData())
     );
 
     useEffect(() => {
@@ -36,7 +36,34 @@ export default function EventList() {
     const getFormData = () => {
         return rushList.map((rush) => {
             const formData = new FormData();
-            // formData.append("image", selectedFile);
+
+            formData.append("rushEventId", rush.rushEventId.toString());
+            formData.append("eventDate", rush.eventDate);
+            formData.append("openTime", rush.openTime);
+            formData.append("closeTime", rush.closeTime);
+            formData.append("winnerCount", rush.winnerCount.toString());
+            formData.append("prizeDescription", rush.prizeDescription);
+            formData.append("status", rush.status);
+
+            formData.append("prizeImageUrl", rush.prizeImageUrl);
+
+            formData.append("leftOption[rushOptionId]", rush.leftOption.rushOptionId.toString());
+            formData.append("leftOption[mainText]", rush.leftOption.mainText);
+            formData.append("leftOption[subText]", rush.leftOption.subText);
+            formData.append("leftOption[resultMainText]", rush.leftOption.resultMainText);
+            formData.append("leftOption[resultSubText]", rush.leftOption.resultSubText);
+
+            formData.append("leftOption[imageUrl]", rush.leftOption.imageUrl);
+
+            formData.append("rightOption[rushOptionId]", rush.rightOption.rushOptionId.toString());
+            formData.append("rightOption[mainText]", rush.rightOption.mainText);
+            formData.append("rightOption[subText]", rush.rightOption.subText);
+            formData.append("rightOption[resultMainText]", rush.rightOption.resultMainText);
+            formData.append("rightOption[resultSubText]", rush.rightOption.resultSubText);
+
+            formData.append("rightOption[imageUrl]", rush.rightOption.imageUrl);
+
+            return formData;
         });
     };
 
