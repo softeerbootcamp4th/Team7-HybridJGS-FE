@@ -6,7 +6,7 @@ interface RouteProps {
     redirectPath?: string;
 }
 
-export function ProtectedRoute({ redirectPath = "/login" }: RouteProps) {
+export function ProtectedRoute({ redirectPath = "/" }: RouteProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
     if (!cookies[COOKIE_KEY.ACCESS_TOKEN]) {

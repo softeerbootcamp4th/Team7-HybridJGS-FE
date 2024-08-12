@@ -6,8 +6,10 @@ import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import RushLayout from "./features/Rush/Layout";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
+import LotteryParticipantList from "./pages/LotteryParticipantList";
 import LotteryWinner from "./pages/LotteryWinner";
 import LotteryWinnerList from "./pages/LotteryWinnerList";
+import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
 import RushWinnerList from "./pages/RushWinnerList";
 
@@ -20,7 +22,7 @@ export const router = createBrowserRouter([
                 element: <UnProtectedRoute />,
                 children: [
                     {
-                        path: "login/",
+                        index: true,
                         element: <Login />,
                     },
                 ],
@@ -57,6 +59,10 @@ export const router = createBrowserRouter([
                                 loader: LotteryAPI.getLottery,
                             },
                             {
+                                path: "participant-list",
+                                element: <LotteryParticipantList />,
+                            },
+                            {
                                 path: "winner-list",
                                 element: <LotteryWinnerList />,
                             },
@@ -66,4 +72,5 @@ export const router = createBrowserRouter([
             },
         ],
     },
+    { path: "*", element: <NotFound /> },
 ]);

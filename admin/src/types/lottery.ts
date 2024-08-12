@@ -23,3 +23,8 @@ export interface LotteryWinnerType {
     expectation: number;
     appliedCount: number;
 }
+
+export interface LotteryParticipantType extends LotteryWinnerType {
+    createdAt: string;
+    updatedAt: string;
+}
