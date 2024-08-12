@@ -60,9 +60,13 @@ export const RushAPI = {
             const response = await fetch(`${baseURL}/options/${optionId}/apply`, {
                 method: "POST",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
-                body: JSON.stringify({}),
             });
-            return response.json();
+
+            if (response.status === 204 || response.status === 404) {
+                return response.status;
+            }
+
+            throw new Error(`Unexpected response status: ${response.status}`);
         } catch (error) {
             console.error("Error:", error);
             throw error;
