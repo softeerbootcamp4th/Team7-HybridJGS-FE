@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { LotteryAPI } from "@/apis/lotteryAPI.ts";
+import { TotalAPI } from "@/apis/totalAPI.ts";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -13,9 +13,9 @@ export function Headline({ id }: SectionKeyProps) {
 
     useEffect(() => {
         (async () => {
-            const lotteryData = await LotteryAPI.getLottery();
-            setStartDateTime(lotteryData.eventStartDate);
-            setEndDateTime(lotteryData.eventEndDate);
+            const totalData = await TotalAPI.getTotal();
+            setStartDateTime(totalData.totalEventStartDate);
+            setEndDateTime(totalData.totalEventEndDate);
         })();
     }, []);
 
