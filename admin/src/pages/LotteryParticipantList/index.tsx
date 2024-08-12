@@ -53,8 +53,8 @@ export default function LotteryParticipantList() {
         refetchParticipantInfo();
     };
 
-    const handleLottery = () => {
-        navigate("/lottery/winner");
+    const handleLotteryWinner = () => {
+        navigate("/lottery/winner-list", { state: { id: lotteryId } });
     };
 
     const handleClickExpectation = async (participantId: number) => {
@@ -130,8 +130,8 @@ export default function LotteryParticipantList() {
                     dataLastItem={targetRef}
                 />
 
-                <Button buttonSize="lg" onClick={handleLottery}>
-                    당첨자 다시 추첨하기
+                <Button buttonSize="lg" onClick={handleLotteryWinner}>
+                    당첨자 보러가기
                 </Button>
             </div>
 
