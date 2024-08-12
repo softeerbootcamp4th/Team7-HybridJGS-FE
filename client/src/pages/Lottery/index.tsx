@@ -1,10 +1,6 @@
-import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useLoaderData } from "react-router-dom";
-import { AuthAPI } from "@/apis/authAPI";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { LOTTERY_SECTIONS } from "@/constants/PageSections/sections.ts";
 import {
     CustomDesign,
@@ -17,63 +13,23 @@ import {
     SmileBadge,
     WheelDesign,
 } from "@/features/Lottery";
+import useAuth from "@/hooks/useAuth.ts";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
-import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
-import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
-import usePopup from "@/hooks/usePopup";
 import useScrollTop from "@/hooks/useScrollTop";
-import useToast from "@/hooks/useToast";
 import { GetLotteryResponse } from "@/types/lotteryApi";
-import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
-import { getMsTime } from "@/utils/getMsTime";
 
 export default function Lottery() {
     useScrollTop();
     const containerRef = useHeaderStyleObserver({
         darkSections: [LOTTERY_SECTIONS.HEADLINE, LOTTERY_SECTIONS.SHORT_CUT],
     });
-
-    const [_cookies, setCookie] = useCookies([COOKIE_TOKEN_KEY]);
-
-    const { phoneNumber } = usePhoneNumberStateContext();
-    const dispatch = usePhoneNumberDispatchContext();
-
-    const [phoneNumberState, setPhoneNumberState] = useState(phoneNumber);
-
     const data = useLoaderData() as GetLotteryResponse;
 
-    const handlePhoneNumberChange = (val: string) => {
-        setPhoneNumberState(val);
-    };
-
-    const handlePhoneNumberConfirm = async (val: string) => {
-        const data = await AuthAPI.getAuthToken({ phoneNumber: val });
-
-        setCookie(COOKIE_TOKEN_KEY, data.accessToken);
-        dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: val });
-    };
-
-    const { handleOpenPopup, PopupComponent } = usePopup({
-        phoneNumber: phoneNumberState,
-        handlePhoneNumberChange,
-        handlePhoneNumberConfirm,
-        confirmUrl: `/lottery/custom`,
+    const { handleClickShortCut, PopupComponent, ToastComponent } = useAuth({
+        eventStartDate: data.eventStartDate,
+        eventEndDate: data.eventEndDate,
+        confirmUrl: "/lottery/custom",
     });
-    const { showToast, ToastComponent } = useToast("이벤트 기간이 아닙니다");
-
-    const handleClickShortCut = () => {
-        const startDate = getMsTime(data.eventStartDate);
-        const endDate = getMsTime(data.eventEndDate);
-        const currentDate = new Date().getTime();
-
-        const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
-
-        if (isEventPeriod) {
-            handleOpenPopup();
-        } else {
-            showToast();
-        }
-    };
 
     return (
         <div ref={containerRef} className="h-screen overflow-x-hidden snap-y snap-mandatory">
