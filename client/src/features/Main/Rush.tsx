@@ -16,21 +16,19 @@ export function Rush({ id }: SectionKeyProps) {
         (async () => {
             const rushData = await RushAPI.getRush();
             const serverDateTime = new Date(rushData.serverDateTime);
+
             setStartDateTime(rushData.eventsStartDate);
             setEndDateTime(rushData.eventsEndDate);
 
-            const events = rushData.events.map((event) => {
-                const rushEvent = RUSH_EVENT_DATA.find((re) => re.id === event.rushEventId) || {
-                    image: "",
-                    prizeName: "",
-                };
-
+            const events = rushData.events.map((event, idx) => {
+                const rushEvent = RUSH_EVENT_DATA[idx];
                 const eventEndTime = new Date(event.endDateTime);
+
                 return {
                     id: event.rushEventId,
                     date: event.startDateTime,
-                    image: rushEvent.image,
-                    prizeName: rushEvent.prizeName,
+                    image: rushEvent?.image || "",
+                    prizeName: rushEvent?.prizeName || "",
                     isPastEvent: serverDateTime > eventEndTime,
                     isTodayEvent:
                         event.rushEventId === rushData.todayEventId &&
