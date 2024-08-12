@@ -8,7 +8,7 @@ export default function Layout() {
     return (
         <ErrorBoundary fallback={<ErrorElement />}>
             <CookiesProvider>
-                <div className="h-screen">
+                <div className="overflow-hidden h-screen">
                     <Header />
                     <div className="mb-[80px]">
                         <Outlet />

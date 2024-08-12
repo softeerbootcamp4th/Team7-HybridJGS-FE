@@ -15,7 +15,7 @@ export default function LotteryParticipantList() {
     const navigate = useNavigate();
 
     const { handleOpenModal, ModalComponent } = useModal();
-    const [selectedParticipant, setSelectedParticipant] = useState<LotteryExpectationsType[]>([]);
+    const [selectedExpectation, setSelectedExpectation] = useState<LotteryExpectationsType[]>([]);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,10 +59,10 @@ export default function LotteryParticipantList() {
         const data = await LotteryAPI.getLotteryExpectations({
             participantId: participantId,
         });
-        setSelectedParticipant(data);
+        setSelectedExpectation(data);
     };
 
-    const expectations = selectedParticipant.map((participant) => [
+    const expectations = selectedExpectation.map((participant) => [
         participant.casperId,
         participant.expectation,
     ]);
