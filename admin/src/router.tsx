@@ -3,6 +3,7 @@ import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import RushLayout from "./features/Rush/Layout";
+import ErrorElement from "./pages/ErrorElement";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
 import LotteryWinner from "./pages/LotteryWinner";
@@ -73,4 +74,5 @@ export const router = createBrowserRouter([
             },
         ],
     },
+    { path: "*", element: <ErrorElement /> },
 ]);
