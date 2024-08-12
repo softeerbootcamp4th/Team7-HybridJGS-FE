@@ -21,8 +21,10 @@ export const LotteryAPI = {
                 resolve([
                     {
                         lotteryEventId: 1,
-                        startDate: "2024-07-26 00:00",
-                        endDate: "2024-08-25 23:59",
+                        startDate: "2024-07-26",
+                        startTime: "00:00",
+                        endDate: "2024-08-25",
+                        endTime: "23:59",
                         appliedCount: 1000000,
                         winnerCount: 363,
                     },

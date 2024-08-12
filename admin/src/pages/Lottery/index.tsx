@@ -6,18 +6,20 @@ import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
 import { LOTTERY_HEADER } from "@/constants/lottery";
-import { LotteryType } from "@/types/lottery";
+import { LotteryEventType } from "@/types/lottery";
 
 export default function Lottery() {
     const navigate = useNavigate();
 
-    const [lottery, setLottery] = useState<LotteryType>({} as LotteryType);
+    const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
     useEffect(() => {
         const data = {
             lotteryEventId: 1,
-            startDate: "2024-07-26 00:00",
+            startDate: "2024-07-26",
+            startTime: "00:00",
             endDate: "2024-08-25 23:59",
+            endTime: "23:59",
             appliedCount: 1000000,
             winnerCount: 363,
         };
