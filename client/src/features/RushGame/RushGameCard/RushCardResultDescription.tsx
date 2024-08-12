@@ -33,16 +33,16 @@ export default function RushCardResultDescription({
     day,
     cardType,
 }: RushCardDescriptionProps) {
-    const mainTitle = CARD_OPTIONS[day][cardType].title;
-    const title = CARD_RESULTS[day][cardType].result_title;
-    const description = CARD_RESULTS[day][cardType].result_description;
+    const mainText = CARD_OPTIONS[day][cardType].mainText;
+    const resultMainText = CARD_RESULTS[day][cardType].resultMainText;
+    const resultSubText = CARD_RESULTS[day][cardType].resultSubText;
 
     return (
         <div className={backgroundGradients({ color })}>
             <div className="flex flex-col gap-2 justify-center items-center w-[245px]">
                 <Category type="limited">당신의 선택</Category>
                 <h2 className="h-heading-2-bold text-center text-n-neutral-950 max-w-56">
-                    {mainTitle}
+                    {mainText}
                 </h2>
                 <span className="h-body-1-regular text-center text-s-red">
                     <p>지금 </p>
@@ -52,8 +52,8 @@ export default function RushCardResultDescription({
             </div>
             <span className="flex flex-col justify-center items-center gap-3 w-[480px] h-[352px] rounded-800 bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-center bg-cover text-n-white">
                 <p className="text-center">CASPER Electric</p>
-                <h2 className="h-heading-2-bold text-center max-w-78">{title}</h2>
-                <p className="h-body-1-bold text-center max-w-72">{description}</p>
+                <h2 className="h-heading-2-bold text-center max-w-78">{resultMainText}</h2>
+                <p className="h-body-1-bold text-center max-w-72">{resultSubText}</p>
             </span>
         </div>
     );
