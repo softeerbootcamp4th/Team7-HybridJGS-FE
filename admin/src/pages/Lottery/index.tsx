@@ -91,6 +91,9 @@ export default function Lottery() {
                     <Button buttonSize="sm" onClick={() => navigate("/lottery/participant-list")}>
                         참여자 리스트 보러가기
                     </Button>
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/winner")}>
+                        당첨자 추첨하기
+                    </Button>
                     <Button buttonSize="sm" onClick={() => navigate("/lottery/winner-list")}>
                         당첨자 보러가기
                     </Button>

@@ -43,7 +43,7 @@ export default function LotteryWinner() {
                         {currentLottery.appliedCount}
                     </p>
                     <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
-                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">
+                    <p className="px-6 py-4 w-[200px] h-body-1-regular">
                         {currentLottery.winnerCount}
                     </p>
                 </div>
