@@ -54,7 +54,7 @@ export function Headline({ id }: SectionKeyProps) {
             </Background>
 
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="light text-n-neutral-950">
+                <Scroll type="dark">
                     <p className="h-body-2-bold">스크롤</p>
                     <p>하고 캐스퍼 일렉트릭의 놀라운 성능을 알아보세요</p>
                 </Scroll>

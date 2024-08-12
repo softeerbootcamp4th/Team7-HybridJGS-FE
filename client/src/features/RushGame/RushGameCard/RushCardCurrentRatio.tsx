@@ -4,6 +4,7 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
+import useTimer from "@/hooks/useTimer.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
 
 const TOOLTIP_CONTENT = () => (
@@ -29,11 +30,11 @@ function ReloadButton({ onClick }: { onClick: () => void }) {
 
 export default function RushCardCurrentRatio() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const [showToggle, setShowToggle] = useState<boolean>(true);
     const [leftOptionRatio, setLeftOptionRatio] = useState<number>(0);
     const [rightOptionRatio, setRightOptionRatio] = useState<number>(0);
     const [message, setMessage] = useState<string>(MESSAGES.WINNING);
     const [optionId, setOptionId] = useState<number | null>(null);
+    const { toggleContents } = useTimer();
 
     const fetchRushBalance = async () => {
         try {
@@ -61,14 +62,6 @@ export default function RushCardCurrentRatio() {
 
     useEffect(() => {
         fetchRushBalance();
-    }, []);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setShowToggle(false);
-        }, 5000);
-
-        return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -101,7 +94,7 @@ export default function RushCardCurrentRatio() {
                 </div>
             </div>
             <div className="absolute right-6 bottom-6">
-                {showToggle ? (
+                {toggleContents ? (
                     <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left">
                         <ReloadButton onClick={fetchRushBalance} />
                     </Tooltip>
