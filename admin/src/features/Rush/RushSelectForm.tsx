@@ -5,6 +5,7 @@ import SelectForm from "@/components/SelectForm";
 import TextField from "@/components/TextField";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
+import useToast from "@/hooks/useToast";
 import { RUSH_ACTION, RushOptionType } from "@/types/rush";
 
 export default function RushSelectForm() {
@@ -15,6 +16,8 @@ export default function RushSelectForm() {
 
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
+
+    const { showToast, ToastComponent } = useToast("입력한 내용이 임시 저장되었습니다!");
 
     const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
 
@@ -40,6 +43,8 @@ export default function RushSelectForm() {
             type: RUSH_ACTION.SET_EVENT_LIST,
             payload: updatedTableItemList,
         });
+
+        showToast();
     };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string) => {
@@ -123,6 +128,8 @@ export default function RushSelectForm() {
             <Button buttonSize="lg" onClick={handleUpdate}>
                 임시 저장
             </Button>
+
+            {ToastComponent}
         </div>
     );
 }

@@ -10,6 +10,7 @@ import { EVENT_LIST_HEADER, QUERY_OPTION } from "@/constants/rush";
 import useFetch from "@/hooks/useFetch";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
+import useToast from "@/hooks/useToast";
 import { RUSH_ACTION } from "@/types/rush";
 import { PutRushEventResponse } from "@/types/rushApi";
 import { getTimeDifference } from "@/utils/getTimeDifference";
@@ -17,15 +18,18 @@ import { getTimeDifference } from "@/utils/getTimeDifference";
 export default function EventList() {
     const navigate = useNavigate();
 
+    const { showToast, ToastComponent } = useToast("수정 사항이 반영되었습니다!");
+
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
-    const { isSuccess: isSuccessPutRush } = useFetch<PutRushEventResponse>(() =>
+    const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(() =>
         RushAPI.putRush(rushList)
     );
 
     useEffect(() => {
         if (isSuccessPutRush) {
+            showToast();
         }
     }, [isSuccessPutRush]);
 
@@ -38,6 +42,10 @@ export default function EventList() {
         });
 
         dispatch({ type: RUSH_ACTION.SET_EVENT_LIST, payload: updatedTableItemList });
+    };
+
+    const handleUpdate = () => {
+        putRush();
     };
 
     const getTableData = () => {
@@ -103,7 +111,11 @@ export default function EventList() {
                 <Table headers={EVENT_LIST_HEADER} data={getTableData()} />
             </div>
 
-            <Button buttonSize="lg">수정사항 업데이트</Button>
+            <Button buttonSize="lg" onClick={handleUpdate}>
+                수정사항 업데이트
+            </Button>
+
+            {ToastComponent}
         </div>
     );
 }
