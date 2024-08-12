@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
@@ -7,7 +8,9 @@ import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
 import { STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
+import useFetch from "@/hooks/useFetch";
 import { LotteryEventType } from "@/types/lottery";
+import { PostLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
 
 export default function Lottery() {
@@ -16,11 +19,25 @@ export default function Lottery() {
     const lotteryData = useLoaderData() as LotteryEventType[];
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
+    const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
+        useFetch<PostLotteryResponse>(() =>
+            LotteryAPI.postLottery({
+                startDateTime: `${lottery.startDate} ${lottery.startTime}`,
+                endDateTime: `${lottery.endDate} ${lottery.endTime}`,
+                winnerCount: lottery.winnerCount,
+            })
+        );
+
     useEffect(() => {
         if (lotteryData.length !== 0) {
             setLottery(lotteryData[0]);
         }
     }, []);
+    useEffect(() => {
+        if (isSuccessPostLottery) {
+            // TODO: toast 메시지
+        }
+    }, [isSuccessPostLottery]);
 
     const handleChangeItem = (key: string, text: string | number) => {
         setLottery({ ...lottery, [key]: text });
@@ -60,7 +77,7 @@ export default function Lottery() {
     };
 
     const handleUpdate = () => {
-        // TODO: update API 요청
+        postLottery();
     };
 
     return (

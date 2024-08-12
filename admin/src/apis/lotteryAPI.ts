@@ -4,6 +4,8 @@ import {
     GetLotteryResponse,
     GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
+    PostLotteryParams,
+    PostLotteryResponse,
     PostLotteryWinnerResponse,
 } from "@/types/lotteryApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
@@ -32,6 +34,28 @@ export const LotteryAPI = {
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
                 headers: headers,
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async postLottery(body: PostLotteryParams): Promise<PostLotteryResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve({
+                    startDate: "2024-08-26",
+                    startTime: "00:00:000",
+                    endDate: "2024-09-25 23:59",
+                    endTime: "00:00:000",
+                    winnerCount: 363,
+                })
+            );
+            const response = await fetchWithTimeout(`${baseURL}`, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(body),
             });
             return response.json();
         } catch (error) {
