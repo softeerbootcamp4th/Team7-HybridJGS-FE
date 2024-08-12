@@ -35,7 +35,7 @@ export const RushAPI = {
                             subText: "첫 차는 가성비가 짱이지!",
                             resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
                             resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "left_image.png",
+                            imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
                         },
                         rightOption: {
                             rushOptionId: 2,
@@ -43,7 +43,7 @@ export const RushAPI = {
                             subText: "차는 당연히 성능이지!",
                             resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
                             resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "left_image.png",
+                            imageUrl: "https://cdn-icons-png.flaticon.com/512/846/846551.png",
                         },
                     },
                     {
@@ -61,7 +61,7 @@ export const RushAPI = {
                             subText: "첫 차는 가성비가 짱이지!",
                             resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
                             resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "left_image.png",
+                            imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
                         },
                         rightOption: {
                             rushOptionId: 2,
@@ -69,7 +69,7 @@ export const RushAPI = {
                             subText: "차는 당연히 성능이지!",
                             resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
                             resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "left_image.png",
+                            imageUrl: "https://cdn-icons-png.flaticon.com/512/846/846551.png",
                         },
                     },
                     {
@@ -87,7 +87,7 @@ export const RushAPI = {
                             subText: "첫 차는 가성비가 짱이지!",
                             resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
                             resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "left_image.png",
+                            imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
                         },
                         rightOption: {
                             rushOptionId: 2,
@@ -95,7 +95,7 @@ export const RushAPI = {
                             subText: "차는 당연히 성능이지!",
                             resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
                             resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "left_image.png",
+                            imageUrl: "https://cdn-icons-png.flaticon.com/512/846/846551.png",
                         },
                     },
                 ])
@@ -115,7 +115,6 @@ export const RushAPI = {
             return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
-                headers: headers,
                 body: JSON.stringify(body),
             });
             return response.json();
@@ -233,7 +232,7 @@ export const RushAPI = {
                         subText: " 첫 차는 가성비가 짱이지!",
                         resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
                         resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                        imageUrl: "left_image.png",
+                        imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
                     },
                     {
                         rushOptionId: 2,
@@ -241,7 +240,7 @@ export const RushAPI = {
                         subText: " 차는 당연히 성능이지!",
                         resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
                         resultSubText: "전기차 평균보다 훨씨니 저렴한 캐스퍼 일렉트릭!",
-                        imageUrl: "left_image.png",
+                        imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
                     },
                 ])
             );

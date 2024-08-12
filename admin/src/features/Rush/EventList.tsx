@@ -24,7 +24,7 @@ export default function EventList() {
     const dispatch = useRushEventDispatchContext();
 
     const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(() =>
-        RushAPI.putRush(rushList)
+        RushAPI.putRush([])
     );
 
     useEffect(() => {
@@ -32,6 +32,13 @@ export default function EventList() {
             showToast();
         }
     }, [isSuccessPutRush]);
+
+    const getFormData = () => {
+        return rushList.map((rush) => {
+            const formData = new FormData();
+            // formData.append("image", selectedFile);
+        });
+    };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {

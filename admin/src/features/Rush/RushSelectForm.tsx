@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
+import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
 import TextField from "@/components/TextField";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
@@ -20,10 +21,15 @@ export default function RushSelectForm() {
     const { showToast, ToastComponent } = useToast("입력한 내용이 임시 저장되었습니다!");
 
     const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
+    const [selectedFile, setSelectedFile] = useState<(File | string | null)[]>([]);
 
     useEffect(() => {
         if (rushIdx !== undefined) {
             setSelectOptionState([rushList[rushIdx].leftOption, rushList[rushIdx].rightOption]);
+            setSelectedFile([
+                rushList[rushIdx].leftOption.imageUrl,
+                rushList[rushIdx].rightOption.imageUrl,
+            ]);
         }
     }, [rushList]);
 
@@ -58,6 +64,16 @@ export default function RushSelectForm() {
         setSelectOptionState(updatedItem);
     };
 
+    const handleSelectFile = (idx: number, file: File | null) => {
+        const updatedSelectedFile = selectedFile.map((selected, selectedIdx) => {
+            if (selectedIdx === idx) {
+                return file;
+            }
+            return selected;
+        });
+        setSelectedFile(updatedSelectedFile);
+    };
+
     const getSelectOption = (idx: number) => {
         if (selectOptionState.length >= 2) {
             return [
@@ -82,7 +98,13 @@ export default function RushSelectForm() {
     const getSelectOptionResult = (idx: number) => {
         if (selectOptionState.length >= 2) {
             return [
-                ["이미지", <input type="file" />],
+                [
+                    "이미지",
+                    <FileInput
+                        selectedFile={selectedFile[idx]}
+                        setSelectedFile={(file) => handleSelectFile(idx, file)}
+                    />,
+                ],
                 [
                     "메인 문구 (20자 이내)",
                     <TextField
