@@ -9,12 +9,15 @@ import TimePicker from "@/components/TimePicker";
 import { STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
+import useToast from "@/hooks/useToast";
 import { LotteryEventType } from "@/types/lottery";
 import { PutLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
 
 export default function Lottery() {
     const navigate = useNavigate();
+
+    const { showToast, ToastComponent } = useToast("수정 사항이 반영되었습니다!");
 
     const lotteryData = useLoaderData() as LotteryEventType[];
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
@@ -35,7 +38,7 @@ export default function Lottery() {
     }, []);
     useEffect(() => {
         if (isSuccessPostLottery) {
-            // TODO: toast 메시지
+            showToast();
         }
     }, [isSuccessPostLottery]);
 
@@ -103,6 +106,8 @@ export default function Lottery() {
                     수정사항 업데이트
                 </Button>
             </div>
+
+            {ToastComponent}
         </div>
     );
 }

@@ -6,6 +6,9 @@ export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>) 
     const [isError, setIsError] = useState<boolean>(false);
 
     const fetchData = async (params?: P) => {
+        setIsError(false);
+        setIsSuccess(false);
+
         try {
             const data = await fetch(params as P);
             setData(data);

@@ -36,6 +36,8 @@ export default function useInfiniteFetch<T>({
         if (!hasNextPage || isLoading || currentPageParam === undefined) return;
 
         setIsLoading(true);
+        setIsError(false);
+        setIsSuccess(false);
         try {
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
