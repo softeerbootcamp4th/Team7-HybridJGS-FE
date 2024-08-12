@@ -10,3 +10,8 @@ export const EVENT_LIST_HEADER = [
     "진행 상태",
     "참여자 리스트 보기",
 ];
+
+export const QUERY_OPTION = {
+    OPTION: "option",
+    PRIZE: "prize",
+} as const;

@@ -4,7 +4,7 @@ import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
 import { STATUS_MAP } from "@/constants/common";
-import { EVENT_LIST_HEADER } from "@/constants/rush";
+import { EVENT_LIST_HEADER, QUERY_OPTION } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
@@ -46,17 +46,13 @@ export default function EventList() {
                 getTimeDifference(item.openTime, item.closeTime),
                 <Button
                     buttonSize="sm"
-                    onClick={() =>
-                        navigate("/rush/select-form", { state: { id: item.rushEventId } })
-                    }
+                    onClick={() => navigate(`/rush?q=${QUERY_OPTION.OPTION}`, { state: { idx } })}
                 >
                     선택지 관리
                 </Button>,
                 <Button
                     buttonSize="sm"
-                    onClick={() =>
-                        navigate("/rush/prize-form", { state: { id: item.rushEventId } })
-                    }
+                    onClick={() => navigate(`/rush?q=${QUERY_OPTION.PRIZE}`, { state: { idx } })}
                 >
                     경품 관리
                 </Button>,

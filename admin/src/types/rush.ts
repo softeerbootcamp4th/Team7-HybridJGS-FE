@@ -11,6 +11,8 @@ export interface RushEventType {
     prizeImageUrl: string;
     prizeDescription: string;
     status: RushEventStatusType;
+    leftOption: RushOptionType;
+    rightOption: RushOptionType;
 }
 
 export interface RushOptionType {
@@ -29,29 +31,16 @@ export interface RushPrizeType {
 
 export interface RushEventStateType {
     rushList: RushEventType[];
-    selectOptions: RushOptionType[];
-    prize: RushPrizeType;
 }
 
 export const RUSH_ACTION = {
     SET_EVENT_LIST: "SET_EVENT_LIST",
-    SET_OPTION: "SET_OPTION",
-    SET_PRIZE: "SET_PRIZE",
 } as const;
 
-export type RushEventAction =
-    | {
-          type: typeof RUSH_ACTION.SET_EVENT_LIST;
-          payload: RushEventType[];
-      }
-    | {
-          type: typeof RUSH_ACTION.SET_OPTION;
-          payload: RushOptionType[];
-      }
-    | {
-          type: typeof RUSH_ACTION.SET_PRIZE;
-          payload: RushPrizeType;
-      };
+export type RushEventAction = {
+    type: typeof RUSH_ACTION.SET_EVENT_LIST;
+    payload: RushEventType[];
+};
 
 export type RushEventDispatchType = Dispatch<RushEventAction>;
 

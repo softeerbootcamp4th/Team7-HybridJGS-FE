@@ -27,6 +27,22 @@ export const RushAPI = {
                         prizeImageUrl: "prize1.png",
                         prizeDescription: "스타벅스 1만원 기프트카드",
                         status: "BEFORE",
+                        leftOption: {
+                            rushOptionId: 1,
+                            mainText: "첫 차로 저렴한 차 사기",
+                            subText: "첫 차는 가성비가 짱이지!",
+                            resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
+                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
+                            imageUrl: "left_image.png",
+                        },
+                        rightOption: {
+                            rushOptionId: 2,
+                            mainText: "첫 차로 성능 좋은 차 사기",
+                            subText: "차는 당연히 성능이지!",
+                            resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
+                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
+                            imageUrl: "left_image.png",
+                        },
                     },
                     {
                         rushEventId: 2,
@@ -37,6 +53,22 @@ export const RushAPI = {
                         prizeImageUrl: "prize2.png",
                         prizeDescription: "올리브영 1만원 기프트카드",
                         status: "DURING",
+                        leftOption: {
+                            rushOptionId: 1,
+                            mainText: "첫 차로 저렴한 차 사기",
+                            subText: "첫 차는 가성비가 짱이지!",
+                            resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
+                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
+                            imageUrl: "left_image.png",
+                        },
+                        rightOption: {
+                            rushOptionId: 2,
+                            mainText: "첫 차로 성능 좋은 차 사기",
+                            subText: "차는 당연히 성능이지!",
+                            resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
+                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
+                            imageUrl: "left_image.png",
+                        },
                     },
                     {
                         rushEventId: 3,
@@ -47,6 +79,22 @@ export const RushAPI = {
                         prizeImageUrl: "prize3.png",
                         prizeDescription: "배달의 민족 1만원 기프트카드",
                         status: "AFTER",
+                        leftOption: {
+                            rushOptionId: 1,
+                            mainText: "첫 차로 저렴한 차 사기",
+                            subText: "첫 차는 가성비가 짱이지!",
+                            resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
+                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
+                            imageUrl: "left_image.png",
+                        },
+                        rightOption: {
+                            rushOptionId: 2,
+                            mainText: "첫 차로 성능 좋은 차 사기",
+                            subText: "차는 당연히 성능이지!",
+                            resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
+                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
+                            imageUrl: "left_image.png",
+                        },
                     },
                 ])
             );

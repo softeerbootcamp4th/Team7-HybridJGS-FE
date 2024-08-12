@@ -9,8 +9,6 @@ import Lottery from "./pages/Lottery";
 import LotteryWinner from "./pages/LotteryWinner";
 import LotteryWinnerList from "./pages/LotteryWinnerList";
 import Rush from "./pages/Rush";
-import RushPrizeForm from "./pages/RushPrizeForm";
-import RushSelectForm from "./pages/RushSelectForm";
 import RushWinnerList from "./pages/RushWinnerList";
 
 export const router = createBrowserRouter([
@@ -38,14 +36,6 @@ export const router = createBrowserRouter([
                                 index: true,
                                 element: <Rush />,
                                 loader: RushAPI.getRush,
-                            },
-                            {
-                                path: "select-form",
-                                element: <RushSelectForm />,
-                            },
-                            {
-                                path: "prize-form",
-                                element: <RushPrizeForm />,
                             },
                             {
                                 path: "winner-list",
