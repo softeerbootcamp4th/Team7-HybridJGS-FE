@@ -7,20 +7,18 @@ export const RushGameContext = createContext<RushGameContextType | undefined>(un
 export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
         phase: "PRE_EVENT",
-        userParticipated: false,
+        userParticipatedStatus: false,
     });
 
-    const updateUserParticipationStatus = (response: GetRushUserParticipationStatusResponse) => {
+    const setUserParticipationStatus = (status: GetRushUserParticipationStatusResponse) => {
         setGameState((prevState) => ({
             ...prevState,
-            userParticipated: response.result,
+            userParticipatedStatus: status,
         }));
     };
 
     return (
-        <RushGameContext.Provider
-            value={{ gameState, setGameState, updateUserParticipationStatus }}
-        >
+        <RushGameContext.Provider value={{ gameState, setGameState, setUserParticipationStatus }}>
             {children}
         </RushGameContext.Provider>
     );

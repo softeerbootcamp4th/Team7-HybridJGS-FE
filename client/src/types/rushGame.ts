@@ -4,8 +4,8 @@ import { GetRushUserParticipationStatusResponse } from "@/types/rushApi.ts";
 export interface RushGameContextType {
     gameState: {
         phase: "PRE_EVENT" | "EVENT_RUNNING" | "EVENT_ENDED";
-        userParticipated: boolean;
+        userParticipatedStatus: boolean;
     };
     setGameState: React.Dispatch<React.SetStateAction<RushGameContextType["gameState"]>>;
-    updateUserParticipationStatus: (response: GetRushUserParticipationStatusResponse) => void;
+    setUserParticipationStatus: (status: GetRushUserParticipationStatusResponse) => void;
 }

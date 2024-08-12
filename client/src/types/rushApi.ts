@@ -18,9 +18,7 @@ export interface GetTotalRushEventsResponse {
     events: RushEventType[];
 }
 
-export interface GetRushUserParticipationStatusResponse {
-    result: boolean;
-}
+export type GetRushUserParticipationStatusResponse = boolean;
 
 export interface GetTodayRushEventResponse {
     leftOption: RushCardType;
@@ -30,8 +28,9 @@ export interface GetTodayRushEventResponse {
 export type PostSelectedRushCardOptionResponse = 204 | 404;
 
 export interface GetRushOptionResultResponse {
-    resultTitle: string;
-    resultDescription: string;
+    mainText: string;
+    resultMainText: string;
+    resultSubText: string;
 }
 
 export interface GetRushBalanceResponse {

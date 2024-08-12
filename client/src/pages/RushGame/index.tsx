@@ -17,7 +17,7 @@ import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 
 export default function RushGame() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const { gameState, setGameState, updateUserParticipationStatus } = useRushGameContext();
+    const { gameState, setGameState, setUserParticipationStatus } = useRushGameContext();
     const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
     const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
 
@@ -44,10 +44,10 @@ export default function RushGame() {
                     setInitialRunCountdown(runCountdown);
                 }
 
-                const userParticipated = await RushAPI.getRushUserParticipationStatus(
+                const userParticipatedStatus = await RushAPI.getRushUserParticipationStatus(
                     cookies[COOKIE_TOKEN_KEY]
                 );
-                updateUserParticipationStatus(userParticipated);
+                setUserParticipationStatus(userParticipatedStatus);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -65,12 +65,21 @@ export default function RushGame() {
         }
     }, [preCountdown, gameState.phase, setGameState]);
 
+    useEffect(() => {
+        if (gameState.userParticipatedStatus) {
+            setGameState((prev) => ({
+                ...prev,
+                phase: "EVENT_RUNNING",
+            }));
+        }
+    }, [gameState.userParticipatedStatus, setGameState]);
+
     const renderRushGameContent = () => {
         switch (gameState.phase) {
             case "PRE_EVENT":
                 return <Countdown countdown={preCountdown} />;
             case "EVENT_RUNNING":
-                if (!gameState.userParticipated) {
+                if (!gameState.userParticipatedStatus) {
                     return <CardOptions countdown={runCountdown} />;
                     // return <SelectedCard countdown={runCountdown} />;
                     // return <FinalResult />;
