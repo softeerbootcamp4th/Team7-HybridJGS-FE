@@ -15,10 +15,10 @@ export function Rush({ id }: SectionKeyProps) {
     useEffect(() => {
         (async () => {
             const rushData = await RushAPI.getRush();
-            const serverDateTime = new Date(rushData.serverDateTime);
+            const serverDateTime = new Date(rushData.serverTime);
 
-            setStartDateTime(rushData.eventsStartDate);
-            setEndDateTime(rushData.eventsEndDate);
+            setStartDateTime(rushData.eventStartDate);
+            setEndDateTime(rushData.eventEndDate);
 
             const events = rushData.events.map((event, idx) => {
                 const rushEvent = RUSH_EVENT_DATA[idx];

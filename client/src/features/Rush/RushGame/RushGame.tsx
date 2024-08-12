@@ -27,8 +27,8 @@ export function RushGame({ id }: SectionKeyProps) {
                     (event) => event.rushEventId === rushData.todayEventId
                 );
 
-                if (rushData.serverDateTime && currentEvent?.startDateTime) {
-                    const serverTime = new Date(rushData.serverDateTime).getTime();
+                if (rushData.serverTime && currentEvent?.startDateTime) {
+                    const serverTime = new Date(rushData.serverTime).getTime();
                     const startTime = new Date(currentEvent.startDateTime).getTime();
                     const countdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
                     setInitialCountdown(countdown);

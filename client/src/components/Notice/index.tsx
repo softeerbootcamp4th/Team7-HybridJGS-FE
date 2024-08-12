@@ -41,8 +41,8 @@ const getEventsDateDetails = async (): Promise<{
         ]);
 
         const rushEventDetails: EventDateDetails = {
-            startDate: rushData.eventsStartDate,
-            endDate: rushData.eventsEndDate,
+            startDate: rushData.eventStartDate,
+            endDate: rushData.eventEndDate,
             activePeriod: rushData.activePeriod,
         };
 

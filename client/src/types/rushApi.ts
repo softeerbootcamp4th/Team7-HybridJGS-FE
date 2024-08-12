@@ -10,10 +10,10 @@ interface RushCardType {
 }
 
 export interface GetTotalRushEventsResponse {
-    serverDateTime: string;
+    serverTime: string;
     todayEventId: number;
-    eventsStartDate: string;
-    eventsEndDate: string;
+    eventStartDate: string;
+    eventEndDate: string;
     activePeriod: number;
     events: RushEventType[];
 }

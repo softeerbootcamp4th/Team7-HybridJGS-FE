@@ -2,6 +2,7 @@ import { RushEventProps } from "@/constants/Main/rushEventData.ts";
 import { formatSingleDateWithSlash } from "@/utils/formatDate.ts";
 
 export interface TotalRushEventsProps extends RushEventProps {
+    id: number;
     date: string;
     isPastEvent: boolean;
     isTodayEvent: boolean;
