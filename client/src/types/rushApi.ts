@@ -5,8 +5,8 @@ interface RushEventType {
 }
 
 interface RushCardType {
-    title: string;
-    description: string;
+    mainText: string;
+    subText: string;
 }
 
 export interface GetTotalRushEventsResponse {

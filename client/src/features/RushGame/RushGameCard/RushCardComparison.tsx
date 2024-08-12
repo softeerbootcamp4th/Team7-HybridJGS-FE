@@ -1,21 +1,37 @@
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
-import { CARD_COLORS, CARD_DAYS, CARD_OPTIONS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
+import { CARD_COLORS, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import RushCard from "@/features/RushGame/RushGameCard/RushCard.tsx";
+import { GetTodayRushEventResponse } from "@/types/rushApi.ts";
 
 export default function RushCardComparison() {
+    const [todayRushEventData, setTodayRushEventData] = useState<GetTodayRushEventResponse>();
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY2;
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const todayRushEventData = await RushAPI.getTodayRushEvent(
+                    cookies[COOKIE_TOKEN_KEY]
+                );
+                setTodayRushEventData(todayRushEventData);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        })();
+    }, []);
+
+    // TODO: 카드 색상 랜덤
+    const currentDay: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY2;
     const leftOptionColor = CARD_COLORS[currentDay][CARD_TYPE.LEFT_OPTIONS];
     const rightOptionColor = CARD_COLORS[currentDay][CARD_TYPE.RIGHT_OPTIONS];
 
-    const leftOptionTitle = CARD_OPTIONS[currentDay][CARD_TYPE.LEFT_OPTIONS].title;
-    const rightOptionTitle = CARD_OPTIONS[currentDay][CARD_TYPE.RIGHT_OPTIONS].title;
-
-    const leftOptionDescription = CARD_OPTIONS[currentDay][CARD_TYPE.LEFT_OPTIONS].description;
-    const rightOptionDescription = CARD_OPTIONS[currentDay][CARD_TYPE.RIGHT_OPTIONS].description;
+    const {
+        leftOption: { mainText: leftOptionTitle = "", subText: leftOptionDescription = "" } = {},
+        rightOption: { mainText: rightOptionTitle = "", subText: rightOptionDescription = "" } = {},
+    } = todayRushEventData || {};
 
     const handleCardSelection = async (optionId: number) => {
         try {

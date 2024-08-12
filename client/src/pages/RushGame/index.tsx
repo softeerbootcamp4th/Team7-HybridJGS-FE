@@ -71,8 +71,8 @@ export default function RushGame() {
                 return <Countdown countdown={preCountdown} />;
             case "EVENT_RUNNING":
                 if (!gameState.userParticipated) {
-                    // return <CardOptions countdown={runCountdown} />;
-                    return <SelectedCard countdown={runCountdown} />;
+                    return <CardOptions countdown={runCountdown} />;
+                    // return <SelectedCard countdown={runCountdown} />;
                     // return <FinalResult />;
                 } else {
                     return <SelectedCard countdown={runCountdown} />;
