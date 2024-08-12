@@ -1,15 +1,19 @@
-import { ReactNode } from "react";
+import { ReactNode, RefObject, forwardRef } from "react";
 
 interface TableProps {
     headers: ReactNode[];
     data: ReactNode[][];
     height?: string | number;
+    dataLastItem?: RefObject<HTMLTableRowElement>;
 }
 
-export default function Table({ headers, data, height = 600 }: TableProps) {
+const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
+    { headers, data, height = 600, dataLastItem },
+    ref
+) {
     return (
-        <div className="relative sm:rounded-lg w-[1560px] border" style={{ height }}>
-            <div className="overflow-y-auto h-full">
+        <div ref={ref} className="relative sm:rounded-lg w-[1560px] border" style={{ height }}>
+            <div className="overflow-y-auto h-full table-contents">
                 <table className="w-full text-sm rtl:text-right text-gray-500 text-center">
                     <thead className="sticky top-0 z-[5] text-gray-700 bg-gray-50">
                         <tr>
@@ -33,9 +37,12 @@ export default function Table({ headers, data, height = 600 }: TableProps) {
                                 ))}
                             </tr>
                         ))}
+                        <tr ref={dataLastItem}></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     );
-}
+});
+
+export default Table;

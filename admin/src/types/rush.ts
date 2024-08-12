@@ -51,3 +51,26 @@ export type RushEventAction =
       };
 
 export type RushEventDispatchType = Dispatch<RushEventAction>;
+
+export interface RushApplicantType {
+    phone_number: string;
+    balance_game_choice: string;
+    created_at: string;
+}
+
+export interface RushParticipantType {
+    id: number;
+    phoneNumber: string;
+    balanceGameChoice: number;
+    createdAt: string;
+    rank: number;
+}
+
+export interface RushOptionType {
+    rushOptionId: number;
+    mainText: string;
+    subText: string;
+    resultMainText: string;
+    resultSubText: string;
+    imageUrl: string;
+}
