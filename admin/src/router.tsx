@@ -3,11 +3,11 @@ import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import RushLayout from "./features/Rush/Layout";
-import ErrorElement from "./pages/ErrorElement";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
 import LotteryWinner from "./pages/LotteryWinner";
 import LotteryWinnerList from "./pages/LotteryWinnerList";
+import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
 import RushPrizeForm from "./pages/RushPrizeForm";
 import RushSelectForm from "./pages/RushSelectForm";
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
                 element: <UnProtectedRoute />,
                 children: [
                     {
-                        path: "login/",
+                        index: true,
                         element: <Login />,
                     },
                 ],
@@ -74,5 +74,5 @@ export const router = createBrowserRouter([
             },
         ],
     },
-    { path: "*", element: <ErrorElement /> },
+    { path: "*", element: <NotFound /> },
 ]);
