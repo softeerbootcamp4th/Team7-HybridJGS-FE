@@ -6,15 +6,14 @@ import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import CardOptions from "@/features/Rush/RushGame/RushGameSection/CardOptions.tsx";
-import CountDown from "@/features/Rush/RushGame/RushGameSection/CountDown.tsx";
-import FinalResult from "@/features/Rush/RushGame/RushGameSection/FinalResult.tsx";
-import SelectedCard from "@/features/Rush/RushGame/RushGameSection/SelectedCard.tsx";
+import CardOptions from "@/features/RushGame/RushGameSection/CardOptions.tsx";
+import CountDown from "@/features/RushGame/RushGameSection/CountDown.tsx";
+import FinalResult from "@/features/RushGame/RushGameSection/FinalResult.tsx";
+import SelectedCard from "@/features/RushGame/RushGameSection/SelectedCard.tsx";
 import useCountDown from "@/hooks/useCountDown.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
-import { SectionKeyProps } from "@/types/sections.ts";
 
-export function RushGame({ id }: SectionKeyProps) {
+export default function RushGame() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
     const { gameState, setGameState, updateUserParticipationStatus } = useRushGameContext();
     const [initialCountdown, setInitialCountdown] = useState<number | null>(null);
@@ -72,10 +71,7 @@ export function RushGame({ id }: SectionKeyProps) {
     };
 
     return (
-        <section
-            id={id}
-            className="relative h-screen bg-n-white flex flex-col gap-8 justify-center items-center snap-start"
-        >
+        <section className="h-screen bg-n-white flex flex-col gap-8 justify-center items-center">
             {renderRushGameContent()}
             <motion.div
                 className="flex flex-col justify-center items-center gap-4 my-3"

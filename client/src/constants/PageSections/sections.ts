@@ -18,7 +18,7 @@ export const LOTTERY_SECTIONS = {
 } as const;
 
 export const RUSH_SECTIONS = {
-    RUSH_GAME: "RUSH_GAME",
+    HEADLINE: "HEADLINE",
     INTRO: "INTRO",
     FAQ: "FAQ",
     ELECTRIC_REASON: "ELECTRIC_REASON",

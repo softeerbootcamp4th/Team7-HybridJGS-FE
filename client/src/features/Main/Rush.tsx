@@ -3,7 +3,6 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
 import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
-import useAuth from "@/hooks/useAuth.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
@@ -40,12 +39,6 @@ export function Rush({ id }: SectionKeyProps) {
         })();
     }, []);
 
-    const { handleClickShortCut, PopupComponent, ToastComponent } = useAuth({
-        eventStartDate: startDateTime,
-        eventEndDate: endDateTime,
-        confirmUrl: "/rush",
-    });
-
     return (
         <Section
             id={id}
@@ -55,7 +48,7 @@ export function Rush({ id }: SectionKeyProps) {
             subtitle="매일 315명에게! 짜릿짜릿 선착순 밸런스 게임"
             description="매일 오후 10시! 선착순 밸런스 게임 참여하고 선물 받자!"
             descriptionColor="text-s-red"
-            onClick={handleClickShortCut}
+            url="/rush"
         >
             <div className="flex flex-col gap-8 py-8 px-14 m-2 rounded-500 w-[1200px] h-[460px] bg-n-neutral-50">
                 <div className="flex gap-[110px]">
@@ -97,9 +90,6 @@ export function Rush({ id }: SectionKeyProps) {
                     </div>
                 </div>
             </div>
-
-            {PopupComponent}
-            {ToastComponent}
         </Section>
     );
 }
