@@ -9,7 +9,7 @@ interface RushCardProps {
 }
 
 const backgroundGradients = cva(
-    `flex flex-col gap-2 justify-center items-center w-[360px] h-[400px] text-n-neutral-950 rounded-800 p-10 break-keep cursor-pointer`,
+    `flex flex-col gap-2 justify-center items-center w-[360px] h-[400px] text-n-neutral-950 rounded-800 p-10 break-keep cursor-pointer hover:scale-[1.05] hover:duration-200`,
     {
         variants: {
             color: {
