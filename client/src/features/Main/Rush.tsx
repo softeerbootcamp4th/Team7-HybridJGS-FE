@@ -9,8 +9,8 @@ import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
 export function Rush({ id }: SectionKeyProps) {
     const [rushEvents, setRushEvents] = useState<TotalRushEventsProps[]>([]);
-    const [startDateTime, setStartDateTime] = useState<string | null>(null);
-    const [endDateTime, setEndDateTime] = useState<string | null>(null);
+    const [startDateTime, setStartDateTime] = useState<string>("");
+    const [endDateTime, setEndDateTime] = useState<string>("");
 
     useEffect(() => {
         (async () => {
@@ -41,8 +41,8 @@ export function Rush({ id }: SectionKeyProps) {
     }, []);
 
     const { handleClickShortCut, PopupComponent, ToastComponent } = useAuth({
-        eventStartDate: startDateTime ?? "",
-        eventEndDate: endDateTime ?? "",
+        eventStartDate: startDateTime,
+        eventEndDate: endDateTime,
         confirmUrl: "/rush",
     });
 
