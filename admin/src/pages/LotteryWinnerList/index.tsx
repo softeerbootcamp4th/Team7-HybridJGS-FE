@@ -111,7 +111,7 @@ export default function LotteryWinnerList() {
                             className="cursor-pointer"
                             onClick={() => navigate(-1)}
                         />
-                        <p className="h-body-1-medium">당첨자 추첨</p>
+                        <p className="h-body-1-medium">당첨자 리스트</p>
                     </div>
 
                     <div className="flex gap-2">

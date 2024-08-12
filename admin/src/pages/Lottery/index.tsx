@@ -18,22 +18,13 @@ export default function Lottery() {
             lotteryEventId: 1,
             startDate: "2024-07-26",
             startTime: "00:00",
-            endDate: "2024-08-25 23:59",
+            endDate: "2024-08-25",
             endTime: "23:59",
             appliedCount: 1000000,
             winnerCount: 363,
         };
 
-        const [startDate, startTime] = data.startDate.split(" ");
-        const [endDate, endTime] = data.startDate.split(" ");
-
-        setLottery({
-            ...data,
-            startDate,
-            startTime,
-            endDate,
-            endTime,
-        });
+        setLottery(data);
     }, []);
 
     const handleChangeItem = (key: string, text: string | number) => {
@@ -88,7 +79,14 @@ export default function Lottery() {
                     <Button buttonSize="sm" onClick={() => navigate("/lottery/participant-list")}>
                         참여자 리스트 보러가기
                     </Button>
-                    <Button buttonSize="sm" onClick={() => navigate("/lottery/winner-list")}>
+                    <Button
+                        buttonSize="sm"
+                        onClick={() =>
+                            navigate("/lottery/winner-list", {
+                                state: { id: lottery.lotteryEventId },
+                            })
+                        }
+                    >
                         당첨자 보러가기
                     </Button>
                 </div>
