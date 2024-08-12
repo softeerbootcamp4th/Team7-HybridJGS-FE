@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { AuthAPI } from "@/apis/authAPI";
 import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { LOTTERY_SECTIONS } from "@/constants/PageSections/sections.ts";
+import { COOKIE_KEY } from "@/constants/cookie";
 import {
     CustomDesign,
     HeadLamp,
@@ -33,11 +33,16 @@ export default function Lottery() {
     useScrollTop();
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const inviteUser = queryParams.get(COOKIE_KEY.INVITE_USER);
+
+    const lotteryData = useLoaderData() as GetLotteryResponse;
 
     const containerRef = useHeaderStyleObserver({
         darkSections: [LOTTERY_SECTIONS.HEADLINE, LOTTERY_SECTIONS.SHORT_CUT],
     });
-    const [_cookies, setCookie] = useCookies([COOKIE_TOKEN_KEY]);
+    const [_cookies, setCookie] = useCookies([COOKIE_KEY.ACCESS_TOKEN, COOKIE_KEY.INVITE_USER]);
 
     const {
         data: authToken,
@@ -52,11 +57,14 @@ export default function Lottery() {
 
     const [phoneNumberState, setPhoneNumberState] = useState(phoneNumber);
 
-    const lotteryData = useLoaderData() as GetLotteryResponse;
-
+    useEffect(() => {
+        if (inviteUser) {
+            setCookie(COOKIE_KEY.INVITE_USER, inviteUser);
+        }
+    }, [inviteUser]);
     useEffect(() => {
         if (authToken && isSuccessGetAuthToken) {
-            setCookie(COOKIE_TOKEN_KEY, authToken.accessToken);
+            setCookie(COOKIE_KEY.ACCESS_TOKEN, authToken.accessToken);
             dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: phoneNumberState });
             navigate("/lottery/custom");
         }

@@ -2,14 +2,16 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
+import { LinkAPI } from "@/apis/linkAPI";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
+import useToast from "@/hooks/useToast";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
@@ -27,10 +29,11 @@ export function CasperCustomFinish({
     handleResetStep,
     unblockNavigation,
 }: CasperCustomFinishProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
+    const { showToast, ToastComponent } = useToast("링크가 복사되었어요!");
 
     const { data: applyCountData, fetchData: getApplyCount } = useFetch<GetApplyCountResponse>(() =>
-        LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY])
+        LotteryAPI.getApplyCount(cookies[COOKIE_KEY.ACCESS_TOKEN])
     );
 
     const dispatch = useCasperCustomDispatchContext();
@@ -39,7 +42,7 @@ export function CasperCustomFinish({
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!cookies[COOKIE_TOKEN_KEY]) {
+        if (!cookies[COOKIE_KEY.ACCESS_TOKEN]) {
             return;
         }
 
@@ -58,6 +61,17 @@ export function CasperCustomFinish({
     const handleReset = () => {
         handleResetStep();
         dispatch({ type: CASPER_ACTION.RESET_CUSTOM });
+    };
+
+    const handleClickShareButton = async () => {
+        const link = await LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+
+        try {
+            await navigator.clipboard.writeText(link.shortenLocalUrl);
+            showToast();
+        } catch (err) {
+            console.error("Failed to copy: ", err);
+        }
     };
 
     return (
@@ -102,7 +116,10 @@ export function CasperCustomFinish({
                         </div>
                     )}
 
-                    <CTAButton label="이벤트 공유해서 추가 응모하기" />
+                    <CTAButton
+                        label="이벤트 공유해서 추가 응모하기"
+                        onClick={handleClickShareButton}
+                    />
                 </div>
             </div>
 
@@ -112,6 +129,8 @@ export function CasperCustomFinish({
                 </p>
                 <ArrowIcon stroke="#ffffff" />
             </Link>
+
+            {ToastComponent}
         </motion.div>
     );
 }

@@ -4,9 +4,9 @@ import { useCookies } from "react-cookie";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
@@ -20,14 +20,17 @@ interface CasperCustomFormProps {
 }
 
 export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN, COOKIE_KEY.INVITE_USER]);
 
     const {
         data: casper,
         isSuccess: isSuccessPostCasper,
         fetchData: postCasper,
-    } = useFetch<PostCasperResponse, { token: string; casper: CasperInformationType }>(
-        ({ token, casper }) => LotteryAPI.postCasper(token, casper)
+    } = useFetch<
+        PostCasperResponse,
+        { token: string; referrerId: string; casper: CasperInformationType }
+    >(({ token, referrerId, casper }) =>
+        LotteryAPI.postCasper(token, { ...casper, [COOKIE_KEY.INVITE_USER]: referrerId })
     );
 
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
@@ -80,7 +83,11 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
             expectation: expectations,
         };
 
-        await postCasper({ token: cookies[COOKIE_TOKEN_KEY], casper });
+        await postCasper({
+            token: cookies[COOKIE_KEY.ACCESS_TOKEN],
+            referrerId: cookies[COOKIE_KEY.INVITE_USER],
+            casper,
+        });
     };
 
     return (
