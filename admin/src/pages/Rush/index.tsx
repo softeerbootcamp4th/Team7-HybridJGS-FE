@@ -1,10 +1,11 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TabHeader from "@/components/TabHeader";
-import ApplicantList from "@/features/Rush/ApplicantList";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import { RUSH_ACTION } from "@/types/rush";
 
 export default function Rush() {
+    const navigate = useNavigate();
     const dispatch = useRushEventDispatchContext();
 
     useEffect(() => {
@@ -13,31 +14,31 @@ export default function Rush() {
             type: RUSH_ACTION.SET_EVENT_LIST,
             payload: [
                 {
-                    rush_event_id: 1,
-                    event_date: "2024-07-25",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize1.png",
-                    prize_description: "스타벅스 1만원 기프트카드",
+                    rushEventId: 1,
+                    eventDate: "2024-07-25",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize1.png",
+                    prizeDescription: "스타벅스 1만원 기프트카드",
                 },
                 {
-                    rush_event_id: 2,
-                    event_date: "2024-07-26",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize2.png",
-                    prize_description: "올리브영 1만원 기프트카드",
+                    rushEventId: 2,
+                    eventDate: "2024-07-26",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize2.png",
+                    prizeDescription: "올리브영 1만원 기프트카드",
                 },
                 {
-                    rush_event_id: 2,
-                    event_date: "2024-07-27",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize3.png",
-                    prize_description: "배달의 민족 1만원 기프트카드",
+                    rushEventId: 2,
+                    eventDate: "2024-07-27",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize3.png",
+                    prizeDescription: "배달의 민족 1만원 기프트카드",
                 },
             ],
         });
@@ -47,7 +48,9 @@ export default function Rush() {
         <div className="flex flex-col items-center">
             <TabHeader />
 
-            <ApplicantList />
+            <button onClick={() => navigate("/rush/winner-list", { state: { id: 1 } })}>
+                To Go Winner List
+            </button>
         </div>
     );
 }
