@@ -1,33 +1,18 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { RUSH_SECTION, RushSectionType } from "@/constants/rush";
+import { EVENT_LIST_HEADER } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 
-interface EventListProps {
-    handleSelectSection: (idx: number, section: RushSectionType) => void;
-}
+export default function EventList() {
+    const navigate = useNavigate();
 
-const EVENT_LIST_HEADER = [
-    "ID",
-    "이벤트 진행 날짜",
-    "오픈 시간",
-    "종료 시간",
-    "활성화 시간",
-    "선택지 관리",
-    "경품 관리",
-    "선착순 당첨 인원 수",
-    "진행 상태",
-    "참여자 리스트 보기",
-    "관리",
-];
-
-export default function EventList({ handleSelectSection }: EventListProps) {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
@@ -37,40 +22,40 @@ export default function EventList({ handleSelectSection }: EventListProps) {
             type: RUSH_ACTION.SET_EVENT_LIST,
             payload: [
                 {
-                    rush_event_id: 1,
-                    event_date: "2024-07-25",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize1.png",
-                    prize_description: "스타벅스 1만원 기프트카드",
+                    rushEventId: 1,
+                    eventDate: "2024-07-25",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize1.png",
+                    prizeDescription: "스타벅스 1만원 기프트카드",
                 },
                 {
-                    rush_event_id: 2,
-                    event_date: "2024-07-26",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize2.png",
-                    prize_description: "올리브영 1만원 기프트카드",
+                    rushEventId: 2,
+                    eventDate: "2024-07-26",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize2.png",
+                    prizeDescription: "올리브영 1만원 기프트카드",
                 },
                 {
-                    rush_event_id: 2,
-                    event_date: "2024-07-27",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize3.png",
-                    prize_description: "배달의 민족 1만원 기프트카드",
+                    rushEventId: 2,
+                    eventDate: "2024-07-27",
+                    openTime: "20:00:00",
+                    closeTime: "20:10:00",
+                    winnerCount: 315,
+                    prizeImageUrl: "prize3.png",
+                    prizeDescription: "배달의 민족 1만원 기프트카드",
                 },
             ],
         });
     }, []);
 
-    const handleChangeItem = (key: string, changeIdx: number, date: string) => {
+    const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === changeIdx) {
-                return { ...item, [key]: date };
+                return { ...item, [key]: text };
             }
             return { ...item };
         });
@@ -81,30 +66,50 @@ export default function EventList({ handleSelectSection }: EventListProps) {
     const getTableData = () => {
         return rushList.map((item, idx) => {
             return [
-                item.rush_event_id,
+                item.rushEventId,
                 <DatePicker
-                    date={item.event_date}
-                    onChangeDate={(date) => handleChangeItem("event_date", idx, date)}
+                    date={item.eventDate}
+                    onChangeDate={(date) => handleChangeItem("eventDate", idx, date)}
                 />,
                 <TimePicker
-                    time={item.open_time}
-                    onChangeTime={(time) => handleChangeItem("open_time", idx, time)}
+                    time={item.openTime}
+                    onChangeTime={(time) => handleChangeItem("openTime", idx, time)}
                 />,
                 <TimePicker
-                    time={item.close_time}
-                    onChangeTime={(time) => handleChangeItem("close_time", idx, time)}
+                    time={item.closeTime}
+                    onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
                 />,
-                getTimeDifference(item.open_time, item.close_time),
-                <Button buttonSize="sm">선택지 관리</Button>,
-                <Button buttonSize="sm">경품 관리</Button>,
-                <div className="flex justify-between">
-                    <p>{item.winner_count}</p>
-                    <p>편집</p>
+                getTimeDifference(item.openTime, item.closeTime),
+                <Button
+                    buttonSize="sm"
+                    onClick={() =>
+                        navigate("/rush/select-form", { state: { id: item.rushEventId } })
+                    }
+                >
+                    선택지 관리
+                </Button>,
+                <Button
+                    buttonSize="sm"
+                    onClick={() =>
+                        navigate("/rush/prize-form", { state: { id: item.rushEventId } })
+                    }
+                >
+                    경품 관리
+                </Button>,
+                <div className="flex w-full border-b">
+                    <input
+                        value={item.winnerCount}
+                        onChange={(e) =>
+                            handleChangeItem("winnerCount", idx, parseInt(e.target.value) || 0)
+                        }
+                    />
                 </div>,
                 "오픈 전",
                 <Button
                     buttonSize="sm"
-                    onClick={() => handleSelectSection(idx, RUSH_SECTION.APPLICANT_LIST)}
+                    onClick={() =>
+                        navigate("/rush/winner-list", { state: { id: item.rushEventId } })
+                    }
                 >
                     참여자 리스트 보기
                 </Button>,

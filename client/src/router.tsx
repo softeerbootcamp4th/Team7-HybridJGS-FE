@@ -3,7 +3,7 @@ import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import CasperCustom from "./pages/CasperCustom";
 import CasperShowCase from "./pages/CasperShowCase";
-import ErrorBoundary from "./pages/ErrorBoundary";
+import ErrorElement from "./pages/ErrorElement";
 import Lottery from "./pages/Lottery";
 import Main from "./pages/Main";
 import NotFound from "./pages/NotFound";
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
                         index: true,
                         element: <Lottery />,
                         loader: LotteryAPI.getLottery,
-                        errorElement: <ErrorBoundary isError />,
+                        errorElement: <ErrorElement />,
                     },
                     {
                         path: "custom",
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
                         path: "show-case",
                         element: <CasperShowCase />,
                         loader: LotteryAPI.getCasperList,
-                        errorElement: <ErrorBoundary isError />,
+                        errorElement: <ErrorElement />,
                     },
                 ],
             },

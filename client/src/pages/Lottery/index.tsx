@@ -28,7 +28,6 @@ import { PostAuthResponse } from "@/types/authApi";
 import { GetLotteryResponse } from "@/types/lotteryApi";
 import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
 import { getMsTime } from "@/utils/getMsTime";
-import ErrorBoundary from "../ErrorBoundary";
 
 export default function Lottery() {
     useScrollTop();
@@ -48,7 +47,6 @@ export default function Lottery() {
     const {
         data: authToken,
         isSuccess: isSuccessGetAuthToken,
-        isError: isErrorGetAuthToken,
         fetchData: getAuthToken,
     } = useFetch<PostAuthResponse, string>((val: string) =>
         AuthAPI.getAuthToken({ phoneNumber: val })
@@ -102,29 +100,27 @@ export default function Lottery() {
     }, [lotteryData]);
 
     return (
-        <ErrorBoundary isError={isErrorGetAuthToken}>
-            <div ref={containerRef} className="h-screen overflow-x-hidden snap-y snap-mandatory">
-                <Headline
-                    id={LOTTERY_SECTIONS.HEADLINE}
-                    handleClickShortCutButton={handleClickShortCut}
-                />
-                <Intro id={LOTTERY_SECTIONS.INTRO} />
-                <HeadLamp id={LOTTERY_SECTIONS.HEADLAMP} />
-                <PixelDesign id={LOTTERY_SECTIONS.PIXEL_DESIGN} />
-                <WheelDesign id={LOTTERY_SECTIONS.WHEEL_DESIGN} />
-                <CustomDesign id={LOTTERY_SECTIONS.CUSTOM_DESIGN} />
-                <NewColor id={LOTTERY_SECTIONS.NEW_COLOR} />
-                <SmileBadge id={LOTTERY_SECTIONS.SMILE_BADGE} />
-                <ShortCut
-                    id={LOTTERY_SECTIONS.SHORT_CUT}
-                    handleClickShortCutButton={handleClickShortCut}
-                />
-                <Notice />
-                <Footer />
+        <div ref={containerRef} className="h-screen overflow-x-hidden snap-y snap-mandatory">
+            <Headline
+                id={LOTTERY_SECTIONS.HEADLINE}
+                handleClickShortCutButton={handleClickShortCut}
+            />
+            <Intro id={LOTTERY_SECTIONS.INTRO} />
+            <HeadLamp id={LOTTERY_SECTIONS.HEADLAMP} />
+            <PixelDesign id={LOTTERY_SECTIONS.PIXEL_DESIGN} />
+            <WheelDesign id={LOTTERY_SECTIONS.WHEEL_DESIGN} />
+            <CustomDesign id={LOTTERY_SECTIONS.CUSTOM_DESIGN} />
+            <NewColor id={LOTTERY_SECTIONS.NEW_COLOR} />
+            <SmileBadge id={LOTTERY_SECTIONS.SMILE_BADGE} />
+            <ShortCut
+                id={LOTTERY_SECTIONS.SHORT_CUT}
+                handleClickShortCutButton={handleClickShortCut}
+            />
+            <Notice />
+            <Footer />
 
-                {PopupComponent}
-                {ToastComponent}
-            </div>
-        </ErrorBoundary>
+            {PopupComponent}
+            {ToastComponent}
+        </div>
     );
 }

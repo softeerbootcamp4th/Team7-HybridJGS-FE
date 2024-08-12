@@ -1,6 +1,6 @@
-import { HTMLProps } from "react";
+import { ComponentProps } from "react";
 
-interface InputProps extends HTMLProps<HTMLInputElement> {
+interface InputProps extends ComponentProps<"input"> {
     label?: string;
 }
 
