@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
@@ -21,10 +21,7 @@ const LOTTERY_WINNER_HEADER = [
 const LOTTERY_EXPECTATIONS_HEADER = ["캐스퍼 ID", "기대평"];
 
 export default function LotteryWinnerList() {
-    const location = useLocation();
     const navigate = useNavigate();
-
-    const lotteryId = location.state.id;
 
     const { handleOpenModal, ModalComponent } = useModal();
     const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
@@ -39,7 +36,6 @@ export default function LotteryWinnerList() {
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             LotteryAPI.getLotteryWinner({
-                id: lotteryId,
                 size: 10,
                 page: pageParam,
                 phoneNumber: phoneNumberRef.current,
@@ -69,7 +65,6 @@ export default function LotteryWinnerList() {
         handleOpenModal();
 
         const data = await LotteryAPI.getLotteryExpectations({
-            lotteryId,
             participantId: winnerId,
         });
         setSelectedWinner(data);
@@ -138,7 +133,7 @@ export default function LotteryWinnerList() {
             </div>
 
             <ModalComponent>
-                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} />
+                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} height="auto" />
             </ModalComponent>
         </div>
     );

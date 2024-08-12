@@ -19,13 +19,13 @@ export const LotteryAPI = {
             return new Promise((resolve) =>
                 resolve([
                     {
-                        lotteryEventId: 1,
                         startDate: "2024-07-26",
                         startTime: "00:00",
                         endDate: "2024-08-25",
                         endTime: "23:59",
                         appliedCount: 1000000,
                         winnerCount: 363,
+                        status: "BEFORE",
                     },
                 ])
             );
@@ -53,7 +53,6 @@ export const LotteryAPI = {
         }
     },
     async getLotteryWinner({
-        id,
         size,
         page,
         phoneNumber,
@@ -89,7 +88,7 @@ export const LotteryAPI = {
                 })
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${id}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
+                `${baseURL}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
                     headers: headers,
@@ -102,7 +101,6 @@ export const LotteryAPI = {
         }
     },
     async getLotteryExpectations({
-        lotteryId,
         participantId,
     }: GetLotteryExpectationsParams): Promise<GetLotteryExpectationsResponse> {
         try {
@@ -123,7 +121,7 @@ export const LotteryAPI = {
                 ])
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${lotteryId}/participants/${participantId}/expectations`,
+                `${baseURL}/participants/${participantId}/expectations`,
                 {
                     method: "GET",
                     headers: headers,

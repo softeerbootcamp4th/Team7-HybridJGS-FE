@@ -1,30 +1,25 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
+import { STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
 import { LotteryEventType } from "@/types/lottery";
+import { getDateDifference } from "@/utils/getDateDifference";
 
 export default function Lottery() {
     const navigate = useNavigate();
 
+    const lotteryData = useLoaderData() as LotteryEventType[];
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
     useEffect(() => {
-        const data = {
-            lotteryEventId: 1,
-            startDate: "2024-07-26",
-            startTime: "00:00",
-            endDate: "2024-08-25",
-            endTime: "23:59",
-            appliedCount: 1000000,
-            winnerCount: 363,
-        };
-
-        setLottery(data);
+        if (lotteryData.length !== 0) {
+            setLottery(lotteryData[0]);
+        }
     }, []);
 
     const handleChangeItem = (key: string, text: string | number) => {
@@ -50,7 +45,7 @@ export default function Lottery() {
                     time={lottery.endTime}
                     onChangeTime={(time) => handleChangeItem("endTime", time)}
                 />,
-                "61일",
+                getDateDifference(lottery.startDate, lottery.endDate),
                 <div className="border-b flex w-full">
                     <input
                         value={lottery.winnerCount}
@@ -59,7 +54,7 @@ export default function Lottery() {
                         }
                     />
                 </div>,
-                "활성화",
+                STATUS_MAP[lottery.status],
             ],
         ];
     };
@@ -79,14 +74,7 @@ export default function Lottery() {
                     <Button buttonSize="sm" onClick={() => navigate("/lottery/participant-list")}>
                         참여자 리스트 보러가기
                     </Button>
-                    <Button
-                        buttonSize="sm"
-                        onClick={() =>
-                            navigate("/lottery/winner-list", {
-                                state: { id: lottery.lotteryEventId },
-                            })
-                        }
-                    >
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/winner-list")}>
                         당첨자 보러가기
                     </Button>
                 </div>

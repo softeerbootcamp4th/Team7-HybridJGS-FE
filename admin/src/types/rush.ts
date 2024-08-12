@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
-import { RUSH_STATUS } from "@/constants/rush";
+import { EVENT_STATUS } from "@/constants/common";
 
-export type RushEventStatusType = (typeof RUSH_STATUS)[keyof typeof RUSH_STATUS];
+export type RushEventStatusType = (typeof EVENT_STATUS)[keyof typeof EVENT_STATUS];
 export interface RushEventType {
     rushEventId: number;
     eventDate: string;

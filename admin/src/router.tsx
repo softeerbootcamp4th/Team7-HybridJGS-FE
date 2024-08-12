@@ -59,6 +59,7 @@ export const router = createBrowserRouter([
                             {
                                 index: true,
                                 element: <Lottery />,
+                                loader: LotteryAPI.getLottery,
                             },
                             {
                                 path: "winner",

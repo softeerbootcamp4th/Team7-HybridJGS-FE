@@ -9,7 +9,6 @@ import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lotteryAp
 
 export default function LotteryWinner() {
     const lottery = useLoaderData() as GetLotteryResponse;
-    const lotteryId = lottery.length !== 0 ? lottery[0].lotteryEventId : -1;
 
     const navigate = useNavigate();
 
@@ -25,7 +24,7 @@ export default function LotteryWinner() {
     }, [lottery]);
     useEffect(() => {
         if (isSuccessPostLottery) {
-            navigate("/lottery/winner-list", { state: { id: lotteryId } });
+            navigate("/lottery/winner-list");
         }
     }, [isSuccessPostLottery]);
 

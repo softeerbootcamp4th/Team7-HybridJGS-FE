@@ -3,7 +3,8 @@ import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { EVENT_LIST_HEADER, RUSH_STATUS_MAP } from "@/constants/rush";
+import { STATUS_MAP } from "@/constants/common";
+import { EVENT_LIST_HEADER } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
@@ -67,7 +68,7 @@ export default function EventList() {
                         }
                     />
                 </div>,
-                RUSH_STATUS_MAP[item.status],
+                STATUS_MAP[item.status],
                 <Button
                     buttonSize="sm"
                     onClick={() =>

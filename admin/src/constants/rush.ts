@@ -10,15 +10,3 @@ export const EVENT_LIST_HEADER = [
     "진행 상태",
     "참여자 리스트 보기",
 ];
-
-export const RUSH_STATUS = {
-    BEFORE: "BEFORE",
-    DURING: "DURING",
-    AFTER: "AFTER",
-} as const;
-
-export const RUSH_STATUS_MAP = {
-    [RUSH_STATUS.BEFORE]: "오픈 전",
-    [RUSH_STATUS.DURING]: "활성화",
-    [RUSH_STATUS.AFTER]: "종료",
-};
