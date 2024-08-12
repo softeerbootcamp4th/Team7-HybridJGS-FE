@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { STATUS_MAP } from "@/constants/common";
+import { EVENT_STATUS, STATUS_MAP } from "@/constants/common";
 import { EVENT_LIST_HEADER, QUERY_OPTION } from "@/constants/rush";
 import useFetch from "@/hooks/useFetch";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
@@ -42,28 +42,34 @@ export default function EventList() {
 
     const getTableData = () => {
         return rushList.map((item, idx) => {
+            const canEdit = item.status !== EVENT_STATUS.BEFORE;
             return [
                 item.rushEventId,
                 <DatePicker
+                    disabled={canEdit}
                     date={item.eventDate}
                     onChangeDate={(date) => handleChangeItem("eventDate", idx, date)}
                 />,
                 <TimePicker
+                    disabled={canEdit}
                     time={item.openTime}
                     onChangeTime={(time) => handleChangeItem("openTime", idx, time)}
                 />,
                 <TimePicker
+                    disabled={canEdit}
                     time={item.closeTime}
                     onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
                 />,
                 getTimeDifference(item.openTime, item.closeTime),
                 <Button
+                    disabled={canEdit}
                     buttonSize="sm"
                     onClick={() => navigate(`/rush?q=${QUERY_OPTION.OPTION}`, { state: { idx } })}
                 >
                     선택지 관리
                 </Button>,
                 <Button
+                    disabled={canEdit}
                     buttonSize="sm"
                     onClick={() => navigate(`/rush?q=${QUERY_OPTION.PRIZE}`, { state: { idx } })}
                 >
@@ -71,6 +77,7 @@ export default function EventList() {
                 </Button>,
                 <div className="flex w-full border-b">
                     <input
+                        disabled={canEdit}
                         value={item.winnerCount}
                         onChange={(e) =>
                             handleChangeItem("winnerCount", idx, parseInt(e.target.value) || 0)

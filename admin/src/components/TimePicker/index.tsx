@@ -2,10 +2,11 @@ import { ChangeEvent } from "react";
 
 interface TimePickerProps {
     time: string;
+    disabled?: boolean;
     onChangeTime: (time: string) => void;
 }
 
-export default function TimePicker({ time, onChangeTime }: TimePickerProps) {
+export default function TimePicker({ time, disabled = false, onChangeTime }: TimePickerProps) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChangeTime(e.target.value);
     };
@@ -31,6 +32,7 @@ export default function TimePicker({ time, onChangeTime }: TimePickerProps) {
                 <input
                     type="time"
                     id="time"
+                    disabled={disabled}
                     className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     min="09:00"
                     max="18:00"
