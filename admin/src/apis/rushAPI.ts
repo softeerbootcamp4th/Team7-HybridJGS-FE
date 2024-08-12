@@ -47,6 +47,7 @@ export const RushAPI = {
                         },
                     ],
                     isLastPage: false,
+                    totalParticipants: 10000,
                 })
             );
             const response = await fetchWithTimeout(
@@ -95,6 +96,7 @@ export const RushAPI = {
                         },
                     ],
                     isLastPage: false,
+                    totalParticipants: 10000,
                 })
             );
             const response = await fetchWithTimeout(

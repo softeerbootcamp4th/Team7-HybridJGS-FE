@@ -4,6 +4,7 @@ import {
     RushEventAction,
     RushEventDispatchType,
     RushEventStateType,
+    RushPrizeType,
 } from "@/types/rush";
 
 export const RushEventStateContext = createContext<RushEventStateType | null>(null);
@@ -11,6 +12,8 @@ export const RushEventDispatchContext = createContext<RushEventDispatchType | nu
 
 const initialState: RushEventStateType = {
     rushList: [],
+    selectOptions: [],
+    prize: {} as RushPrizeType,
 };
 
 const casperCustomReducer = (
@@ -20,7 +23,10 @@ const casperCustomReducer = (
     switch (action.type) {
         case RUSH_ACTION.SET_EVENT_LIST:
             return { ...state, rushList: action.payload };
-
+        case RUSH_ACTION.SET_OPTION:
+            return { ...state, selectOptions: action.payload };
+        case RUSH_ACTION.SET_PRIZE:
+            return { ...state, prize: action.payload };
         default:
             return state;
     }

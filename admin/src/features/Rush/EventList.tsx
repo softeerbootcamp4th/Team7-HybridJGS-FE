@@ -1,33 +1,18 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { RUSH_SECTION, RushSectionType } from "@/constants/rush";
+import { EVENT_LIST_HEADER } from "@/constants/rush";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import { RUSH_ACTION } from "@/types/rush";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 
-interface EventListProps {
-    handleSelectSection: (idx: number, section: RushSectionType) => void;
-}
+export default function EventList() {
+    const navigate = useNavigate();
 
-const EVENT_LIST_HEADER = [
-    "ID",
-    "이벤트 진행 날짜",
-    "오픈 시간",
-    "종료 시간",
-    "활성화 시간",
-    "선택지 관리",
-    "경품 관리",
-    "선착순 당첨 인원 수",
-    "진행 상태",
-    "참여자 리스트 보기",
-    "관리",
-];
-
-export default function EventList({ handleSelectSection }: EventListProps) {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
@@ -67,10 +52,10 @@ export default function EventList({ handleSelectSection }: EventListProps) {
         });
     }, []);
 
-    const handleChangeItem = (key: string, changeIdx: number, date: string) => {
+    const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === changeIdx) {
-                return { ...item, [key]: date };
+                return { ...item, [key]: text };
             }
             return { ...item };
         });
@@ -84,27 +69,47 @@ export default function EventList({ handleSelectSection }: EventListProps) {
                 item.rushEventId,
                 <DatePicker
                     date={item.eventDate}
-                    onChangeDate={(date) => handleChangeItem("event_date", idx, date)}
+                    onChangeDate={(date) => handleChangeItem("eventDate", idx, date)}
                 />,
                 <TimePicker
                     time={item.openTime}
-                    onChangeTime={(time) => handleChangeItem("open_time", idx, time)}
+                    onChangeTime={(time) => handleChangeItem("openTime", idx, time)}
                 />,
                 <TimePicker
                     time={item.closeTime}
-                    onChangeTime={(time) => handleChangeItem("close_time", idx, time)}
+                    onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
                 />,
                 getTimeDifference(item.openTime, item.closeTime),
-                <Button buttonSize="sm">선택지 관리</Button>,
-                <Button buttonSize="sm">경품 관리</Button>,
-                <div className="flex justify-between">
-                    <p>{item.winnerCount}</p>
-                    <p>편집</p>
+                <Button
+                    buttonSize="sm"
+                    onClick={() =>
+                        navigate("/rush/select-form", { state: { id: item.rushEventId } })
+                    }
+                >
+                    선택지 관리
+                </Button>,
+                <Button
+                    buttonSize="sm"
+                    onClick={() =>
+                        navigate("/rush/prize-form", { state: { id: item.rushEventId } })
+                    }
+                >
+                    경품 관리
+                </Button>,
+                <div className="flex w-full border-b">
+                    <input
+                        value={item.winnerCount}
+                        onChange={(e) =>
+                            handleChangeItem("winnerCount", idx, parseInt(e.target.value) || 0)
+                        }
+                    />
                 </div>,
                 "오픈 전",
                 <Button
                     buttonSize="sm"
-                    onClick={() => handleSelectSection(idx, RUSH_SECTION.APPLICANT_LIST)}
+                    onClick={() =>
+                        navigate("/rush/winner-list", { state: { id: item.rushEventId } })
+                    }
                 >
                     참여자 리스트 보기
                 </Button>,

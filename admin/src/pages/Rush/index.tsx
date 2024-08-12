@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import TabHeader from "@/components/TabHeader";
+import EventList from "@/features/Rush/EventList";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import { RUSH_ACTION } from "@/types/rush";
 
 export default function Rush() {
-    const navigate = useNavigate();
     const dispatch = useRushEventDispatchContext();
 
     useEffect(() => {
@@ -48,9 +47,7 @@ export default function Rush() {
         <div className="flex flex-col items-center">
             <TabHeader />
 
-            <button onClick={() => navigate("/rush/winner-list", { state: { id: 1 } })}>
-                To Go Winner List
-            </button>
+            <EventList />
         </div>
     );
 }

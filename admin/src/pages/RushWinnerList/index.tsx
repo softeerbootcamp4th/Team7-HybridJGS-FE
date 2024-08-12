@@ -26,6 +26,7 @@ export default function RushWinnerList() {
 
     const {
         data: participants,
+        totalLength: participantsLength,
         isSuccess: isSuccessGetRushParticipantList,
         fetchNextPage: getRushParticipantList,
         refetch: refetchRushParticipantList,
@@ -46,6 +47,7 @@ export default function RushWinnerList() {
     });
     const {
         data: winners,
+        totalLength: winnersLength,
         isSuccess: isSuccessGetRushWinnerList,
         fetchNextPage: getRushWinnerList,
         refetch: refetchRushWinnerList,
@@ -167,7 +169,8 @@ export default function RushWinnerList() {
                             onClick={() => navigate(-1)}
                         />
                         <p className="h-body-1-medium">
-                            선착순 참여자 리스트 {currentData.length} 명
+                            선착순 참여자 리스트{" "}
+                            {isWinnerToggle ? winnersLength : participantsLength} 명
                         </p>
                         <Button
                             buttonSize="sm"

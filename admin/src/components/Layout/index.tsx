@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import { RushEventContext } from "@/contexts/rushEventContext";
 import Header from "../Header";
 
 export default function Layout() {
@@ -7,9 +6,7 @@ export default function Layout() {
         <div className="overflow-hidden h-screen">
             <Header />
             <div className="mb-[80px]">
-                <RushEventContext>
-                    <Outlet />
-                </RushEventContext>
+                <Outlet />
             </div>
         </div>
     );

@@ -16,7 +16,7 @@ export default function LotteryWinner() {
     const [giftCount, setGiftCount] = useState<number>(0);
 
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner({ id: lotteryId }));
+        useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner());
 
     useEffect(() => {
         if (lottery.length !== 0) {

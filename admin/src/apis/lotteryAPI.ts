@@ -4,7 +4,6 @@ import {
     GetLotteryResponse,
     GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
-    PostLotteryWinnerParams,
     PostLotteryWinnerResponse,
 } from "@/types/lotteryApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
@@ -21,8 +20,10 @@ export const LotteryAPI = {
                 resolve([
                     {
                         lotteryEventId: 1,
-                        startDate: "2024-07-26 00:00",
-                        endDate: "2024-08-25 23:59",
+                        startDate: "2024-07-26",
+                        startTime: "00:00",
+                        endDate: "2024-08-25",
+                        endTime: "23:59",
                         appliedCount: 1000000,
                         winnerCount: 363,
                     },
@@ -38,10 +39,10 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async postLotteryWinner({ id }: PostLotteryWinnerParams): Promise<PostLotteryWinnerResponse> {
+    async postLotteryWinner(): Promise<PostLotteryWinnerResponse> {
         try {
             return new Promise((resolve) => resolve({ message: "요청에 성공하였습니다." }));
-            const response = await fetchWithTimeout(`${baseURL}/${id}/winner`, {
+            const response = await fetchWithTimeout(`${baseURL}/winner`, {
                 method: "POST",
                 headers: headers,
             });
@@ -84,6 +85,7 @@ export const LotteryAPI = {
                         },
                     ],
                     isLastPage: false,
+                    totalParticipants: 10000,
                 })
             );
             const response = await fetchWithTimeout(
