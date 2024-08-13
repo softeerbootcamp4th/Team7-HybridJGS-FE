@@ -28,9 +28,9 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
         fetchData: postCasper,
     } = useFetch<
         PostCasperResponse,
-        { token: string; referrerId: string; casper: CasperInformationType }
-    >(({ token, referrerId, casper }) =>
-        LotteryAPI.postCasper(token, { ...casper, [COOKIE_KEY.INVITE_USER]: referrerId })
+        { token: string; referralId: string; casper: CasperInformationType }
+    >(({ token, referralId, casper }) =>
+        LotteryAPI.postCasper(token, { ...casper, [COOKIE_KEY.INVITE_USER]: referralId })
     );
 
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
@@ -85,7 +85,7 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
 
         await postCasper({
             token: cookies[COOKIE_KEY.ACCESS_TOKEN],
-            referrerId: cookies[COOKIE_KEY.INVITE_USER],
+            referralId: cookies[COOKIE_KEY.INVITE_USER],
             casper,
         });
     };
