@@ -6,7 +6,7 @@ import {
     LotteryWinnerType,
 } from "./lottery";
 
-export type GetLotteryResponse = LotteryEventType[];
+export interface GetLotteryResponse extends LotteryEventType {}
 
 export interface PutLotteryParams {
     startDateTime: string;

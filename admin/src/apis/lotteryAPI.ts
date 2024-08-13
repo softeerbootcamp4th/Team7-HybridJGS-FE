@@ -17,24 +17,11 @@ const headers = {
 };
 
 export const LotteryAPI = {
-    async getLottery(): Promise<GetLotteryResponse> {
+    async getLottery(token: string): Promise<GetLotteryResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve([
-                    {
-                        startDate: "2024-07-26",
-                        startTime: "00:00:00",
-                        endDate: "2024-08-25",
-                        endTime: "23:59:00",
-                        appliedCount: 1000000,
-                        winnerCount: 363,
-                        status: "BEFORE",
-                    },
-                ])
-            );
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
-                headers: headers,
+                headers: { ...headers, Authorization: `Bearer ${token}` },
             });
             return response.json();
         } catch (error) {
@@ -42,7 +29,7 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async putLottery(body: PutLotteryParams): Promise<PutLotteryResponse> {
+    async putLottery(body: PutLotteryParams, token: string): Promise<PutLotteryResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -55,7 +42,7 @@ export const LotteryAPI = {
             );
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
-                headers: headers,
+                headers: { ...headers, Authorization: `Bearer ${token}` },
                 body: JSON.stringify(body),
             });
             return response.json();
@@ -64,12 +51,12 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async postLotteryWinner(): Promise<PostLotteryWinnerResponse> {
+    async postLotteryWinner(token: string): Promise<PostLotteryWinnerResponse> {
         try {
             return new Promise((resolve) => resolve({ message: "요청에 성공하였습니다." }));
             const response = await fetchWithTimeout(`${baseURL}/winner`, {
                 method: "POST",
-                headers: headers,
+                headers: { ...headers, Authorization: `Bearer ${token}` },
             });
             return response.json();
         } catch (error) {
@@ -77,11 +64,10 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async getLotteryParticipant({
-        size,
-        page,
-        phoneNumber,
-    }: GetLotteryWinnerParams): Promise<GetLotteryParticipantResponse> {
+    async getLotteryParticipant(
+        { size, page, phoneNumber }: GetLotteryWinnerParams,
+        token: string
+    ): Promise<GetLotteryParticipantResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -122,7 +108,7 @@ export const LotteryAPI = {
                 `${baseURL}/participants?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
-                    headers: headers,
+                    headers: { ...headers, Authorization: `Bearer ${token}` },
                 }
             );
             return response.json();
@@ -131,11 +117,10 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async getLotteryWinner({
-        size,
-        page,
-        phoneNumber,
-    }: GetLotteryWinnerParams): Promise<GetLotteryWinnerResponse> {
+    async getLotteryWinner(
+        { size, page, phoneNumber }: GetLotteryWinnerParams,
+        token: string
+    ): Promise<GetLotteryWinnerResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -170,7 +155,7 @@ export const LotteryAPI = {
                 `${baseURL}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
-                    headers: headers,
+                    headers: { ...headers, Authorization: `Bearer ${token}` },
                 }
             );
             return response.json();
@@ -179,9 +164,10 @@ export const LotteryAPI = {
             throw error;
         }
     },
-    async getLotteryExpectations({
-        participantId,
-    }: GetLotteryExpectationsParams): Promise<GetLotteryExpectationsResponse> {
+    async getLotteryExpectations(
+        { participantId }: GetLotteryExpectationsParams,
+        token: string
+    ): Promise<GetLotteryExpectationsResponse> {
         try {
             return new Promise((resolve) =>
                 resolve([
@@ -203,7 +189,7 @@ export const LotteryAPI = {
                 `${baseURL}/participants/${participantId}/expectations`,
                 {
                     method: "GET",
-                    headers: headers,
+                    headers: { ...headers, Authorization: `Bearer ${token}` },
                 }
             );
             return response.json();

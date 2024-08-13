@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
@@ -11,7 +11,7 @@ import { LOTTERY_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
 import useToast from "@/hooks/useToast";
 import { LotteryEventType } from "@/types/lottery";
-import { PutLotteryResponse } from "@/types/lotteryApi";
+import { GetLotteryResponse, PutLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
 
 export default function Lottery() {
@@ -19,23 +19,34 @@ export default function Lottery() {
 
     const { showToast, ToastComponent } = useToast("수정 사항이 반영되었습니다!");
 
-    const lotteryData = useLoaderData() as LotteryEventType[];
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
+    const {
+        data: lotteryEvent,
+        isSuccess: isSuccessGetLotteryEvent,
+        fetchData: getLotteryEvent,
+    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token ?? ""));
+
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PutLotteryResponse>(() =>
-            LotteryAPI.putLottery({
-                startDateTime: `${lottery.startDate} ${lottery.startTime}`,
-                endDateTime: `${lottery.endDate} ${lottery.endTime}`,
-                winnerCount: lottery.winnerCount,
-            })
+        useFetch<PutLotteryResponse>((_, token) =>
+            LotteryAPI.putLottery(
+                {
+                    startDateTime: `${lottery.startDate} ${lottery.startTime}`,
+                    endDateTime: `${lottery.endDate} ${lottery.endTime}`,
+                    winnerCount: lottery.winnerCount,
+                },
+                token ?? ""
+            )
         );
 
     useEffect(() => {
-        if (lotteryData.length !== 0) {
-            setLottery(lotteryData[0]);
-        }
+        getLotteryEvent();
     }, []);
+    useEffect(() => {
+        if (lotteryEvent && isSuccessGetLotteryEvent) {
+            setLottery(lotteryEvent);
+        }
+    }, [lotteryEvent, isSuccessGetLotteryEvent]);
     useEffect(() => {
         if (isSuccessPostLottery) {
             showToast();

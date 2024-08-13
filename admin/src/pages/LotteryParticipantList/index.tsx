@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
+import { COOKIE_KEY } from "@/constants/cookie";
 import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_PARTICIPANT_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
@@ -14,6 +16,8 @@ import { GetLotteryExpectationsResponse, GetLotteryParticipantResponse } from "@
 
 export default function LotteryParticipantList() {
     const navigate = useNavigate();
+
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
     const { handleOpenModal, ModalComponent } = useModal();
     const [selectedExpectation, setSelectedExpectation] = useState<LotteryExpectationsType[]>([]);
@@ -28,11 +32,14 @@ export default function LotteryParticipantList() {
         refetch: refetchParticipantInfo,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
-            LotteryAPI.getLotteryParticipant({
-                size: 10,
-                page: pageParam,
-                phoneNumber: phoneNumberRef.current,
-            }),
+            LotteryAPI.getLotteryParticipant(
+                {
+                    size: 10,
+                    page: pageParam,
+                    phoneNumber: phoneNumberRef.current,
+                },
+                cookies[COOKIE_KEY.ACCESS_TOKEN]
+            ),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryParticipantResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
@@ -43,10 +50,13 @@ export default function LotteryParticipantList() {
         data: expectation,
         isSuccess: isSuccessGetLotteryExpectation,
         fetchData: getLotteryExpectation,
-    } = useFetch<GetLotteryExpectationsResponse, number>((participantId: number) =>
-        LotteryAPI.getLotteryExpectations({
-            participantId: participantId,
-        })
+    } = useFetch<GetLotteryExpectationsResponse, number>((participantId: number, token) =>
+        LotteryAPI.getLotteryExpectations(
+            {
+                participantId: participantId,
+            },
+            token ?? ""
+        )
     );
 
     const tableContainerRef = useRef<HTMLDivElement>(null);
