@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ImageAPI } from "@/apis/imageAPI";
 import Button from "@/components/Button";
 import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
@@ -21,6 +22,7 @@ export default function RushPrizeForm() {
     const { showToast, ToastComponent } = useToast("입력한 내용이 임시 저장되었습니다!");
 
     const [prizeState, setPrizeState] = useState<RushPrizeType>({} as RushPrizeType);
+    const [selectedFile, setSelectedFile] = useState<File | string | null>(null);
 
     useEffect(() => {
         if (rushIdx !== undefined) {
@@ -28,13 +30,24 @@ export default function RushPrizeForm() {
                 prizeImageUrl: rushList[rushIdx].prizeImageUrl,
                 prizeDescription: rushList[rushIdx].prizeDescription,
             });
+            setSelectedFile(rushList[rushIdx].prizeImageUrl);
         }
     }, [rushList]);
 
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
+        let currentPrize = { ...prizeState };
+        if (selectedFile instanceof File) {
+            const formData = new FormData();
+            formData.append("image", selectedFile);
+            const image = await ImageAPI.postImage(formData);
+            currentPrize = { ...currentPrize, prizeImageUrl: image.imageUrl };
+        } else if (typeof selectedFile === "string") {
+            currentPrize = { ...currentPrize, prizeImageUrl: selectedFile };
+        }
+
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === rushIdx) {
-                return { ...item, ...prizeState };
+                return { ...item, ...currentPrize };
             }
             return { ...item };
         });
@@ -51,8 +64,8 @@ export default function RushPrizeForm() {
         [
             "이미지",
             <FileInput
-                selectedFile={prizeState.prizeImageUrl}
-                setSelectedFile={(file) => setPrizeState({ ...prizeState, prizeImageUrl: file })}
+                selectedFile={selectedFile}
+                setSelectedFile={(file) => setSelectedFile(file)}
             />,
         ],
         [

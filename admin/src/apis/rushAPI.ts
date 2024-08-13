@@ -5,6 +5,7 @@ import {
     GetRushParticipantListParams,
     GetRushParticipantListResponse,
     GetRushWinnerListParams,
+    PutRushEventParams,
     PutRushEventResponse,
 } from "@/types/rushApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
@@ -27,18 +28,13 @@ export const RushAPI = {
             throw error;
         }
     },
-    async putRush(body: FormData[], token: string): Promise<PutRushEventResponse> {
+    async putRush(body: PutRushEventParams, token: string): Promise<PutRushEventResponse> {
         try {
-            body.forEach((b) => {
-                for (let pair of b.entries()) {
-                    console.log(pair[0] + ": " + pair[1]);
-                }
-            });
             return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    ...headers,
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(body),

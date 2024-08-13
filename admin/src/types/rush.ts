@@ -9,7 +9,7 @@ export interface RushEventType {
     startTime: string;
     endTime: string;
     winnerCount: number;
-    prizeImageUrl: File | string;
+    prizeImageUrl: string;
     prizeDescription: string;
     status: RushEventStatusType;
     options: RushOptionType[];
@@ -23,12 +23,12 @@ export interface RushOptionType {
     subText: string;
     resultMainText: string;
     resultSubText: string;
-    imageUrl: File | string;
+    imageUrl: string;
     position: RushOptionPositionType;
 }
 
 export interface RushPrizeType {
-    prizeImageUrl: File | string;
+    prizeImageUrl: string;
     prizeDescription: string;
 }
 
@@ -39,6 +39,8 @@ export interface RushEventStateType {
 export const RUSH_ACTION = {
     SET_EVENT_LIST: "SET_EVENT_LIST",
 } as const;
+
+export type ImageType = { imgName: string; imgFile: File };
 
 export type RushEventAction = {
     type: typeof RUSH_ACTION.SET_EVENT_LIST;

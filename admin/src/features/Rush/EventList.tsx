@@ -24,7 +24,7 @@ export default function EventList() {
     const dispatch = useRushEventDispatchContext();
 
     const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(
-        (_, token) => RushAPI.putRush(getFormData(), token ?? "")
+        (_, token) => RushAPI.putRush(rushList, token ?? "")
     );
 
     useEffect(() => {
@@ -32,24 +32,6 @@ export default function EventList() {
             showToast();
         }
     }, [isSuccessPutRush]);
-
-    const getFormData = () => {
-        return rushList.map((rush) => {
-            const formData = new FormData();
-            Object.entries(rush).forEach(([key, value]) => {
-                if (Array.isArray(value)) {
-                    value.forEach((item, index) => {
-                        Object.entries(item).forEach(([subKey, subValue]) => {
-                            formData.append(`${key}[${index}][${subKey}]`, subValue as Blob);
-                        });
-                    });
-                } else {
-                    formData.append(key, value.toString());
-                }
-            });
-            return formData;
-        });
-    };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ImageAPI } from "@/apis/imageAPI";
 import Button from "@/components/Button";
 import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
@@ -21,19 +22,48 @@ export default function RushSelectForm() {
     const { showToast, ToastComponent } = useToast("입력한 내용이 임시 저장되었습니다!");
 
     const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
+    const [selectedFiles, setSelectedFiles] = useState<(File | string | null)[]>([]);
 
     useEffect(() => {
         if (rushIdx !== undefined) {
             setSelectOptionState(rushList[rushIdx].options);
+
+            const optionFiles = rushList[rushIdx].options.map((option) => option.imageUrl);
+            setSelectedFiles(optionFiles);
         }
     }, [rushList]);
 
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
+        // 이미지 URL 받아오기
+        const results = await Promise.allSettled(
+            selectedFiles.map((file) => {
+                if (!(file instanceof File)) {
+                    return;
+                }
+                const formData = new FormData();
+                formData.append("image", file);
+                return ImageAPI.postImage(formData);
+            })
+        );
+
+        const processedResults = results.map((result) =>
+            result.status === "fulfilled" ? result.value : null
+        );
+
+        // Image URL 객체에 반영
+        const updatedOptions = selectOptionState.map((option, idx) => {
+            const currentOption = rushList[rushIdx].options;
+            return {
+                ...option,
+                imageUrl: processedResults[idx]?.imageUrl ?? currentOption[idx].imageUrl,
+            };
+        });
+
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === rushIdx) {
                 return {
                     ...item,
-                    options: selectOptionState,
+                    options: updatedOptions,
                 };
             }
             return { ...item };
@@ -56,6 +86,16 @@ export default function RushSelectForm() {
         });
 
         setSelectOptionState(updatedItem);
+    };
+
+    const handleSelectFile = (file: File, idx: number) => {
+        const currentFiles = selectedFiles.map((currentFile, currentIdx) => {
+            if (currentIdx === idx) {
+                return file;
+            }
+            return currentFile;
+        });
+        setSelectedFiles(currentFiles);
     };
 
     const getSelectOption = (idx: number) => {
@@ -85,8 +125,8 @@ export default function RushSelectForm() {
                 [
                     "이미지",
                     <FileInput
-                        selectedFile={selectOptionState[idx].imageUrl}
-                        setSelectedFile={(file) => handleChangeItem("imageUrl", idx, file)}
+                        selectedFile={selectedFiles[idx]}
+                        setSelectedFile={(file) => handleSelectFile(file, idx)}
                     />,
                 ],
                 [
