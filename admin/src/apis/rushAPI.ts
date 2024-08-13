@@ -15,93 +15,11 @@ const headers = {
 };
 
 export const RushAPI = {
-    async getRush(): Promise<GetRushEventResponse> {
+    async getRush(token: string): Promise<GetRushEventResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve([
-                    {
-                        rushEventId: 1,
-                        eventDate: "2024-07-25",
-                        openTime: "20:00:00",
-                        closeTime: "20:10:00",
-                        winnerCount: 315,
-                        prizeImageUrl: "prize1.png",
-                        prizeDescription: "스타벅스 1만원 기프트카드",
-                        status: "BEFORE",
-                        leftOption: {
-                            rushOptionId: 1,
-                            mainText: "첫 차로 저렴한 차 사기",
-                            subText: "첫 차는 가성비가 짱이지!",
-                            resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
-                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
-                        },
-                        rightOption: {
-                            rushOptionId: 2,
-                            mainText: "첫 차로 성능 좋은 차 사기",
-                            subText: "차는 당연히 성능이지!",
-                            resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
-                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "https://cdn-icons-png.flaticon.com/512/846/846551.png",
-                        },
-                    },
-                    {
-                        rushEventId: 2,
-                        eventDate: "2024-07-26",
-                        openTime: "20:00:00",
-                        closeTime: "20:10:00",
-                        winnerCount: 315,
-                        prizeImageUrl: "prize2.png",
-                        prizeDescription: "올리브영 1만원 기프트카드",
-                        status: "DURING",
-                        leftOption: {
-                            rushOptionId: 1,
-                            mainText: "첫 차로 저렴한 차 사기",
-                            subText: "첫 차는 가성비가 짱이지!",
-                            resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
-                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
-                        },
-                        rightOption: {
-                            rushOptionId: 2,
-                            mainText: "첫 차로 성능 좋은 차 사기",
-                            subText: "차는 당연히 성능이지!",
-                            resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
-                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "https://cdn-icons-png.flaticon.com/512/846/846551.png",
-                        },
-                    },
-                    {
-                        rushEventId: 3,
-                        eventDate: "2024-07-27",
-                        openTime: "20:00:00",
-                        closeTime: "20:10:00",
-                        winnerCount: 315,
-                        prizeImageUrl: "prize3.png",
-                        prizeDescription: "배달의 민족 1만원 기프트카드",
-                        status: "AFTER",
-                        leftOption: {
-                            rushOptionId: 1,
-                            mainText: "첫 차로 저렴한 차 사기",
-                            subText: "첫 차는 가성비가 짱이지!",
-                            resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
-                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
-                        },
-                        rightOption: {
-                            rushOptionId: 2,
-                            mainText: "첫 차로 성능 좋은 차 사기",
-                            subText: "차는 당연히 성능이지!",
-                            resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
-                            resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                            imageUrl: "https://cdn-icons-png.flaticon.com/512/846/846551.png",
-                        },
-                    },
-                ])
-            );
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
-                headers: headers,
+                headers: { ...headers, Authorization: `Bearer ${token}` },
             });
             return response.json();
         } catch (error) {
@@ -109,7 +27,7 @@ export const RushAPI = {
             throw error;
         }
     },
-    async putRush(body: FormData[]): Promise<PutRushEventResponse> {
+    async putRush(body: FormData[], token: string): Promise<PutRushEventResponse> {
         try {
             body.forEach((b) => {
                 for (let pair of b.entries()) {
@@ -119,7 +37,10 @@ export const RushAPI = {
             return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
                 body: JSON.stringify(body),
             });
             return response.json();
@@ -128,13 +49,10 @@ export const RushAPI = {
             throw error;
         }
     },
-    async getRushParticipantList({
-        id,
-        phoneNumber,
-        size,
-        page,
-        option,
-    }: GetRushParticipantListParams): Promise<GetRushParticipantListResponse> {
+    async getRushParticipantList(
+        { id, phoneNumber, size, page, option }: GetRushParticipantListParams,
+        token: string
+    ): Promise<GetRushParticipantListResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -169,7 +87,7 @@ export const RushAPI = {
                 `${baseURL}/${id}/participants?number=${phoneNumber}&size=${size}&page=${page}&option=${option}`,
                 {
                     method: "GET",
-                    headers: headers,
+                    headers: { ...headers, Authorization: `Bearer ${token}` },
                 }
             );
             return response.json();
@@ -178,12 +96,10 @@ export const RushAPI = {
             throw error;
         }
     },
-    async getRushWinnerList({
-        id,
-        phoneNumber,
-        size,
-        page,
-    }: GetRushWinnerListParams): Promise<GetRushParticipantListResponse> {
+    async getRushWinnerList(
+        { id, phoneNumber, size, page }: GetRushWinnerListParams,
+        token: string
+    ): Promise<GetRushParticipantListResponse> {
         try {
             return new Promise((resolve) =>
                 resolve({
@@ -218,7 +134,7 @@ export const RushAPI = {
                 `${baseURL}/${id}/participants?number=${phoneNumber}&size=${size}&page=${page}`,
                 {
                     method: "GET",
-                    headers: headers,
+                    headers: { ...headers, Authorization: `Bearer ${token}` },
                 }
             );
             return response.json();
@@ -227,31 +143,36 @@ export const RushAPI = {
             throw error;
         }
     },
-    async getRushOptions({ id }: GetRushOptionsParams): Promise<GetRushOptionsResponse> {
+    async getRushOptions(
+        { id }: GetRushOptionsParams,
+        token: string
+    ): Promise<GetRushOptionsResponse> {
         try {
             return new Promise((resolve) =>
                 resolve([
                     {
-                        rushOptionId: 1,
+                        optionId: 1,
                         mainText: "첫 차로 저렴한 차 사기",
                         subText: " 첫 차는 가성비가 짱이지!",
                         resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
                         resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
                         imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
+                        position: "LEFT",
                     },
                     {
-                        rushOptionId: 2,
+                        optionId: 2,
                         mainText: "첫 차로 성능 좋은 차 사기",
                         subText: " 차는 당연히 성능이지!",
                         resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
                         resultSubText: "전기차 평균보다 훨씨니 저렴한 캐스퍼 일렉트릭!",
                         imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
+                        position: "RIGHT",
                     },
                 ])
             );
             const response = await fetchWithTimeout(`${baseURL}/${id}/options`, {
                 method: "GET",
-                headers: headers,
+                headers: { ...headers, Authorization: `Bearer ${token}` },
             });
             return response.json();
         } catch (error) {

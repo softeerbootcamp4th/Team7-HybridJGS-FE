@@ -23,8 +23,8 @@ export default function EventList() {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
-    const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(() =>
-        RushAPI.putRush(getFormData())
+    const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(
+        (_, token) => RushAPI.putRush(getFormData(), token ?? "")
     );
 
     useEffect(() => {
@@ -76,15 +76,15 @@ export default function EventList() {
                 />,
                 <TimePicker
                     disabled={canEdit}
-                    time={item.openTime}
-                    onChangeTime={(time) => handleChangeItem("openTime", idx, time)}
+                    time={item.startTime}
+                    onChangeTime={(time) => handleChangeItem("startTime", idx, time)}
                 />,
                 <TimePicker
                     disabled={canEdit}
-                    time={item.closeTime}
-                    onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
+                    time={item.endTime}
+                    onChangeTime={(time) => handleChangeItem("endTime", idx, time)}
                 />,
-                getTimeDifference(item.openTime, item.closeTime),
+                getTimeDifference(item.startTime, item.endTime),
                 <Button
                     disabled={canEdit}
                     buttonSize="sm"

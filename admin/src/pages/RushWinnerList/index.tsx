@@ -1,19 +1,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { RushOptionType } from "@/types/rush";
 import { GetRushOptionsResponse, GetRushParticipantListResponse } from "@/types/rushApi";
+import { sortRushOptions } from "@/utils/rush/sortRushOptions";
 
 export default function RushWinnerList() {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
     const rushId = location.state.id;
 
@@ -32,13 +37,16 @@ export default function RushWinnerList() {
         refetch: refetchRushParticipantList,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
-            RushAPI.getRushParticipantList({
-                id: rushId,
-                size: 10,
-                page: pageParam,
-                option: options[selectedOptionIdx].rushOptionId,
-                phoneNumber: phoneNumberRef.current,
-            }),
+            RushAPI.getRushParticipantList(
+                {
+                    id: rushId,
+                    size: 10,
+                    page: pageParam,
+                    option: options[selectedOptionIdx].optionId,
+                    phoneNumber: phoneNumberRef.current,
+                },
+                cookies[COOKIE_KEY.ACCESS_TOKEN]
+            ),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
@@ -53,12 +61,15 @@ export default function RushWinnerList() {
         refetch: refetchRushWinnerList,
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
-            RushAPI.getRushWinnerList({
-                id: rushId,
-                size: 10,
-                page: pageParam,
-                phoneNumber: phoneNumberRef.current,
-            }),
+            RushAPI.getRushWinnerList(
+                {
+                    id: rushId,
+                    size: 10,
+                    page: pageParam,
+                    phoneNumber: phoneNumberRef.current,
+                },
+                cookies[COOKIE_KEY.ACCESS_TOKEN]
+            ),
         initialPageParam: 1,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
@@ -69,7 +80,9 @@ export default function RushWinnerList() {
         data: rushOptions,
         isSuccess: isSuccessGetRushOptions,
         fetchData: getRushOptions,
-    } = useFetch<GetRushOptionsResponse>(() => RushAPI.getRushOptions({ id: rushId }));
+    } = useFetch<GetRushOptionsResponse>((_, token) =>
+        RushAPI.getRushOptions({ id: rushId }, token ?? "")
+    );
 
     const currentData = isWinnerToggle ? winners : participants;
 
@@ -119,7 +132,10 @@ export default function RushWinnerList() {
     };
 
     const optionTitleList = useMemo(
-        () => options.map((option) => `옵션 ${option.rushOptionId} : ${option.mainText}`),
+        () =>
+            options
+                .sort(sortRushOptions)
+                .map((option) => `옵션 ${option.optionId} : ${option.mainText}`),
         [options]
     );
     const participantHeader = useMemo(

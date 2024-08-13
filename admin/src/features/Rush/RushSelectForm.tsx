@@ -24,7 +24,7 @@ export default function RushSelectForm() {
 
     useEffect(() => {
         if (rushIdx !== undefined) {
-            setSelectOptionState([rushList[rushIdx].leftOption, rushList[rushIdx].rightOption]);
+            setSelectOptionState(rushList[rushIdx].options);
         }
     }, [rushList]);
 
