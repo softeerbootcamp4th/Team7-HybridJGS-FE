@@ -45,7 +45,7 @@ export default function useInfiniteFetch<T>({
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
 
-            setData([...data, ...lastPage.participants]);
+            setData([...data, ...lastPage.participantsList]);
             setCurrentPageParam(nextPageParam);
             setHasNextPage(nextPageParam !== undefined);
             setTotalLength(lastPage.totalParticipants);

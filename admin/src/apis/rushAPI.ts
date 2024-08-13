@@ -54,35 +54,6 @@ export const RushAPI = {
         token: string
     ): Promise<GetRushParticipantListResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve({
-                    participants: [
-                        {
-                            id: 1,
-                            phoneNumber: "010-1111-2222",
-                            balanceGameChoice: option,
-                            createdAt: "2024-07-25 20:00:123",
-                            rank: 1,
-                        },
-                        {
-                            id: 3,
-                            phoneNumber: "010-1111-2222",
-                            balanceGameChoice: option,
-                            createdAt: "2024-07-25 20:00:125",
-                            rank: 2,
-                        },
-                        {
-                            id: 4,
-                            phoneNumber: "010-1111-2222",
-                            balanceGameChoice: option,
-                            createdAt: "2024-07-25 20:00:127",
-                            rank: 3,
-                        },
-                    ],
-                    isLastPage: false,
-                    totalParticipants: 10000,
-                })
-            );
             const response = await fetchWithTimeout(
                 `${baseURL}/${id}/participants?number=${phoneNumber}&size=${size}&page=${page}&option=${option}`,
                 {
@@ -103,7 +74,7 @@ export const RushAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    participants: [
+                    participantsList: [
                         {
                             id: 1,
                             phoneNumber: "010-3843-6999",
