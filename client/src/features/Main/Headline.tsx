@@ -41,9 +41,9 @@ export function Headline({ id }: SectionKeyProps) {
                     className="w-[667px] h-[300px] mt-10"
                 />
                 <p className="h-heading-3-medium text-n-white pb-28">
-                    {startDateTime && endDateTime
-                        ? formatEventDateRangeWithDot(startDateTime, endDateTime)
-                        : ""}
+                    {startDateTime &&
+                        endDateTime &&
+                        formatEventDateRangeWithDot(startDateTime, endDateTime)}
                 </p>
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>

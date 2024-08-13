@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { CARD_COLOR, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameCard/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameCard/RushCardResultDescription.tsx";
 import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
+import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
@@ -19,11 +18,7 @@ interface SelectedCardChangeProps {
 function SelectedCardDescription({ onClick }: SelectedCardChangeProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
-            <RushCardResultDescription
-                color={CARD_COLOR.RED}
-                day={CARD_DAYS.DAY4}
-                cardType={CARD_TYPE.LEFT_OPTIONS}
-            />
+            <RushCardResultDescription />
             <div className="absolute flex items-center justify-center top-1/2 right-[-150px]">
                 <button
                     className="flex flex-col gap-1 justify-center items-center text-center cursor-pointer"
@@ -59,11 +54,7 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardChangeProps) {
 }
 
 export default function SelectedCard({ countdown }: SelectedCardProps) {
-    const [isDescriptionVisible, setIsDescriptionVisible] = useState(true);
-
-    const handleChangeCardResult = () => {
-        setIsDescriptionVisible((prev) => !prev);
-    };
+    const { toggleContents, toggle } = useToggleContents();
 
     return (
         <motion.div
@@ -71,10 +62,10 @@ export default function SelectedCard({ countdown }: SelectedCardProps) {
             {...SCROLL_MOTION(ASCEND)}
         >
             <RushCountdown countdown={countdown} />
-            {isDescriptionVisible ? (
-                <SelectedCardDescription onClick={handleChangeCardResult} />
+            {toggleContents ? (
+                <SelectedCardDescription onClick={toggle} />
             ) : (
-                <SelectedCardCurrentRatio onClick={handleChangeCardResult} />
+                <SelectedCardCurrentRatio onClick={toggle} />
             )}
         </motion.div>
     );

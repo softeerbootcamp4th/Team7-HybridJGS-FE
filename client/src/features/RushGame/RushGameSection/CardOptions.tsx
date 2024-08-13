@@ -2,14 +2,14 @@ import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardComparison from "@/features/RushGame/RushGameCard/RushCardComparison.tsx";
 import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
-import useTimer from "@/hooks/useTimer.ts";
+import useToggleContents from "@/hooks/useToggleContents.ts";
 
 interface CardOptionsProps {
     countdown: number;
 }
 
 export default function CardOptions({ countdown }: CardOptionsProps) {
-    const { toggleContents } = useTimer();
+    const { toggleContents } = useToggleContents(true, 5000);
 
     return (
         <motion.div

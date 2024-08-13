@@ -4,7 +4,7 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
-import useTimer from "@/hooks/useTimer.ts";
+import useToggleContents from "@/hooks/useToggleContents.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
 
 const TOOLTIP_CONTENT = () => (
@@ -34,7 +34,7 @@ export default function RushCardCurrentRatio() {
     const [rightOptionRatio, setRightOptionRatio] = useState<number>(0);
     const [message, setMessage] = useState<string>(MESSAGES.WINNING);
     const [optionId, setOptionId] = useState<number | null>(null);
-    const { toggleContents } = useTimer();
+    const { toggleContents } = useToggleContents(true, 5000);
 
     const fetchRushBalance = async () => {
         try {
