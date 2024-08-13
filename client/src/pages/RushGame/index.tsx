@@ -56,6 +56,8 @@ export default function RushGame() {
 
     // const preCountdown = useCountdown(initialPreCountdown || 0);
     // const runCountdown = useCountdown(initialRunCountdown || 0);
+
+    // TEST CODE
     const preCountdown = useCountdown(3 || 0);
     const runCountdown = useCountdown(3 || 0);
 
@@ -81,8 +83,6 @@ export default function RushGame() {
             case "EVENT_RUNNING":
                 if (!gameState.userParticipatedStatus) {
                     return <CardOptions countdown={runCountdown} />;
-                    // return <SelectedCard countdown={runCountdown} />;
-                    // return <FinalResult />;
                 } else {
                     return <SelectedCard countdown={runCountdown} />;
                 }

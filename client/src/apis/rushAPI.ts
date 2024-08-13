@@ -111,4 +111,20 @@ export const RushAPI = {
             throw error;
         }
     },
+    async getRushTodayEventTest(token: string): Promise<PostSelectedRushCardOptionResponse> {
+        try {
+            const response = await fetch(`${baseURL}/today/test`, {
+                method: "GET",
+                headers: { ...headers, Authorization: `Bearer ${token}` },
+            });
+            if (response.status === 204 || response.status === 404) {
+                return response.status;
+            }
+
+            throw new Error(`Unexpected response status: ${response.status}`);
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
 };
