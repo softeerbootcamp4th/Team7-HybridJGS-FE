@@ -90,9 +90,9 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     const runCountdown = useCountdown(initialRunCountdown || 0);
 
     useEffect(() => {
-        if (preCountdown < 0 && gameState.phase === "NOT_STARTED") {
+        if (preCountdown <= 0 && gameState.phase === "NOT_STARTED") {
             setGamePhase("IN_PROGRESS");
-        } else if (runCountdown < 0 && gameState.phase === "IN_PROGRESS") {
+        } else if (runCountdown <= 0 && gameState.phase === "IN_PROGRESS") {
             setGamePhase("COMPLETED");
         }
     }, [preCountdown, runCountdown]);
