@@ -111,6 +111,11 @@ export const RushAPI = {
     },
     async putRush(body: FormData[]): Promise<PutRushEventResponse> {
         try {
+            body.forEach((b) => {
+                for (let pair of b.entries()) {
+                    console.log(pair[0] + ": " + pair[1]);
+                }
+            });
             return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
