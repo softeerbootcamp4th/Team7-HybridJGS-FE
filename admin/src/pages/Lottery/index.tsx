@@ -31,8 +31,10 @@ export default function Lottery() {
         useFetch<PutLotteryResponse>((_, token) =>
             LotteryAPI.putLottery(
                 {
-                    startDateTime: `${lottery.startDate} ${lottery.startTime}`,
-                    endDateTime: `${lottery.endDate} ${lottery.endTime}`,
+                    startDate: lottery.startDate,
+                    startTime: lottery.startTime,
+                    endDate: lottery.endDate,
+                    endTime: lottery.endTime,
                     winnerCount: lottery.winnerCount,
                 },
                 token ?? ""

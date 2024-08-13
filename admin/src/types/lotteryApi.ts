@@ -6,21 +6,17 @@ import {
     LotteryWinnerType,
 } from "./lottery";
 
-export interface GetLotteryResponse extends LotteryEventType {}
+export type GetLotteryResponse = LotteryEventType;
 
-export interface PutLotteryParams {
-    startDateTime: string;
-    endDateTime: string;
-    winnerCount: number;
-}
+export type PutLotteryParams = Pick<
+    LotteryEventType,
+    "startDate" | "startTime" | "endDate" | "endTime" | "winnerCount"
+>;
 
-export interface PutLotteryResponse {
-    startDate: string;
-    startTime: string;
-    endDate: string;
-    endTime: string;
-    winnerCount: number;
-}
+export type PutLotteryResponse = Pick<
+    LotteryEventType,
+    "startDate" | "startTime" | "endDate" | "endTime" | "winnerCount"
+>;
 
 export interface PostLotteryWinnerResponse {
     message: string;
