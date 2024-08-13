@@ -6,13 +6,14 @@ import { CARD_COLORS, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts"
 import RushCard from "@/features/RushGame/RushGameCard/RushCard.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetTodayRushEventResponse } from "@/types/rushApi.ts";
+import { CardOption } from "@/types/rushGame.ts";
 
 const TEMP_CURRENT_DAY: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
 
 export default function RushCardComparison() {
     const [todayRushEventData, setTodayRushEventData] = useState<GetTodayRushEventResponse>();
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const { setUserParticipationStatus } = useRushGameContext();
+    const { updateUserStatusAndSelectedOption } = useRushGameContext();
 
     useEffect(() => {
         (async () => {
@@ -36,7 +37,7 @@ export default function RushCardComparison() {
         rightOption: { mainText: rightOptionMainText = "", subText: rightOptionSubText = "" } = {},
     } = todayRushEventData || {};
 
-    const handleCardSelection = async (optionId: number) => {
+    const handleCardSelection = async (optionId: CardOption) => {
         try {
             const response = await RushAPI.postSelectedRushOptionApply(
                 cookies[COOKIE_TOKEN_KEY],
@@ -44,10 +45,7 @@ export default function RushCardComparison() {
             );
 
             if (response === 204) {
-                const userParticipatedStatus = await RushAPI.getRushUserParticipationStatus(
-                    cookies[COOKIE_TOKEN_KEY]
-                );
-                setUserParticipationStatus(userParticipatedStatus);
+                await updateUserStatusAndSelectedOption(cookies[COOKIE_TOKEN_KEY], optionId);
             } else if (response === 404) {
                 console.log(`Error ${response}`);
             }

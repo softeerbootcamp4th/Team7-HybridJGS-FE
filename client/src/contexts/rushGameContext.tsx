@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useCallback, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_COLOR, CARD_TYPE } from "@/constants/Rush/rushCard";
 import useCountdown from "@/hooks/useCountdown.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
@@ -86,8 +87,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [rushData, gameState.phase]);
 
-    const preCountdown = useCountdown(initialPreCountdown || 0);
-    const runCountdown = useCountdown(initialRunCountdown || 0);
+    const preCountdown = useCountdown(initialPreCountdown || 3);
+    const runCountdown = useCountdown(initialRunCountdown || 5000);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === "NOT_STARTED") {
@@ -97,20 +98,22 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [preCountdown, runCountdown]);
 
-    // TODO: POST 후 사용자 참여 상태 업데이트 및 진행 상태 수정
-    // const userParticipatedStatus = await RushAPI.getRushUserParticipationStatus(
-    //     cookies[COOKIE_TOKEN_KEY]
-    // );
-    // setUserParticipationStatus(userParticipatedStatus);
+    // console.log(gameState.userParticipatedStatus);
 
-    // useEffect(() => {
-    //     if (gameState.userParticipatedStatus) {
-    //         setGameState((prev) => ({
-    //             ...prev,
-    //             phase: "IN_PROGRESS",
-    //         }));
-    //     }
-    // }, [gameState.userParticipatedStatus, setGameState]);
+    const updateUserStatusAndSelectedOption = useCallback(
+        async (token: string, selectedOption: CardOption) => {
+            try {
+                const userParticipatedStatus = await RushAPI.getRushUserParticipationStatus(token);
+                setUserParticipationStatus(userParticipatedStatus);
+                if (userParticipatedStatus) {
+                    setUserSelectedOption(selectedOption);
+                }
+            } catch (error) {
+                console.error("Error: ", error);
+            }
+        },
+        []
+    );
 
     return (
         <RushGameContext.Provider
@@ -122,6 +125,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
                 setUserParticipationStatus,
                 setUserSelectedOption,
                 updateCardOption,
+                updateUserStatusAndSelectedOption,
             }}
         >
             {children}

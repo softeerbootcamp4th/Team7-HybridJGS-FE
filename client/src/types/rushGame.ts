@@ -11,6 +11,7 @@ export interface CardOptionState {
     selectionCount: number;
 }
 
+// TODO: 추후 밖에서 안쓰는 함수들 제거
 export interface RushGameContextType {
     gameState: {
         phase: GamePhase;
@@ -26,4 +27,5 @@ export interface RushGameContextType {
     setUserParticipationStatus: (status: boolean) => void;
     setUserSelectedOption: (option: CardOption | null) => void;
     updateCardOption: (option: CardOption, updates: Partial<CardOptionState>) => void;
+    updateUserStatusAndSelectedOption: (token: string, selectedOption: CardOption) => Promise<void>;
 }

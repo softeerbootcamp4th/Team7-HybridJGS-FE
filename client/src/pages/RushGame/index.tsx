@@ -12,7 +12,7 @@ export default function RushGame() {
     const { gameState } = useRushGameContext();
 
     const renderRushGameContent = () => {
-        console.log(gameState.phase);
+        // console.log(gameState.phase);
         switch (gameState.phase) {
             case "NOT_STARTED":
                 return <Countdown />;
