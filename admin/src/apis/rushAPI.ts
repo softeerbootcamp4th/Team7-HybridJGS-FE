@@ -114,6 +114,7 @@ export const RushAPI = {
             return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
+                headers: { "Content-Type": "multipart/form-data" },
                 body: JSON.stringify(body),
             });
             return response.json();
