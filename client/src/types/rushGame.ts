@@ -26,6 +26,6 @@ export interface RushGameContextType {
     setGamePhase: (phase: GamePhase) => void;
     setUserParticipationStatus: (status: boolean) => void;
     setUserSelectedOption: (option: CardOption | null) => void;
-    updateCardOption: (option: CardOption, updates: Partial<CardOptionState>) => void;
+    updateCardOptions: (option: CardOption, updates: Partial<CardOptionState>) => void;
     updateUserStatusAndSelectedOption: (token: string, selectedOption: CardOption) => Promise<void>;
 }

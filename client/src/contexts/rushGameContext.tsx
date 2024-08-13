@@ -45,7 +45,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         setGameState((prevState) => ({ ...prevState, userSelectedOption: option }));
     }, []);
 
-    const updateCardOption = useCallback(
+    const updateCardOptions = useCallback(
         (option: CardOption, updates: Partial<CardOptionState>) => {
             setGameState((prevState) => ({
                 ...prevState,
@@ -87,6 +87,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [rushData, gameState.phase]);
 
+    // FIX: runCountdown이 preCountdown이 카운트다운될 때부터 같이 카운트다운 되고 있는 현상
+    // 이건 12시 지나고 다시 확인해볼 것 (어차피 서버에서 받아오는 시간을 사용하기 때문에 문제는 없을듯)
     const preCountdown = useCountdown(initialPreCountdown || 3);
     const runCountdown = useCountdown(initialRunCountdown || 5000);
 
@@ -98,7 +100,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [preCountdown, runCountdown]);
 
-    // console.log(gameState.userParticipatedStatus);
+    // console.log(gameState.cardOptions);
 
     const updateUserStatusAndSelectedOption = useCallback(
         async (token: string, selectedOption: CardOption) => {
@@ -124,7 +126,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
                 setGamePhase,
                 setUserParticipationStatus,
                 setUserSelectedOption,
-                updateCardOption,
+                updateCardOptions,
                 updateUserStatusAndSelectedOption,
             }}
         >
