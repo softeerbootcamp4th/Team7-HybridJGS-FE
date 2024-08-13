@@ -3,12 +3,12 @@ export async function fetchWithTimeout(url: string, options: RequestInit = {}, t
     const id = setTimeout(() => controller.abort(), timeout);
     options.signal = controller.signal;
 
-    try {
-        const response = await fetch(url, options);
-        clearTimeout(id);
-        return response;
-    } catch (error) {
-        clearTimeout(id);
-        throw error;
+    const response = await fetch(url, options);
+    clearTimeout(id);
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
     }
+
+    return response;
 }

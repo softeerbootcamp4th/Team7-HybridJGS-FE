@@ -10,16 +10,12 @@ const headers = {
 export const AuthAPI = {
     async postAuth(body: PostAuthParams): Promise<PostAuthResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve({
-                    accessToken: "access token",
-                })
-            );
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "POST",
                 headers: headers,
                 body: JSON.stringify(body),
             });
+
             return response.json();
         } catch (error) {
             console.error("Error:", error);

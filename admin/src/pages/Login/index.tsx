@@ -20,19 +20,27 @@ export default function Login() {
     const {
         data: token,
         isSuccess: isSuccessPostAuth,
+        isError: isErrorPostAuth,
         fetchData: postAuth,
-    } = useFetch<PostAuthResponse>(() => AuthAPI.postAuth({ adminId: id, password }));
+    } = useFetch<PostAuthResponse>(() => AuthAPI.postAuth({ adminId: id, password }), false);
 
     const isValidButton = id.length !== 0 && password.length !== 0;
 
     useEffect(() => {
         if (isSuccessPostAuth && token) {
-            setCookie(COOKIE_KEY.ACCESS_TOKEN, token.accessToken);
+            setCookie(COOKIE_KEY.ACCESS_TOKEN, token.accessToken, { path: "/" });
 
             setErrorMessage("");
             navigate("/lottery");
         }
     }, [isSuccessPostAuth, token]);
+    useEffect(() => {
+        if (isErrorPostAuth) {
+            setErrorMessage(
+                "아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요."
+            );
+        }
+    }, [isErrorPostAuth]);
 
     const handleChangeId = (e: ChangeEvent<HTMLInputElement>) => {
         setId(e.target.value);
