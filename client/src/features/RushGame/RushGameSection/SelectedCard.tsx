@@ -58,7 +58,7 @@ export default function SelectedCard({ countdown }: SelectedCardProps) {
 
     return (
         <motion.div
-            className="flex flex-col gap-3 justify-center items-center pt-14"
+            className="flex flex-col gap-3 justify-center items-center pt-6"
             {...SCROLL_MOTION(ASCEND)}
         >
             <RushCountdown countdown={countdown} />

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import { Background } from "@/components/Background";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";

@@ -13,7 +13,7 @@ export default function CardOptions({ countdown }: CardOptionsProps) {
 
     return (
         <motion.div
-            className="flex flex-col gap-3 justify-center items-center pt-14"
+            className="flex flex-col gap-3 justify-center items-center pt-6"
             {...SCROLL_MOTION(ASCEND)}
         >
             {toggleContents ? (

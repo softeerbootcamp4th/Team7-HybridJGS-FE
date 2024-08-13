@@ -4,9 +4,8 @@ import { useCookies } from "react-cookie";
 import { useLoaderData } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import CTAButton from "@/components/CTAButton";
-import Scroll from "@/components/Scroll";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
-import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import CardOptions from "@/features/RushGame/RushGameSection/CardOptions.tsx";
 import Countdown from "@/features/RushGame/RushGameSection/Countdown.tsx";
 import FinalResult from "@/features/RushGame/RushGameSection/FinalResult.tsx";
@@ -104,12 +103,6 @@ export default function RushGame() {
                     우리 편에 투표할 친구를 불러오세요!
                 </p>
                 <CTAButton label="이벤트 링크 공유" />
-            </motion.div>
-            <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="dark">
-                    <p className="h-body-2-bold">스크롤</p>
-                    <p>하고 캐스퍼 일렉트릭의 놀라운 성능을 알아보세요</p>
-                </Scroll>
             </motion.div>
         </section>
     );
