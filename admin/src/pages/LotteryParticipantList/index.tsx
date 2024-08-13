@@ -1,15 +1,16 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_PARTICIPANT_HEADER } from "@/constants/lottery";
+import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useModal from "@/hooks/useModal";
 import { LotteryExpectationsType } from "@/types/lottery";
-import { GetLotteryParticipantResponse } from "@/types/lotteryApi";
+import { GetLotteryExpectationsResponse, GetLotteryParticipantResponse } from "@/types/lotteryApi";
 
 export default function LotteryParticipantList() {
     const navigate = useNavigate();
@@ -38,11 +39,27 @@ export default function LotteryParticipantList() {
         },
     });
 
+    const {
+        data: expectation,
+        isSuccess: isSuccessGetLotteryExpectation,
+        fetchData: getLotteryExpectation,
+    } = useFetch<GetLotteryExpectationsResponse, number>((participantId: number) =>
+        LotteryAPI.getLotteryExpectations({
+            participantId: participantId,
+        })
+    );
+
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getParticipantInfo,
         enabled: isSuccessGetParticipant,
     });
+
+    useEffect(() => {
+        if (expectation && isSuccessGetLotteryExpectation) {
+            setSelectedExpectation(expectation);
+        }
+    }, [expectation, isSuccessGetLotteryExpectation]);
 
     const handleRefetch = () => {
         phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
@@ -55,11 +72,7 @@ export default function LotteryParticipantList() {
 
     const handleClickExpectation = async (participantId: number) => {
         handleOpenModal();
-
-        const data = await LotteryAPI.getLotteryExpectations({
-            participantId: participantId,
-        });
-        setSelectedExpectation(data);
+        getLotteryExpectation(participantId);
     };
 
     const expectations = selectedExpectation.map((participant) => [
