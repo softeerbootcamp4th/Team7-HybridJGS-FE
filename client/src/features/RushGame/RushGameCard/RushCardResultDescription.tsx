@@ -58,7 +58,7 @@ export default function RushCardResultDescription() {
             </div>
             <span className="flex flex-col justify-center items-center gap-3 w-[480px] h-[352px] rounded-800 bg-[url('/assets/main/car-2.jpg')] bg-no-repeat bg-center bg-cover text-n-white">
                 <p className="text-center">CASPER Electric</p>
-                <h2 className="h-heading-2-bold text-center max-w-78">{resultMainText}</h2>
+                <h2 className="h-heading-2-bold text-center max-w-80">{resultMainText}</h2>
                 <p className="h-body-1-bold text-center max-w-72">{resultSubText}</p>
             </span>
         </div>
