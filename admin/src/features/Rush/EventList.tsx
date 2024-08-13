@@ -37,9 +37,11 @@ export default function EventList() {
         return rushList.map((rush) => {
             const formData = new FormData();
             Object.entries(rush).forEach(([key, value]) => {
-                if (typeof value === "object") {
-                    Object.entries(value).forEach(([subKey, subValue]) => {
-                        formData.append(`${key}[${subKey}]`, subValue as Blob);
+                if (Array.isArray(value)) {
+                    value.forEach((item, index) => {
+                        Object.entries(item).forEach(([subKey, subValue]) => {
+                            formData.append(`${key}[${index}][${subKey}]`, subValue as Blob);
+                        });
                     });
                 } else {
                     formData.append(key, value.toString());

@@ -33,8 +33,7 @@ export default function RushSelectForm() {
             if (idx === rushIdx) {
                 return {
                     ...item,
-                    leftOption: selectOptionState[0],
-                    rightOption: selectOptionState[1],
+                    options: selectOptionState,
                 };
             }
             return { ...item };
