@@ -27,15 +27,7 @@ export default function FileInput({ selectedFile, setSelectedFile }: FileInputPr
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const originalFileName = file.name;
-            const fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-
-            const timestamp = Date.now();
-            const newFileName = `${originalFileName.replace(fileExtension, "")}-${timestamp}${fileExtension}`;
-
-            const renamedFile = new File([file], newFileName, { type: file.type });
-
-            setSelectedFile(renamedFile);
+            setSelectedFile(file);
         }
     };
 

@@ -14,6 +14,8 @@ export interface LotteryEventType {
 export interface LotteryExpectationsType {
     casperId: number;
     expectation: string;
+    createdDate: string;
+    createdTime: string;
 }
 
 export interface LotteryWinnerType {
