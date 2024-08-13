@@ -9,5 +9,9 @@ export const EVENT_LIST_HEADER = [
     "선착순 당첨 인원 수",
     "진행 상태",
     "참여자 리스트 보기",
-    "관리",
 ];
+
+export const QUERY_OPTION = {
+    OPTION: "option",
+    PRIZE: "prize",
+} as const;

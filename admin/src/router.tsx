@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { LotteryAPI } from "./apis/lotteryAPI";
+import { RushAPI } from "./apis/rushAPI";
 import Layout from "./components/Layout";
 import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import RushLayout from "./features/Rush/Layout";
@@ -10,8 +11,6 @@ import LotteryWinner from "./pages/LotteryWinner";
 import LotteryWinnerList from "./pages/LotteryWinnerList";
 import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
-import RushPrizeForm from "./pages/RushPrizeForm";
-import RushSelectForm from "./pages/RushSelectForm";
 import RushWinnerList from "./pages/RushWinnerList";
 
 export const router = createBrowserRouter([
@@ -38,14 +37,7 @@ export const router = createBrowserRouter([
                             {
                                 index: true,
                                 element: <Rush />,
-                            },
-                            {
-                                path: "select-form",
-                                element: <RushSelectForm />,
-                            },
-                            {
-                                path: "prize-form",
-                                element: <RushPrizeForm />,
+                                loader: RushAPI.getRush,
                             },
                             {
                                 path: "winner-list",
@@ -59,6 +51,7 @@ export const router = createBrowserRouter([
                             {
                                 index: true,
                                 element: <Lottery />,
+                                loader: LotteryAPI.getLottery,
                             },
                             {
                                 path: "winner",

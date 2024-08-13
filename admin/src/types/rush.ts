@@ -1,13 +1,18 @@
 import { Dispatch } from "react";
+import { EVENT_STATUS } from "@/constants/common";
 
+export type RushEventStatusType = (typeof EVENT_STATUS)[keyof typeof EVENT_STATUS];
 export interface RushEventType {
     rushEventId: number;
     eventDate: string;
     openTime: string;
     closeTime: string;
     winnerCount: number;
-    prizeImageUrl: string;
+    prizeImageUrl: File | string;
     prizeDescription: string;
+    status: RushEventStatusType;
+    leftOption: RushOptionType;
+    rightOption: RushOptionType;
 }
 
 export interface RushOptionType {
@@ -16,39 +21,26 @@ export interface RushOptionType {
     subText: string;
     resultMainText: string;
     resultSubText: string;
-    imageUrl: string;
+    imageUrl: File | string;
 }
 
 export interface RushPrizeType {
-    prizeImageUrl: string;
+    prizeImageUrl: File | string;
     prizeDescription: string;
 }
 
 export interface RushEventStateType {
     rushList: RushEventType[];
-    selectOptions: RushOptionType[];
-    prize: RushPrizeType;
 }
 
 export const RUSH_ACTION = {
     SET_EVENT_LIST: "SET_EVENT_LIST",
-    SET_OPTION: "SET_OPTION",
-    SET_PRIZE: "SET_PRIZE",
 } as const;
 
-export type RushEventAction =
-    | {
-          type: typeof RUSH_ACTION.SET_EVENT_LIST;
-          payload: RushEventType[];
-      }
-    | {
-          type: typeof RUSH_ACTION.SET_OPTION;
-          payload: RushOptionType[];
-      }
-    | {
-          type: typeof RUSH_ACTION.SET_PRIZE;
-          payload: RushPrizeType;
-      };
+export type RushEventAction = {
+    type: typeof RUSH_ACTION.SET_EVENT_LIST;
+    payload: RushEventType[];
+};
 
 export type RushEventDispatchType = Dispatch<RushEventAction>;
 
@@ -64,13 +56,4 @@ export interface RushParticipantType {
     balanceGameChoice: number;
     createdAt: string;
     rank: number;
-}
-
-export interface RushOptionType {
-    rushOptionId: number;
-    mainText: string;
-    subText: string;
-    resultMainText: string;
-    resultSubText: string;
-    imageUrl: string;
 }

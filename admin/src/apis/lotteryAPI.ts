@@ -6,6 +6,8 @@ import {
     GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
     PostLotteryWinnerResponse,
+    PutLotteryParams,
+    PutLotteryResponse,
 } from "@/types/lotteryApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
@@ -20,19 +22,41 @@ export const LotteryAPI = {
             return new Promise((resolve) =>
                 resolve([
                     {
-                        lotteryEventId: 1,
                         startDate: "2024-07-26",
-                        startTime: "00:00",
+                        startTime: "00:00:00",
                         endDate: "2024-08-25",
-                        endTime: "23:59",
+                        endTime: "23:59:00",
                         appliedCount: 1000000,
                         winnerCount: 363,
+                        status: "BEFORE",
                     },
                 ])
             );
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
                 headers: headers,
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async putLottery(body: PutLotteryParams): Promise<PutLotteryResponse> {
+        try {
+            return new Promise((resolve) =>
+                resolve({
+                    startDate: "2024-08-26",
+                    startTime: "00:00:00",
+                    endDate: "2024-09-25 23:59",
+                    endTime: "00:00:00",
+                    winnerCount: 363,
+                })
+            );
+            const response = await fetchWithTimeout(`${baseURL}`, {
+                method: "PUT",
+                headers: headers,
+                body: JSON.stringify(body),
             });
             return response.json();
         } catch (error) {
@@ -54,7 +78,6 @@ export const LotteryAPI = {
         }
     },
     async getLotteryParticipant({
-        id,
         size,
         page,
         phoneNumber,
@@ -62,7 +85,7 @@ export const LotteryAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    data: [
+                    participants: [
                         {
                             id: 1,
                             phoneNumber: "010-1111-2222",
@@ -96,7 +119,7 @@ export const LotteryAPI = {
                 })
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${id}/participants?size=${size}&page=${page}&number=${phoneNumber}`,
+                `${baseURL}/participants?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
                     headers: headers,
@@ -109,7 +132,6 @@ export const LotteryAPI = {
         }
     },
     async getLotteryWinner({
-        id,
         size,
         page,
         phoneNumber,
@@ -117,7 +139,7 @@ export const LotteryAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    data: [
+                    participants: [
                         {
                             id: 1,
                             phoneNumber: "010-1111-2222",
@@ -145,7 +167,7 @@ export const LotteryAPI = {
                 })
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${id}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
+                `${baseURL}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
                     method: "GET",
                     headers: headers,
@@ -158,7 +180,6 @@ export const LotteryAPI = {
         }
     },
     async getLotteryExpectations({
-        lotteryId,
         participantId,
     }: GetLotteryExpectationsParams): Promise<GetLotteryExpectationsResponse> {
         try {
@@ -179,7 +200,7 @@ export const LotteryAPI = {
                 ])
             );
             const response = await fetchWithTimeout(
-                `${baseURL}/${lotteryId}/participants/${participantId}/expectations`,
+                `${baseURL}/participants/${participantId}/expectations`,
                 {
                     method: "GET",
                     headers: headers,

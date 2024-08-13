@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import { InfiniteListData } from "@/types/common";
+import { InfiniteParticipantListData } from "@/types/common";
 
 interface UseInfiniteFetchProps<R> {
     fetch: (pageParam: number) => Promise<R>;
@@ -24,7 +24,7 @@ export default function useInfiniteFetch<T>({
     initialPageParam,
     getNextPageParam,
     startFetching = true,
-}: UseInfiniteFetchProps<InfiniteListData<T>>): InfiniteScrollData<T> {
+}: UseInfiniteFetchProps<InfiniteParticipantListData<T>>): InfiniteScrollData<T> {
     const { showBoundary } = useErrorBoundary();
 
     const [data, setData] = useState<T[]>([]);
@@ -39,11 +39,13 @@ export default function useInfiniteFetch<T>({
         if (!hasNextPage || isLoading || currentPageParam === undefined) return;
 
         setIsLoading(true);
+        setIsError(false);
+        setIsSuccess(false);
         try {
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
 
-            setData([...data, ...lastPage.data]);
+            setData([...data, ...lastPage.participants]);
             setCurrentPageParam(nextPageParam);
             setHasNextPage(nextPageParam !== undefined);
             setTotalLength(lastPage.totalParticipants);

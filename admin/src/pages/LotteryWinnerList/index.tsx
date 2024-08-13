@@ -1,21 +1,19 @@
-import { useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_WINNER_HEADER } from "@/constants/lottery";
+import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useModal from "@/hooks/useModal";
 import { LotteryExpectationsType } from "@/types/lottery";
-import { GetLotteryWinnerResponse } from "@/types/lotteryApi";
+import { GetLotteryExpectationsResponse, GetLotteryWinnerResponse } from "@/types/lotteryApi";
 
 export default function LotteryWinnerList() {
-    const location = useLocation();
     const navigate = useNavigate();
-
-    const lotteryId = location.state.id;
 
     const { handleOpenModal, ModalComponent } = useModal();
     const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
@@ -30,7 +28,6 @@ export default function LotteryWinnerList() {
     } = useInfiniteFetch({
         fetch: (pageParam: number) =>
             LotteryAPI.getLotteryWinner({
-                id: lotteryId,
                 size: 10,
                 page: pageParam,
                 phoneNumber: phoneNumberRef.current,
@@ -41,11 +38,27 @@ export default function LotteryWinnerList() {
         },
     });
 
+    const {
+        data: expectation,
+        isSuccess: isSuccessGetLotteryExpectation,
+        fetchData: getLotteryExpectation,
+    } = useFetch<GetLotteryExpectationsResponse, number>((winnerId: number) =>
+        LotteryAPI.getLotteryExpectations({
+            participantId: winnerId,
+        })
+    );
+
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getWinnerInfo,
         enabled: isSuccessGetLotteryWinner,
     });
+
+    useEffect(() => {
+        if (expectation && isSuccessGetLotteryExpectation) {
+            setSelectedWinner(expectation);
+        }
+    }, [expectation, isSuccessGetLotteryExpectation]);
 
     const handleRefetch = () => {
         phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
@@ -58,12 +71,7 @@ export default function LotteryWinnerList() {
 
     const handleClickExpectation = async (winnerId: number) => {
         handleOpenModal();
-
-        const data = await LotteryAPI.getLotteryExpectations({
-            lotteryId,
-            participantId: winnerId,
-        });
-        setSelectedWinner(data);
+        getLotteryExpectation(winnerId);
     };
 
     const expectations = selectedWinner.map((winner) => [winner.casperId, winner.expectation]);
@@ -129,7 +137,7 @@ export default function LotteryWinnerList() {
             </div>
 
             <ModalComponent>
-                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} />
+                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} height="auto" />
             </ModalComponent>
         </div>
     );

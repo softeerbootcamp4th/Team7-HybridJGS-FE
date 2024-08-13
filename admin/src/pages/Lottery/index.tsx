@@ -1,31 +1,46 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
+import { STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
+import useFetch from "@/hooks/useFetch";
+import useToast from "@/hooks/useToast";
 import { LotteryEventType } from "@/types/lottery";
+import { PutLotteryResponse } from "@/types/lotteryApi";
+import { getDateDifference } from "@/utils/getDateDifference";
 
 export default function Lottery() {
     const navigate = useNavigate();
 
+    const { showToast, ToastComponent } = useToast("수정 사항이 반영되었습니다!");
+
+    const lotteryData = useLoaderData() as LotteryEventType[];
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
-    useEffect(() => {
-        const data = {
-            lotteryEventId: 1,
-            startDate: "2024-07-26",
-            startTime: "00:00",
-            endDate: "2024-08-25",
-            endTime: "23:59",
-            appliedCount: 1000000,
-            winnerCount: 363,
-        };
+    const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
+        useFetch<PutLotteryResponse>(() =>
+            LotteryAPI.putLottery({
+                startDateTime: `${lottery.startDate} ${lottery.startTime}`,
+                endDateTime: `${lottery.endDate} ${lottery.endTime}`,
+                winnerCount: lottery.winnerCount,
+            })
+        );
 
-        setLottery(data);
+    useEffect(() => {
+        if (lotteryData.length !== 0) {
+            setLottery(lotteryData[0]);
+        }
     }, []);
+    useEffect(() => {
+        if (isSuccessPostLottery) {
+            showToast();
+        }
+    }, [isSuccessPostLottery]);
 
     const handleChangeItem = (key: string, text: string | number) => {
         setLottery({ ...lottery, [key]: text });
@@ -50,7 +65,7 @@ export default function Lottery() {
                     time={lottery.endTime}
                     onChangeTime={(time) => handleChangeItem("endTime", time)}
                 />,
-                "61일",
+                getDateDifference(lottery.startDate, lottery.endDate),
                 <div className="border-b flex w-full">
                     <input
                         value={lottery.winnerCount}
@@ -59,13 +74,13 @@ export default function Lottery() {
                         }
                     />
                 </div>,
-                "활성화",
+                STATUS_MAP[lottery.status],
             ],
         ];
     };
 
     const handleUpdate = () => {
-        // TODO: update API 요청
+        postLottery();
     };
 
     return (
@@ -76,24 +91,13 @@ export default function Lottery() {
                 <Table headers={LOTTERY_HEADER} data={getLotteryData()} height="auto" />
 
                 <div className="self-end flex gap-4">
-                    <Button
-                        buttonSize="sm"
-                        onClick={() =>
-                            navigate("/lottery/participant-list", {
-                                state: { id: lottery.lotteryEventId },
-                            })
-                        }
-                    >
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/participant-list")}>
                         참여자 리스트 보러가기
                     </Button>
-                    <Button
-                        buttonSize="sm"
-                        onClick={() =>
-                            navigate("/lottery/winner-list", {
-                                state: { id: lottery.lotteryEventId },
-                            })
-                        }
-                    >
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/winner")}>
+                        당첨자 추첨하기
+                    </Button>
+                    <Button buttonSize="sm" onClick={() => navigate("/lottery/winner-list")}>
                         당첨자 보러가기
                     </Button>
                 </div>
@@ -102,6 +106,8 @@ export default function Lottery() {
                     수정사항 업데이트
                 </Button>
             </div>
+
+            {ToastComponent}
         </div>
     );
 }
