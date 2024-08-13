@@ -1,6 +1,4 @@
-interface RushCountdownProps {
-    countdown: number;
-}
+import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 
 function TimeDisplay({ label, value }: { label: string; value: string }) {
     return (
@@ -11,9 +9,10 @@ function TimeDisplay({ label, value }: { label: string; value: string }) {
     );
 }
 
-export default function RushCountdown({ countdown }: RushCountdownProps) {
-    const minutes = Math.floor((countdown % 3600) / 60);
-    const seconds = countdown % 60;
+export default function RushCountdown() {
+    const { runCountdown } = useRushGameContext();
+    const minutes = Math.floor((runCountdown % 3600) / 60);
+    const seconds = runCountdown % 60;
 
     const formatTime = (time: number) => time.toString().padStart(2, "0");
 

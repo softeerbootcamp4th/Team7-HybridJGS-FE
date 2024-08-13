@@ -4,11 +4,7 @@ import RushCardComparison from "@/features/RushGame/RushGameCard/RushCardCompari
 import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 
-interface CardOptionsProps {
-    countdown: number;
-}
-
-export default function CardOptions({ countdown }: CardOptionsProps) {
+export default function CardOptions() {
     const { toggleContents } = useToggleContents(true, 5000);
 
     return (
@@ -25,7 +21,7 @@ export default function CardOptions({ countdown }: CardOptionsProps) {
                 </motion.p>
             ) : (
                 <motion.div {...SCROLL_MOTION(DISSOLVE)}>
-                    <RushCountdown countdown={countdown} />
+                    <RushCountdown />
                 </motion.div>
             )}
             <RushCardComparison />

@@ -8,14 +8,10 @@ import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 interface SelectedCardProps {
-    countdown: number;
-}
-
-interface SelectedCardChangeProps {
     onClick: () => void;
 }
 
-function SelectedCardDescription({ onClick }: SelectedCardChangeProps) {
+function SelectedCardDescription({ onClick }: SelectedCardProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardResultDescription />
@@ -34,7 +30,7 @@ function SelectedCardDescription({ onClick }: SelectedCardChangeProps) {
     );
 }
 
-function SelectedCardCurrentRatio({ onClick }: SelectedCardChangeProps) {
+function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardCurrentRatio />
@@ -53,7 +49,7 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardChangeProps) {
     );
 }
 
-export default function SelectedCard({ countdown }: SelectedCardProps) {
+export default function SelectedCard() {
     const { toggleContents, toggle } = useToggleContents();
 
     return (
@@ -61,7 +57,7 @@ export default function SelectedCard({ countdown }: SelectedCardProps) {
             className="flex flex-col gap-3 justify-center items-center pt-6"
             {...SCROLL_MOTION(ASCEND)}
         >
-            <RushCountdown countdown={countdown} />
+            <RushCountdown />
             {toggleContents ? (
                 <SelectedCardDescription onClick={toggle} />
             ) : (
