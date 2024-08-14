@@ -10,7 +10,6 @@ export const ImageAPI = {
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${token}`,
                 },
                 body: image,

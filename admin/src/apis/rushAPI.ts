@@ -30,7 +30,6 @@ export const RushAPI = {
     },
     async putRush(body: PutRushEventParams, token: string): Promise<PutRushEventResponse> {
         try {
-            return new Promise((resolve) => resolve([]));
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
                 headers: {

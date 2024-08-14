@@ -27,6 +27,6 @@ export interface GetRushOptionsParams {
     id: number;
 }
 
-export type PutRushEventParams = RushEventType[];
+export type PutRushEventParams = Omit<RushEventType, "status">[];
 
 export type PutRushEventResponse = RushEventType[];

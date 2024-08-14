@@ -53,11 +53,17 @@ export default function RushSelectForm() {
                 }
             });
 
+            const updatedSelectedOptions = selectOptionState.map((option, idx) => ({
+                ...option,
+                imageUrl: processedResults[idx] as string,
+            }));
+            setSelectOptionState(updatedSelectedOptions);
+
             const updatedTableItemList = rushList.map((item, idx) => {
                 if (idx === rushIdx) {
                     return {
                         ...item,
-                        options: selectOptionState,
+                        options: updatedSelectedOptions,
                     };
                 }
                 return { ...item };
