@@ -67,7 +67,7 @@ export function CasperCustomFinish({
         const link = await LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]);
 
         try {
-            await navigator.clipboard.writeText(link.shortenLocalUrl);
+            await navigator.clipboard.writeText(link.shortenUrl);
             showToast();
         } catch (err) {
             console.error("Failed to copy: ", err);
