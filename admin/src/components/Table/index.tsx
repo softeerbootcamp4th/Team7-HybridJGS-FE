@@ -1,4 +1,4 @@
-import { ReactNode, RefObject, forwardRef } from "react";
+import { ReactNode, RefObject, forwardRef, memo } from "react";
 
 interface TableProps {
     headers: ReactNode[];
@@ -45,4 +45,4 @@ const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
     );
 });
 
-export default Table;
+export default memo(Table);
