@@ -29,11 +29,11 @@ export function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishin
 
         const flipTimer = setTimeout(() => {
             setIsFlipped(true);
-        }, 3000);
+        }, 2000);
 
         const navigateTimer = setTimeout(() => {
             navigateNextStep();
-        }, 6000);
+        }, 4000);
 
         return () => {
             clearTimeout(flipTimer);
