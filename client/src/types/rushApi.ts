@@ -40,9 +40,9 @@ export interface GetRushBalanceResponse {
 }
 
 export interface GetRushResultResponse {
-    leftSelection: number;
-    rightSelection: number;
+    isWinner: boolean;
+    leftOption: number;
+    rightOption: number;
     rank: number;
     totalParticipants: number;
-    winnerCount: number;
 }

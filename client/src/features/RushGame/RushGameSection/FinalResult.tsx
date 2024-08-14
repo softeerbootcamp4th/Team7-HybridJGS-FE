@@ -1,25 +1,18 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
-import { CardOption } from "@/types/rushGame.ts";
+import { GetRushResultResponse } from "@/types/rushApi.ts";
 
 const MESSAGES = {
     WINNING: "축하해요! 선착순 경품 당첨이에요.",
-    TIED: "황금 밸런스! 완벽한 동점이에요.",
-    LOSING: "이런, 다음 기회를 다시 노려봐요.",
+    LOSING: "아쉽네요, 다음 기회를 다시 노려봐요.",
 };
-
-function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: CardOption) {
-    const userSelectedRatio =
-        userSelectedOption === CARD_TYPE.LEFT_OPTIONS ? leftRatio : rightRatio;
-    const oppositeRatio = userSelectedOption === CARD_TYPE.LEFT_OPTIONS ? rightRatio : leftRatio;
-
-    if (userSelectedRatio > oppositeRatio) return MESSAGES.WINNING;
-    if (userSelectedRatio < oppositeRatio) return MESSAGES.LOSING;
-    return MESSAGES.TIED;
-}
 
 type WinStatus = "Win" | "Lose" | "Tie";
 
@@ -28,26 +21,57 @@ function getWinStatus(ratio: number, oppositeRatio: number): WinStatus {
     return ratio > oppositeRatio ? "Win" : "Lose";
 }
 
-function OptionDisplay({ mainText, winStatus }: { mainText: string; winStatus: WinStatus }) {
+function OptionDisplay({
+    mainText,
+    winStatus,
+    isUserSelected,
+}: {
+    mainText: string;
+    winStatus: WinStatus;
+    isUserSelected: boolean;
+}) {
     const categoryType = winStatus === "Win" ? "limited" : "basic";
     return (
         <div className="flex gap-2 items-center">
             <p className="h-heading-4-bold text-n-neutral-950">{mainText}</p>
             <Category type={categoryType}>{winStatus}</Category>
+            {isUserSelected && <Category type="selected">당신의 선택</Category>}
         </div>
     );
 }
 
 export default function FinalResult() {
-    const { gameState, getOptionRatio, getSelectedCardInfo } = useRushGameContext();
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [resultData, setResultData] = useState<GetRushResultResponse>();
+    const { gameState, getOptionRatio, getSelectedCardInfo, updateCardOptions } =
+        useRushGameContext();
 
-    const leftOptionRatio = getOptionRatio(CARD_TYPE.LEFT_OPTIONS);
-    const rightOptionRatio = getOptionRatio(CARD_TYPE.RIGHT_OPTIONS);
+    useEffect(() => {
+        (async () => {
+            const resultData = await RushAPI.getRushResult(cookies[COOKIE_TOKEN_KEY]);
+            const { leftOption, rightOption } = resultData;
+            setResultData(resultData);
 
-    const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
+            updateCardOptions(CARD_TYPE.LEFT_OPTIONS, {
+                selectionCount: leftOption,
+            });
+            updateCardOptions(CARD_TYPE.RIGHT_OPTIONS, {
+                selectionCount: rightOption,
+            });
+        })();
+    }, []);
+
+    const isWinner = resultData?.isWinner || true;
+    const rank = resultData?.rank || 0;
+    const totalParticipants = resultData?.totalParticipants || 0;
+
+    const message = isWinner ? MESSAGES.WINNING : MESSAGES.LOSING;
 
     const { mainText: leftMainText } = getSelectedCardInfo(CARD_TYPE.LEFT_OPTIONS);
     const { mainText: rightMainText } = getSelectedCardInfo(CARD_TYPE.RIGHT_OPTIONS);
+
+    const leftOptionRatio = getOptionRatio(CARD_TYPE.LEFT_OPTIONS);
+    const rightOptionRatio = getOptionRatio(CARD_TYPE.RIGHT_OPTIONS);
 
     const leftWinStatus = getWinStatus(leftOptionRatio, rightOptionRatio);
     const rightWinStatus = getWinStatus(rightOptionRatio, leftOptionRatio);
@@ -66,15 +90,27 @@ export default function FinalResult() {
                 <span className="flex flex-col justify-center items-center text-center gap-3 text-n-black">
                     <p className="h-heading-4-bold">나의 선착순 등수</p>
                     <span className="flex gap-3 justify-center items-center ">
-                        <p className="h-heading-1-bold">301등</p>
-                        <p className="h-body-1-regular text-n-neutral-500">/ 13,524명 중</p>
+                        <p className="h-heading-1-bold">{rank}등</p>
+                        <p className="h-body-1-regular text-n-neutral-500">
+                            / {totalParticipants.toLocaleString("en-US")}명 중
+                        </p>
                     </span>
                 </span>
                 <div className="flex flex-col gap-3">
                     <p className="h-body-2-regular text-n-neutral-500">최종 밸런스 게임 결과</p>
                     <div className="flex justify-between">
-                        <OptionDisplay mainText={leftMainText} winStatus={leftWinStatus} />
-                        <OptionDisplay mainText={rightMainText} winStatus={rightWinStatus} />
+                        <OptionDisplay
+                            mainText={leftMainText}
+                            winStatus={leftWinStatus}
+                            isUserSelected={gameState.userSelectedOption === CARD_TYPE.LEFT_OPTIONS}
+                        />
+                        <OptionDisplay
+                            mainText={rightMainText}
+                            winStatus={rightWinStatus}
+                            isUserSelected={
+                                gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS
+                            }
+                        />
                     </div>
                     {/* TODO: 비율대로 프로그래스바 움직이는 로직 구현 */}
                     <div className="h-heading-3-bold h-[66px] flex justify-between">

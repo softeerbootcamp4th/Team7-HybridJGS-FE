@@ -108,7 +108,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [preCountdown, runCountdown]);
 
-    console.log(gameState.cardOptions);
+    // console.log(gameState.cardOptions);
 
     const updateUserStatusAndSelectedOption = useCallback(
         async (token: string, selectedOption: CardOption) => {

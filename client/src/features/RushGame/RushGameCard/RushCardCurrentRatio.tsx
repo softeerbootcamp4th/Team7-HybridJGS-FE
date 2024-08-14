@@ -63,7 +63,7 @@ function OptionDisplay({
             {userSelectedOptionRatio > oppositeOptionRatio && (
                 <Category type="limited">우세해요!</Category>
             )}
-            {isUserSelected && <Category type="basic">당신의 선택</Category>}
+            {isUserSelected && <Category type="selected">당신의 선택</Category>}
         </div>
     );
 }
