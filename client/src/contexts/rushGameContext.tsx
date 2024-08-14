@@ -98,7 +98,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     // const runCountdown = useCountdown(initialRunCountdown || 0);
 
     const preCountdown = useCountdown(1);
-    const runCountdown = useCountdown(10000);
+    const runCountdown = useCountdown(1);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === "NOT_STARTED") {
@@ -162,7 +162,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
                 gameState.cardOptions[CARD_TYPE.LEFT_OPTIONS].selectionCount +
                 gameState.cardOptions[CARD_TYPE.RIGHT_OPTIONS].selectionCount;
             if (total === 0) return 0;
-            return Math.round((gameState.cardOptions[option].selectionCount / total) * 100);
+            const ratio = (gameState.cardOptions[option].selectionCount / total) * 100;
+            return Math.round(ratio * 100) / 100;
         },
         [gameState.cardOptions]
     );
