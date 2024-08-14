@@ -84,6 +84,14 @@ export default function LotteryWinnerList() {
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getWinnerInfo,
         enabled: isSuccessGetLotteryWinner,
+        root: tableContainerRef,
+    });
+
+    const expectationTableContainerRef = useRef<HTMLDivElement>(null);
+    const { targetRef: expectationTargetRef } = useIntersectionObserver<HTMLTableRowElement>({
+        onIntersect: getLotteryExpectation,
+        enabled: isSuccessGetLotteryExpectation,
+        root: expectationTableContainerRef,
     });
 
     useEffect(() => {
@@ -190,7 +198,12 @@ export default function LotteryWinnerList() {
             </div>
 
             <ModalComponent>
-                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} />
+                <Table
+                    ref={expectationTableContainerRef}
+                    headers={LOTTERY_EXPECTATIONS_HEADER}
+                    data={expectations}
+                    dataLastItem={expectationTargetRef}
+                />
             </ModalComponent>
 
             {ToastComponent}

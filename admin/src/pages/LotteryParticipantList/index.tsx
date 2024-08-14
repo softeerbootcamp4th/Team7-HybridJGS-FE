@@ -85,18 +85,15 @@ export default function LotteryParticipantList() {
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getParticipantInfo,
         enabled: isSuccessGetParticipant,
-        root: tableContainerRef.current,
+        root: tableContainerRef,
     });
 
     const expectationTableContainerRef = useRef<HTMLDivElement>(null);
     const { targetRef: expectationTargetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getLotteryExpectation,
         enabled: isSuccessGetLotteryExpectation,
-        root: expectationTableContainerRef.current,
+        root: expectationTableContainerRef,
     });
-
-    // console.log(expectationTableContainerRef.current, expectationTargetRef.current);
-    // console.log(tableContainerRef.current, targetRef.current);
 
     useEffect(() => {
         refetchLotteryExpectation();

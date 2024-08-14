@@ -94,6 +94,7 @@ export default function RushWinnerList() {
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: isWinnerToggle ? getRushWinnerList : getRushParticipantList,
         enabled: isSuccessGetRushParticipantList && isSuccessGetRushWinnerList,
+        root: tableContainerRef,
     });
 
     useEffect(() => {
