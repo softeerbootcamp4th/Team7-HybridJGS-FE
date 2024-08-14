@@ -1,6 +1,8 @@
 import { ReactNode, createContext, useCallback, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useLoaderData } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI.ts";
+import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLOR, CARD_TYPE } from "@/constants/Rush/rushCard";
 import useCountdown from "@/hooks/useCountdown.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
@@ -9,6 +11,7 @@ import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/t
 export const RushGameContext = createContext<RushGameContextType | undefined>(undefined);
 
 export const RushGameProvider = ({ children }: { children: ReactNode }) => {
+    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
     const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
     const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
@@ -16,7 +19,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
         phase: "NOT_STARTED",
         userParticipatedStatus: false,
-        userSelectedOption: 1,
+        userSelectedOption: CARD_TYPE.LEFT_OPTIONS,
         cardOptions: {
             [CARD_TYPE.LEFT_OPTIONS]: {
                 mainText: "",
@@ -137,6 +140,33 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         [gameState.userSelectedOption, gameState.cardOptions]
     );
 
+    const fetchRushBalance = useCallback(async (): Promise<void> => {
+        try {
+            const rushBalanceData = await RushAPI.getRushBalance(cookies[COOKIE_TOKEN_KEY]);
+            const { leftOption, rightOption } = rushBalanceData;
+
+            updateCardOptions(CARD_TYPE.LEFT_OPTIONS, {
+                selectionCount: leftOption,
+            });
+            updateCardOptions(CARD_TYPE.RIGHT_OPTIONS, {
+                selectionCount: rightOption,
+            });
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    }, [cookies]);
+
+    const getOptionRatio = useCallback(
+        (option: CardOption): number => {
+            const total =
+                gameState.cardOptions[CARD_TYPE.LEFT_OPTIONS].selectionCount +
+                gameState.cardOptions[CARD_TYPE.RIGHT_OPTIONS].selectionCount;
+            if (total === 0) return 0;
+            return Math.round((gameState.cardOptions[option].selectionCount / total) * 100);
+        },
+        [gameState.cardOptions]
+    );
+
     return (
         <RushGameContext.Provider
             value={{
@@ -149,6 +179,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
                 updateCardOptions,
                 updateUserStatusAndSelectedOption,
                 getSelectedCardInfo,
+                getOptionRatio,
+                fetchRushBalance,
             }}
         >
             {children}

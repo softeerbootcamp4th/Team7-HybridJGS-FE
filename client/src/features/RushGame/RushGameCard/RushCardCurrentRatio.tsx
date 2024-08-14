@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
+import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
+import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
 
@@ -29,40 +27,13 @@ function ReloadButton({ onClick }: { onClick: () => void }) {
 }
 
 export default function RushCardCurrentRatio() {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const [leftOptionRatio, setLeftOptionRatio] = useState<number>(0);
-    const [rightOptionRatio, setRightOptionRatio] = useState<number>(0);
-    const [message, setMessage] = useState<string>(MESSAGES.WINNING);
-    const [optionId, setOptionId] = useState<number | null>(null);
+    const { gameState, getOptionRatio, fetchRushBalance } = useRushGameContext();
     const { toggleContents } = useToggleContents(true, 5000);
 
-    const fetchRushBalance = async () => {
-        try {
-            const rushBalanceData = await RushAPI.getRushBalance(cookies[COOKIE_TOKEN_KEY]);
-            const { optionId, leftOption, rightOption } = rushBalanceData;
+    const leftOptionRatio = getOptionRatio(CARD_TYPE.LEFT_OPTIONS);
+    const rightOptionRatio = getOptionRatio(CARD_TYPE.RIGHT_OPTIONS);
 
-            const total = leftOption + rightOption;
-            const leftRatio = Math.round((leftOption / total) * 100);
-            const rightRatio = Math.round((rightOption / total) * 100);
-
-            setOptionId(optionId);
-            setLeftOptionRatio(leftRatio);
-            setRightOptionRatio(rightRatio);
-
-            const selectedOptionCount = optionId === 1 ? leftOption : rightOption;
-            const opposingOptionCount = optionId === 1 ? rightOption : leftOption;
-
-            setMessage(
-                selectedOptionCount > opposingOptionCount ? MESSAGES.WINNING : MESSAGES.LOSING
-            );
-        } catch (error) {
-            console.error("Error: ", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchRushBalance();
-    }, []);
+    const message = leftOptionRatio > rightOptionRatio ? MESSAGES.WINNING : MESSAGES.LOSING;
 
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
@@ -72,19 +43,24 @@ export default function RushCardCurrentRatio() {
             </span>
             <div className="flex flex-col gap-3">
                 <div className="flex justify-between">
+                    {/* TODO: 공통 로직 함수로 분리 */}
                     <div className="flex gap-2 items-center">
                         <p className="h-heading-4-bold text-n-neutral-950">첫 차로 성능 좋은 차</p>
                         {leftOptionRatio > rightOptionRatio && (
                             <Category type="limited">우세해요!</Category>
                         )}
-                        {optionId === 1 && <Category type="basic">당신의 선택</Category>}
+                        {gameState.userSelectedOption === CARD_TYPE.LEFT_OPTIONS && (
+                            <Category type="basic">당신의 선택</Category>
+                        )}
                     </div>
                     <div className="flex gap-2 items-center">
                         <p className="h-heading-4-bold text-n-neutral-950">첫 차로 저렴한 차</p>
                         {rightOptionRatio > leftOptionRatio && (
                             <Category type="limited">우세해요!</Category>
                         )}
-                        {optionId === 2 && <Category type="basic">당신의 선택</Category>}
+                        {gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS && (
+                            <Category type="basic">당신의 선택</Category>
+                        )}
                     </div>
                 </div>
                 {/* TODO: 비율대로 프로그래스바 움직이는 로직 구현 */}

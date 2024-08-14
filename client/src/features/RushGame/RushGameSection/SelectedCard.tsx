@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameCard/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameCard/RushCardResultDescription.tsx";
 import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
+import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
@@ -51,6 +53,11 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
 
 export default function SelectedCard() {
     const { toggleContents, toggle } = useToggleContents();
+    const { fetchRushBalance } = useRushGameContext();
+
+    useEffect(() => {
+        fetchRushBalance();
+    }, []);
 
     return (
         <motion.div

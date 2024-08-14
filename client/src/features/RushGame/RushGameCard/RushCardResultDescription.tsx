@@ -26,7 +26,8 @@ const backgroundGradients = cva(
 
 export default function RushCardResultDescription() {
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
-    const { gameState, updateCardOptions, getSelectedCardInfo } = useRushGameContext();
+    const { gameState, updateCardOptions, getSelectedCardInfo, getOptionRatio } =
+        useRushGameContext();
 
     useEffect(() => {
         (async () => {
@@ -48,6 +49,8 @@ export default function RushCardResultDescription() {
         gameState.userSelectedOption
     );
 
+    const selectedOptionRatio = getOptionRatio(gameState.userSelectedOption);
+
     return (
         <div className={backgroundGradients({ color })}>
             <div className="flex flex-col gap-2 justify-center items-center w-[245px]">
@@ -57,8 +60,7 @@ export default function RushCardResultDescription() {
                 </h2>
                 <span className="h-body-1-regular text-center text-s-red">
                     <p>지금 </p>
-                    {/* TODO: 실시간 비율 Context로 저장해서 넣기 */}
-                    <p className="h-body-1-bold">63%</p>
+                    <p className="h-body-1-bold">{selectedOptionRatio}%</p>
                     <p>가 선택했어요</p>
                 </span>
             </div>
