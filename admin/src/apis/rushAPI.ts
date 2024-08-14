@@ -114,28 +114,6 @@ export const RushAPI = {
         token: string
     ): Promise<GetRushOptionsResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve([
-                    {
-                        optionId: 1,
-                        mainText: "첫 차로 저렴한 차 사기",
-                        subText: " 첫 차는 가성비가 짱이지!",
-                        resultMainText: "누구보다 가성비 갑인 캐스퍼 일렉트릭",
-                        resultSubText: "전기차 평균보다 훨씬 저렴한 캐스퍼 일렉트릭!",
-                        imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
-                        position: "LEFT",
-                    },
-                    {
-                        optionId: 2,
-                        mainText: "첫 차로 성능 좋은 차 사기",
-                        subText: " 차는 당연히 성능이지!",
-                        resultMainText: "필요한 건 다 갖춘 캐스퍼 일렉트릭",
-                        resultSubText: "전기차 평균보다 훨씨니 저렴한 캐스퍼 일렉트릭!",
-                        imageUrl: "https://cdn-icons-png.flaticon.com/512/660/660026.png",
-                        position: "RIGHT",
-                    },
-                ])
-            );
             const response = await fetchWithTimeout(`${baseURL}/${id}/options`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },

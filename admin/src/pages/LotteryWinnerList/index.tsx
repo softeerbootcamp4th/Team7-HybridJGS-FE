@@ -39,7 +39,7 @@ export default function LotteryWinnerList() {
                 },
                 cookies[COOKIE_KEY.ACCESS_TOKEN]
             ),
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },

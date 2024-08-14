@@ -47,7 +47,7 @@ export default function RushWinnerList() {
                 },
                 cookies[COOKIE_KEY.ACCESS_TOKEN]
             ),
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
@@ -70,7 +70,7 @@ export default function RushWinnerList() {
                 },
                 cookies[COOKIE_KEY.ACCESS_TOKEN]
             ),
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (currentPageParam: number, lastPage: GetRushParticipantListResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
@@ -98,7 +98,8 @@ export default function RushWinnerList() {
 
     useEffect(() => {
         if (isSuccessGetRushOptions && rushOptions) {
-            setOptions(rushOptions);
+            const sortedRushOptions = rushOptions.sort(sortRushOptions);
+            setOptions(sortedRushOptions);
             setSelectedOptionIdx(0);
         }
     }, [isSuccessGetRushOptions, rushOptions]);
@@ -107,6 +108,7 @@ export default function RushWinnerList() {
     }, [isWinnerToggle]);
     useEffect(() => {
         refetchRushParticipantList();
+        console.log(selectedOptionIdx, "refetch");
     }, [selectedOptionIdx]);
 
     const handleSearchPhoneNumber = () => {

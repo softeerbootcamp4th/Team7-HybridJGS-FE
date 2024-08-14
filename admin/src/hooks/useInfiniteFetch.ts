@@ -21,7 +21,7 @@ interface InfiniteScrollData<T> {
 
 export default function useInfiniteFetch<T>({
     fetch,
-    initialPageParam,
+    initialPageParam = 0,
     getNextPageParam,
     startFetching = true,
 }: UseInfiniteFetchProps<InfiniteParticipantListData<T>>): InfiniteScrollData<T> {

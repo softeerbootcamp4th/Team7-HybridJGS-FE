@@ -40,7 +40,7 @@ export default function LotteryParticipantList() {
                 },
                 cookies[COOKIE_KEY.ACCESS_TOKEN]
             ),
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryParticipantResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
