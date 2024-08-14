@@ -3,7 +3,15 @@ import Tooltip from "@/components/Tooltip";
 import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
+import { CardOption } from "@/types/rushGame.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
+
+interface OptionDisplayProps {
+    mainText: string;
+    userSelectedOptionRatio: number;
+    oppositeOptionRatio: number;
+    isUserSelected: boolean;
+}
 
 const TOOLTIP_CONTENT = () => (
     <>
@@ -15,8 +23,25 @@ const TOOLTIP_CONTENT = () => (
 
 const MESSAGES = {
     WINNING: "이대로 가면 우리 편이 이겨요!",
+    TIED: "막상막하! 우리 편에 투표할 친구를 데려오세요!",
     LOSING: "이대로 가면 우리 편이 질 수도 있어요!",
 };
+
+function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: CardOption) {
+    if (leftRatio >= 49 && leftRatio <= 51 && rightRatio >= 49 && rightRatio <= 51) {
+        return MESSAGES.TIED;
+    }
+
+    const userSelectedRatio =
+        userSelectedOption === CARD_TYPE.LEFT_OPTIONS ? leftRatio : rightRatio;
+    const oppositeRatio = userSelectedOption === CARD_TYPE.LEFT_OPTIONS ? rightRatio : leftRatio;
+
+    if (userSelectedRatio > oppositeRatio) {
+        return MESSAGES.WINNING;
+    } else {
+        return MESSAGES.LOSING;
+    }
+}
 
 function ReloadButton({ onClick }: { onClick: () => void }) {
     return (
@@ -26,42 +51,56 @@ function ReloadButton({ onClick }: { onClick: () => void }) {
     );
 }
 
+function OptionDisplay({
+    mainText,
+    userSelectedOptionRatio,
+    oppositeOptionRatio,
+    isUserSelected,
+}: OptionDisplayProps) {
+    return (
+        <div className="flex gap-2 items-center">
+            <p className="h-heading-4-bold text-n-neutral-950">{mainText}</p>
+            {userSelectedOptionRatio > oppositeOptionRatio && (
+                <Category type="limited">우세해요!</Category>
+            )}
+            {isUserSelected && <Category type="basic">당신의 선택</Category>}
+        </div>
+    );
+}
+
 export default function RushCardCurrentRatio() {
-    const { gameState, getOptionRatio, fetchRushBalance } = useRushGameContext();
+    const { gameState, getOptionRatio, fetchRushBalance, getSelectedCardInfo } =
+        useRushGameContext();
     const { toggleContents } = useToggleContents(true, 5000);
 
     const leftOptionRatio = getOptionRatio(CARD_TYPE.LEFT_OPTIONS);
     const rightOptionRatio = getOptionRatio(CARD_TYPE.RIGHT_OPTIONS);
 
-    const message = leftOptionRatio > rightOptionRatio ? MESSAGES.WINNING : MESSAGES.LOSING;
+    const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
+
+    const { mainText: leftMainText } = getSelectedCardInfo(CARD_TYPE.LEFT_OPTIONS);
+    const { mainText: rightMainText } = getSelectedCardInfo(CARD_TYPE.RIGHT_OPTIONS);
 
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
-            <span className="flex flex-col justify-center items-center gap-3">
+            <span className="flex flex-col justify-center items-center text-center gap-3">
                 <p className="h-body-2-regular text-n-neutral-500">실시간 투표 결과</p>
                 <p className="h-heading-2-bold text-n-neutral-950">{message}</p>
             </span>
             <div className="flex flex-col gap-3">
                 <div className="flex justify-between">
-                    {/* TODO: 공통 로직 함수로 분리 */}
-                    <div className="flex gap-2 items-center">
-                        <p className="h-heading-4-bold text-n-neutral-950">첫 차로 성능 좋은 차</p>
-                        {leftOptionRatio > rightOptionRatio && (
-                            <Category type="limited">우세해요!</Category>
-                        )}
-                        {gameState.userSelectedOption === CARD_TYPE.LEFT_OPTIONS && (
-                            <Category type="basic">당신의 선택</Category>
-                        )}
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <p className="h-heading-4-bold text-n-neutral-950">첫 차로 저렴한 차</p>
-                        {rightOptionRatio > leftOptionRatio && (
-                            <Category type="limited">우세해요!</Category>
-                        )}
-                        {gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS && (
-                            <Category type="basic">당신의 선택</Category>
-                        )}
-                    </div>
+                    <OptionDisplay
+                        mainText={leftMainText}
+                        userSelectedOptionRatio={leftOptionRatio}
+                        oppositeOptionRatio={rightOptionRatio}
+                        isUserSelected={gameState.userSelectedOption === CARD_TYPE.LEFT_OPTIONS}
+                    />
+                    <OptionDisplay
+                        mainText={rightMainText}
+                        userSelectedOptionRatio={rightOptionRatio}
+                        oppositeOptionRatio={leftOptionRatio}
+                        isUserSelected={gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS}
+                    />
                 </div>
                 {/* TODO: 비율대로 프로그래스바 움직이는 로직 구현 */}
                 <div className="h-heading-3-bold h-[66px] flex justify-between">
