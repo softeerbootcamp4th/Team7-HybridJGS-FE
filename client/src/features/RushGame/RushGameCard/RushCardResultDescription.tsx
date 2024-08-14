@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
-import { GetRushOptionResultResponse } from "@/types/rushApi.ts";
+import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 
 const backgroundGradients = cva(
-    `flex gap-[35px] w-[834px] h-[400px] bg-gradient-green rounded-800 py-6 px-[37px] justify-between break-keep`,
+    `flex gap-[35px] w-[834px] h-[400px] rounded-800 py-6 px-[37px] justify-between break-keep`,
     {
         variants: {
             color: {
@@ -17,30 +17,36 @@ const backgroundGradients = cva(
                 [CARD_COLOR.YELLOW]: "bg-gradient-yellow",
                 [CARD_COLOR.GREEN]: "bg-gradient-green",
             },
+            defaultVariants: {
+                color: CARD_COLOR.GREEN,
+            },
         },
     }
 );
 
 export default function RushCardResultDescription() {
-    const [userResultData, setUserResultData] = useState<GetRushOptionResultResponse>();
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const { gameState, updateCardOptions, getSelectedCardInfo } = useRushGameContext();
 
     useEffect(() => {
         (async () => {
-            // TODO: 사용자가 선택한 카드 옵션(1 or 2) Context에 저장해서 받기
-            const userResultData = await RushAPI.getRushOptionResult(cookies[COOKIE_TOKEN_KEY], 1);
-            setUserResultData(userResultData);
+            const userResultData = await RushAPI.getRushOptionResult(
+                cookies[COOKIE_TOKEN_KEY],
+                gameState.userSelectedOption
+            );
+            if (userResultData) {
+                updateCardOptions(gameState.userSelectedOption, {
+                    mainText: userResultData.mainText,
+                    resultMainText: userResultData.resultMainText,
+                    resultSubText: userResultData.resultSubText,
+                });
+            }
         })();
     }, []);
 
-    const {
-        mainText: mainText = "",
-        resultMainText: resultMainText = "",
-        resultSubText: resultSubText = "",
-    } = userResultData || {};
-
-    // TODO: RushCard에서 선택한 색상 가져오기
-    const color = CARD_COLOR.RED;
+    const { mainText, resultMainText, resultSubText, color } = getSelectedCardInfo(
+        gameState.userSelectedOption
+    );
 
     return (
         <div className={backgroundGradients({ color })}>

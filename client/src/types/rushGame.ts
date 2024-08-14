@@ -5,8 +5,8 @@ export type CardOption = 1 | 2;
 export interface CardOptionState {
     mainText: string;
     subText: string;
-    resultMainText?: string;
-    resultSubText?: string;
+    resultMainText: string;
+    resultSubText: string;
     color: CardColor;
     selectionCount: number;
 }
@@ -16,7 +16,7 @@ export interface RushGameContextType {
     gameState: {
         phase: GamePhase;
         userParticipatedStatus: boolean;
-        userSelectedOption: CardOption | null;
+        userSelectedOption: CardOption;
         cardOptions: {
             [key in CardOption]: CardOptionState;
         };
@@ -25,7 +25,8 @@ export interface RushGameContextType {
     runCountdown: number;
     setGamePhase: (phase: GamePhase) => void;
     setUserParticipationStatus: (status: boolean) => void;
-    setUserSelectedOption: (option: CardOption | null) => void;
+    setUserSelectedOption: (option: CardOption) => void;
     updateCardOptions: (option: CardOption, updates: Partial<CardOptionState>) => void;
     updateUserStatusAndSelectedOption: (token: string, selectedOption: CardOption) => Promise<void>;
+    getSelectedCardInfo: (option: CardOption) => CardOptionState;
 }

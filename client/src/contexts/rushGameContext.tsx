@@ -16,17 +16,21 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
         phase: "NOT_STARTED",
         userParticipatedStatus: false,
-        userSelectedOption: null,
+        userSelectedOption: 1,
         cardOptions: {
             [CARD_TYPE.LEFT_OPTIONS]: {
                 mainText: "",
                 subText: "",
+                resultMainText: "",
+                resultSubText: "",
                 color: CARD_COLOR.GREEN,
                 selectionCount: 0,
             },
             [CARD_TYPE.RIGHT_OPTIONS]: {
                 mainText: "",
                 subText: "",
+                resultMainText: "",
+                resultSubText: "",
                 color: CARD_COLOR.BLUE,
                 selectionCount: 0,
             },
@@ -41,7 +45,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         setGameState((prevState) => ({ ...prevState, userParticipatedStatus: status }));
     }, []);
 
-    const setUserSelectedOption = useCallback((option: CardOption | null) => {
+    const setUserSelectedOption = useCallback((option: CardOption) => {
         setGameState((prevState) => ({ ...prevState, userSelectedOption: option }));
     }, []);
 
@@ -87,10 +91,11 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [rushData, gameState.phase]);
 
-    // FIX: runCountdown이 preCountdown이 카운트다운될 때부터 같이 카운트다운 되고 있는 현상
-    // 이건 12시 지나고 다시 확인해볼 것 (어차피 서버에서 받아오는 시간을 사용하기 때문에 문제는 없을듯)
-    const preCountdown = useCountdown(initialPreCountdown || 3);
-    const runCountdown = useCountdown(initialRunCountdown || 5000);
+    // const preCountdown = useCountdown(initialPreCountdown || 0);
+    // const runCountdown = useCountdown(initialRunCountdown || 0);
+
+    const preCountdown = useCountdown(1);
+    const runCountdown = useCountdown(10000);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === "NOT_STARTED") {
@@ -100,7 +105,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [preCountdown, runCountdown]);
 
-    // console.log(gameState.cardOptions);
+    console.log(gameState.cardOptions);
 
     const updateUserStatusAndSelectedOption = useCallback(
         async (token: string, selectedOption: CardOption) => {
@@ -117,6 +122,21 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         []
     );
 
+    const getSelectedCardInfo = useCallback(
+        (option: CardOption) => {
+            const cardInfo = gameState.cardOptions[option];
+            return {
+                mainText: cardInfo.mainText,
+                subText: cardInfo.subText,
+                resultMainText: cardInfo.resultMainText,
+                resultSubText: cardInfo.resultSubText,
+                color: cardInfo.color,
+                selectionCount: cardInfo.selectionCount,
+            };
+        },
+        [gameState.userSelectedOption, gameState.cardOptions]
+    );
+
     return (
         <RushGameContext.Provider
             value={{
@@ -128,6 +148,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
                 setUserSelectedOption,
                 updateCardOptions,
                 updateUserStatusAndSelectedOption,
+                getSelectedCardInfo,
             }}
         >
             {children}
