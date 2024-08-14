@@ -24,7 +24,6 @@ export default function LotteryParticipantList() {
     const { handleOpenModal, ModalComponent } = useModal();
 
     const [selectedWinnerId, setSelectedWinnerId] = useState<number>(0);
-    const [selectedExpectation, setSelectedExpectation] = useState<LotteryExpectationsType[]>([]);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
@@ -85,16 +84,19 @@ export default function LotteryParticipantList() {
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getParticipantInfo,
         enabled: isSuccessGetParticipant,
+        root: tableContainerRef.current,
+    });
+
+    const expectationTableContainerRef = useRef<HTMLDivElement>(null);
+    const { targetRef: expectationTargetRef } = useIntersectionObserver<HTMLTableRowElement>({
+        onIntersect: getLotteryExpectation,
+        enabled: isSuccessGetLotteryExpectation,
+        root: expectationTableContainerRef.current,
     });
 
     useEffect(() => {
-        getLotteryExpectation();
+        refetchLotteryExpectation();
     }, [selectedWinnerId]);
-    useEffect(() => {
-        if (expectation && isSuccessGetLotteryExpectation) {
-            setSelectedExpectation(expectation);
-        }
-    }, [expectation, isSuccessGetLotteryExpectation]);
     useEffect(() => {
         if (isSuccessGetLotteryExpectation) {
             showToast();
@@ -120,7 +122,7 @@ export default function LotteryParticipantList() {
         patchLotteryExpectation(id);
     };
 
-    const expectations = selectedExpectation.map((participant) => [
+    const expectations = expectation.map((participant) => [
         participant.createdDate,
         participant.createdTime,
         participant.expectation,
@@ -193,7 +195,12 @@ export default function LotteryParticipantList() {
             </div>
 
             <ModalComponent>
-                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} height="auto" />
+                <Table
+                    ref={expectationTableContainerRef}
+                    headers={LOTTERY_EXPECTATIONS_HEADER}
+                    data={expectations}
+                    dataLastItem={expectationTargetRef}
+                />
             </ModalComponent>
 
             {ToastComponent}

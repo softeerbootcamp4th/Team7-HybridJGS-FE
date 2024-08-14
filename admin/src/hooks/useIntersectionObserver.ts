@@ -24,6 +24,7 @@ function useIntersectionObserver<T extends HTMLElement>({
         const observerCallback = (entries: IntersectionObserverEntry[]) => {
             const isIntersect = entries.some((entry) => entry.isIntersecting);
             if (isIntersect) {
+                console.log(entries);
                 onIntersect();
             }
         };

@@ -87,7 +87,7 @@ export default function LotteryWinnerList() {
     });
 
     useEffect(() => {
-        getLotteryExpectation();
+        refetchLotteryExpectation();
     }, [selectedWinnerId]);
     useEffect(() => {
         if (expectation && isSuccessGetLotteryExpectation) {
@@ -189,7 +189,7 @@ export default function LotteryWinnerList() {
             </div>
 
             <ModalComponent>
-                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} height="auto" />
+                <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} />
             </ModalComponent>
 
             {ToastComponent}

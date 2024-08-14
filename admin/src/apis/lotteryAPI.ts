@@ -120,7 +120,7 @@ export const LotteryAPI = {
                         },
                     ],
                     isLastPage: false,
-                    totalExpectations: 3,
+                    totalExpectations: 100,
                 })
             );
             const response = await fetchWithTimeout(
