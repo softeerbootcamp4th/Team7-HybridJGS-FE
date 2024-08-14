@@ -31,15 +31,6 @@ export const LotteryAPI = {
     },
     async putLottery(body: PutLotteryParams, token: string): Promise<PutLotteryResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve({
-                    startDate: "2024-08-26",
-                    startTime: "00:00:00",
-                    endDate: "2024-09-25 23:59",
-                    endTime: "00:00:00",
-                    winnerCount: 363,
-                })
-            );
             const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "PUT",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
