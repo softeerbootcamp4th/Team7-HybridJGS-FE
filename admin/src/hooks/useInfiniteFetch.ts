@@ -62,6 +62,8 @@ export default function useInfiniteFetch<T>({
     const refetch = useCallback(async () => {
         setCurrentPageParam(initialPageParam);
         setData([]);
+        setHasNextPage(true);
+        setTotalLength(0);
     }, []);
 
     useEffect(() => {

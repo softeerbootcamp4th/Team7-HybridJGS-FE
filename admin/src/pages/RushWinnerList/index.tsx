@@ -42,7 +42,7 @@ export default function RushWinnerList() {
                     id: rushId,
                     size: 10,
                     page: pageParam,
-                    option: options[selectedOptionIdx].optionId,
+                    option: selectedOptionIdx + 1,
                     phoneNumber: phoneNumberRef.current,
                 },
                 cookies[COOKIE_KEY.ACCESS_TOKEN]
@@ -98,7 +98,7 @@ export default function RushWinnerList() {
 
     useEffect(() => {
         if (isSuccessGetRushOptions && rushOptions) {
-            const sortedRushOptions = rushOptions.sort(sortRushOptions);
+            const sortedRushOptions = rushOptions.options.sort(sortRushOptions);
             setOptions(sortedRushOptions);
             setSelectedOptionIdx(0);
         }
@@ -108,7 +108,6 @@ export default function RushWinnerList() {
     }, [isWinnerToggle]);
     useEffect(() => {
         refetchRushParticipantList();
-        console.log(selectedOptionIdx, "refetch");
     }, [selectedOptionIdx]);
 
     const handleSearchPhoneNumber = () => {
@@ -137,7 +136,7 @@ export default function RushWinnerList() {
         () =>
             options
                 .sort(sortRushOptions)
-                .map((option) => `옵션 ${option.optionId} : ${option.mainText}`),
+                .map((option, idx) => `옵션 ${idx + 1} : ${option.mainText}`),
         [options]
     );
     const participantHeader = useMemo(
@@ -161,7 +160,6 @@ export default function RushWinnerList() {
     const dataList = useMemo(
         () =>
             currentData.map((participant) => {
-                const selectedOptionIdx = participant.balanceGameChoice - 1;
                 return [
                     participant.id,
                     participant.phoneNumber,

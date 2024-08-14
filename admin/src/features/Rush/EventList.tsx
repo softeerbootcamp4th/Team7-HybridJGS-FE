@@ -14,6 +14,7 @@ import useToast from "@/hooks/useToast";
 import { RUSH_ACTION } from "@/types/rush";
 import { PutRushEventResponse } from "@/types/rushApi";
 import { getTimeDifference } from "@/utils/getTimeDifference";
+import { validateDateTime } from "@/utils/validateDateTime";
 
 export default function EventList() {
     const navigate = useNavigate();
@@ -38,9 +39,16 @@ export default function EventList() {
         const selectedTime = selectedItem.startTime || "00:00";
         const selectedDateTime = new Date(`${newDate}T${selectedTime}`).getTime();
         const currentTime = new Date().getTime();
+        const endDateTime = new Date(`${newDate}T${selectedItem.endTime || "23:59"}`).getTime();
 
-        if (selectedDateTime < currentTime) {
-            alert("이벤트 날짜와 시간이 현재 시간보다 빠를 수 없습니다!");
+        const errorMessage = validateDateTime(
+            "startDate",
+            selectedDateTime,
+            endDateTime,
+            currentTime
+        );
+        if (errorMessage) {
+            alert(errorMessage);
             return;
         }
 
@@ -53,23 +61,24 @@ export default function EventList() {
         newTime: string | number
     ) => {
         const selectedItem = rushList[changeIdx];
-        const otherKey = key === "startTime" ? "endTime" : "startTime";
-        const otherTime = selectedItem[otherKey];
         const selectedDate = selectedItem.eventDate;
 
         const selectedDateTime = new Date(`${selectedDate}T${newTime}`).getTime();
         const currentTime = new Date().getTime();
+        const startDateTime = new Date(
+            `${selectedItem.eventDate}T${selectedItem.startTime}`
+        ).getTime();
+        const endDateTime = new Date(`${selectedDate}T${selectedItem.endTime}`).getTime();
 
-        if (key === "startTime" && selectedDateTime < currentTime) {
-            alert("이벤트 시작 시간은 현재 시간보다 빠를 수 없습니다!");
-            return;
-        }
+        const errorMessage = validateDateTime(
+            key,
+            key === "startTime" ? selectedDateTime : startDateTime,
+            key === "endTime" ? selectedDateTime : endDateTime,
+            currentTime
+        );
 
-        if (
-            (key === "startTime" && newTime > otherTime) ||
-            (key === "endTime" && newTime < otherTime)
-        ) {
-            alert("이벤트 시작 시간이 이벤트 종료 시간보다 빨라야 합니다!");
+        if (errorMessage) {
+            alert(errorMessage);
             return;
         }
 

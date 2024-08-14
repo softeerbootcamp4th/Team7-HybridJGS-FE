@@ -6,13 +6,14 @@ import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { STATUS_MAP } from "@/constants/common";
+import { EVENT_STATUS, STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
 import useToast from "@/hooks/useToast";
 import { LotteryEventType } from "@/types/lottery";
 import { GetLotteryResponse, PutLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
+import { validateDateTime } from "@/utils/validateDateTime";
 
 export default function Lottery() {
     const navigate = useNavigate();
@@ -56,29 +57,24 @@ export default function Lottery() {
     }, [isSuccessPostLottery]);
 
     const handleChangeItem = (key: string, text: string | number) => {
+        if (
+            lottery.status === EVENT_STATUS.DURING &&
+            (key === "startDate" || key === "startTime")
+        ) {
+            alert("활성화된 이벤트의 시작 날짜와 시간을 수정할 수 없습니다!");
+            return;
+        }
+
         const newLottery = { ...lottery, [key]: text };
 
         const startDateTime = new Date(`${newLottery.startDate}T${newLottery.startTime}`).getTime();
         const endDateTime = new Date(`${newLottery.endDate}T${newLottery.endTime}`).getTime();
         const currentDateTime = new Date().getTime();
 
-        if (key === "startDate" || key === "startTime") {
-            if (startDateTime < currentDateTime) {
-                alert("시작 날짜와 시간은 현재보다 빠를 수 없습니다!");
-                return;
-            }
-
-            if (startDateTime > endDateTime) {
-                alert("시작 날짜와 시간이 종료 날짜와 시간보다 빠를 수 없습니다!");
-                return;
-            }
-        }
-
-        if (key === "endDate" || key === "endTime") {
-            if (endDateTime < startDateTime) {
-                alert("종료 날짜와 시간이 시작 날짜와 시간보다 느릴 수 없습니다!");
-                return;
-            }
+        const errorMessage = validateDateTime(key, startDateTime, endDateTime, currentDateTime);
+        if (errorMessage) {
+            alert(errorMessage);
+            return;
         }
 
         setLottery(newLottery);

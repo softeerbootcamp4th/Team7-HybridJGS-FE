@@ -11,7 +11,9 @@ export interface GetRushParticipantListParams {
 
 export type GetRushEventResponse = RushEventType[];
 
-export type GetRushOptionsResponse = RushOptionType[];
+export interface GetRushOptionsResponse {
+    options: RushOptionType[];
+}
 
 export type GetRushParticipantListResponse = InfiniteParticipantListData<RushParticipantType>;
 
