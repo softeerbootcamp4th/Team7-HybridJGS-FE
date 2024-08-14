@@ -5,9 +5,11 @@ import Button from "@/components/Button";
 import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
 import TextField from "@/components/TextField";
+import useFetch from "@/hooks/useFetch";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import useToast from "@/hooks/useToast";
+import { PostImageResponse } from "@/types/imageApi";
 import { RUSH_ACTION, RushPrizeType } from "@/types/rush";
 
 export default function RushPrizeForm() {
@@ -24,6 +26,14 @@ export default function RushPrizeForm() {
     const [prizeState, setPrizeState] = useState<RushPrizeType>({} as RushPrizeType);
     const [selectedFile, setSelectedFile] = useState<File | string | null>(null);
 
+    const {
+        data: image,
+        isSuccess: isSuccessPostImage,
+        fetchData: postImage,
+    } = useFetch<PostImageResponse, FormData>((image, token) =>
+        ImageAPI.postImage(image, token ?? "")
+    );
+
     useEffect(() => {
         if (rushIdx !== undefined) {
             setPrizeState({
@@ -33,17 +43,24 @@ export default function RushPrizeForm() {
             setSelectedFile(rushList[rushIdx].prizeImageUrl);
         }
     }, [rushList]);
+    useEffect(() => {
+        if (image && isSuccessPostImage) {
+            handleUpdateEvent(image.imageUrl);
+        }
+    }, [image, isSuccessPostImage]);
 
     const handleUpdate = async () => {
-        let currentPrize = { ...prizeState };
         if (selectedFile instanceof File) {
             const formData = new FormData();
             formData.append("image", selectedFile);
-            const image = await ImageAPI.postImage(formData);
-            currentPrize = { ...currentPrize, prizeImageUrl: image.imageUrl };
-        } else if (typeof selectedFile === "string") {
-            currentPrize = { ...currentPrize, prizeImageUrl: selectedFile };
+            postImage(formData);
+        } else {
+            handleUpdateEvent(prizeState.prizeImageUrl);
         }
+    };
+
+    const handleUpdateEvent = (prizeImageUrl: string) => {
+        const currentPrize = { ...prizeState, prizeImageUrl };
 
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === rushIdx) {

@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ImageAPI } from "@/apis/imageAPI";
 import Button from "@/components/Button";
 import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
 import TextField from "@/components/TextField";
+import useFetchMultiple from "@/hooks/useFetchMultiple";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import useToast from "@/hooks/useToast";
+import { PostImageResponse } from "@/types/imageApi";
 import { RUSH_ACTION, RushOptionType } from "@/types/rush";
 
 export default function RushSelectForm() {
@@ -24,6 +26,14 @@ export default function RushSelectForm() {
     const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<(File | string | null)[]>([]);
 
+    const {
+        results: images,
+        isSuccess: isSuccessPostImage,
+        fetchMultiple: postImage,
+    } = useFetchMultiple<PostImageResponse, FormData>((formData, token) =>
+        ImageAPI.postImage(formData, token ?? "")
+    );
+
     useEffect(() => {
         if (rushIdx !== undefined) {
             setSelectOptionState(rushList[rushIdx].options);
@@ -33,48 +43,52 @@ export default function RushSelectForm() {
         }
     }, [rushList]);
 
-    const handleUpdate = async () => {
-        // 이미지 URL 받아오기
-        const results = await Promise.allSettled(
-            selectedFiles.map((file) => {
+    useEffect(() => {
+        if (isSuccessPostImage) {
+            const processedResults = [...selectedFiles];
+            formDataArrayWithIndex.forEach((item, idx) => {
+                if (images[idx]) {
+                    const { imageUrl } = images[idx] as PostImageResponse;
+                    processedResults[item.index] = imageUrl;
+                }
+            });
+
+            const updatedTableItemList = rushList.map((item, idx) => {
+                if (idx === rushIdx) {
+                    return {
+                        ...item,
+                        options: selectOptionState,
+                    };
+                }
+                return { ...item };
+            });
+
+            dispatch({
+                type: RUSH_ACTION.SET_EVENT_LIST,
+                payload: updatedTableItemList,
+            });
+
+            showToast();
+        }
+    }, [isSuccessPostImage]);
+
+    const formDataArrayWithIndex = useMemo(() => {
+        return selectedFiles
+            .map((file, index) => {
                 if (!(file instanceof File)) {
-                    return;
+                    return null;
                 }
                 const formData = new FormData();
                 formData.append("image", file);
-                return ImageAPI.postImage(formData);
+                return { formData, index };
             })
-        );
+            .filter((item): item is { formData: FormData; index: number } => item !== null);
+    }, [images, selectedFiles]);
 
-        const processedResults = results.map((result) =>
-            result.status === "fulfilled" ? result.value : null
-        );
+    const handleUpdate = async () => {
+        const formDataArray = formDataArrayWithIndex.map((item) => item.formData);
 
-        // Image URL 객체에 반영
-        const updatedOptions = selectOptionState.map((option, idx) => {
-            const currentOption = rushList[rushIdx].options;
-            return {
-                ...option,
-                imageUrl: processedResults[idx]?.imageUrl ?? currentOption[idx].imageUrl,
-            };
-        });
-
-        const updatedTableItemList = rushList.map((item, idx) => {
-            if (idx === rushIdx) {
-                return {
-                    ...item,
-                    options: updatedOptions,
-                };
-            }
-            return { ...item };
-        });
-
-        dispatch({
-            type: RUSH_ACTION.SET_EVENT_LIST,
-            payload: updatedTableItemList,
-        });
-
-        showToast();
+        await postImage(formDataArray);
     };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | File) => {
