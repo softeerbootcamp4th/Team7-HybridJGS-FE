@@ -10,6 +10,7 @@ import useFetch from "@/hooks/useFetch";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import { RUSH_ACTION } from "@/types/rush";
 import { GetRushEventResponse } from "@/types/rushApi";
+import { sortRushOptions } from "@/utils/rush/sortRushOptions";
 
 export default function Rush() {
     const [searchParams] = useSearchParams();
@@ -28,9 +29,12 @@ export default function Rush() {
     }, []);
     useEffect(() => {
         if (rushEvent && isSuccessGetRushEvent) {
+            const sortedRushEvent = rushEvent.map((event) => {
+                return { ...event, options: event.options.sort(sortRushOptions) };
+            });
             dispatch({
                 type: RUSH_ACTION.SET_EVENT_LIST,
-                payload: rushEvent,
+                payload: sortedRushEvent,
             });
         }
     }, [rushEvent, isSuccessGetRushEvent]);

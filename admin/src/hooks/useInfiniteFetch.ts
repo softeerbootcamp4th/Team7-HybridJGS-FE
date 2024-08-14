@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import { InfiniteParticipantListData } from "@/types/common";
+import { isInfiniteExpectationListData, isInfiniteParticipantListData } from "@/utils/typeguard";
 
 interface UseInfiniteFetchProps<R> {
     fetch: (pageParam: number) => Promise<R>;
@@ -19,12 +19,12 @@ interface InfiniteScrollData<T> {
     isError: boolean;
 }
 
-export default function useInfiniteFetch<T>({
+export default function useInfiniteFetch<T, R>({
     fetch,
     initialPageParam = 0,
     getNextPageParam,
     startFetching = true,
-}: UseInfiniteFetchProps<InfiniteParticipantListData<T>>): InfiniteScrollData<T> {
+}: UseInfiniteFetchProps<R>): InfiniteScrollData<T> {
     const { showBoundary } = useErrorBoundary();
 
     const [data, setData] = useState<T[]>([]);
@@ -34,6 +34,18 @@ export default function useInfiniteFetch<T>({
     const [isError, setIsError] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [totalLength, setTotalLength] = useState<number>(0);
+
+    const getDataList = (lastPage: R) => {
+        if (isInfiniteParticipantListData<T>(lastPage)) {
+            setTotalLength(lastPage.totalParticipants);
+            return lastPage.participantsList;
+        } else if (isInfiniteExpectationListData<T>(lastPage)) {
+            setTotalLength(lastPage.totalExpectations);
+            return lastPage.expectationList;
+        }
+
+        return [];
+    };
 
     const fetchNextPage = useCallback(async () => {
         if (!hasNextPage || isLoading || currentPageParam === undefined) return;
@@ -45,10 +57,9 @@ export default function useInfiniteFetch<T>({
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
 
-            setData([...data, ...lastPage.participantsList]);
+            setData([...data, ...getDataList(lastPage)]);
             setCurrentPageParam(nextPageParam);
             setHasNextPage(nextPageParam !== undefined);
-            setTotalLength(lastPage.totalParticipants);
             setIsSuccess(true);
         } catch (error) {
             showBoundary(error);

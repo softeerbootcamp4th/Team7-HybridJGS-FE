@@ -10,8 +10,12 @@ import { COOKIE_KEY } from "@/constants/cookie";
 import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { RushOptionType } from "@/types/rush";
-import { GetRushOptionsResponse, GetRushParticipantListResponse } from "@/types/rushApi";
+import { RushOptionType, RushParticipantType } from "@/types/rush";
+import {
+    GetRushOptionsResponse,
+    GetRushParticipantListResponse,
+    GetRushWinnerListResponse,
+} from "@/types/rushApi";
 import { sortRushOptions } from "@/utils/rush/sortRushOptions";
 
 export default function RushWinnerList() {
@@ -35,7 +39,7 @@ export default function RushWinnerList() {
         isSuccess: isSuccessGetRushParticipantList,
         fetchNextPage: getRushParticipantList,
         refetch: refetchRushParticipantList,
-    } = useInfiniteFetch({
+    } = useInfiniteFetch<RushParticipantType, GetRushParticipantListResponse>({
         fetch: (pageParam: number) =>
             RushAPI.getRushParticipantList(
                 {
@@ -59,7 +63,7 @@ export default function RushWinnerList() {
         isSuccess: isSuccessGetRushWinnerList,
         fetchNextPage: getRushWinnerList,
         refetch: refetchRushWinnerList,
-    } = useInfiniteFetch({
+    } = useInfiniteFetch<RushParticipantType, GetRushWinnerListResponse>({
         fetch: (pageParam: number) =>
             RushAPI.getRushWinnerList(
                 {

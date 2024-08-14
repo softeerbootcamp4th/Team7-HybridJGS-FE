@@ -12,7 +12,7 @@ import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useModal from "@/hooks/useModal";
 import useToast from "@/hooks/useToast";
-import { LotteryExpectationsType } from "@/types/lottery";
+import { LotteryExpectationsType, LotteryWinnerType } from "@/types/lottery";
 import { GetLotteryExpectationsResponse, GetLotteryWinnerResponse } from "@/types/lotteryApi";
 
 export default function LotteryWinnerList() {
@@ -23,7 +23,8 @@ export default function LotteryWinnerList() {
     const { showToast, ToastComponent } = useToast("수정 사항이 반영됐습니다!");
     const { handleOpenModal, ModalComponent } = useModal();
 
-    const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
+    const [selectedWinnerId, setSelectedWinnerId] = useState<number>(0);
+    const [selectedExpectations, setSelectedExpectations] = useState<LotteryExpectationsType[]>([]);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,7 +33,7 @@ export default function LotteryWinnerList() {
         isSuccess: isSuccessGetLotteryWinner,
         fetchNextPage: getWinnerInfo,
         refetch: refetchWinnerInfo,
-    } = useInfiniteFetch({
+    } = useInfiniteFetch<LotteryWinnerType, GetLotteryWinnerResponse>({
         fetch: (pageParam: number) =>
             LotteryAPI.getLotteryWinner(
                 {
@@ -51,15 +52,23 @@ export default function LotteryWinnerList() {
     const {
         data: expectation,
         isSuccess: isSuccessGetLotteryExpectation,
-        fetchData: getLotteryExpectation,
-    } = useFetch<GetLotteryExpectationsResponse, number>((winnerId: number, token) =>
-        LotteryAPI.getLotteryExpectations(
-            {
-                participantId: winnerId,
-            },
-            token ?? ""
-        )
-    );
+        fetchNextPage: getLotteryExpectation,
+        refetch: refetchLotteryExpectation,
+    } = useInfiniteFetch<LotteryExpectationsType, GetLotteryExpectationsResponse>({
+        fetch: (pageParam: number) =>
+            LotteryAPI.getLotteryExpectations(
+                {
+                    participantId: selectedWinnerId,
+                    size: 10,
+                    page: pageParam,
+                },
+                cookies[COOKIE_KEY.ACCESS_TOKEN]
+            ),
+        initialPageParam: 0,
+        getNextPageParam: (currentPageParam: number, lastPage: GetLotteryExpectationsResponse) => {
+            return lastPage.isLastPage ? undefined : currentPageParam + 1;
+        },
+    });
 
     const { isSuccess: isSuccessPatchLotteryExpectation, fetchData: patchLotteryExpectation } =
         useFetch<{}, number>((casperId: number, token) =>
@@ -78,14 +87,17 @@ export default function LotteryWinnerList() {
     });
 
     useEffect(() => {
+        getLotteryExpectation();
+    }, [selectedWinnerId]);
+    useEffect(() => {
         if (expectation && isSuccessGetLotteryExpectation) {
-            setSelectedWinner(expectation);
+            setSelectedExpectations(expectation);
         }
     }, [expectation, isSuccessGetLotteryExpectation]);
     useEffect(() => {
         if (isSuccessGetLotteryExpectation) {
             showToast();
-            getLotteryExpectation();
+            refetchLotteryExpectation();
         }
     }, [isSuccessPatchLotteryExpectation]);
 
@@ -100,14 +112,14 @@ export default function LotteryWinnerList() {
 
     const handleClickExpectation = async (winnerId: number) => {
         handleOpenModal();
-        getLotteryExpectation(winnerId);
+        setSelectedWinnerId(winnerId);
     };
 
     const handleClickDelete = (id: number) => {
         patchLotteryExpectation(id);
     };
 
-    const expectations = selectedWinner.map((winner) => [
+    const expectations = selectedExpectations.map((winner) => [
         winner.createdDate,
         winner.createdTime,
         winner.expectation,
