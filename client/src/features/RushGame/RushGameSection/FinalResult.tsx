@@ -53,17 +53,15 @@ export default function FinalResult() {
     const rightWinStatus = getWinStatus(rightOptionRatio, leftOptionRatio);
 
     return (
-        <>
-            <motion.p className="h-heading-2-bold pt-10" {...SCROLL_MOTION(ASCEND)}>
-                {message}
-            </motion.p>
-            <motion.span
-                className="h-body-1-regular text-n-black flex flex-col justify-center items-center"
-                {...SCROLL_MOTION(ASCEND)}
-            >
+        <motion.div
+            className="flex flex-col justify-center items-center gap-8"
+            {...SCROLL_MOTION(ASCEND)}
+        >
+            <p className="h-heading-2-bold pt-10">{message}</p>
+            <span className="h-body-1-regular text-n-black flex flex-col justify-center items-center">
                 <p>*이 화면은 밤 12시 이후 재접속이 불가능합니다.</p>
                 <p>입력하신 전화번호로 경품 수령 관련 메시지가 전송될 예정이에요.</p>
-            </motion.span>
+            </span>
             <div className="flex flex-col gap-12 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
                 <span className="flex flex-col justify-center items-center text-center gap-3 text-n-black">
                     <p className="h-heading-4-bold">나의 선착순 등수</p>
@@ -89,6 +87,6 @@ export default function FinalResult() {
                     </div>
                 </div>
             </div>
-        </>
+        </motion.div>
     );
 }

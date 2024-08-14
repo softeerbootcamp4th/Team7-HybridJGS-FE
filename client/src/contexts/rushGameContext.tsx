@@ -98,7 +98,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     // const runCountdown = useCountdown(initialRunCountdown || 0);
 
     const preCountdown = useCountdown(1);
-    const runCountdown = useCountdown(1);
+    const runCountdown = useCountdown(10);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === "NOT_STARTED") {
