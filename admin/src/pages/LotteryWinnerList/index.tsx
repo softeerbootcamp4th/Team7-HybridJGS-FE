@@ -127,14 +127,18 @@ export default function LotteryWinnerList() {
         patchLotteryExpectation(id);
     };
 
-    const expectations = selectedExpectations.map((winner) => [
-        winner.createdDate,
-        winner.createdTime,
-        winner.expectation,
-        <Button buttonSize="sm" onClick={() => handleClickDelete(winner.casperId)}>
-            삭제
-        </Button>,
-    ]);
+    const expectations = useMemo(
+        () =>
+            expectation.map((winner) => [
+                winner.createdDate,
+                winner.createdTime,
+                winner.expectation,
+                <Button buttonSize="sm" onClick={() => handleClickDelete(winner.casperId)}>
+                    삭제
+                </Button>,
+            ]),
+        [expectation]
+    );
 
     const winnerList = useMemo(
         () =>
