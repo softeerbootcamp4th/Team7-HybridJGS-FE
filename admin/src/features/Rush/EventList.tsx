@@ -33,6 +33,49 @@ export default function EventList() {
         }
     }, [isSuccessPutRush]);
 
+    const handleChangeDate = (changeIdx: number, newDate: string) => {
+        const selectedItem = rushList[changeIdx];
+        const selectedTime = selectedItem.startTime || "00:00";
+        const selectedDateTime = new Date(`${newDate}T${selectedTime}`).getTime();
+        const currentTime = new Date().getTime();
+
+        if (selectedDateTime < currentTime) {
+            alert("이벤트 날짜와 시간이 현재 시간보다 빠를 수 없습니다!");
+            return;
+        }
+
+        handleChangeItem("eventDate", changeIdx, newDate);
+    };
+
+    const handleChangeTime = (
+        key: "startTime" | "endTime",
+        changeIdx: number,
+        newTime: string | number
+    ) => {
+        const selectedItem = rushList[changeIdx];
+        const otherKey = key === "startTime" ? "endTime" : "startTime";
+        const otherTime = selectedItem[otherKey];
+        const selectedDate = selectedItem.eventDate;
+
+        const selectedDateTime = new Date(`${selectedDate}T${newTime}`).getTime();
+        const currentTime = new Date().getTime();
+
+        if (key === "startTime" && selectedDateTime < currentTime) {
+            alert("이벤트 시작 시간은 현재 시간보다 빠를 수 없습니다!");
+            return;
+        }
+
+        if (
+            (key === "startTime" && newTime > otherTime) ||
+            (key === "endTime" && newTime < otherTime)
+        ) {
+            alert("이벤트 시작 시간이 이벤트 종료 시간보다 빨라야 합니다!");
+            return;
+        }
+
+        handleChangeItem(key, changeIdx, newTime);
+    };
+
     const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === changeIdx) {
@@ -56,17 +99,17 @@ export default function EventList() {
                 <DatePicker
                     disabled={canEdit}
                     date={item.eventDate}
-                    onChangeDate={(date) => handleChangeItem("eventDate", idx, date)}
+                    onChangeDate={(date) => handleChangeDate(idx, date)}
                 />,
                 <TimePicker
                     disabled={canEdit}
                     time={item.startTime}
-                    onChangeTime={(time) => handleChangeItem("startTime", idx, time)}
+                    onChangeTime={(time) => handleChangeTime("startTime", idx, time)}
                 />,
                 <TimePicker
                     disabled={canEdit}
                     time={item.endTime}
-                    onChangeTime={(time) => handleChangeItem("endTime", idx, time)}
+                    onChangeTime={(time) => handleChangeTime("endTime", idx, time)}
                 />,
                 getTimeDifference(item.startTime, item.endTime),
                 <Button

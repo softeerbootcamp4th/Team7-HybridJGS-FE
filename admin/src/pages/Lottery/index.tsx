@@ -56,7 +56,32 @@ export default function Lottery() {
     }, [isSuccessPostLottery]);
 
     const handleChangeItem = (key: string, text: string | number) => {
-        setLottery({ ...lottery, [key]: text });
+        const newLottery = { ...lottery, [key]: text };
+
+        const startDateTime = new Date(`${newLottery.startDate}T${newLottery.startTime}`).getTime();
+        const endDateTime = new Date(`${newLottery.endDate}T${newLottery.endTime}`).getTime();
+        const currentDateTime = new Date().getTime();
+
+        if (key === "startDate" || key === "startTime") {
+            if (startDateTime < currentDateTime) {
+                alert("시작 날짜와 시간은 현재보다 빠를 수 없습니다!");
+                return;
+            }
+
+            if (startDateTime > endDateTime) {
+                alert("시작 날짜와 시간이 종료 날짜와 시간보다 빠를 수 없습니다!");
+                return;
+            }
+        }
+
+        if (key === "endDate" || key === "endTime") {
+            if (endDateTime < startDateTime) {
+                alert("종료 날짜와 시간이 시작 날짜와 시간보다 느릴 수 없습니다!");
+                return;
+            }
+        }
+
+        setLottery(newLottery);
     };
 
     const getLotteryData = () => {
