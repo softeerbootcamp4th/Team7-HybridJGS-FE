@@ -1,6 +1,7 @@
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
 import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
+import RushProgressBar from "@/features/RushGame/RushGameCard/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
@@ -102,11 +103,10 @@ export default function RushCardCurrentRatio() {
                         isUserSelected={gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS}
                     />
                 </div>
-                {/* TODO: 비율대로 프로그래스바 움직이는 로직 구현 */}
-                <div className="h-heading-3-bold h-[66px] flex justify-between">
-                    <p className="bg-gradient-green flex items-center w-1/2">{leftOptionRatio}%</p>
-                    <p className="bg-gradient-red flex items-center w-1/2">{rightOptionRatio}%</p>
-                </div>
+                <RushProgressBar
+                    leftOptionRatio={leftOptionRatio}
+                    rightOptionRatio={rightOptionRatio}
+                />
             </div>
             <div className="absolute right-6 bottom-6">
                 {toggleContents ? (

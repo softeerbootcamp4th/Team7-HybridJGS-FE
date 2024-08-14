@@ -6,6 +6,7 @@ import Category from "@/components/Category";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import RushProgressBar from "@/features/RushGame/RushGameCard/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
 
@@ -33,7 +34,11 @@ function OptionDisplay({
     const categoryType = winStatus === "Win" ? "limited" : "basic";
     return (
         <div className="flex gap-2 items-center">
-            <p className="h-heading-4-bold text-n-neutral-950">{mainText}</p>
+            <p
+                className={`h-heading-4-bold ${winStatus === "Win" ? "text-n-neutral-950" : "text-n-neutral-500"}`}
+            >
+                {mainText}
+            </p>
             <Category type={categoryType}>{winStatus}</Category>
             {isUserSelected && <Category type="selected">당신의 선택</Category>}
         </div>
@@ -112,15 +117,10 @@ export default function FinalResult() {
                             }
                         />
                     </div>
-                    {/* TODO: 비율대로 프로그래스바 움직이는 로직 구현 */}
-                    <div className="h-heading-3-bold h-[66px] flex justify-between">
-                        <p className="bg-gradient-green flex items-center w-1/2">
-                            {leftOptionRatio}%
-                        </p>
-                        <p className="bg-gradient-red flex items-center w-1/2">
-                            {rightOptionRatio}%
-                        </p>
-                    </div>
+                    <RushProgressBar
+                        leftOptionRatio={leftOptionRatio}
+                        rightOptionRatio={rightOptionRatio}
+                    />
                 </div>
             </div>
         </motion.div>
