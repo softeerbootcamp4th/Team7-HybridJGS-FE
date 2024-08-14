@@ -59,6 +59,7 @@ export interface RushParticipantType {
     id: number;
     phoneNumber: string;
     balanceGameChoice: number;
-    createdAt: string;
     rank: number;
+    createdDate: string;
+    createdTime: string;
 }

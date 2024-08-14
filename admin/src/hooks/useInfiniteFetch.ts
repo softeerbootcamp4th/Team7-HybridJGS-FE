@@ -41,7 +41,7 @@ export default function useInfiniteFetch<T, R>({
             return lastPage.participantsList;
         } else if (isInfiniteExpectationListData<T>(lastPage)) {
             setTotalLength(lastPage.totalExpectations);
-            return lastPage.expectationList;
+            return lastPage.expectations;
         }
 
         return [];

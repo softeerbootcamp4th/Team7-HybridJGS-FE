@@ -168,7 +168,7 @@ export default function RushWinnerList() {
                     participant.id,
                     participant.phoneNumber,
                     participant.rank,
-                    participant.createdAt,
+                    participant.createdTime,
                     `옵션 ${selectedOptionIdx + 1} : ${options[selectedOptionIdx].mainText}`,
                 ];
             }),

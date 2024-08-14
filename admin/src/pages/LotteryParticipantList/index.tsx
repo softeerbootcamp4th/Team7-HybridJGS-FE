@@ -94,6 +94,9 @@ export default function LotteryParticipantList() {
         root: expectationTableContainerRef.current,
     });
 
+    // console.log(expectationTableContainerRef.current, expectationTargetRef.current);
+    // console.log(tableContainerRef.current, targetRef.current);
+
     useEffect(() => {
         refetchLotteryExpectation();
     }, [selectedWinnerId]);
@@ -122,21 +125,25 @@ export default function LotteryParticipantList() {
         patchLotteryExpectation(id);
     };
 
-    const expectations = expectation.map((participant) => [
-        participant.createdDate,
-        participant.createdTime,
-        participant.expectation,
-        <Button buttonSize="sm" onClick={() => handleClickDelete(participant.casperId)}>
-            삭제
-        </Button>,
-    ]);
+    const expectations = useMemo(
+        () =>
+            expectation.map((participant) => [
+                participant.createdDate,
+                participant.createdTime,
+                participant.expectation,
+                <Button buttonSize="sm" onClick={() => handleClickDelete(participant.casperId)}>
+                    삭제
+                </Button>,
+            ]),
+        [expectation]
+    );
 
     const participantList = useMemo(
         () =>
             participantInfo.map((participant) => [
                 participant.id,
-                participant.createdAt,
-                participant.createdAt,
+                participant.createdDate,
+                participant.createdTime,
                 participant.phoneNumber,
                 participant.linkClickedCounts,
                 <div className="flex justify-between">

@@ -14,8 +14,8 @@ export function isInfiniteExpectationListData<T>(
     data: any
 ): data is InfiniteExpectationListData<T> {
     return (
-        data.expectationList !== undefined &&
-        Array.isArray(data.expectationList) &&
+        data.expectations !== undefined &&
+        Array.isArray(data.expectations) &&
         typeof data.totalExpectations === "number"
     );
 }

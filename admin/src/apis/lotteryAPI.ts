@@ -99,7 +99,7 @@ export const LotteryAPI = {
         try {
             return new Promise((resolve) =>
                 resolve({
-                    expectationList: [
+                    expectations: [
                         {
                             casperId: 1,
                             expectation: "기대평 1",

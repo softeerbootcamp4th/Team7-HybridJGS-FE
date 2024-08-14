@@ -133,6 +133,7 @@ export default function LotteryWinnerList() {
             winnerInfo.map((winner, idx) => [
                 idx + 1,
                 winner.id,
+                winner.createdTime,
                 winner.phoneNumber,
                 winner.linkClickedCounts,
                 <div className="flex justify-between">

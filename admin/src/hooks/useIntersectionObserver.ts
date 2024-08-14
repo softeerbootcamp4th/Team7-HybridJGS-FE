@@ -23,8 +23,8 @@ function useIntersectionObserver<T extends HTMLElement>({
 
         const observerCallback = (entries: IntersectionObserverEntry[]) => {
             const isIntersect = entries.some((entry) => entry.isIntersecting);
+            console.log(root, targetRef, entries, isIntersect);
             if (isIntersect) {
-                console.log(entries);
                 onIntersect();
             }
         };

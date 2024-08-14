@@ -11,6 +11,7 @@ export const LOTTERY_HEADER = [
 export const LOTTERY_WINNER_HEADER = [
     "등수",
     "ID",
+    "생성 시간",
     "전화번호",
     "공유 링크 클릭 횟수",
     "기대평 작성 여부",

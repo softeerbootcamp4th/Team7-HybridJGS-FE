@@ -5,7 +5,7 @@ export interface InfiniteParticipantListData<T> {
 }
 
 export interface InfiniteExpectationListData<T> {
-    expectationList: T[];
+    expectations: T[];
     isLastPage: boolean;
     totalExpectations: number;
 }

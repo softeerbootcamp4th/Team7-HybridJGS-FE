@@ -24,9 +24,8 @@ export interface LotteryWinnerType {
     linkClickedCounts: number;
     expectation: number;
     appliedCount: number;
+    createdDate: string;
+    createdTime: string;
 }
 
-export interface LotteryParticipantType extends LotteryWinnerType {
-    createdAt: string;
-    updatedAt: string;
-}
+export type LotteryParticipantType = LotteryWinnerType;
