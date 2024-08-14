@@ -6,7 +6,6 @@ interface UseIntersectionObserverOptions<T extends HTMLElement> {
     enabled: boolean;
     root?: RefObject<Element | null>;
     rootMargin?: string;
-    isVisible?: boolean;
 }
 
 function useIntersectionObserver<T extends HTMLElement>({
@@ -14,12 +13,11 @@ function useIntersectionObserver<T extends HTMLElement>({
     enabled,
     root,
     rootMargin = "0px",
-    isVisible = true,
 }: UseIntersectionObserverOptions<T>) {
     const targetRef = useRef<T>(null);
 
     useEffect(() => {
-        if (!enabled || !isVisible || !targetRef.current || !root) {
+        if (!enabled || !targetRef.current || !root?.current) {
             return;
         }
 
@@ -41,7 +39,7 @@ function useIntersectionObserver<T extends HTMLElement>({
                 observer.unobserve(targetRef.current);
             }
         };
-    }, [targetRef, root, onIntersect, enabled, isVisible]);
+    }, [targetRef, root, onIntersect, enabled]);
 
     return { targetRef };
 }
