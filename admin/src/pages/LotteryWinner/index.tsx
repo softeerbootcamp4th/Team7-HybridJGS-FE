@@ -16,12 +16,10 @@ export default function LotteryWinner() {
         data: lotteryEvent,
         isSuccess: isSuccessGetLotteryEvent,
         fetchData: getLotteryEvent,
-    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token ?? ""));
+    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token));
 
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PostLotteryWinnerResponse>((_, token) =>
-            LotteryAPI.postLotteryWinner(token ?? "")
-        );
+        useFetch<PostLotteryWinnerResponse>((_, token) => LotteryAPI.postLotteryWinner(token));
 
     useEffect(() => {
         getLotteryEvent();

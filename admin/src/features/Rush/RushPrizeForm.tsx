@@ -30,9 +30,7 @@ export default function RushPrizeForm() {
         data: image,
         isSuccess: isSuccessPostImage,
         fetchData: postImage,
-    } = useFetch<PostImageResponse, FormData>((image, token) =>
-        ImageAPI.postImage(image, token ?? "")
-    );
+    } = useFetch<PostImageResponse, FormData>((image, token) => ImageAPI.postImage(image, token));
 
     useEffect(() => {
         if (rushIdx !== undefined) {

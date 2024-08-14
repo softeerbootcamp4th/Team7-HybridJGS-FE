@@ -20,7 +20,7 @@ export default function Rush() {
         data: rushEvent,
         isSuccess: isSuccessGetRushEvent,
         fetchData: getRushEvent,
-    } = useFetch<GetRushEventResponse>((_, token) => RushAPI.getRush(token ?? ""));
+    } = useFetch<GetRushEventResponse>((_, token) => RushAPI.getRush(token));
 
     const query = searchParams.get("q");
 

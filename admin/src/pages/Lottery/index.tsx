@@ -26,7 +26,7 @@ export default function Lottery() {
         data: lotteryEvent,
         isSuccess: isSuccessGetLotteryEvent,
         fetchData: getLotteryEvent,
-    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token ?? ""));
+    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token));
 
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
         useFetch<PutLotteryResponse>((_, token) =>
@@ -38,7 +38,7 @@ export default function Lottery() {
                     endTime: lottery.endTime,
                     winnerCount: lottery.winnerCount,
                 },
-                token ?? ""
+                token
             )
         );
 

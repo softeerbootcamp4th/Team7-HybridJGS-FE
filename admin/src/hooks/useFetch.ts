@@ -4,7 +4,7 @@ import { useErrorBoundary } from "react-error-boundary";
 import { COOKIE_KEY } from "@/constants/cookie";
 
 export default function useFetch<T, P = void>(
-    fetch: (params: P, token?: string) => Promise<T>,
+    fetch: (params: P, token: string) => Promise<T>,
     showError = true
 ) {
     const { showBoundary } = useErrorBoundary();

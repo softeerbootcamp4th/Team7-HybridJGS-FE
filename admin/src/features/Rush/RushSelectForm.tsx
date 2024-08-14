@@ -31,7 +31,7 @@ export default function RushSelectForm() {
         isSuccess: isSuccessPostImage,
         fetchMultiple: postImage,
     } = useFetchMultiple<PostImageResponse, FormData>((formData, token) =>
-        ImageAPI.postImage(formData, token ?? "")
+        ImageAPI.postImage(formData, token)
     );
 
     useEffect(() => {

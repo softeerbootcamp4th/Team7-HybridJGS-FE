@@ -25,7 +25,7 @@ export default function EventList() {
     const dispatch = useRushEventDispatchContext();
 
     const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(
-        (_, token) => RushAPI.putRush(rushList, token ?? "")
+        (_, token) => RushAPI.putRush(rushList, token)
     );
 
     useEffect(() => {

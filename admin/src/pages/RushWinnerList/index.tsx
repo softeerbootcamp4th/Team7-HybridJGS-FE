@@ -85,7 +85,7 @@ export default function RushWinnerList() {
         isSuccess: isSuccessGetRushOptions,
         fetchData: getRushOptions,
     } = useFetch<GetRushOptionsResponse>((_, token) =>
-        RushAPI.getRushOptions({ id: rushId }, token ?? "")
+        RushAPI.getRushOptions({ id: rushId }, token)
     );
 
     const currentData = isWinnerToggle ? winners : participants;
