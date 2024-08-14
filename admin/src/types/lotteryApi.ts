@@ -32,6 +32,10 @@ export interface GetLotteryExpectationsParams {
     participantId: number;
 }
 
+export interface PatchLotteryExpectationParams {
+    casperId: number;
+}
+
 export type GetLotteryExpectationsResponse = LotteryExpectationsType[];
 
 export type GetLotteryWinnerResponse = InfiniteParticipantListData<LotteryWinnerType>;

@@ -5,6 +5,7 @@ import {
     GetLotteryResponse,
     GetLotteryWinnerParams,
     GetLotteryWinnerResponse,
+    PatchLotteryExpectationParams,
     PostLotteryWinnerResponse,
     PutLotteryParams,
     PutLotteryResponse,
@@ -78,35 +79,6 @@ export const LotteryAPI = {
         token: string
     ): Promise<GetLotteryWinnerResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve({
-                    participantsList: [
-                        {
-                            id: 1,
-                            phoneNumber: "010-1111-2222",
-                            linkClickedCounts: 1,
-                            expectation: 1,
-                            appliedCount: 3,
-                        },
-                        {
-                            id: 2,
-                            phoneNumber: "010-1111-2223",
-                            linkClickedCounts: 1,
-                            expectation: 1,
-                            appliedCount: 3,
-                        },
-                        {
-                            id: 3,
-                            phoneNumber: "010-1111-2224",
-                            linkClickedCounts: 1,
-                            expectation: 1,
-                            appliedCount: 3,
-                        },
-                    ],
-                    isLastPage: false,
-                    totalParticipants: 10000,
-                })
-            );
             const response = await fetchWithTimeout(
                 `${baseURL}/winner?size=${size}&page=${page}&number=${phoneNumber}`,
                 {
@@ -125,28 +97,6 @@ export const LotteryAPI = {
         token: string
     ): Promise<GetLotteryExpectationsResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve([
-                    {
-                        casperId: 1,
-                        expectation: "기대평 1",
-                        createdDate: "2024-08-15",
-                        createdTime: "22:00:00",
-                    },
-                    {
-                        casperId: 2,
-                        expectation: "기대평 2",
-                        createdDate: "2024-08-15",
-                        createdTime: "22:00:00",
-                    },
-                    {
-                        casperId: 3,
-                        expectation: "기대평 3",
-                        createdDate: "2024-08-15",
-                        createdTime: "22:00:00",
-                    },
-                ])
-            );
             const response = await fetchWithTimeout(
                 `${baseURL}/participants/${participantId}/expectations`,
                 {
@@ -154,6 +104,21 @@ export const LotteryAPI = {
                     headers: { ...headers, Authorization: `Bearer ${token}` },
                 }
             );
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async patchLotteryExpectation(
+        { casperId }: PatchLotteryExpectationParams,
+        token: string
+    ): Promise<GetLotteryExpectationsResponse> {
+        try {
+            const response = await fetchWithTimeout(`${baseURL}/expectations/${casperId}`, {
+                method: "PATCH",
+                headers: { ...headers, Authorization: `Bearer ${token}` },
+            });
             return response.json();
         } catch (error) {
             console.error("Error:", error);

@@ -11,6 +11,7 @@ import useFetch from "@/hooks/useFetch";
 import useInfiniteFetch from "@/hooks/useInfiniteFetch";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useModal from "@/hooks/useModal";
+import useToast from "@/hooks/useToast";
 import { LotteryExpectationsType } from "@/types/lottery";
 import { GetLotteryExpectationsResponse, GetLotteryWinnerResponse } from "@/types/lotteryApi";
 
@@ -19,7 +20,9 @@ export default function LotteryWinnerList() {
 
     const [cookies] = useCookies();
 
+    const { showToast, ToastComponent } = useToast("수정 사항이 반영됐습니다!");
     const { handleOpenModal, ModalComponent } = useModal();
+
     const [selectedWinner, setSelectedWinner] = useState<LotteryExpectationsType[]>([]);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
@@ -58,6 +61,16 @@ export default function LotteryWinnerList() {
         )
     );
 
+    const { isSuccess: isSuccessPatchLotteryExpectation, fetchData: patchLotteryExpectation } =
+        useFetch<{}, number>((casperId: number, token) =>
+            LotteryAPI.patchLotteryExpectation(
+                {
+                    casperId,
+                },
+                token ?? ""
+            )
+        );
+
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const { targetRef } = useIntersectionObserver<HTMLTableRowElement>({
         onIntersect: getWinnerInfo,
@@ -69,6 +82,12 @@ export default function LotteryWinnerList() {
             setSelectedWinner(expectation);
         }
     }, [expectation, isSuccessGetLotteryExpectation]);
+    useEffect(() => {
+        if (isSuccessGetLotteryExpectation) {
+            showToast();
+            getLotteryExpectation();
+        }
+    }, [isSuccessPatchLotteryExpectation]);
 
     const handleRefetch = () => {
         phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
@@ -84,7 +103,18 @@ export default function LotteryWinnerList() {
         getLotteryExpectation(winnerId);
     };
 
-    const expectations = selectedWinner.map((winner) => [winner.casperId, winner.expectation]);
+    const handleClickDelete = (id: number) => {
+        patchLotteryExpectation(id);
+    };
+
+    const expectations = selectedWinner.map((winner) => [
+        winner.createdDate,
+        winner.createdTime,
+        winner.expectation,
+        <Button buttonSize="sm" onClick={() => handleClickDelete(winner.casperId)}>
+            삭제
+        </Button>,
+    ]);
 
     const winnerList = useMemo(
         () =>
@@ -149,6 +179,8 @@ export default function LotteryWinnerList() {
             <ModalComponent>
                 <Table headers={LOTTERY_EXPECTATIONS_HEADER} data={expectations} height="auto" />
             </ModalComponent>
+
+            {ToastComponent}
         </div>
     );
 }
