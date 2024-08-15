@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 
-export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>) {
+export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>, showError = true) {
     const [data, setData] = useState<T | null>(null);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
@@ -17,9 +17,11 @@ export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>) 
             setData(data);
             setIsSuccess(!!data);
         } catch (error) {
-            showBoundary(error);
             setIsError(true);
             console.error(error);
+            if (showError) {
+                showBoundary(error);
+            }
         }
     };
 

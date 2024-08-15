@@ -39,14 +39,21 @@ export default function CasperShowCase() {
     });
 
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { showToast, ToastComponent } = useToast("링크가 복사되었어요!");
 
     const {
         data: shareLink,
         isSuccess: isSuccessGetShareLink,
+        isError: isErrorGetShareLink,
         fetchData: getShareLink,
-    } = useFetch<GetShareLinkResponse>(() =>
-        LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    } = useFetch<GetShareLinkResponse>(
+        () => LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]),
+        false
+    );
+
+    const { showToast, ToastComponent } = useToast(
+        isErrorGetShareLink
+            ? "공유 링크 생성에 실패했습니다! 캐스퍼 봇 생성 후 다시 시도해주세요."
+            : "링크가 복사되었어요!"
     );
 
     const casperList = useLoaderData() as GetCasperListResponse;
@@ -55,8 +62,12 @@ export default function CasperShowCase() {
     useEffect(() => {
         if (shareLink && isSuccessGetShareLink) {
             writeClipboard(shareLink.shortenUrl, showToast);
+            return;
         }
-    }, [shareLink, isSuccessGetShareLink]);
+        if (isErrorGetShareLink) {
+            showToast();
+        }
+    }, [shareLink, isSuccessGetShareLink, isErrorGetShareLink]);
 
     const handleClickShareButton = () => {
         getShareLink();
