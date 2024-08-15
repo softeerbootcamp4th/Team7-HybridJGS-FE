@@ -23,9 +23,6 @@ export interface RushGameContextType {
     };
     preCountdown: number;
     runCountdown: number;
-    setGamePhase: (phase: GamePhase) => void;
-    setUserParticipationStatus: (status: boolean) => void;
-    setUserSelectedOption: (option: CardOption) => void;
     updateCardOptions: (option: CardOption, updates: Partial<CardOptionState>) => void;
     updateUserStatusAndSelectedOption: (token: string, selectedOption: CardOption) => Promise<void>;
     getSelectedCardInfo: (option: CardOption) => CardOptionState;
