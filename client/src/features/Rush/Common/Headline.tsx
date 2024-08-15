@@ -1,67 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { motion } from "framer-motion";
-import { useCookies } from "react-cookie";
-import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
-import { AuthAPI } from "@/apis/authAPI.ts";
+import { useLoaderData } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { COOKIE_KEY } from "@/constants/cookie.ts";
-import useFetch from "@/hooks/useFetch.ts";
-import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext.ts";
-import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext.ts";
+import { useAuth } from "@/hooks/useAuth.ts";
 import usePopup from "@/hooks/usePopup.tsx";
 import useToast from "@/hooks/useToast.tsx";
-import { PostAuthResponse } from "@/types/authApi.ts";
-import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
 export function Headline({ id }: SectionKeyProps) {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const inviteUser = queryParams.get(COOKIE_KEY.INVITE_USER);
-
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
 
-    const [_cookies, setCookie] = useCookies([COOKIE_KEY.ACCESS_TOKEN, COOKIE_KEY.INVITE_USER]);
-
-    const {
-        data: authToken,
-        isSuccess: isSuccessGetAuthToken,
-        fetchData: getAuthToken,
-    } = useFetch<PostAuthResponse, string>((val: string) =>
-        AuthAPI.getAuthToken({ phoneNumber: val })
-    );
-
-    const { phoneNumber } = usePhoneNumberStateContext();
-    const dispatch = usePhoneNumberDispatchContext();
-
-    const [phoneNumberState, setPhoneNumberState] = useState(phoneNumber);
-
-    useEffect(() => {
-        if (inviteUser) {
-            setCookie(COOKIE_KEY.INVITE_USER, inviteUser);
-        }
-    }, [inviteUser]);
-
-    useEffect(() => {
-        if (authToken && isSuccessGetAuthToken) {
-            setCookie(COOKIE_KEY.ACCESS_TOKEN, authToken.accessToken);
-            dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: phoneNumberState });
-            navigate("/rush/game");
-        }
-    }, [authToken, isSuccessGetAuthToken]);
-
-    const handlePhoneNumberChange = (val: string) => {
-        setPhoneNumberState(val);
-    };
-
-    const handlePhoneNumberConfirm = async (val: string) => {
-        await getAuthToken(val);
-    };
+    const { phoneNumberState, handlePhoneNumberChange, handlePhoneNumberConfirm } =
+        useAuth("/rush/game");
 
     const { handleOpenPopup, PopupComponent } = usePopup({
         phoneNumber: phoneNumberState,
