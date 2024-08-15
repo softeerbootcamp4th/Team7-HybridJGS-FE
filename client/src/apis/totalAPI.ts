@@ -1,4 +1,5 @@
 import { GetTotalEventDateResponse } from "@/types/totalApi.ts";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout.ts";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/event/total`;
 const headers = {
@@ -8,7 +9,7 @@ const headers = {
 export const TotalAPI = {
     async getTotal(): Promise<GetTotalEventDateResponse> {
         try {
-            const response = await fetch(`${baseURL}`, {
+            const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
                 headers: headers,
             });

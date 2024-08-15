@@ -7,6 +7,7 @@ import {
     GetTotalRushEventsResponse,
     PostSelectedRushCardOptionResponse,
 } from "@/types/rushApi";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout.ts";
 
 const baseURL = `${import.meta.env.VITE_API_URL}/event/rush`;
 const headers = {
@@ -16,7 +17,7 @@ const headers = {
 export const RushAPI = {
     async getRush(): Promise<GetTotalRushEventsResponse> {
         try {
-            const response = await fetch(`${baseURL}`, {
+            const response = await fetchWithTimeout(`${baseURL}`, {
                 method: "GET",
                 headers: headers,
             });
@@ -30,7 +31,7 @@ export const RushAPI = {
         token: string
     ): Promise<GetRushUserParticipationStatusResponse> {
         try {
-            const response = await fetch(`${baseURL}/applied`, {
+            const response = await fetchWithTimeout(`${baseURL}/applied`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -42,7 +43,7 @@ export const RushAPI = {
     },
     async getTodayRushEvent(token: string): Promise<GetTodayRushEventResponse> {
         try {
-            const response = await fetch(`${baseURL}/today`, {
+            const response = await fetchWithTimeout(`${baseURL}/today`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -57,7 +58,7 @@ export const RushAPI = {
         optionId: number
     ): Promise<PostSelectedRushCardOptionResponse> {
         try {
-            const response = await fetch(`${baseURL}/options/${optionId}/apply`, {
+            const response = await fetchWithTimeout(`${baseURL}/options/${optionId}/apply`, {
                 method: "POST",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -77,7 +78,7 @@ export const RushAPI = {
         optionId: number
     ): Promise<GetRushOptionResultResponse> {
         try {
-            const response = await fetch(`${baseURL}/options/${optionId}/result`, {
+            const response = await fetchWithTimeout(`${baseURL}/options/${optionId}/result`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -89,7 +90,7 @@ export const RushAPI = {
     },
     async getRushBalance(token: string): Promise<GetRushBalanceResponse> {
         try {
-            const response = await fetch(`${baseURL}/balance`, {
+            const response = await fetchWithTimeout(`${baseURL}/balance`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -101,7 +102,7 @@ export const RushAPI = {
     },
     async getRushResult(token: string): Promise<GetRushResultResponse> {
         try {
-            const response = await fetch(`${baseURL}/result`, {
+            const response = await fetchWithTimeout(`${baseURL}/result`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
@@ -113,7 +114,7 @@ export const RushAPI = {
     },
     async getRushTodayEventTest(token: string): Promise<PostSelectedRushCardOptionResponse> {
         try {
-            const response = await fetch(`${baseURL}/today/test`, {
+            const response = await fetchWithTimeout(`${baseURL}/today/test`, {
                 method: "GET",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
