@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
-import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
+import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
@@ -57,10 +57,10 @@ export default function FinalResult() {
             const { leftOption, rightOption } = resultData;
             setResultData(resultData);
 
-            updateCardOptions(CARD_TYPE.LEFT_OPTIONS, {
+            updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 selectionCount: leftOption,
             });
-            updateCardOptions(CARD_TYPE.RIGHT_OPTIONS, {
+            updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 selectionCount: rightOption,
             });
         })();
@@ -72,11 +72,11 @@ export default function FinalResult() {
 
     const message = isWinner ? MESSAGES.WINNING : MESSAGES.LOSING;
 
-    const { mainText: leftMainText } = getSelectedCardInfo(CARD_TYPE.LEFT_OPTIONS);
-    const { mainText: rightMainText } = getSelectedCardInfo(CARD_TYPE.RIGHT_OPTIONS);
+    const { mainText: leftMainText } = getSelectedCardInfo(CARD_OPTION.LEFT_OPTIONS);
+    const { mainText: rightMainText } = getSelectedCardInfo(CARD_OPTION.RIGHT_OPTIONS);
 
-    const leftOptionRatio = getOptionRatio(CARD_TYPE.LEFT_OPTIONS);
-    const rightOptionRatio = getOptionRatio(CARD_TYPE.RIGHT_OPTIONS);
+    const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
+    const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);
 
     const leftWinStatus = getWinStatus(leftOptionRatio, rightOptionRatio);
     const rightWinStatus = getWinStatus(rightOptionRatio, leftOptionRatio);
@@ -107,13 +107,15 @@ export default function FinalResult() {
                         <OptionDisplay
                             mainText={leftMainText}
                             winStatus={leftWinStatus}
-                            isUserSelected={gameState.userSelectedOption === CARD_TYPE.LEFT_OPTIONS}
+                            isUserSelected={
+                                gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS
+                            }
                         />
                         <OptionDisplay
                             mainText={rightMainText}
                             winStatus={rightWinStatus}
                             isUserSelected={
-                                gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS
+                                gameState.userSelectedOption === CARD_OPTION.RIGHT_OPTIONS
                             }
                         />
                     </div>

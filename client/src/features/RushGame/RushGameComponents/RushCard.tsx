@@ -1,8 +1,9 @@
 import { cva } from "class-variance-authority";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
+import { CardColor } from "@/types/rushGame.ts";
 
 interface RushCardProps {
-    color: (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
+    color: CardColor;
     mainText: string;
     subText: string;
     onClick?: () => void;

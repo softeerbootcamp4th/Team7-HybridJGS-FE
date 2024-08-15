@@ -1,6 +1,6 @@
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
-import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
+import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
@@ -34,8 +34,8 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
     }
 
     const userSelectedRatio =
-        userSelectedOption === CARD_TYPE.LEFT_OPTIONS ? leftRatio : rightRatio;
-    const oppositeRatio = userSelectedOption === CARD_TYPE.LEFT_OPTIONS ? rightRatio : leftRatio;
+        userSelectedOption === CARD_OPTION.LEFT_OPTIONS ? leftRatio : rightRatio;
+    const oppositeRatio = userSelectedOption === CARD_OPTION.LEFT_OPTIONS ? rightRatio : leftRatio;
 
     if (userSelectedRatio > oppositeRatio) {
         return MESSAGES.WINNING;
@@ -74,13 +74,13 @@ export default function RushCardCurrentRatio() {
         useRushGameContext();
     const { toggleContents } = useToggleContents(true, 5000);
 
-    const leftOptionRatio = getOptionRatio(CARD_TYPE.LEFT_OPTIONS);
-    const rightOptionRatio = getOptionRatio(CARD_TYPE.RIGHT_OPTIONS);
+    const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
+    const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);
 
     const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
 
-    const { mainText: leftMainText } = getSelectedCardInfo(CARD_TYPE.LEFT_OPTIONS);
-    const { mainText: rightMainText } = getSelectedCardInfo(CARD_TYPE.RIGHT_OPTIONS);
+    const { mainText: leftMainText } = getSelectedCardInfo(CARD_OPTION.LEFT_OPTIONS);
+    const { mainText: rightMainText } = getSelectedCardInfo(CARD_OPTION.RIGHT_OPTIONS);
 
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
@@ -94,13 +94,13 @@ export default function RushCardCurrentRatio() {
                         mainText={leftMainText}
                         userSelectedOptionRatio={leftOptionRatio}
                         oppositeOptionRatio={rightOptionRatio}
-                        isUserSelected={gameState.userSelectedOption === CARD_TYPE.LEFT_OPTIONS}
+                        isUserSelected={gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
                     />
                     <OptionDisplay
                         mainText={rightMainText}
                         userSelectedOptionRatio={rightOptionRatio}
                         oppositeOptionRatio={leftOptionRatio}
-                        isUserSelected={gameState.userSelectedOption === CARD_TYPE.RIGHT_OPTIONS}
+                        isUserSelected={gameState.userSelectedOption === CARD_OPTION.RIGHT_OPTIONS}
                     />
                 </div>
                 <RushProgressBar

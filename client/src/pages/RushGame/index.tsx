@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
+import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import CardOptions from "@/features/RushGame/RushGameSections/CardOptions.tsx";
 import Countdown from "@/features/RushGame/RushGameSections/Countdown.tsx";
@@ -14,15 +15,15 @@ export default function RushGame() {
     const renderRushGameContent = () => {
         // console.log(gameState.phase);
         switch (gameState.phase) {
-            case "NOT_STARTED":
+            case CARD_PHASE.NOT_STARTED:
                 return <Countdown />;
-            case "IN_PROGRESS":
+            case CARD_PHASE.IN_PROGRESS:
                 if (!gameState.userParticipatedStatus) {
                     return <CardOptions />;
                 } else {
                     return <SelectedCard />;
                 }
-            case "COMPLETED":
+            case CARD_PHASE.COMPLETED:
                 return <FinalResult />;
             default:
                 return null;

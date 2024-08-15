@@ -1,4 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
+import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 
 interface RushProgressBarProps {
@@ -45,7 +46,7 @@ export default function RushProgressBar({
     rightOptionRatio,
 }: RushProgressBarProps) {
     const { gameState } = useRushGameContext();
-    const isCompleted = gameState.phase === "COMPLETED";
+    const isCompleted = gameState.phase === CARD_PHASE.COMPLETED;
     const leftStatus = isCompleted && leftOptionRatio < rightOptionRatio ? "losing" : "winning";
     const rightStatus = isCompleted && rightOptionRatio < leftOptionRatio ? "losing" : "winning";
 
