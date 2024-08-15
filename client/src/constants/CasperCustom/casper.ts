@@ -338,7 +338,7 @@ export const CASPER_MOUTH_SIZE = {
         },
         [MOUTH_OPTION.MOCKING]: {
             WIDTH: 170,
-            TOP: 90,
+            TOP: 94,
         },
         [MOUTH_OPTION.SMILE]: {
             WIDTH: 170,
@@ -360,7 +360,7 @@ export const CASPER_MOUTH_SIZE = {
         },
         [MOUTH_OPTION.MOCKING]: {
             WIDTH: 126,
-            TOP: 59,
+            TOP: 60,
         },
         [MOUTH_OPTION.SMILE]: {
             WIDTH: 128,
