@@ -13,8 +13,10 @@ import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
 import useToast from "@/hooks/useToast";
 import { CASPER_ACTION } from "@/types/casperCustom";
+import { GetShareLinkResponse } from "@/types/linkApi";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
+import { writeClipboard } from "@/utils/writeClipboard";
 import { SCROLL_MOTION } from "../../constants/animation";
 import { Battery } from "./Battery";
 import { MyCasperCardFront } from "./MyCasperCardFront";
@@ -30,10 +32,25 @@ export function CasperCustomFinish({
     unblockNavigation,
 }: CasperCustomFinishProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { showToast, ToastComponent } = useToast("링크가 복사되었어요!");
 
     const { data: applyCountData, fetchData: getApplyCount } = useFetch<GetApplyCountResponse>(() =>
         LotteryAPI.getApplyCount(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    );
+
+    const {
+        data: shareLink,
+        isSuccess: isSuccessGetShareLink,
+        isError: isErrorGetShareLink,
+        fetchData: getShareLink,
+    } = useFetch<GetShareLinkResponse>(
+        () => LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]),
+        false
+    );
+
+    const { showToast, ToastComponent } = useToast(
+        isErrorGetShareLink
+            ? "공유 링크 생성에 실패했습니다! 캐스퍼 봇 생성 후 다시 시도해주세요."
+            : "링크가 복사되었어요!"
     );
 
     const dispatch = useCasperCustomDispatchContext();
@@ -41,6 +58,15 @@ export function CasperCustomFinish({
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        if (shareLink && isSuccessGetShareLink) {
+            writeClipboard(shareLink.shortenUrl, showToast);
+            return;
+        }
+        if (isErrorGetShareLink) {
+            showToast();
+        }
+    }, [shareLink, isSuccessGetShareLink]);
     useEffect(() => {
         if (!cookies[COOKIE_KEY.ACCESS_TOKEN]) {
             return;
@@ -63,15 +89,8 @@ export function CasperCustomFinish({
         dispatch({ type: CASPER_ACTION.RESET_CUSTOM });
     };
 
-    const handleClickShareButton = async () => {
-        const link = await LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]);
-
-        try {
-            await navigator.clipboard.writeText(link.shortenUrl);
-            showToast();
-        } catch (err) {
-            console.error("Failed to copy: ", err);
-        }
+    const handleClickShareButton = () => {
+        getShareLink();
     };
 
     return (

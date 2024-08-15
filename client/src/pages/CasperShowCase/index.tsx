@@ -1,12 +1,20 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
 import { useLoaderData } from "react-router-dom";
+import { LinkAPI } from "@/apis/linkAPI";
 import CTAButton from "@/components/CTAButton";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { CASPER_SHOWCASE_SECTIONS } from "@/constants/PageSections/sections";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import { CasperCards } from "@/features/CasperShowCase";
+import useFetch from "@/hooks/useFetch";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver";
+import useToast from "@/hooks/useToast";
+import { GetShareLinkResponse } from "@/types/linkApi";
 import { GetCasperListResponse } from "@/types/lotteryApi";
+import { writeClipboard } from "@/utils/writeClipboard";
 
 function getCardListData(cardList: GetCasperListResponse) {
     return cardList.map((card) => {
@@ -30,11 +38,39 @@ export default function CasperShowCase() {
         darkSections: [CASPER_SHOWCASE_SECTIONS.SHOWCASE],
     });
 
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
+
+    const {
+        data: shareLink,
+        isSuccess: isSuccessGetShareLink,
+        isError: isErrorGetShareLink,
+        fetchData: getShareLink,
+    } = useFetch<GetShareLinkResponse>(
+        () => LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]),
+        false
+    );
+
+    const { showToast, ToastComponent } = useToast(
+        isErrorGetShareLink
+            ? "공유 링크 생성에 실패했습니다! 캐스퍼 봇 생성 후 다시 시도해주세요."
+            : "링크가 복사되었어요!"
+    );
+
     const casperList = useLoaderData() as GetCasperListResponse;
     const cardListData = getCardListData(casperList);
 
-    const handleClickShare = () => {
-        // TODO: 이벤트 링크 공유 로직
+    useEffect(() => {
+        if (shareLink && isSuccessGetShareLink) {
+            writeClipboard(shareLink.shortenUrl, showToast);
+            return;
+        }
+        if (isErrorGetShareLink) {
+            showToast();
+        }
+    }, [shareLink, isSuccessGetShareLink, isErrorGetShareLink]);
+
+    const handleClickShareButton = () => {
+        getShareLink();
     };
 
     return (
@@ -55,10 +91,12 @@ export default function CasperShowCase() {
                 </motion.div>
 
                 <motion.div className="flex gap-500" {...SCROLL_MOTION(ASCEND)}>
-                    <CTAButton label="이벤트 링크 공유" onClick={handleClickShare} />
+                    <CTAButton label="이벤트 링크 공유" onClick={handleClickShareButton} />
                     <CTAButton label="메인으로 돌아가기" url="/" color="white" />
                 </motion.div>
             </section>
+
+            {ToastComponent}
         </div>
     );
 }
