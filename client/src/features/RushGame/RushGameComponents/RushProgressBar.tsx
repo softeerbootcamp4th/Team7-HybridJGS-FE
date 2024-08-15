@@ -6,7 +6,7 @@ interface RushProgressBarProps {
     rightOptionRatio: number;
 }
 
-const barStyle = cva("flex items-center", {
+const barVariants = cva(`flex items-center`, {
     variants: {
         color: {
             green: "bg-gradient-green",
@@ -26,15 +26,15 @@ const barStyle = cva("flex items-center", {
     },
 });
 
-type BarStyleProps = VariantProps<typeof barStyle>;
+type BarVariantsProps = VariantProps<typeof barVariants>;
 
-interface BarProps extends BarStyleProps {
+interface BarProps extends BarVariantsProps {
     ratio: number;
 }
 
 function Bar({ ratio, color, status, textAlign }: BarProps) {
     return (
-        <span className={barStyle({ color, status, textAlign })} style={{ width: `${ratio}%` }}>
+        <span className={barVariants({ color, status, textAlign })} style={{ width: `${ratio}%` }}>
             <p className="px-3">{ratio}%</p>
         </span>
     );
