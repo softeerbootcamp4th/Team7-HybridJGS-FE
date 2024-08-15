@@ -13,8 +13,10 @@ import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
 import useToast from "@/hooks/useToast";
 import { CASPER_ACTION } from "@/types/casperCustom";
+import { GetShareLinkResponse } from "@/types/linkApi";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
+import { writeClipboard } from "@/utils/writeClipboard";
 import { SCROLL_MOTION } from "../../constants/animation";
 import { Battery } from "./Battery";
 import { MyCasperCardFront } from "./MyCasperCardFront";
@@ -36,11 +38,24 @@ export function CasperCustomFinish({
         LotteryAPI.getApplyCount(cookies[COOKIE_KEY.ACCESS_TOKEN])
     );
 
+    const {
+        data: shareLink,
+        isSuccess: isSuccessGetShareLink,
+        fetchData: getShareLink,
+    } = useFetch<GetShareLinkResponse>(() =>
+        LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    );
+
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        if (shareLink && isSuccessGetShareLink) {
+            writeClipboard(shareLink.shortenUrl, showToast);
+        }
+    }, [shareLink, isSuccessGetShareLink]);
     useEffect(() => {
         if (!cookies[COOKIE_KEY.ACCESS_TOKEN]) {
             return;
@@ -63,15 +78,8 @@ export function CasperCustomFinish({
         dispatch({ type: CASPER_ACTION.RESET_CUSTOM });
     };
 
-    const handleClickShareButton = async () => {
-        const link = await LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]);
-
-        try {
-            await navigator.clipboard.writeText(link.shortenUrl);
-            showToast();
-        } catch (err) {
-            console.error("Failed to copy: ", err);
-        }
+    const handleClickShareButton = () => {
+        getShareLink();
     };
 
     return (
