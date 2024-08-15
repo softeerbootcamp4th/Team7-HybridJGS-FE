@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Modal, { ModalProps } from "@/components/Modal";
 
 export default function useModal() {
@@ -20,9 +20,12 @@ export default function useModal() {
         setIsOpen(false);
     };
 
-    const ModalComponent = ({ children }: Omit<ModalProps, "handleClose">) => {
-        return isOpen ? <Modal handleClose={handleCloseModal}>{children}</Modal> : null;
-    };
+    const ModalComponent = useCallback(
+        ({ children }: Omit<ModalProps, "handleClose">) => {
+            return isOpen ? <Modal handleClose={handleCloseModal}>{children}</Modal> : null;
+        },
+        [isOpen]
+    );
 
     return { handleOpenModal, ModalComponent };
 }
