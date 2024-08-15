@@ -1,76 +1,58 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { RushAPI } from "@/apis/rushAPI";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { RUSH_SECTION, RushSectionType } from "@/constants/rush";
+import { EVENT_STATUS, STATUS_MAP } from "@/constants/common";
+import { EVENT_LIST_HEADER, QUERY_OPTION } from "@/constants/rush";
+import useFetch from "@/hooks/useFetch";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
+import useToast from "@/hooks/useToast";
 import { RUSH_ACTION } from "@/types/rush";
+import { PutRushEventResponse } from "@/types/rushApi";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 
-interface EventListProps {
-    handleSelectSection: (idx: number, section: RushSectionType) => void;
-}
+export default function EventList() {
+    const navigate = useNavigate();
 
-const EVENT_LIST_HEADER = [
-    "ID",
-    "이벤트 진행 날짜",
-    "오픈 시간",
-    "종료 시간",
-    "활성화 시간",
-    "선택지 관리",
-    "경품 관리",
-    "선착순 당첨 인원 수",
-    "진행 상태",
-    "참여자 리스트 보기",
-    "관리",
-];
+    const { showToast, ToastComponent } = useToast("수정 사항이 반영되었습니다!");
 
-export default function EventList({ handleSelectSection }: EventListProps) {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
-    useEffect(() => {
-        // TODO: 데이터 패칭 로직 구현
-        dispatch({
-            type: RUSH_ACTION.SET_EVENT_LIST,
-            payload: [
-                {
-                    rush_event_id: 1,
-                    event_date: "2024-07-25",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize1.png",
-                    prize_description: "스타벅스 1만원 기프트카드",
-                },
-                {
-                    rush_event_id: 2,
-                    event_date: "2024-07-26",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize2.png",
-                    prize_description: "올리브영 1만원 기프트카드",
-                },
-                {
-                    rush_event_id: 2,
-                    event_date: "2024-07-27",
-                    open_time: "20:00:00",
-                    close_time: "20:10:00",
-                    winner_count: 315,
-                    prize_image_url: "prize3.png",
-                    prize_description: "배달의 민족 1만원 기프트카드",
-                },
-            ],
-        });
-    }, []);
+    const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(() =>
+        RushAPI.putRush(getFormData())
+    );
 
-    const handleChangeItem = (key: string, changeIdx: number, date: string) => {
+    useEffect(() => {
+        if (isSuccessPutRush) {
+            showToast();
+        }
+    }, [isSuccessPutRush]);
+
+    const getFormData = () => {
+        return rushList.map((rush) => {
+            const formData = new FormData();
+            Object.entries(rush).forEach(([key, value]) => {
+                if (typeof value === "object") {
+                    Object.entries(value).forEach(([subKey, subValue]) => {
+                        formData.append(`${key}[${subKey}]`, subValue as Blob);
+                    });
+                } else {
+                    formData.append(key, value.toString());
+                }
+            });
+            return formData;
+        });
+    };
+
+    const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
         const updatedTableItemList = rushList.map((item, idx) => {
             if (idx === changeIdx) {
-                return { ...item, [key]: date };
+                return { ...item, [key]: text };
             }
             return { ...item };
         });
@@ -78,50 +60,78 @@ export default function EventList({ handleSelectSection }: EventListProps) {
         dispatch({ type: RUSH_ACTION.SET_EVENT_LIST, payload: updatedTableItemList });
     };
 
+    const handleUpdate = () => {
+        putRush();
+    };
+
     const getTableData = () => {
         return rushList.map((item, idx) => {
+            const canEdit = item.status !== EVENT_STATUS.BEFORE;
             return [
-                item.rush_event_id,
+                item.rushEventId,
                 <DatePicker
-                    date={item.event_date}
-                    onChangeDate={(date) => handleChangeItem("event_date", idx, date)}
+                    disabled={canEdit}
+                    date={item.eventDate}
+                    onChangeDate={(date) => handleChangeItem("eventDate", idx, date)}
                 />,
                 <TimePicker
-                    time={item.open_time}
-                    onChangeTime={(time) => handleChangeItem("open_time", idx, time)}
+                    disabled={canEdit}
+                    time={item.openTime}
+                    onChangeTime={(time) => handleChangeItem("openTime", idx, time)}
                 />,
                 <TimePicker
-                    time={item.close_time}
-                    onChangeTime={(time) => handleChangeItem("close_time", idx, time)}
+                    disabled={canEdit}
+                    time={item.closeTime}
+                    onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
                 />,
-                getTimeDifference(item.open_time, item.close_time),
-                <Button buttonSize="sm">선택지 관리</Button>,
-                <Button buttonSize="sm">경품 관리</Button>,
-                <div className="flex justify-between">
-                    <p>{item.winner_count}</p>
-                    <p>편집</p>
+                getTimeDifference(item.openTime, item.closeTime),
+                <Button
+                    disabled={canEdit}
+                    buttonSize="sm"
+                    onClick={() => navigate(`/rush?q=${QUERY_OPTION.OPTION}`, { state: { idx } })}
+                >
+                    선택지 관리
+                </Button>,
+                <Button
+                    disabled={canEdit}
+                    buttonSize="sm"
+                    onClick={() => navigate(`/rush?q=${QUERY_OPTION.PRIZE}`, { state: { idx } })}
+                >
+                    경품 관리
+                </Button>,
+                <div className="flex w-full border-b">
+                    <input
+                        disabled={canEdit}
+                        value={item.winnerCount}
+                        onChange={(e) =>
+                            handleChangeItem("winnerCount", idx, parseInt(e.target.value) || 0)
+                        }
+                    />
                 </div>,
-                "오픈 전",
+                STATUS_MAP[item.status],
                 <Button
                     buttonSize="sm"
-                    onClick={() => handleSelectSection(idx, RUSH_SECTION.APPLICANT_LIST)}
+                    onClick={() =>
+                        navigate("/rush/winner-list", { state: { id: item.rushEventId } })
+                    }
                 >
                     참여자 리스트 보기
                 </Button>,
-                <Button buttonSize="sm">삭제</Button>,
             ];
         });
     };
 
     return (
         <div className="w-[1560px] flex flex-col items-center mt-10 gap-4">
-            <div className="self-start">
-                <Button buttonSize="sm">이벤트 진행 날짜 추가</Button>
+            <div className="mt-4">
+                <Table headers={EVENT_LIST_HEADER} data={getTableData()} />
             </div>
 
-            <Table headers={EVENT_LIST_HEADER} data={getTableData()} />
+            <Button buttonSize="lg" onClick={handleUpdate}>
+                수정사항 업데이트
+            </Button>
 
-            <Button buttonSize="lg">수정사항 업데이트</Button>
+            {ToastComponent}
         </div>
     );
 }

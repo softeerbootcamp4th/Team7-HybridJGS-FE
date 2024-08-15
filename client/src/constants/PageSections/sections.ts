@@ -32,3 +32,11 @@ export const RUSH_SECTIONS = {
     CASPER_CHARGE: "CASPER_CHARGE",
     CASPER_SMART_KEY: "CASPER_SMART_KEY",
 } as const;
+
+export const CASPER_CUSTOM_SECTIONS = {
+    CUSTOM: "CUSTOM",
+} as const;
+
+export const CASPER_SHOWCASE_SECTIONS = {
+    SHOWCASE: "SHOWCASE",
+} as const;

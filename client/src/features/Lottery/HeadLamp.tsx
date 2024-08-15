@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -5,7 +6,7 @@ import { SectionKeyProps } from "@/types/sections.ts";
 import { Description } from "./Description";
 import { Section } from "./Section";
 
-export function HeadLamp({ id }: SectionKeyProps) {
+function HeadLamp({ id }: SectionKeyProps) {
     return (
         <Section id={id}>
             <div className="w-[1200px]">
@@ -49,3 +50,6 @@ export function HeadLamp({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedHeadLamp = memo(HeadLamp);
+export { MemoizedHeadLamp as HeadLamp };

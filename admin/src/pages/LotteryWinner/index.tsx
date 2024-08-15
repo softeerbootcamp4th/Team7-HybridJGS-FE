@@ -1,80 +1,55 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
-import Table from "@/components/Table";
-
-const LOTTERY_WINNER_HEADER = [
-    "등수",
-    "ID",
-    "생성 시간",
-    "전화번호",
-    "공유 링크 클릭 횟수",
-    "기대평 작성 여부",
-    "총 응모 횟수",
-];
-const data = [
-    {
-        phone_number: "010-1111-2222",
-        link_clicked_counts: "1",
-        expectation: "1",
-    },
-    {
-        phone_number: "010-1111-2223",
-        link_clicked_counts: "3",
-        expectation: "1",
-    },
-    {
-        phone_number: "010-1111-2224",
-        link_clicked_counts: "4",
-        expectation: "0",
-    },
-];
+import useFetch from "@/hooks/useFetch";
+import { LotteryEventType } from "@/types/lottery";
+import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lotteryApi";
 
 export default function LotteryWinner() {
+    const lottery = useLoaderData() as GetLotteryResponse;
+
     const navigate = useNavigate();
 
-    const [winnerList, setWinnerList] = useState([] as any);
+    const [currentLottery, setCurrentLottery] = useState<LotteryEventType>({} as LotteryEventType);
+
+    const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
+        useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner());
 
     useEffect(() => {
-        setWinnerList(
-            data.map((d, idx) => {
-                return [
-                    idx + 1,
-                    d.phone_number,
-                    d.phone_number,
-                    d.phone_number,
-                    d.link_clicked_counts,
-                    d.link_clicked_counts,
-                    d.link_clicked_counts,
-                ];
-            })
-        );
-    }, []);
+        if (lottery.length !== 0) {
+            setCurrentLottery(lottery[0]);
+        }
+    }, [lottery]);
+    useEffect(() => {
+        if (isSuccessPostLottery) {
+            navigate("/lottery/winner-list");
+        }
+    }, [isSuccessPostLottery]);
 
     const handleLottery = () => {
-        // TODO: 다시 추첨하는 로직 구현
+        postLottery();
     };
 
     return (
         <div className="flex flex-col items-center h-screen">
             <TabHeader />
 
-            <div className="w-[1560px] flex flex-col items-center justify-center gap-8 mt-10">
-                <div className="flex items-center gap-2 self-start">
-                    <img
-                        alt="뒤로 가기 버튼"
-                        src="/assets/icons/left-arrow.svg"
-                        className="cursor-pointer"
-                        onClick={() => navigate(-1)}
-                    />
-                    <p className="h-body-1-medium">당첨자 추첨</p>
+            <div className="flex flex-col h-full items-center justify-center gap-8 pb-40">
+                <div className="flex border">
+                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">전체 참여자 수</p>
+                    <p className="px-6 py-4 w-[200px] h-body-1-regular">
+                        {currentLottery.appliedCount}
+                    </p>
+                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
+                    <p className="px-6 py-4 w-[200px] h-body-1-regular">
+                        {currentLottery.winnerCount}
+                    </p>
                 </div>
 
-                <Table headers={LOTTERY_WINNER_HEADER} data={winnerList} />
-
                 <Button buttonSize="lg" onClick={handleLottery}>
-                    당첨자 다시 추첨하기
+                    당첨자 추첨하기
                 </Button>
             </div>
         </div>

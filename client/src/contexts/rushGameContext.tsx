@@ -2,8 +2,8 @@ import { ReactNode, createContext, useCallback, useEffect, useState } from "reac
 import { useCookies } from "react-cookie";
 import { useLoaderData } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
+import { COOKIE_KEY } from "@/constants/cookie.ts";
 import useCountdown from "@/hooks/useCountdown.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/types/rushGame";
@@ -12,7 +12,7 @@ export const RushGameContext = createContext<RushGameContextType | undefined>(un
 
 export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     // const navigate  = useNavigate();
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
     const [_initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
     const [_initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
@@ -98,7 +98,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
 
     const fetchRushBalance = useCallback(async (): Promise<void> => {
         try {
-            const rushBalanceData = await RushAPI.getRushBalance(cookies[COOKIE_TOKEN_KEY]);
+            const rushBalanceData = await RushAPI.getRushBalance(cookies[COOKIE_KEY.ACCESS_TOKEN]);
             const { leftOption, rightOption } = rushBalanceData;
 
             updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { cva } from "class-variance-authority";
 import {
     CASPER_CARD_SIZE,
@@ -45,7 +46,7 @@ const casperNameVariants = cva(
     }
 );
 
-export function CasperCardFrontUI({
+function CasperCardFrontUI({
     size = CASPER_SIZE_OPTION.LG,
     optionDescription,
     casperName,
@@ -195,3 +196,6 @@ export function CasperCardFrontUI({
         </div>
     );
 }
+
+const MemoizedCasperCardFrontUI = memo(CasperCardFrontUI);
+export { MemoizedCasperCardFrontUI as CasperCardFrontUI };

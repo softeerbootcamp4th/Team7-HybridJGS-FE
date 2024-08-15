@@ -12,7 +12,6 @@ export function Battery({ applyCount }: BatteryProps) {
     const [batteryApplyArray, setBatteryApplyArray] = useState<boolean[]>(batteryArray);
 
     useEffect(() => {
-        // TODO: 응모 횟수 받아와야함
         const newBatteryApplyArray = batteryApplyArray.map((_, index) => index < applyCount);
         setBatteryApplyArray(newBatteryApplyArray);
     }, [applyCount]);

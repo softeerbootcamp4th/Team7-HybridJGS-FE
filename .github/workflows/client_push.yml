@@ -31,6 +31,11 @@ jobs:
       - name: Install dependencies
         run: yarn
         working-directory: ${{ env.working-directory }}
+      
+
+      - name: Create .env file
+        run: echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > ./.env
+        working-directory: ${{ env.working-directory }}
 
       #       build
       - name: Build project

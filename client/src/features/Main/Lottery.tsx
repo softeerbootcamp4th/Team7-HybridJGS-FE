@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import LotteryEvent from "@/components/LotteryEvent";
@@ -8,7 +8,7 @@ import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
-export function Lottery({ id }: SectionKeyProps) {
+function Lottery({ id }: SectionKeyProps) {
     const [startDateTime, setStartDateTime] = useState<string | null>(null);
     const [endDateTime, setEndDateTime] = useState<string | null>(null);
 
@@ -81,3 +81,6 @@ export function Lottery({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedLottery = memo(Lottery);
+export { MemoizedLottery as Lottery };

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
+import { SCROLL_MOTION } from "@/constants/animation";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useToast from "@/hooks/useToast";
 import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
@@ -26,18 +27,23 @@ export function CasperCustomFinishing({ navigateNextStep }: CasperCustomFinishin
     useEffect(() => {
         showToast();
 
-        setTimeout(() => {
+        const flipTimer = setTimeout(() => {
             setIsFlipped(true);
-        }, 3000);
+        }, 2000);
 
-        setTimeout(() => {
+        const navigateTimer = setTimeout(() => {
             navigateNextStep();
-        }, 6000);
+        }, 4000);
+
+        return () => {
+            clearTimeout(flipTimer);
+            clearTimeout(navigateTimer);
+        };
     }, []);
 
     return (
         <>
-            <motion.div className="flex" {...DISSOLVE}>
+            <motion.div className="flex" {...SCROLL_MOTION(DISSOLVE)}>
                 <CasperFlipCard size={CASPER_SIZE_OPTION.LG} card={card} isFlipped={isFlipped} />
             </motion.div>
 

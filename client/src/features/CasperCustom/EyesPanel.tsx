@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import Category from "@/components/Category";
 import {
     CASPER_OPTION,
@@ -30,19 +31,19 @@ export function EyesPanel() {
         POSITION_OPTION.RIGHT,
     ];
 
-    const handleClickEyes = (id: string) => {
+    const handleClickEyes = useCallback((id: string) => {
         dispatch({
             type: CASPER_ACTION.SELECT_OPTION,
             payload: { option: CUSTOM_OPTION.EYES, id },
         });
-    };
+    }, []);
 
-    const handleClickEyesDirection = (id: string) => {
+    const handleClickEyesDirection = useCallback((id: string) => {
         dispatch({
             type: CASPER_ACTION.SELECT_OPTION,
             payload: { option: CUSTOM_OPTION.EYES_DIRECTION, id },
         });
-    };
+    }, []);
 
     return (
         <CasperCustomPanelLayout className="px-[30px] py-1000">
@@ -52,8 +53,9 @@ export function EyesPanel() {
                     {limitedEyes.map((eye) => (
                         <EyesOptionImageItem
                             key={eye.id}
+                            id={eye.id}
                             isSelected={selectedEyes.id === eye.id}
-                            handleClickOption={() => handleClickEyes(eye.id)}
+                            handleClickOption={handleClickEyes}
                             previewUrl={`${eye.id}-center.png`}
                         />
                     ))}
@@ -68,8 +70,9 @@ export function EyesPanel() {
                     {basicEyes.map((eye) => (
                         <EyesOptionImageItem
                             key={eye.id}
+                            id={eye.id}
                             isSelected={selectedEyes.id === eye.id}
-                            handleClickOption={() => handleClickEyes(eye.id)}
+                            handleClickOption={handleClickEyes}
                             previewUrl={`${eye.id}-center.png`}
                         />
                     ))}
@@ -85,8 +88,9 @@ export function EyesPanel() {
                         eyesDirectionArray.map((direction) => (
                             <EyesOptionImageItem
                                 key={direction}
+                                id={direction}
                                 isSelected={selectedEyesDirection.id === direction}
-                                handleClickOption={() => handleClickEyesDirection(direction)}
+                                handleClickOption={handleClickEyesDirection}
                                 previewUrl={`${eyesOptions[0].id}-${direction}.png`}
                             />
                         ))}

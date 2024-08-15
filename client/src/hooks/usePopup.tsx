@@ -5,7 +5,6 @@ export default function usePopup({
     phoneNumber,
     handlePhoneNumberChange,
     handlePhoneNumberConfirm,
-    confirmUrl,
 }: Omit<PopUpProps, "handleClose">) {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -32,7 +31,6 @@ export default function usePopup({
             handlePhoneNumberChange={handlePhoneNumberChange}
             handlePhoneNumberConfirm={handlePhoneNumberConfirm}
             handleClose={handleClosePopup}
-            confirmUrl={confirmUrl}
         />
     ) : (
         <></>

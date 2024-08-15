@@ -1,16 +1,46 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { AuthAPI } from "@/apis/authAPI";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import { COOKIE_KEY } from "@/constants/cookie";
+import useFetch from "@/hooks/useFetch";
+import { PostAuthResponse } from "@/types/authApi";
 
 export default function Login() {
     const navigate = useNavigate();
+
+    const [_cookies, setCookie] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
     const [id, setId] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    const {
+        data: token,
+        isSuccess: isSuccessPostAuth,
+        isError: isErrorPostAuth,
+        fetchData: postAuth,
+    } = useFetch<PostAuthResponse>(() => AuthAPI.postAuth({ adminId: id, password }), false);
+
     const isValidButton = id.length !== 0 && password.length !== 0;
+
+    useEffect(() => {
+        if (isSuccessPostAuth && token) {
+            setCookie(COOKIE_KEY.ACCESS_TOKEN, token.accessToken, { path: "/" });
+
+            setErrorMessage("");
+            navigate("/lottery");
+        }
+    }, [isSuccessPostAuth, token]);
+    useEffect(() => {
+        if (isErrorPostAuth) {
+            setErrorMessage(
+                "아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요."
+            );
+        }
+    }, [isErrorPostAuth]);
 
     const handleChangeId = (e: ChangeEvent<HTMLInputElement>) => {
         setId(e.target.value);
@@ -23,10 +53,7 @@ export default function Login() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // TODO: 로그인 로직
-
-        setErrorMessage("");
-        navigate("/lottery");
+        postAuth();
     };
 
     return (

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import { cva } from "class-variance-authority";
 
 export interface CategoryProps {
@@ -16,6 +16,8 @@ const categoryVariants = cva(`w-fit px-300 py-200 rounded-1000 text-n-white h-bo
     },
 });
 
-export default function Category({ type, children }: CategoryProps) {
+function Category({ type, children }: CategoryProps) {
     return <span className={categoryVariants({ type })}>{children}</span>;
 }
+
+export default memo(Category);

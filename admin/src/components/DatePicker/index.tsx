@@ -2,10 +2,11 @@ import { ChangeEvent } from "react";
 
 interface DatePickerProps {
     date: string;
+    disabled?: boolean;
     onChangeDate: (date: string) => void;
 }
 
-export default function DatePicker({ date, onChangeDate }: DatePickerProps) {
+export default function DatePicker({ date, disabled = false, onChangeDate }: DatePickerProps) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChangeDate(e.target.value);
     };
@@ -17,6 +18,7 @@ export default function DatePicker({ date, onChangeDate }: DatePickerProps) {
             </div>
             <input
                 type="date"
+                disabled={disabled}
                 value={date}
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"

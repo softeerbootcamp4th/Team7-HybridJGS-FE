@@ -20,7 +20,6 @@ const casperCustomReducer = (
     switch (action.type) {
         case RUSH_ACTION.SET_EVENT_LIST:
             return { ...state, rushList: action.payload };
-
         default:
             return state;
     }

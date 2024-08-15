@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -7,7 +8,7 @@ interface ShortCutProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
 }
 
-export function ShortCut({ id, handleClickShortCutButton }: ShortCutProps) {
+function ShortCut({ id, handleClickShortCutButton }: ShortCutProps) {
     return (
         <motion.section
             id={id}
@@ -34,3 +35,6 @@ export function ShortCut({ id, handleClickShortCutButton }: ShortCutProps) {
         </motion.section>
     );
 }
+
+const MemoizedShortCut = memo(ShortCut);
+export { MemoizedShortCut as ShortCut };

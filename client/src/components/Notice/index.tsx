@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { formatEventDate } from "@/utils/formatDate.ts";
@@ -65,7 +65,7 @@ const getEventsDateDetails = async (): Promise<{
     }
 };
 
-export default function Notice() {
+function Notice() {
     const [eventDateDetails, setEventDateDetails] = useState<EventDateData>({});
 
     useEffect(() => {
@@ -108,3 +108,5 @@ export default function Notice() {
         </div>
     );
 }
+
+export default memo(Notice);

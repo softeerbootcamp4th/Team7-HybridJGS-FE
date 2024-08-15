@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { TotalAPI } from "@/apis/totalAPI.ts";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { COOKIE_KEY } from "@/constants/cookie.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
-export function Headline({ id }: SectionKeyProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+function Headline({ id }: SectionKeyProps) {
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const [startDateTime, setStartDateTime] = useState<string | null>(null);
     const [endDateTime, setEndDateTime] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
             // DATA RESET TEST API
-            await RushAPI.getRushTodayEventTest(cookies[COOKIE_TOKEN_KEY]);
+            await RushAPI.getRushTodayEventTest(cookies[COOKIE_KEY.ACCESS_TOKEN]);
             const totalData = await TotalAPI.getTotal();
             setStartDateTime(totalData.totalEventStartDate);
             setEndDateTime(totalData.totalEventEndDate);
@@ -56,3 +56,6 @@ export function Headline({ id }: SectionKeyProps) {
         </section>
     );
 }
+
+const MemoizedHeadline = memo(Headline);
+export { MemoizedHeadline as Headline };

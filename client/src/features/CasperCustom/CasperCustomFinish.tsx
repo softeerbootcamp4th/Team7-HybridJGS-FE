@@ -1,45 +1,80 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
+import { LinkAPI } from "@/apis/linkAPI";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
+import { SCROLL_MOTION } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import useFetch from "@/hooks/useFetch";
+import useToast from "@/hooks/useToast";
 import { CASPER_ACTION } from "@/types/casperCustom";
+import { GetShareLinkResponse } from "@/types/linkApi";
+import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
+import { writeClipboard } from "@/utils/writeClipboard";
 import { Battery } from "./Battery";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 interface CasperCustomFinishProps {
     handleResetStep: () => void;
+    unblockNavigation: () => void;
 }
 
-export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+export function CasperCustomFinish({
+    handleResetStep,
+    unblockNavigation,
+}: CasperCustomFinishProps) {
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
+
+    const { data: applyCountData, fetchData: getApplyCount } = useFetch<GetApplyCountResponse>(() =>
+        LotteryAPI.getApplyCount(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    );
+
+    const {
+        data: shareLink,
+        isSuccess: isSuccessGetShareLink,
+        isError: isErrorGetShareLink,
+        fetchData: getShareLink,
+    } = useFetch<GetShareLinkResponse>(
+        () => LinkAPI.getShareLink(cookies[COOKIE_KEY.ACCESS_TOKEN]),
+        false
+    );
+
+    const { showToast, ToastComponent } = useToast(
+        isErrorGetShareLink
+            ? "공유 링크 생성에 실패했습니다! 캐스퍼 봇 생성 후 다시 시도해주세요."
+            : "링크가 복사되었어요!"
+    );
 
     const dispatch = useCasperCustomDispatchContext();
     const { casperName } = useCasperCustomStateContext();
 
     const casperCustomRef = useRef<HTMLDivElement>(null);
 
-    const [applyCount, setApplyCount] = useState<number>(0);
-
     useEffect(() => {
-        if (!cookies[COOKIE_TOKEN_KEY]) {
+        if (shareLink && isSuccessGetShareLink) {
+            writeClipboard(shareLink.shortenUrl, showToast);
             return;
         }
-        getApplyCount();
-    }, []);
+        if (isErrorGetShareLink) {
+            showToast();
+        }
+    }, [shareLink, isSuccessGetShareLink]);
+    useEffect(() => {
+        if (!cookies[COOKIE_KEY.ACCESS_TOKEN]) {
+            return;
+        }
 
-    const getApplyCount = async () => {
-        const data = await LotteryAPI.getApplyCount(cookies[COOKIE_TOKEN_KEY]);
-        setApplyCount(data.appliedCount);
-    };
+        unblockNavigation();
+        getApplyCount();
+    }, [cookies]);
 
     const handleSaveImage = () => {
         if (!casperCustomRef.current) {
@@ -54,8 +89,12 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
         dispatch({ type: CASPER_ACTION.RESET_CUSTOM });
     };
 
+    const handleClickShareButton = () => {
+        getShareLink();
+    };
+
     return (
-        <motion.div className="mt-[60px] flex flex-col items-center" {...DISSOLVE}>
+        <motion.div className="mt-[60px] flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
             <div className="flex items-center gap-[107px]">
                 <div>
                     <div ref={casperCustomRef}>
@@ -79,18 +118,27 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
                 </div>
 
                 <div className="flex flex-col items-center gap-[56px]">
-                    <div className="flex flex-col items-center gap-800">
-                        <p className="text-n-neutral-500">응모한 횟수</p>
+                    {applyCountData && (
+                        <div className="flex flex-col items-center gap-800">
+                            <p className="text-n-neutral-500">응모한 횟수</p>
 
-                        <Battery applyCount={applyCount} />
+                            <Battery applyCount={applyCountData.appliedCount} />
 
-                        <div className="flex items-center gap-300">
-                            <h2 className="h-heading-2-bold text-n-white">{applyCount}회</h2>{" "}
-                            <p className="h-body-2-regular text-n-neutral-300">/{MAX_APPLY}회</p>
+                            <div className="flex items-center gap-300">
+                                <h2 className="h-heading-2-bold text-n-white">
+                                    {applyCountData.appliedCount}회
+                                </h2>{" "}
+                                <p className="h-body-2-regular text-n-neutral-300">
+                                    /{MAX_APPLY}회
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    <CTAButton label="이벤트 공유해서 추가 응모하기" />
+                    <CTAButton
+                        label="이벤트 공유해서 추가 응모하기"
+                        onClick={handleClickShareButton}
+                    />
                 </div>
             </div>
 
@@ -100,6 +148,8 @@ export function CasperCustomFinish({ handleResetStep }: CasperCustomFinishProps)
                 </p>
                 <ArrowRightIcon stroke="#ffffff" />
             </Link>
+
+            {ToastComponent}
         </motion.div>
     );
 }

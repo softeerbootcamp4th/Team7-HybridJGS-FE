@@ -1,15 +1,18 @@
+import { useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
+import { SCROLL_MOTION } from "@/constants/animation";
+import { COOKIE_KEY } from "@/constants/cookie";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import useFetch from "@/hooks/useFetch";
 import { CASPER_ACTION } from "@/types/casperCustom";
-import { CasperInformationType } from "@/types/lotteryApi";
+import { CasperInformationType, PostCasperResponse } from "@/types/lotteryApi";
 import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
@@ -17,20 +20,57 @@ interface CasperCustomFormProps {
 }
 
 export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN, COOKIE_KEY.INVITE_USER]);
+
+    const {
+        data: casper,
+        isSuccess: isSuccessPostCasper,
+        fetchData: postCasper,
+    } = useFetch<
+        PostCasperResponse,
+        { token: string; referralId: string; casper: CasperInformationType }
+    >(({ token, referralId, casper }) =>
+        LotteryAPI.postCasper(token, { ...casper, [COOKIE_KEY.INVITE_USER]: referralId })
+    );
 
     const { casperName, expectations, selectedCasperIdx } = useCasperCustomStateContext();
     const dispatch = useCasperCustomDispatchContext();
 
     const canSubmit = casperName.length !== 0;
 
-    const handleSetCasperName = (value: string) => {
-        dispatch({ type: CASPER_ACTION.SET_CASPER_NAME, payload: value });
-    };
+    useEffect(() => {
+        if (casper && isSuccessPostCasper) {
+            /**
+             * 서버 상태 동기화
+             */
+            const { name, expectation, ...selectedOption } = casper;
+            const option = {
+                [CUSTOM_OPTION.EYES]: selectedOption.eyeShape,
+                [CUSTOM_OPTION.EYES_DIRECTION]: selectedOption.eyePosition,
+                [CUSTOM_OPTION.MOUTH]: selectedOption.mouthShape,
+                [CUSTOM_OPTION.COLOR]: selectedOption.color,
+                [CUSTOM_OPTION.STICKER]: selectedOption.sticker,
+            };
+            dispatch({
+                type: CASPER_ACTION.SET_CASPER,
+                payload: {
+                    option,
+                    casperName: name,
+                    expectations: expectation,
+                },
+            });
 
-    const handleSetExpectations = (value: string) => {
+            navigateNextStep();
+        }
+    }, [casper, isSuccessPostCasper]);
+
+    const handleSetCasperName = useCallback((value: string) => {
+        dispatch({ type: CASPER_ACTION.SET_CASPER_NAME, payload: value });
+    }, []);
+
+    const handleSetExpectations = useCallback((value: string) => {
         dispatch({ type: CASPER_ACTION.SET_EXPECTATIONS, payload: value });
-    };
+    }, []);
 
     const handleSubmitCasper = async () => {
         const casper: CasperInformationType = {
@@ -43,33 +83,15 @@ export function CasperCustomForm({ navigateNextStep }: CasperCustomFormProps) {
             expectation: expectations,
         };
 
-        const data = await LotteryAPI.postCasper(cookies[COOKIE_TOKEN_KEY], casper);
-
-        /**
-         * 서버 상태 동기화
-         */
-        const { name, expectation, ...selectedOption } = data;
-        const option = {
-            [CUSTOM_OPTION.EYES]: selectedOption.eyeShape,
-            [CUSTOM_OPTION.EYES_DIRECTION]: selectedOption.eyePosition,
-            [CUSTOM_OPTION.MOUTH]: selectedOption.mouthShape,
-            [CUSTOM_OPTION.COLOR]: selectedOption.color,
-            [CUSTOM_OPTION.STICKER]: selectedOption.sticker,
-        };
-        dispatch({
-            type: CASPER_ACTION.SET_CASPER,
-            payload: {
-                option,
-                casperName: name,
-                expectations: expectation,
-            },
+        await postCasper({
+            token: cookies[COOKIE_KEY.ACCESS_TOKEN],
+            referralId: cookies[COOKIE_KEY.INVITE_USER],
+            casper,
         });
-
-        navigateNextStep();
     };
 
     return (
-        <motion.div className="flex flex-col items-center" {...DISSOLVE}>
+        <motion.div className="flex flex-col items-center" {...SCROLL_MOTION(DISSOLVE)}>
             <div className="flex items-center mt-[68px] gap-1000">
                 <MyCasperCardFront hasRandomButton={false} />
                 <div>

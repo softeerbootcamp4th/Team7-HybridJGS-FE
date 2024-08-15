@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import { CasperDescription } from "@/features/Rush/Casper/CasperDescription.tsx";
 import { CasperSection } from "@/features/Rush/Casper/CasperSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-export function CasperFast({ id }: SectionKeyProps) {
+function CasperFast({ id }: SectionKeyProps) {
     return (
         <CasperSection id={id}>
             <CasperDescription
@@ -37,3 +38,6 @@ export function CasperFast({ id }: SectionKeyProps) {
         </CasperSection>
     );
 }
+
+const MemoizedCasperFast = memo(CasperFast);
+export { MemoizedCasperFast as CasperFast };

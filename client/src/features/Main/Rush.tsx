@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
 import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
@@ -6,7 +6,7 @@ import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
-export function Rush({ id }: SectionKeyProps) {
+function Rush({ id }: SectionKeyProps) {
     const [rushEvents, setRushEvents] = useState<TotalRushEventsProps[]>([]);
     const [startDateTime, setStartDateTime] = useState<string>("");
     const [endDateTime, setEndDateTime] = useState<string>("");
@@ -93,3 +93,6 @@ export function Rush({ id }: SectionKeyProps) {
         </Section>
     );
 }
+
+const MemoizedRush = memo(Rush);
+export { MemoizedRush as Rush };

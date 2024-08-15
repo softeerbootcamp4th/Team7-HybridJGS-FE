@@ -3,8 +3,8 @@ import { cva } from "class-variance-authority";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
+import { COOKIE_KEY } from "@/constants/cookie.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 
 const backgroundGradients = cva(
@@ -25,14 +25,14 @@ const backgroundGradients = cva(
 );
 
 export default function RushCardResultDescription() {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const { gameState, updateCardOptions, getSelectedCardInfo, getOptionRatio } =
         useRushGameContext();
 
     useEffect(() => {
         (async () => {
             const userResultData = await RushAPI.getRushOptionResult(
-                cookies[COOKIE_TOKEN_KEY],
+                cookies[COOKIE_KEY.ACCESS_TOKEN],
                 gameState.userSelectedOption
             );
             if (userResultData) {

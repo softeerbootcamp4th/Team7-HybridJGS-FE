@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLORS, CARD_DAYS, CARD_OPTION } from "@/constants/Rush/rushCard.ts";
+import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { CardOption } from "@/types/rushGame.ts";
@@ -10,7 +10,7 @@ import { CardOption } from "@/types/rushGame.ts";
 const TEMP_CURRENT_DAY: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
 
 export default function RushCardComparison() {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const { gameState, updateUserStatusAndSelectedOption, updateCardOptions } =
         useRushGameContext();
 
@@ -18,7 +18,7 @@ export default function RushCardComparison() {
         (async () => {
             try {
                 const todayRushEventData = await RushAPI.getTodayRushEvent(
-                    cookies[COOKIE_TOKEN_KEY]
+                    cookies[COOKIE_KEY.ACCESS_TOKEN]
                 );
 
                 // TODO: 카드 색상 랜덤으로 변경
@@ -43,12 +43,12 @@ export default function RushCardComparison() {
     const handleCardSelection = async (optionId: CardOption) => {
         try {
             const response = await RushAPI.postSelectedRushOptionApply(
-                cookies[COOKIE_TOKEN_KEY],
+                cookies[COOKIE_KEY.ACCESS_TOKEN],
                 optionId
             );
 
             if (response === 204) {
-                await updateUserStatusAndSelectedOption(cookies[COOKIE_TOKEN_KEY], optionId);
+                await updateUserStatusAndSelectedOption(cookies[COOKIE_KEY.ACCESS_TOKEN], optionId);
             } else if (response === 404) {
                 console.log(`Error ${response}`);
             }

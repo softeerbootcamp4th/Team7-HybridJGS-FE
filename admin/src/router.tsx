@@ -1,9 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
+import { LotteryAPI } from "./apis/lotteryAPI";
+import { RushAPI } from "./apis/rushAPI";
 import Layout from "./components/Layout";
+import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
+import RushLayout from "./features/Rush/Layout";
 import Login from "./pages/Login";
 import Lottery from "./pages/Lottery";
+import LotteryParticipantList from "./pages/LotteryParticipantList";
 import LotteryWinner from "./pages/LotteryWinner";
+import LotteryWinnerList from "./pages/LotteryWinnerList";
+import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
+import RushWinnerList from "./pages/RushWinnerList";
 
 export const router = createBrowserRouter([
     {
@@ -11,26 +19,58 @@ export const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                path: "login/",
-                element: <Login />,
-            },
-            {
-                path: "lottery/",
+                element: <UnProtectedRoute />,
                 children: [
                     {
                         index: true,
-                        element: <Lottery />,
-                    },
-                    {
-                        path: "winner",
-                        element: <LotteryWinner />,
+                        element: <Login />,
                     },
                 ],
             },
             {
-                path: "rush/",
-                element: <Rush />,
+                element: <ProtectedRoute />,
+                children: [
+                    {
+                        path: "rush/",
+                        element: <RushLayout />,
+                        children: [
+                            {
+                                index: true,
+                                element: <Rush />,
+                                loader: RushAPI.getRush,
+                            },
+                            {
+                                path: "winner-list",
+                                element: <RushWinnerList />,
+                            },
+                        ],
+                    },
+                    {
+                        path: "lottery/",
+                        children: [
+                            {
+                                index: true,
+                                element: <Lottery />,
+                                loader: LotteryAPI.getLottery,
+                            },
+                            {
+                                path: "winner",
+                                element: <LotteryWinner />,
+                                loader: LotteryAPI.getLottery,
+                            },
+                            {
+                                path: "participant-list",
+                                element: <LotteryParticipantList />,
+                            },
+                            {
+                                path: "winner-list",
+                                element: <LotteryWinnerList />,
+                            },
+                        ],
+                    },
+                ],
             },
         ],
     },
+    { path: "*", element: <NotFound /> },
 ]);

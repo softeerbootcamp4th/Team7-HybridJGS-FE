@@ -1,9 +1,10 @@
+import { memo } from "react";
 import { cva } from "class-variance-authority";
 
 interface CustomOptionImageItemProps {
     optionId: string;
     selected: boolean;
-    handleClickOption: () => void;
+    handleClickOption: (id: string) => void;
 }
 
 const selectableVariants = cva(
@@ -18,14 +19,20 @@ const selectableVariants = cva(
     }
 );
 
-export function CustomOptionImageItem({
+function CustomOptionImageItem({
     optionId,
     selected,
     handleClickOption,
 }: CustomOptionImageItemProps) {
     return (
-        <li className={selectableVariants({ selected })} onClick={handleClickOption}>
+        <li
+            className={selectableVariants({ selected })}
+            onClick={() => handleClickOption(optionId)}
+        >
             <img src={`/assets/casper-custom/preview/${optionId}.png`} />
         </li>
     );
 }
+
+const MemoizedCustomOptionImageItem = memo(CustomOptionImageItem);
+export { MemoizedCustomOptionImageItem as CustomOptionImageItem };

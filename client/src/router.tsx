@@ -5,8 +5,10 @@ import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import CasperCustom from "./pages/CasperCustom";
 import CasperShowCase from "./pages/CasperShowCase";
+import ErrorElement from "./pages/ErrorElement";
 import Lottery from "./pages/Lottery";
 import Main from "./pages/Main";
+import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
 import RushGame from "./pages/RushGame";
 
@@ -25,6 +27,8 @@ export const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Rush />,
+                        loader: RushAPI.getRush,
+                        errorElement: <ErrorElement />,
                     },
                     {
                         path: "game",
@@ -34,6 +38,7 @@ export const router = createBrowserRouter([
                             </RushGameProvider>
                         ),
                         loader: RushAPI.getRush,
+                        errorElement: <ErrorElement />,
                     },
                 ],
             },
@@ -44,6 +49,7 @@ export const router = createBrowserRouter([
                         index: true,
                         element: <Lottery />,
                         loader: LotteryAPI.getLottery,
+                        errorElement: <ErrorElement />,
                     },
                     {
                         path: "custom",
@@ -53,9 +59,14 @@ export const router = createBrowserRouter([
                         path: "show-case",
                         element: <CasperShowCase />,
                         loader: LotteryAPI.getCasperList,
+                        errorElement: <ErrorElement />,
                     },
                 ],
             },
         ],
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
 ]);

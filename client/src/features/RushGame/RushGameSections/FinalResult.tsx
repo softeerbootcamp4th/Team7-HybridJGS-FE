@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
-import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
@@ -46,14 +46,14 @@ function OptionDisplay({
 }
 
 export default function FinalResult() {
-    const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const [resultData, setResultData] = useState<GetRushResultResponse>();
     const { gameState, getOptionRatio, getSelectedCardInfo, updateCardOptions } =
         useRushGameContext();
 
     useEffect(() => {
         (async () => {
-            const resultData = await RushAPI.getRushResult(cookies[COOKIE_TOKEN_KEY]);
+            const resultData = await RushAPI.getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]);
             const { leftOption, rightOption } = resultData;
             setResultData(resultData);
 
