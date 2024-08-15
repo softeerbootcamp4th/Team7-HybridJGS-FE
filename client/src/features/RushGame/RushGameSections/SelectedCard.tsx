@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import RushCardCurrentRatio from "@/features/RushGame/RushGameCard/RushCardCurrentRatio.tsx";
-import RushCardResultDescription from "@/features/RushGame/RushGameCard/RushCardResultDescription.tsx";
-import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
+import RushCardCurrentRatio from "@/features/RushGame/RushGameComponents/RushCardCurrentRatio.tsx";
+import RushCardResultDescription from "@/features/RushGame/RushGameComponents/RushCardResultDescription.tsx";
+import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";

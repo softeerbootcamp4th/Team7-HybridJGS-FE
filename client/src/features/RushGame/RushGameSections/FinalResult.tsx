@@ -6,7 +6,7 @@ import Category from "@/components/Category";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import RushProgressBar from "@/features/RushGame/RushGameCard/RushProgressBar.tsx";
+import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
 

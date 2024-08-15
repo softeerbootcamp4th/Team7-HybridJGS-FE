@@ -1,7 +1,7 @@
 import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
 import { CARD_TYPE } from "@/constants/Rush/rushCard.ts";
-import RushProgressBar from "@/features/RushGame/RushGameCard/RushProgressBar.tsx";
+import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";

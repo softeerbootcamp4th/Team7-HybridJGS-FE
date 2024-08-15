@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLORS, CARD_DAYS, CARD_TYPE } from "@/constants/Rush/rushCard.ts";
-import RushCard from "@/features/RushGame/RushGameCard/RushCard.tsx";
+import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { CardOption } from "@/types/rushGame.ts";
 

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import RushCardComparison from "@/features/RushGame/RushGameCard/RushCardComparison.tsx";
-import RushCountdown from "@/features/RushGame/RushGameCard/RushCountdown.tsx";
+import RushCardComparison from "@/features/RushGame/RushGameComponents/RushCardComparison.tsx";
+import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.tsx";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 
 export default function CardOptions() {

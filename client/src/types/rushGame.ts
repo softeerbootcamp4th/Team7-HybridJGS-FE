@@ -11,7 +11,6 @@ export interface CardOptionState {
     selectionCount: number;
 }
 
-// TODO: 추후 밖에서 안쓰는 함수들 제거
 export interface RushGameContextType {
     gameState: {
         phase: GamePhase;
