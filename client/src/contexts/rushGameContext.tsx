@@ -7,6 +7,7 @@ import { COOKIE_KEY } from "@/constants/cookie.ts";
 import useCountdown from "@/hooks/useCountdown.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/types/rushGame";
+import { getMsTime } from "@/utils/getMsTime.ts";
 
 export const RushGameContext = createContext<RushGameContextType | undefined>(undefined);
 
@@ -129,9 +130,9 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
             (event) => event.rushEventId === rushData.todayEventId
         );
         if (currentEvent) {
-            const serverTime = new Date(rushData.serverTime).getTime();
-            const startTime = new Date(currentEvent.startDateTime).getTime();
-            const endTime = new Date(currentEvent.endDateTime).getTime();
+            const serverTime = getMsTime(rushData.serverTime);
+            const startTime = getMsTime(currentEvent.startDateTime);
+            const endTime = getMsTime(currentEvent.endDateTime);
 
             switch (gameState.phase) {
                 case CARD_PHASE.NOT_STARTED:
@@ -174,8 +175,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     //     );
     //
     //     if (currentEvent && gameState.phase === CARD_PHASE.COMPLETED) {
-    //         const serverTime = new Date(rushData.serverTime).getTime();
-    //         const endTime = new Date(currentEvent.endDateTime).getTime();
+    //         const serverTime = getMsTime(rushData.serverTime);
+    //         const endTime = getMsTime(currentEvent.endDateTime);
     //
     //         if (!gameState.userParticipatedStatus) {
     //             if (serverTime > endTime) {

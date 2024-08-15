@@ -5,6 +5,7 @@ import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
+import { getMsTime } from "@/utils/getMsTime.ts";
 
 function Rush({ id }: SectionKeyProps) {
     const [rushEvents, setRushEvents] = useState<TotalRushEventsProps[]>([]);
@@ -14,14 +15,14 @@ function Rush({ id }: SectionKeyProps) {
     useEffect(() => {
         (async () => {
             const rushData = await RushAPI.getRush();
-            const serverDateTime = new Date(rushData.serverTime);
+            const serverDateTime = getMsTime(rushData.serverTime);
 
             setStartDateTime(rushData.eventStartDate);
             setEndDateTime(rushData.eventEndDate);
 
             const events = rushData.events.map((event, idx) => {
                 const rushEvent = RUSH_EVENT_DATA[idx];
-                const eventEndTime = new Date(event.endDateTime);
+                const eventEndTime = getMsTime(event.endDateTime);
 
                 return {
                     id: event.rushEventId,
