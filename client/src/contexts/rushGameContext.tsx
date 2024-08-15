@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { COOKIE_TOKEN_KEY } from "@/constants/Auth/token.ts";
 import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
@@ -11,7 +11,7 @@ import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/t
 export const RushGameContext = createContext<RushGameContextType | undefined>(undefined);
 
 export const RushGameProvider = ({ children }: { children: ReactNode }) => {
-    const navigate = useNavigate();
+    // const navigate  = useNavigate();
     const [cookies] = useCookies([COOKIE_TOKEN_KEY]);
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
     const [_initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
@@ -158,7 +158,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
 
     // TEST COUNTDOWN CODE
     const preCountdown = useCountdown(3);
-    const runCountdown = useCountdown(10);
+    const runCountdown = useCountdown(30);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === CARD_PHASE.NOT_STARTED) {
