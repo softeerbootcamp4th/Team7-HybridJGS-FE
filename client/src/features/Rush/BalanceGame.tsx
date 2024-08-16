@@ -6,7 +6,11 @@ import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts"
 import { Background } from "@/features/Rush/Background.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-function BalanceGame({ id }: SectionKeyProps) {
+interface BalanceGameProps extends SectionKeyProps {
+    handleScrollToTarget: () => void;
+}
+
+function BalanceGame({ id, handleScrollToTarget }: BalanceGameProps) {
     return (
         <section
             id={id}
@@ -48,7 +52,7 @@ function BalanceGame({ id }: SectionKeyProps) {
                 <CTAButton label="이벤트 링크 공유" />
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="dark">
+                <Scroll type="dark" onClick={handleScrollToTarget}>
                     <p className="h-body-2-bold">스크롤</p>
                     <p>하고 캐스퍼 일렉트릭의 놀라운 성능을 알아보세요</p>
                 </Scroll>

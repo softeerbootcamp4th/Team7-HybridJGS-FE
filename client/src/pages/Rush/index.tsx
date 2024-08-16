@@ -17,6 +17,7 @@ import {
     ReasonSecond,
 } from "@/features/Rush";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
+import useScrollToTarget from "@/hooks/useScrollToTarget";
 import useScrollTop from "@/hooks/useScrollTop.tsx";
 
 export default function Rush() {
@@ -24,10 +25,16 @@ export default function Rush() {
     const containerRef = useHeaderStyleObserver({
         darkSections: [RUSH_SECTIONS.INTRO],
     });
+
+    const { targetRef, handleScrollToTarget } = useScrollToTarget<HTMLDivElement>();
+
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
-            <BalanceGame id={RUSH_SECTIONS.BALANCE_GAME} />
-            <Intro id={RUSH_SECTIONS.INTRO} />
+            <BalanceGame
+                id={RUSH_SECTIONS.BALANCE_GAME}
+                handleScrollToTarget={handleScrollToTarget}
+            />
+            <Intro ref={targetRef} id={RUSH_SECTIONS.INTRO} />
             <FAQ id={RUSH_SECTIONS.FAQ} />
             <ElectricReason id={RUSH_SECTIONS.ELECTRIC_REASON} />
             <ElectricAdvantage id={RUSH_SECTIONS.ELECTRIC_ADVANTAGE} />
