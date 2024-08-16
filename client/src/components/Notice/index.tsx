@@ -15,7 +15,8 @@ interface EventDateDetails {
 export type EventType = "rush" | "lottery";
 
 export interface EventDateData {
-    [key: EventType]: EventDateDetails;
+    rush?: EventDateDetails;
+    lottery?: EventDateDetails;
 }
 
 const mapToEventDateDetails = (
