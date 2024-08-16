@@ -5,7 +5,11 @@ import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-function Headline({ id }: SectionKeyProps) {
+interface HeadlineProps extends SectionKeyProps {
+    handleClickScroll: () => void;
+}
+
+function Headline({ id, handleClickScroll }: HeadlineProps) {
     return (
         <section
             id={id}
@@ -26,7 +30,7 @@ function Headline({ id }: SectionKeyProps) {
                 </p>
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="light">
+                <Scroll type="light" onClick={handleClickScroll}>
                     <p>이벤트에 대해 궁금하다면 </p>
                     <p className="h-body-2-bold">스크롤</p>
                     <p>해 보세요</p>
