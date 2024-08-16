@@ -7,9 +7,10 @@ import { SectionKeyProps } from "@/types/sections.ts";
 
 interface HeadlineProps extends SectionKeyProps {
     handleClickShortCutButton: () => void;
+    handleClickScroll: () => void;
 }
 
-function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
+function Headline({ id, handleClickShortCutButton, handleClickScroll }: HeadlineProps) {
     return (
         <section
             id={id}
@@ -45,7 +46,7 @@ function Headline({ id, handleClickShortCutButton }: HeadlineProps) {
             <div className="mt-[100px]" />
 
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="light">
+                <Scroll type="light" onClick={handleClickScroll}>
                     <p>캐스퍼 일렉트릭 봇이 어디서 왔는지 궁금하다면</p>
                     <p className="h-body-2-bold"> 스크롤</p>
                     <p>해보세요</p>

@@ -22,6 +22,7 @@ import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
 import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import usePopup from "@/hooks/usePopup";
+import useScrollToTarget from "@/hooks/useScrollToTarget";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
 import { PostAuthResponse } from "@/types/authApi";
@@ -43,6 +44,8 @@ export default function Lottery() {
         darkSections: [LOTTERY_SECTIONS.HEADLINE, LOTTERY_SECTIONS.SHORT_CUT],
     });
     const [_cookies, setCookie] = useCookies([COOKIE_KEY.ACCESS_TOKEN, COOKIE_KEY.INVITE_USER]);
+
+    const { targetRef, handleScrollToTarget } = useScrollToTarget<HTMLDivElement>();
 
     const {
         data: authToken,
@@ -104,8 +107,9 @@ export default function Lottery() {
             <Headline
                 id={LOTTERY_SECTIONS.HEADLINE}
                 handleClickShortCutButton={handleClickShortCut}
+                handleClickScroll={handleScrollToTarget}
             />
-            <Intro id={LOTTERY_SECTIONS.INTRO} />
+            <Intro ref={targetRef} id={LOTTERY_SECTIONS.INTRO} />
             <HeadLamp id={LOTTERY_SECTIONS.HEADLAMP} />
             <PixelDesign id={LOTTERY_SECTIONS.PIXEL_DESIGN} />
             <WheelDesign id={LOTTERY_SECTIONS.WHEEL_DESIGN} />
