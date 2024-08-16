@@ -165,7 +165,12 @@ export function CasperCardBackUI({
                         style={{ width: CARD_WIDTH - 100 }}
                     >
                         <p className="text-n-neutral-500">작성한 기대평</p>
-                        <p className="text-n-black">{expectations}</p>
+                        <p
+                            className="text-n-black max-w-full text-center"
+                            style={{ overflowWrap: "break-word" }}
+                        >
+                            {expectations}
+                        </p>
                     </div>
                 )}
 
