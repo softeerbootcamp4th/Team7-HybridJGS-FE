@@ -58,6 +58,8 @@ export function TransitionCasperCards({
         const [isFlipped, setIsFlipped] = useState<boolean>(false);
         const { isInView, cardRef } = useLazyLoading<HTMLLIElement>();
 
+        // TODO: isInView가 아니면 DOM에서 제거?
+
         const handleMouseEnter = () => {
             stopAnimation();
             setIsFlipped(true);

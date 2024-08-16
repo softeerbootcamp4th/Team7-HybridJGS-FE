@@ -8,7 +8,7 @@ export default function useLazyLoading<T extends HTMLElement>() {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setIsInView(true);
+                    setIsInView(entry.isIntersecting);
                     observer.disconnect();
                 }
             },
