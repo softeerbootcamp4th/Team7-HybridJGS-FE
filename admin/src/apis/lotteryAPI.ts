@@ -45,7 +45,6 @@ export const LotteryAPI = {
     },
     async postLotteryWinner(token: string): Promise<PostLotteryWinnerResponse> {
         try {
-            return new Promise((resolve) => resolve({ message: "요청에 성공하였습니다." }));
             const response = await fetchWithTimeout(`${baseURL}/winner`, {
                 method: "POST",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
@@ -97,68 +96,6 @@ export const LotteryAPI = {
         token: string
     ): Promise<GetLotteryExpectationsResponse> {
         try {
-            return new Promise((resolve) =>
-                resolve({
-                    expectations: [
-                        {
-                            casperId: 1,
-                            expectation: "기대평 1",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 2,
-                            expectation: "기대평 2",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 3,
-                            expectation: "기대평 3",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 1,
-                            expectation: "기대평 1",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 2,
-                            expectation: "기대평 2",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 3,
-                            expectation: "기대평 3",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 1,
-                            expectation: "기대평 1",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 2,
-                            expectation: "기대평 2",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                        {
-                            casperId: 3,
-                            expectation: "기대평 3",
-                            createdDate: "2024-08-15",
-                            createdTime: "22:00:00",
-                        },
-                    ],
-                    isLastPage: false,
-                    totalExpectations: 100,
-                })
-            );
             const response = await fetchWithTimeout(
                 `${baseURL}/participants/${participantId}/expectations?page=${page}&size=${size}`,
                 {

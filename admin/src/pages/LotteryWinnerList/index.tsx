@@ -24,7 +24,6 @@ export default function LotteryWinnerList() {
     const { handleOpenModal, ModalComponent } = useModal();
 
     const [selectedWinnerId, setSelectedWinnerId] = useState<number>(0);
-    const [selectedExpectations, setSelectedExpectations] = useState<LotteryExpectationsType[]>([]);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
@@ -97,11 +96,6 @@ export default function LotteryWinnerList() {
     useEffect(() => {
         refetchLotteryExpectation();
     }, [selectedWinnerId]);
-    useEffect(() => {
-        if (expectation && isSuccessGetLotteryExpectation) {
-            setSelectedExpectations(expectation);
-        }
-    }, [expectation, isSuccessGetLotteryExpectation]);
     useEffect(() => {
         if (isSuccessGetLotteryExpectation) {
             showToast();
