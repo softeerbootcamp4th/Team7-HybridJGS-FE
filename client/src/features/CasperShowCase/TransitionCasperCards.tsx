@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
@@ -29,6 +29,14 @@ export function TransitionCasperCards({
     gap,
     isEndCard,
 }: TransitionCasperCardsProps) {
+    const visibleCardCount = useMemo(() => {
+        const width = window.innerWidth;
+        const cardWidth = CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH;
+
+        return Math.ceil(width / cardWidth);
+    }, []);
+    const isAnimated = visibleCardCount <= cardList.length;
+
     const containerRef = useRef<HTMLUListElement>(null);
     const transitionControls = useAnimation();
 
@@ -53,6 +61,14 @@ export function TransitionCasperCards({
     useEffect(() => {
         startAnimation(x);
     }, [transitionControls, totalWidth]);
+
+    const expandedCardList = useMemo(() => {
+        if (isAnimated) {
+            return [...cardList, ...cardList.slice(0, visibleCardCount)];
+        }
+
+        return cardList;
+    }, [cardList]);
 
     const renderCardItem = (cardItem: CasperCardType, id: string) => {
         const [isFlipped, setIsFlipped] = useState<boolean>(false);
@@ -92,20 +108,25 @@ export function TransitionCasperCards({
 
     return (
         <AnimatePresence>
-            <motion.ul
-                ref={containerRef}
-                className="flex"
-                animate={transitionControls}
-                style={{ gap: `${gap}px` }}
-                onUpdate={(latest) => {
-                    if (isEndCard(parseInt(String(latest.x)))) {
-                        startAnimation(initialX);
-                    }
-                }}
-            >
-                {cardList.map((card) => renderCardItem(card, `${card.id}`))}
-                {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
-            </motion.ul>
+            {isAnimated ? (
+                <motion.ul
+                    ref={containerRef}
+                    className="flex"
+                    animate={transitionControls}
+                    style={{ gap: `${gap}px` }}
+                    onUpdate={(latest) => {
+                        if (isEndCard(parseInt(String(latest.x)))) {
+                            startAnimation(initialX);
+                        }
+                    }}
+                >
+                    {expandedCardList.map((card, idx) => renderCardItem(card, `${card.id}-${idx}`))}
+                </motion.ul>
+            ) : (
+                <ul className="flex w-screen justify-center" style={{ gap: `${gap}px` }}>
+                    {expandedCardList.map((card, idx) => renderCardItem(card, `${card.id}-${idx}`))}
+                </ul>
+            )}
         </AnimatePresence>
     );
 }

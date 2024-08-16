@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CasperCardType, TransitionCasperCards } from "./TransitionCasperCards";
 
@@ -8,8 +9,16 @@ interface CasperCardsProps {
 export function CasperCards({ cardList }: CasperCardsProps) {
     const cardLength = cardList.length;
     const cardLengthHalf = Math.floor(cardLength / 2);
-    const topCardList = cardList.slice(0, cardLengthHalf);
-    const bottomCardList = cardList.slice(cardLengthHalf, cardLength);
+    const visibleCardCount = useMemo(() => {
+        const width = window.innerWidth;
+        const cardWidth = CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH;
+
+        return Math.ceil(width / cardWidth);
+    }, []);
+    const isMultipleLine = visibleCardCount * 2 <= cardLength;
+
+    const topCardList = cardList.slice(0, isMultipleLine ? cardLengthHalf : cardLength);
+    const bottomCardList = isMultipleLine ? cardList.slice(cardLengthHalf, cardLength) : [];
 
     const itemWidth = CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH;
     const gap = 40;
