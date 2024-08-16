@@ -5,7 +5,7 @@ import {
     GetRushUserParticipationStatusResponse,
     GetTodayRushEventResponse,
     GetTotalRushEventsResponse,
-    PostSelectedRushCardOptionResponse,
+    RushEventStatusCodeResponse,
 } from "@/types/rushApi";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout.ts";
 
@@ -56,7 +56,7 @@ export const RushAPI = {
     async postSelectedRushOptionApply(
         token: string,
         optionId: number
-    ): Promise<PostSelectedRushCardOptionResponse> {
+    ): Promise<RushEventStatusCodeResponse> {
         try {
             const response = await fetchWithTimeout(`${baseURL}/options/${optionId}/apply`, {
                 method: "POST",
@@ -112,7 +112,7 @@ export const RushAPI = {
             throw error;
         }
     },
-    async getRushTodayEventTest(token: string): Promise<PostSelectedRushCardOptionResponse> {
+    async getRushTodayEventTest(token: string): Promise<RushEventStatusCodeResponse> {
         try {
             const response = await fetchWithTimeout(`${baseURL}/today/test`, {
                 method: "GET",

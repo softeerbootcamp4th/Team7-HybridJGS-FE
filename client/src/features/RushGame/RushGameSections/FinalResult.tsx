@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
@@ -7,6 +7,7 @@ import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
+import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
 
@@ -47,15 +48,24 @@ function OptionDisplay({
 
 export default function FinalResult() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const [resultData, setResultData] = useState<GetRushResultResponse>();
     const { gameState, getOptionRatio, getSelectedCardInfo, updateCardOptions } =
         useRushGameContext();
 
+    const {
+        data: resultData,
+        isSuccess: isSuccessRushResult,
+        fetchData: getRushResult,
+    } = useFetch<GetRushResultResponse>(() =>
+        RushAPI.getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    );
+
     useEffect(() => {
-        (async () => {
-            const resultData = await RushAPI.getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+        getRushResult();
+    }, []);
+
+    useEffect(() => {
+        if (resultData && isSuccessRushResult) {
             const { leftOption, rightOption } = resultData;
-            setResultData(resultData);
 
             updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 selectionCount: leftOption,
@@ -63,10 +73,10 @@ export default function FinalResult() {
             updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 selectionCount: rightOption,
             });
-        })();
-    }, []);
+        }
+    }, [resultData, isSuccessRushResult, updateCardOptions]);
 
-    const isWinner = resultData?.isWinner || true;
+    const isWinner = resultData?.winner;
     const rank = resultData?.rank || 0;
     const totalParticipants = resultData?.totalParticipants || 0;
 

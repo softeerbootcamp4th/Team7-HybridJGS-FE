@@ -25,7 +25,7 @@ export interface GetTodayRushEventResponse {
     rightOption: RushCardType;
 }
 
-export type PostSelectedRushCardOptionResponse = 204 | 404;
+export type RushEventStatusCodeResponse = 204 | 404;
 
 export interface GetRushOptionResultResponse {
     mainText: string;
@@ -40,7 +40,7 @@ export interface GetRushBalanceResponse {
 }
 
 export interface GetRushResultResponse {
-    isWinner: boolean;
+    winner: boolean;
     leftOption: number;
     rightOption: number;
     rank: number;

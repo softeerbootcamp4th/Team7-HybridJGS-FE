@@ -2,7 +2,7 @@ import { EventDateData } from "@/components/Notice";
 
 const LOADING_DATE_MESSAGE = "날짜를 불러오는 중입니다...";
 
-const parseDate = (dateString: string): Date | null => {
+export const parseDate = (dateString: string): Date | null => {
     const date = new Date(dateString);
     return isNaN(date.getTime()) ? null : date;
 };

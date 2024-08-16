@@ -5,7 +5,10 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import Category from "@/components/Category";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
+import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { GetRushOptionResultResponse } from "@/types/rushApi.ts";
+import { CardOption } from "@/types/rushGame.ts";
 
 const backgroundGradients = cva(
     `flex gap-[35px] w-[834px] h-[400px] rounded-800 py-6 px-[37px] justify-between break-keep`,
@@ -29,21 +32,30 @@ export default function RushCardResultDescription() {
     const { gameState, updateCardOptions, getSelectedCardInfo, getOptionRatio } =
         useRushGameContext();
 
+    const {
+        data: userResultData,
+        isSuccess: isSuccessUserResultData,
+        fetchData: getUserResultData,
+    } = useFetch<GetRushOptionResultResponse, { token: string; optionId: CardOption }>(
+        ({ token, optionId }) => RushAPI.getRushOptionResult(token, optionId)
+    );
+
     useEffect(() => {
-        (async () => {
-            const userResultData = await RushAPI.getRushOptionResult(
-                cookies[COOKIE_KEY.ACCESS_TOKEN],
-                gameState.userSelectedOption
-            );
-            if (userResultData) {
-                updateCardOptions(gameState.userSelectedOption, {
-                    mainText: userResultData.mainText,
-                    resultMainText: userResultData.resultMainText,
-                    resultSubText: userResultData.resultSubText,
-                });
-            }
-        })();
+        getUserResultData({
+            token: cookies[COOKIE_KEY.ACCESS_TOKEN],
+            optionId: gameState.userSelectedOption,
+        });
     }, []);
+
+    useEffect(() => {
+        if (isSuccessUserResultData && userResultData) {
+            updateCardOptions(gameState.userSelectedOption, {
+                mainText: userResultData.mainText,
+                resultMainText: userResultData.resultMainText,
+                resultSubText: userResultData.resultSubText,
+            });
+        }
+    }, [isSuccessUserResultData, userResultData]);
 
     const { mainText, resultMainText, resultSubText, color } = getSelectedCardInfo(
         gameState.userSelectedOption

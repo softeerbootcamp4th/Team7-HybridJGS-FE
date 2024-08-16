@@ -7,23 +7,39 @@ import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
+import useFetch from "@/hooks/useFetch.ts";
+import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
+import { GetTotalEventDateResponse } from "@/types/totalApi.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
 function Headline({ id }: SectionKeyProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const [startDateTime, setStartDateTime] = useState<string | null>(null);
-    const [endDateTime, setEndDateTime] = useState<string | null>(null);
+    const [startDateTime, setStartDateTime] = useState<string>("");
+    const [endDateTime, setEndDateTime] = useState<string>("");
+
+    // DATA RESET TEST API
+    const { fetchData: getRushTodayEventTest } = useFetch<RushEventStatusCodeResponse, string>(
+        (token) => RushAPI.getRushTodayEventTest(token)
+    );
+
+    const {
+        data: totalData,
+        isSuccess: isSuccessTotalData,
+        fetchData: getTotal,
+    } = useFetch<GetTotalEventDateResponse>(() => TotalAPI.getTotal());
 
     useEffect(() => {
-        (async () => {
-            // DATA RESET TEST API
-            await RushAPI.getRushTodayEventTest(cookies[COOKIE_KEY.ACCESS_TOKEN]);
-            const totalData = await TotalAPI.getTotal();
+        getRushTodayEventTest(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+        getTotal();
+    }, []);
+
+    useEffect(() => {
+        if (isSuccessTotalData && totalData) {
             setStartDateTime(totalData.totalEventStartDate);
             setEndDateTime(totalData.totalEventEndDate);
-        })();
-    }, []);
+        }
+    }, [isSuccessTotalData, totalData]);
 
     return (
         <section

@@ -5,7 +5,12 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import useCountdown from "@/hooks/useCountdown.ts";
-import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
+import useFetch from "@/hooks/useFetch.ts";
+import {
+    GetRushBalanceResponse,
+    GetRushUserParticipationStatusResponse,
+    GetTotalRushEventsResponse,
+} from "@/types/rushApi.ts";
 import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/types/rushGame";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
@@ -67,20 +72,27 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         []
     );
 
+    const {
+        data: userParticipatedStatus,
+        isSuccess: isSuccessUserParticipationStatus,
+        fetchData: getRushUserParticipationStatus,
+    } = useFetch<GetRushUserParticipationStatusResponse, string>((token) =>
+        RushAPI.getRushUserParticipationStatus(token)
+    );
+
     const updateUserStatusAndSelectedOption = useCallback(
         async (token: string, selectedOption: CardOption) => {
-            try {
-                const userParticipatedStatus = await RushAPI.getRushUserParticipationStatus(token);
-                setUserParticipationStatus(userParticipatedStatus);
-                if (userParticipatedStatus) {
-                    setUserSelectedOption(selectedOption);
-                }
-            } catch (error) {
-                console.error("Error: ", error);
-            }
+            await getRushUserParticipationStatus(token);
+            setUserSelectedOption(selectedOption);
         },
         []
     );
+
+    useEffect(() => {
+        if (isSuccessUserParticipationStatus && userParticipatedStatus) {
+            setUserParticipationStatus(userParticipatedStatus);
+        }
+    }, [isSuccessUserParticipationStatus, userParticipatedStatus]);
 
     const getSelectedCardInfo = useCallback(
         (option: CardOption) => {
@@ -97,9 +109,18 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         [gameState.userSelectedOption, gameState.cardOptions]
     );
 
+    const {
+        data: rushBalanceData,
+        isSuccess: isSuccessRushBalance,
+        fetchData: getRushBalance,
+    } = useFetch<GetRushBalanceResponse, string>((token) => RushAPI.getRushBalance(token));
+
     const fetchRushBalance = useCallback(async (): Promise<void> => {
-        try {
-            const rushBalanceData = await RushAPI.getRushBalance(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+        await getRushBalance(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+    }, [cookies, getRushBalance]);
+
+    useEffect(() => {
+        if (isSuccessRushBalance && rushBalanceData) {
             const { leftOption, rightOption } = rushBalanceData;
 
             updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
@@ -108,10 +129,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
             updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 selectionCount: rightOption,
             });
-        } catch (error) {
-            console.error("Error: ", error);
         }
-    }, [cookies]);
+    }, [isSuccessRushBalance, rushBalanceData]);
 
     const getOptionRatio = useCallback(
         (option: CardOption): number => {
@@ -158,8 +177,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     // const runCountdown = useCountdown(initialRunCountdown || 1);
 
     // TEST COUNTDOWN CODE
-    const preCountdown = useCountdown(5);
-    const runCountdown = useCountdown(35);
+    const preCountdown = useCountdown(3);
+    const runCountdown = useCountdown(10);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === CARD_PHASE.NOT_STARTED) {

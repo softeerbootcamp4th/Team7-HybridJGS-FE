@@ -3,6 +3,8 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
 import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
+import useFetch from "@/hooks/useFetch.ts";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
@@ -12,9 +14,18 @@ function Rush({ id }: SectionKeyProps) {
     const [startDateTime, setStartDateTime] = useState<string>("");
     const [endDateTime, setEndDateTime] = useState<string>("");
 
+    const {
+        data: rushData,
+        isSuccess: isSuccessRush,
+        fetchData: getRush,
+    } = useFetch<GetTotalRushEventsResponse>(() => RushAPI.getRush());
+
     useEffect(() => {
-        (async () => {
-            const rushData = await RushAPI.getRush();
+        getRush();
+    }, []);
+
+    useEffect(() => {
+        if (isSuccessRush && rushData) {
             const serverDateTime = getMsTime(rushData.serverTime);
 
             setStartDateTime(rushData.eventStartDate);
@@ -35,10 +46,9 @@ function Rush({ id }: SectionKeyProps) {
                         serverDateTime <= eventEndTime,
                 };
             });
-
             setRushEvents(events);
-        })();
-    }, []);
+        }
+    }, [isSuccessRush, rushData]);
 
     return (
         <Section

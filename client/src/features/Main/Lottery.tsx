@@ -4,21 +4,32 @@ import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
+import useFetch from "@/hooks/useFetch.ts";
+import { GetLotteryResponse } from "@/types/lotteryApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 function Lottery({ id }: SectionKeyProps) {
-    const [startDateTime, setStartDateTime] = useState<string | null>(null);
-    const [endDateTime, setEndDateTime] = useState<string | null>(null);
+    const [startDateTime, setStartDateTime] = useState<string>("");
+    const [endDateTime, setEndDateTime] = useState<string>("");
+
+    const {
+        data: lotteryData,
+        isSuccess: isSuccessLottery,
+        fetchData: getLottery,
+    } = useFetch<GetLotteryResponse>(() => LotteryAPI.getLottery());
 
     useEffect(() => {
-        (async () => {
-            const data = await LotteryAPI.getLottery();
-            setStartDateTime(data.eventStartDate);
-            setEndDateTime(data.eventEndDate);
-        })();
+        getLottery();
     }, []);
+
+    useEffect(() => {
+        if (isSuccessLottery && lotteryData) {
+            setStartDateTime(lotteryData.eventStartDate);
+            setEndDateTime(lotteryData.eventEndDate);
+        }
+    }, [isSuccessLottery, lotteryData]);
 
     return (
         <Section

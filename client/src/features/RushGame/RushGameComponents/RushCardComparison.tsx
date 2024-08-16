@@ -1,61 +1,74 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_COLORS, CARD_DAYS, CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
+import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { GetTodayRushEventResponse, RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { CardOption } from "@/types/rushGame.ts";
 
 const TEMP_CURRENT_DAY: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
 
+const INITIAL_OPTION_NUMBER = -1 as const;
+
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
+    const [optionId, setOptionId] = useState<CardOption | typeof INITIAL_OPTION_NUMBER>(
+        INITIAL_OPTION_NUMBER
+    );
     const { gameState, updateUserStatusAndSelectedOption, updateCardOptions } =
         useRushGameContext();
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const todayRushEventData = await RushAPI.getTodayRushEvent(
-                    cookies[COOKIE_KEY.ACCESS_TOKEN]
-                );
+    const {
+        data: todayRushEventData,
+        isSuccess: isSuccessTodayRushEvent,
+        fetchData: getTodayRushEvent,
+    } = useFetch<GetTodayRushEventResponse, string>((token) => RushAPI.getTodayRushEvent(token));
 
-                // TODO: 카드 색상 랜덤으로 변경
-                if (todayRushEventData) {
-                    updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
-                        mainText: todayRushEventData.leftOption.mainText,
-                        subText: todayRushEventData.leftOption.subText,
-                        color: CARD_COLORS[TEMP_CURRENT_DAY][CARD_OPTION.LEFT_OPTIONS],
-                    });
-                    updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
-                        mainText: todayRushEventData.rightOption.mainText,
-                        subText: todayRushEventData.rightOption.subText,
-                        color: CARD_COLORS[TEMP_CURRENT_DAY][CARD_OPTION.RIGHT_OPTIONS],
-                    });
-                }
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        })();
+    const {
+        data: postSelectedRushOptionResponse,
+        isSuccess: isSuccessPostSelectedRushOption,
+        fetchData: postSelectedRushOptionApply,
+    } = useFetch<RushEventStatusCodeResponse, { token: string; optionId: CardOption }>(
+        ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId)
+    );
+
+    useEffect(() => {
+        getTodayRushEvent(cookies[COOKIE_KEY.ACCESS_TOKEN]);
     }, []);
 
-    const handleCardSelection = async (optionId: CardOption) => {
-        try {
-            const response = await RushAPI.postSelectedRushOptionApply(
-                cookies[COOKIE_KEY.ACCESS_TOKEN],
-                optionId
-            );
-
-            if (response === 204) {
-                await updateUserStatusAndSelectedOption(cookies[COOKIE_KEY.ACCESS_TOKEN], optionId);
-            } else if (response === 404) {
-                console.log(`Error ${response}`);
-            }
-        } catch (error) {
-            console.error("Error: ", error);
+    useEffect(() => {
+        if (isSuccessTodayRushEvent && todayRushEventData) {
+            // TODO: 카드 색상 랜덤으로 변경
+            updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
+                mainText: todayRushEventData.leftOption.mainText,
+                subText: todayRushEventData.leftOption.subText,
+                color: CARD_COLORS[TEMP_CURRENT_DAY][CARD_OPTION.LEFT_OPTIONS],
+            });
+            updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
+                mainText: todayRushEventData.rightOption.mainText,
+                subText: todayRushEventData.rightOption.subText,
+                color: CARD_COLORS[TEMP_CURRENT_DAY][CARD_OPTION.RIGHT_OPTIONS],
+            });
         }
+    }, [isSuccessTodayRushEvent, todayRushEventData]);
+
+    const handleCardSelection = async (optionId: CardOption) => {
+        await postSelectedRushOptionApply({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], optionId });
+        setOptionId(optionId);
     };
+
+    useEffect(() => {
+        if (
+            isSuccessPostSelectedRushOption &&
+            postSelectedRushOptionResponse === 204 &&
+            optionId !== INITIAL_OPTION_NUMBER
+        ) {
+            updateUserStatusAndSelectedOption(cookies[COOKIE_KEY.ACCESS_TOKEN], optionId);
+        }
+    }, [optionId]);
 
     const leftOptionData = gameState.cardOptions[CARD_OPTION.LEFT_OPTIONS];
     const rightOptionData = gameState.cardOptions[CARD_OPTION.RIGHT_OPTIONS];
