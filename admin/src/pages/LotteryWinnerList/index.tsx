@@ -23,7 +23,7 @@ export default function LotteryWinnerList() {
     const { showToast, ToastComponent } = useToast("수정 사항이 반영됐습니다!");
     const { handleOpenModal, ModalComponent } = useModal();
 
-    const [selectedWinnerId, setSelectedWinnerId] = useState<number>(0);
+    const [selectedWinnerId, setSelectedWinnerId] = useState<number>(-1);
     const phoneNumberRef = useRef<string>("");
     const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
@@ -67,6 +67,7 @@ export default function LotteryWinnerList() {
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryExpectationsResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
+        startFetching: selectedWinnerId !== -1,
     });
 
     const { isSuccess: isSuccessPatchLotteryExpectation, fetchData: patchLotteryExpectation } =
