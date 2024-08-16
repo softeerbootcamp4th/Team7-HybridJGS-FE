@@ -1,4 +1,4 @@
-import { EventDateData } from "@/components/Notice";
+import { EventDateData, EventType } from "@/components/Notice";
 
 const LOADING_DATE_MESSAGE = "날짜를 불러오는 중입니다...";
 
@@ -78,7 +78,7 @@ export const formatEventDateRangeWithDotNoDayOfWeek = (
 
 export const formatEventDate = (
     eventName: string,
-    eventKey: keyof EventDateData,
+    eventKey: EventType,
     eventDateDetails: EventDateData
 ) => {
     const event = eventDateDetails[eventKey];

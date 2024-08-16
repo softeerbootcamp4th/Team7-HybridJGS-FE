@@ -1,7 +1,9 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import useFetch from "@/hooks/useFetch.ts";
+import { GetLotteryResponse } from "@/types/lotteryApi.ts";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { formatEventDate } from "@/utils/formatDate.ts";
 
 interface EventDateDetails {
@@ -10,9 +12,19 @@ interface EventDateDetails {
     activePeriod: number;
 }
 
+export type EventType = "rush" | "lottery";
+
 export interface EventDateData {
-    [key: string]: EventDateDetails;
+    [key: EventType]: EventDateDetails;
 }
+
+const mapToEventDateDetails = (
+    data: GetLotteryResponse | GetTotalRushEventsResponse
+): EventDateDetails => ({
+    startDate: data.eventStartDate,
+    endDate: data.eventEndDate,
+    activePeriod: data.activePeriod,
+});
 
 interface SectionProps {
     title: string;
@@ -31,60 +43,47 @@ const Section: React.FC<SectionProps> = ({ title, items, indentedIndices = [] })
     </div>
 );
 
-// TODO: Promise.all 로 묶지 말고 따로 useFetch 써서 하기
-const getEventsDateDetails = async (): Promise<{
-    rush: EventDateDetails;
-    lottery: EventDateDetails;
-}> => {
-    const [rushData, lotteryData] = await Promise.all([RushAPI.getRush(), LotteryAPI.getLottery()]);
-
-    const rushEventDetails: EventDateDetails = {
-        startDate: rushData.eventStartDate,
-        endDate: rushData.eventEndDate,
-        activePeriod: rushData.activePeriod,
-    };
-
-    const lotteryEventDetails: EventDateDetails = {
-        startDate: lotteryData.eventStartDate,
-        endDate: lotteryData.eventEndDate,
-        activePeriod: lotteryData.activePeriod,
-    };
-
-    return {
-        rush: rushEventDetails,
-        lottery: lotteryEventDetails,
-    };
-};
-
 function Notice() {
     const {
-        data: eventDateDetails,
-        isSuccess: isSuccessRushAndLottery,
-        fetchData: getRushAndLotteryEventData,
-    } = useFetch<{
-        rush: EventDateDetails;
-        lottery: EventDateDetails;
-    }>(getEventsDateDetails);
+        data: rushEventDetails,
+        isSuccess: isSuccessRush,
+        fetchData: getRushEventData,
+    } = useFetch<EventDateDetails>(() => RushAPI.getRush().then(mapToEventDateDetails));
+
+    const {
+        data: lotteryEventDetails,
+        isSuccess: isSuccessLottery,
+        fetchData: getLotteryEventData,
+    } = useFetch<EventDateDetails>(() => LotteryAPI.getLottery().then(mapToEventDateDetails));
 
     useEffect(() => {
-        getRushAndLotteryEventData();
+        getRushEventData();
+        getLotteryEventData();
     }, []);
+
+    const eventDateData: EventDateData = useMemo(() => {
+        const eventData: EventDateData = {};
+
+        if (rushEventDetails) eventData.rush = rushEventDetails;
+        if (lotteryEventDetails) eventData.lottery = lotteryEventDetails;
+
+        return eventData;
+    }, [rushEventDetails, lotteryEventDetails]);
+
+    const isValidData =
+        isSuccessRush && isSuccessLottery && rushEventDetails && lotteryEventDetails;
 
     return (
         <div className="w-full h-[756px] flex flex-col gap-y-5 bg-n-neutral-100 py-20 px-[180px] text-n-black snap-center">
             <h3 className="!leading-9 h-heading-3-bold">유의사항</h3>
-            {isSuccessRushAndLottery && eventDateDetails && (
+            {isValidData && (
                 <>
                     <Section
                         title="이벤트 참여"
                         items={[
                             "이벤트 기간",
-                            formatEventDate("캐스퍼봇 뱃지 추첨 이벤트", "rush", eventDateDetails),
-                            formatEventDate(
-                                "선착순 밸런스 게임 이벤트",
-                                "lottery",
-                                eventDateDetails
-                            ),
+                            formatEventDate("캐스퍼봇 뱃지 추첨 이벤트", "rush", eventDateData),
+                            formatEventDate("선착순 밸런스 게임 이벤트", "lottery", eventDateData),
                             "선착순 밸런스 게임 이벤트는 이벤트 기간 내 매일 하루에 한 번씩, 기간 내 최대 6번 참여 가능합니다.",
                             "이벤트 참여 시 당첨자 연락을 위해 전화번호 기재와 개인정보 수집 동의, 마케팅 정보 수신 동의가 필수로 요구됩니다.",
                             "본 이벤트에서 제작해주신 캐스퍼봇 이미지는 추후 마케팅에 이용될 수 있습니다.",
