@@ -1,4 +1,4 @@
-export { CasperCustomFinish } from "./CasperCustomFinish";
-export { CasperCustomFinishing } from "./CasperCustomFinishing";
-export { CasperCustomProcess } from "./CasperCustomProcess";
-export { CasperCustomForm } from "./CasperCustomForm";
+export { CasperCustomFinish } from "./CustomProcess/CasperCustomFinish";
+export { CasperCustomFinishing } from "./CustomProcess/CasperCustomFinishing";
+export { CasperCustomProcess } from "./CustomProcess/CasperCustomProcess";
+export { CasperCustomForm } from "./CustomProcess/CasperCustomForm";

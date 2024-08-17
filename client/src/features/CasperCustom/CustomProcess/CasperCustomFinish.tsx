@@ -7,7 +7,9 @@ import { LotteryAPI } from "@/apis/lotteryAPI";
 import CTAButton from "@/components/CTAButton";
 import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
+import { SCROLL_MOTION } from "@/constants/animation";
 import { COOKIE_KEY } from "@/constants/cookie";
+import { MyCasperCardFront } from "@/features/CasperCustom/CasperCard/MyCasperCardFront";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
@@ -17,9 +19,7 @@ import { GetShareLinkResponse } from "@/types/linkApi";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
 import { writeClipboard } from "@/utils/writeClipboard";
-import { SCROLL_MOTION } from "../../constants/animation";
-import { Battery } from "./Battery";
-import { MyCasperCardFront } from "./MyCasperCardFront";
+import { Battery } from "../Battery";
 import ArrowIcon from "/public/assets/icons/arrow.svg?react";
 
 interface CasperCustomFinishProps {

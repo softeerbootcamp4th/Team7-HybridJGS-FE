@@ -6,14 +6,14 @@ import CTAButton from "@/components/CTAButton";
 import TextField from "@/components/TextField";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
+import { SCROLL_MOTION } from "@/constants/animation";
 import { COOKIE_KEY } from "@/constants/cookie";
+import { MyCasperCardFront } from "@/features/CasperCustom/CasperCard/MyCasperCardFront";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { CasperInformationType, PostCasperResponse } from "@/types/lotteryApi";
-import { SCROLL_MOTION } from "../../constants/animation";
-import { MyCasperCardFront } from "./MyCasperCardFront";
 
 interface CasperCustomFormProps {
     navigateNextStep: () => void;
