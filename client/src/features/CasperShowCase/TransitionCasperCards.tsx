@@ -81,8 +81,6 @@ export function TransitionCasperCards({
                 nextIdx = nextIdx % cardList.length;
             }
 
-            console.log(nextIdx);
-
             setVisibleCardListIdx(nextIdx);
             startAnimation(initialX);
         }
