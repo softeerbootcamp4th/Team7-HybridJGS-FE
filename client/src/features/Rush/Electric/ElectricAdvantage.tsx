@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ElectricSection } from "@/features/Rush/ElectricSection.tsx";
+import { ElectricSection } from "@/features/Rush/Electric/ElectricSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 function ElectricAdvantage({ id }: SectionKeyProps) {

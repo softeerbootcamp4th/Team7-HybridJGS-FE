@@ -20,7 +20,7 @@ import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
 import { writeClipboard } from "@/utils/writeClipboard";
 import { Battery } from "../Battery";
-import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 interface CasperCustomFinishProps {
     handleResetStep: () => void;
@@ -146,7 +146,7 @@ export function CasperCustomFinish({
                 <p className="h-body-1-regular text-n-white group-hover:underline">
                     다른 사람들의 스마일 로봇 뱃지 보러가기
                 </p>
-                <ArrowIcon stroke="#ffffff" />
+                <ArrowRightIcon stroke="#ffffff" />
             </Link>
 
             {ToastComponent}

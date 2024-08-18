@@ -2,7 +2,7 @@ import { memo } from "react";
 import { VariantProps, cva } from "class-variance-authority";
 import { Link } from "react-router-dom";
 import "@/index.css";
-import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 import ShareIcon from "/public/assets/icons/share.svg?react";
 
 const BUTTON_STATUS: Record<string, ButtonStatusType> = {
@@ -61,7 +61,7 @@ function CTAButton({
     const content = (
         <>
             {label}
-            {hasArrowIcon && <ArrowIcon stroke={strokeColor} />}
+            {hasArrowIcon && <ArrowRightIcon stroke={strokeColor} />}
             {hasShareIcon && <ShareIcon stroke={strokeColor} />}
         </>
     );

@@ -7,6 +7,7 @@ import {
 } from "@/constants/CasperCustom/customStep";
 import { CASPER_CUSTOM_SECTIONS } from "@/constants/PageSections/sections";
 import { DISSOLVE } from "@/constants/animation";
+import { SCROLL_MOTION } from "@/constants/animation";
 import { CasperCustomProvider } from "@/contexts/casperCustomContext";
 import {
     CasperCustomFinish,
@@ -16,7 +17,6 @@ import {
 } from "@/features/CasperCustom";
 import { useBlockNavigation } from "@/hooks/useBlockNavigation";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver";
-import { SCROLL_MOTION } from "../../constants/animation";
 
 const INITIAL_STEP = 0;
 

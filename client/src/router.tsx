@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import { RushAPI } from "@/apis/rushAPI.ts";
+import { RushGameProvider } from "@/contexts/rushGameContext.tsx";
 import { LotteryAPI } from "./apis/lotteryAPI";
 import Layout from "./components/Layout";
 import CasperCustom from "./pages/CasperCustom";
@@ -8,6 +10,7 @@ import Lottery from "./pages/Lottery";
 import Main from "./pages/Main";
 import NotFound from "./pages/NotFound";
 import Rush from "./pages/Rush";
+import RushGame from "./pages/RushGame";
 
 export const router = createBrowserRouter([
     {
@@ -20,7 +23,24 @@ export const router = createBrowserRouter([
             },
             {
                 path: "rush/",
-                element: <Rush />,
+                children: [
+                    {
+                        index: true,
+                        element: <Rush />,
+                        loader: RushAPI.getRush,
+                        errorElement: <ErrorElement />,
+                    },
+                    {
+                        path: "game",
+                        element: (
+                            <RushGameProvider>
+                                <RushGame />
+                            </RushGameProvider>
+                        ),
+                        loader: RushAPI.getRush,
+                        errorElement: <ErrorElement />,
+                    },
+                ],
             },
             {
                 path: "lottery/",
