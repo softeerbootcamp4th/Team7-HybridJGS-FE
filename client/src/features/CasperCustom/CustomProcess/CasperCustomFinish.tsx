@@ -9,6 +9,7 @@ import { MAX_APPLY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
 import { SCROLL_MOTION } from "@/constants/animation";
 import { COOKIE_KEY } from "@/constants/cookie";
+import { MyCasperCardFront } from "@/features/CasperCustom/CasperCard/MyCasperCardFront";
 import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
 import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import useFetch from "@/hooks/useFetch";
@@ -18,8 +19,7 @@ import { GetShareLinkResponse } from "@/types/linkApi";
 import { GetApplyCountResponse } from "@/types/lotteryApi";
 import { saveDomImage } from "@/utils/saveDomImage";
 import { writeClipboard } from "@/utils/writeClipboard";
-import { Battery } from "./Battery";
-import { MyCasperCardFront } from "./MyCasperCardFront";
+import { Battery } from "../Battery";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 interface CasperCustomFinishProps {
