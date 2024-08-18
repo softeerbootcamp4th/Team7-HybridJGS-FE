@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, type ResolvedValues, motion, useAnimation } from "framer-motion";
-import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
 import { CasperCardType } from "@/types/casper";
 import { TransitionCasperCardItem } from "./TransitionCasperCardItem";
@@ -9,27 +8,23 @@ interface TransitionCasperCardsProps {
     cardList: CasperCardType[];
     initialX: number;
     diffX: number;
-    totalWidth: number;
+    visibleCardCount: number;
     gap: number;
     isEndCard: (latestX: number) => boolean;
+    isReverseCards?: boolean;
 }
 
 export function TransitionCasperCards({
     cardList,
     initialX,
     diffX,
-    totalWidth,
     gap,
+    visibleCardCount,
     isEndCard,
+    isReverseCards = false,
 }: TransitionCasperCardsProps) {
-    const visibleCardCount = useMemo(() => {
-        const width = window.innerWidth;
-        const cardWidth = CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH;
-
-        return Math.ceil(width / cardWidth);
-    }, []);
     const isAnimated = visibleCardCount <= cardList.length;
-    const expandedCardList = useMemo(() => [...cardList, ...cardList], [cardList]);
+    const expandedCardList = useMemo(() => [...cardList, ...cardList, ...cardList], [cardList]);
 
     const containerRef = useRef<HTMLUListElement>(null);
     const transitionControls = useAnimation();
@@ -54,40 +49,40 @@ export function TransitionCasperCards({
     };
 
     const visibleCardList = useMemo(() => {
-        if (isAnimated) {
-            return [
-                ...expandedCardList.slice(
-                    visibleCardListIdx,
-                    visibleCardListIdx + visibleCardCount
-                ),
-                ...expandedCardList.slice(
-                    visibleCardListIdx + visibleCardCount,
-                    visibleCardListIdx + visibleCardCount * 2
-                ),
-            ];
+        const list = expandedCardList.slice(
+            visibleCardListIdx,
+            visibleCardListIdx + visibleCardCount * 2
+        );
+
+        if (isAnimated && isReverseCards) {
+            return list.reverse();
         }
 
-        return cardList;
-    }, [cardList, visibleCardCount, visibleCardListIdx]);
+        return isAnimated ? list : cardList;
+    }, [
+        isReverseCards,
+        expandedCardList,
+        cardList,
+        isAnimated,
+        visibleCardCount,
+        visibleCardListIdx,
+    ]);
 
     useEffect(() => {
         startAnimation(x);
-    }, [transitionControls, totalWidth]);
+    }, []);
 
     const handleUpdateAnimation = (latest: ResolvedValues) => {
         if (isEndCard(parseInt(String(latest.x)))) {
-            startAnimation(initialX);
-
             let nextIdx = visibleCardListIdx + visibleCardCount;
 
-            // 만약 nextIdx가 cardList의 길이를 초과하면 0으로 초기화하거나 초과분을 조정합니다.
-            if (visibleCardListIdx >= cardList.length) {
-                nextIdx = visibleCardListIdx % cardList.length;
+            // 만약 nextIdx가 cardList의 길이를 초과하면 배열의 처음부터 다시 index를 카운트하도록 함
+            if (nextIdx >= cardList.length) {
+                nextIdx = nextIdx % cardList.length;
             }
 
-            console.log(nextIdx);
-
             setVisibleCardListIdx(nextIdx);
+            startAnimation(initialX);
         }
     };
 

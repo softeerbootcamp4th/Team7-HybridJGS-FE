@@ -8,7 +8,7 @@ interface CasperCardsProps {
 }
 
 export function CasperCards({ cardList }: CasperCardsProps) {
-    const cardLength = 10;
+    const cardLength = 20;
     const cardLengthHalf = Math.floor(cardLength / 2);
     const visibleCardCount = useMemo(() => {
         const width = window.innerWidth;
@@ -38,17 +38,18 @@ export function CasperCards({ cardList }: CasperCardsProps) {
                 cardList={topCardList}
                 initialX={0}
                 gap={gap}
-                diffX={-totalWidth}
-                totalWidth={totalWidth}
+                diffX={-totalWidth - 1}
+                visibleCardCount={visibleCardCount}
                 isEndCard={isEndTopCard}
             />
             <TransitionCasperCards
                 cardList={bottomCardList}
                 initialX={-totalWidth}
                 gap={gap}
-                diffX={totalWidth}
-                totalWidth={totalWidth}
+                diffX={totalWidth + 1}
+                visibleCardCount={visibleCardCount}
                 isEndCard={isEndBottomCard}
+                isReverseCards
             />
         </div>
     );

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import { CasperCardType } from "../CasperShowCase/TransitionCasperCards";
+import type { CasperCardType } from "@/types/casper";
 import { CasperCardBackUI } from "./CasperCardBackUI";
 import { CasperCardFrontUI } from "./CasperCardFrontUI";
 
