@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, type ResolvedValues, motion, useAnimation } from "framer-motion";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
-import { CasperCardType } from "@/types/casper";
+import type { CasperCardType } from "@/types/casper";
 import { TransitionCasperCardItem } from "./TransitionCasperCardItem";
 
 interface TransitionCasperCardsProps {

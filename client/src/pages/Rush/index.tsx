@@ -30,7 +30,7 @@ export default function Rush() {
 
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
-            <Headline id={RUSH_SECTIONS.HEADLINE} handleScrollToTarget={handleScrollToTarget} />
+            <Headline id={RUSH_SECTIONS.HEADLINE} handleClickScroll={handleScrollToTarget} />
             <Intro ref={targetRef} id={RUSH_SECTIONS.INTRO} />
             <FAQ id={RUSH_SECTIONS.FAQ} />
             <ElectricReason id={RUSH_SECTIONS.ELECTRIC_REASON} />

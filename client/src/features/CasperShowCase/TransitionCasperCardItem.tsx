@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
+import { CasperFlipCard } from "@/features/CasperCustom/CasperCard/CasperFlipCard";
 import useLazyLoading from "@/hooks/useLazyLoading";
 import type { CasperCardType } from "@/types/casper";
-import { CasperFlipCard } from "../CasperCustom/CasperFlipCard";
 
 interface TransitionCasperCardItemProps {
     cardItem: CasperCardType;
