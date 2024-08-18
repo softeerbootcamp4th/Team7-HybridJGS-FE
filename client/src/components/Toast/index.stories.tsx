@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import useToast from "../../hooks/useToast.tsx";
+import useToast from "@/hooks/useToast.tsx";
 import Toast from "./index.tsx";
 
 const meta: Meta<typeof Toast> = {

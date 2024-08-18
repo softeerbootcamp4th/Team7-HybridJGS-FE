@@ -1,49 +1,55 @@
-import { memo } from "react";
-import RushEvent, { RushEventProps } from "@/components/RushEvent";
+import { memo, useEffect, useMemo } from "react";
+import { RushAPI } from "@/apis/rushAPI.ts";
+import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
+import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
+import useFetch from "@/hooks/useFetch.ts";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
-
-// TODO: API로 대체될 데이터
-export const rushEventData: RushEventProps[] = [
-    {
-        id: 1,
-        date: "2024-07-28 09:00:00.000000",
-        image: "/assets/main/rush/prize-1.png",
-        prizeName: "영화 예매권",
-    },
-    {
-        id: 2,
-        date: "2024-07-29 09:00:00.000000",
-        image: "/assets/main/rush/prize-2.png",
-        prizeName: "야구 관람권",
-    },
-    {
-        id: 3,
-        date: "2024-07-30 09:00:00.000000",
-        image: "/assets/main/rush/prize-3.jpg",
-        prizeName: "올리브영 상품권",
-    },
-    {
-        id: 4,
-        date: "2024-07-31 09:00:00.000000",
-        image: "/assets/main/rush/prize-4.jpeg",
-        prizeName: "쿠팡 기프트카드",
-    },
-    {
-        id: 5,
-        date: "2024-08-01 09:00:00.000000",
-        image: "/assets/main/rush/prize-5.jpg",
-        prizeName: "배달의민족 기프트카드",
-    },
-    {
-        id: 6,
-        date: "2024-08-02 09:00:00.000000",
-        image: "/assets/main/rush/prize-6.jpg",
-        prizeName: "BBQ 기프트카드",
-    },
-];
+import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
+import { getMsTime } from "@/utils/getMsTime.ts";
 
 function Rush({ id }: SectionKeyProps) {
+    const {
+        data: rushData,
+        isSuccess: isSuccessRush,
+        fetchData: getRush,
+    } = useFetch<GetTotalRushEventsResponse>(() => RushAPI.getRush());
+
+    useEffect(() => {
+        getRush();
+    }, []);
+
+    const {
+        serverTime,
+        todayEventId,
+        eventStartDate,
+        eventEndDate,
+        events = [],
+    }: GetTotalRushEventsResponse = rushData || ({} as GetTotalRushEventsResponse);
+
+    const rushEvents: TotalRushEventsProps[] = useMemo(() => {
+        if (isSuccessRush && rushData) {
+            const serverDateTime = getMsTime(serverTime);
+
+            return events.map((event, idx) => {
+                const rushEvent = RUSH_EVENT_DATA[idx];
+                const eventEndTime = getMsTime(event.endDateTime);
+
+                return {
+                    id: event.rushEventId,
+                    date: event.startDateTime,
+                    image: rushEvent?.image || "",
+                    prizeName: rushEvent?.prizeName || "",
+                    isPastEvent: serverDateTime > eventEndTime,
+                    isTodayEvent:
+                        event.rushEventId === todayEventId && serverDateTime <= eventEndTime,
+                };
+            });
+        }
+        return [];
+    }, [isSuccessRush, rushData, serverTime, todayEventId, events]);
+
     return (
         <Section
             id={id}
@@ -61,7 +67,9 @@ function Rush({ id }: SectionKeyProps) {
                         <p className="h-heading-4-bold text-n-black">이벤트 기간</p>
                         <span className="flex flex-col">
                             <p className="h-body-1-regular text-n-neutral-500">
-                                2024. 08. 25. (목) ~ 2024. 09. 01. (일)
+                                {isSuccessRush && eventStartDate && eventEndDate
+                                    ? formatEventDateRangeWithDot(eventStartDate, eventEndDate)
+                                    : ""}
                             </p>
                             <p className="h-body-1-regular text-s-red">매일 오후 10시!</p>
                         </span>
@@ -80,13 +88,14 @@ function Rush({ id }: SectionKeyProps) {
                 <div className="flex flex-col gap-4">
                     <p className="h-heading-4-bold text-n-black">이벤트 경품</p>
                     <div className="flex gap-6">
-                        {rushEventData.map((event) => (
+                        {rushEvents.map((event) => (
                             <RushEvent
                                 key={event.id}
-                                id={event.id}
                                 date={event.date}
                                 image={event.image}
                                 prizeName={event.prizeName}
+                                isPastEvent={event.isPastEvent}
+                                isTodayEvent={event.isTodayEvent}
                             />
                         ))}
                     </div>

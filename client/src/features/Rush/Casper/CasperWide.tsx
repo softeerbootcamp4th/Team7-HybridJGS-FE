@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 import { DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
-import { CasperDescription } from "@/features/Rush/CasperDescription.tsx";
-import { CasperSection } from "@/features/Rush/CasperSection.tsx";
+import { CasperDescription } from "@/features/Rush/Casper/CasperDescription.tsx";
+import { CasperSection } from "@/features/Rush/Casper/CasperSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 function CasperWide({ id }: SectionKeyProps) {

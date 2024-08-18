@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ReasonSection } from "@/features/Rush/ReasonSection.tsx";
+import { ReasonSection } from "@/features/Rush/Reason/ReasonSection.tsx";
 import { SectionKeyProps } from "@/types/sections.ts";
 
 function ReasonFirst({ id }: SectionKeyProps) {
