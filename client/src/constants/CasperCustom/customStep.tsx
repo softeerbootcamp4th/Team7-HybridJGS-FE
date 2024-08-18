@@ -3,7 +3,7 @@ import {
     EyesPanel,
     MouthPanel,
     StickerPanel,
-} from "@/features/CasperCustom/CasperCustomPanel";
+} from "@/features/CasperCustom/CasperCustomPanel/CasperCustomPanel";
 import { CUSTOM_OPTION } from "./casper";
 
 export const CUSTOM_STEP_OPTION = {

@@ -1,15 +1,40 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { motion } from "framer-motion";
+import { RushAPI } from "@/apis/rushAPI.ts";
+import { TotalAPI } from "@/apis/totalAPI.ts";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import useFetch from "@/hooks/useFetch.ts";
+import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
+import { GetTotalEventDateResponse } from "@/types/totalApi.ts";
+import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
 interface HeadlineProps extends SectionKeyProps {
     handleClickScroll: () => void;
 }
 
 function Headline({ id, handleClickScroll }: HeadlineProps) {
+    // DATA RESET TEST API
+    const { fetchData: getRushTodayEventTest } = useFetch<RushEventStatusCodeResponse>(() =>
+        RushAPI.getRushTodayEventTest()
+    );
+
+    const {
+        data: totalData,
+        isSuccess: isSuccessTotalData,
+        fetchData: getTotal,
+    } = useFetch<GetTotalEventDateResponse>(() => TotalAPI.getTotal());
+
+    useEffect(() => {
+        getRushTodayEventTest();
+        getTotal();
+    }, []);
+
+    const { totalEventStartDate, totalEventEndDate }: GetTotalEventDateResponse =
+        totalData || ({} as GetTotalEventDateResponse);
+
     return (
         <section
             id={id}
@@ -26,7 +51,10 @@ function Headline({ id, handleClickScroll }: HeadlineProps) {
                     className="w-[667px] h-[300px] mt-10"
                 />
                 <p className="h-heading-3-medium text-n-white pb-28">
-                    2024. 08. 21. (수) ~ 2024. 09. 03. (화)
+                    {isSuccessTotalData &&
+                        totalEventStartDate &&
+                        totalEventEndDate &&
+                        formatEventDateRangeWithDot(totalEventStartDate, totalEventEndDate)}
                 </p>
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>

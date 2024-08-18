@@ -1,12 +1,29 @@
-import { forwardRef, memo } from "react";
+import { forwardRef, memo, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import LotteryEvent from "@/components/LotteryEvent";
 import { LOTTERY_EVENT_DATA } from "@/constants/Main/lotteryEventData.ts";
 import { Section } from "@/features/Main/Section.tsx";
+import useFetch from "@/hooks/useFetch.ts";
+import { GetLotteryResponse } from "@/types/lotteryApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
-import ArrowIcon from "/public/assets/icons/arrow.svg?react";
+import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
+import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 const Lottery = forwardRef<HTMLDivElement, SectionKeyProps>(function Lottery({ id }, ref) {
+    const {
+        data: lotteryData,
+        isSuccess: isSuccessLottery,
+        fetchData: getLottery,
+    } = useFetch<GetLotteryResponse>(() => LotteryAPI.getLottery());
+
+    useEffect(() => {
+        getLottery();
+    }, []);
+
+    const { eventStartDate, eventEndDate }: GetLotteryResponse =
+        lotteryData || ({} as GetLotteryResponse);
+
     return (
         <Section
             id={id}
@@ -29,7 +46,9 @@ const Lottery = forwardRef<HTMLDivElement, SectionKeyProps>(function Lottery({ i
                     <div className="flex flex-col gap-4">
                         <p className="h-heading-4-bold text-n-white">이벤트 기간</p>
                         <p className="h-body-1-regular text-[#A6B2BA]">
-                            2024. 08. 23. (금) ~ 2024. 09. 05 (목)
+                            {isSuccessLottery && eventStartDate && eventEndDate
+                                ? formatEventDateRangeWithDot(eventStartDate, eventEndDate)
+                                : ""}
                         </p>
                     </div>
                     <div className="flex flex-col gap-4">
@@ -62,7 +81,7 @@ const Lottery = forwardRef<HTMLDivElement, SectionKeyProps>(function Lottery({ i
                 className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"
             >
                 <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
-                <ArrowIcon stroke="#637381" />
+                <ArrowRightIcon stroke="#637381" />
             </Link>
         </Section>
     );

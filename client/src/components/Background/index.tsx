@@ -15,7 +15,9 @@ export function Background({ children }: PropsWithChildren) {
             <div className="absolute top-0 right-[35px] w-[800px] h-[390px] rounded-[29px] overflow-hidden bg-n-white/[.16] z-5">
                 <div className="w-1/2 h-full float-left bg-gradient-green blur-[40px]" />
             </div>
-            {children}
+            <div className="flex flex-col gap-6 justify-center items-center w-[800px] h-[390px] bg-n-white rounded-[29px] relative z-20">
+                {children}
+            </div>
         </motion.div>
     );
 }

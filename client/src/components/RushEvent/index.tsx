@@ -1,27 +1,20 @@
-import { useMemo } from "react";
-import { formatDate } from "@/utils/formatDate.ts";
+import { RushEventProps } from "@/constants/Main/rushEventData.ts";
+import { formatSingleDateWithSlash } from "@/utils/formatDate.ts";
 
-export interface RushEventProps {
+export interface TotalRushEventsProps extends RushEventProps {
     id: number;
     date: string;
-    image: string;
-    prizeName: string;
+    isPastEvent: boolean;
+    isTodayEvent: boolean;
 }
 
-export default function RushEvent({ date, image, prizeName }: RushEventProps) {
-    // TODO: 백엔드와 상의 후 게임 진행 상태 값 받는 걸로 변경
-    const { isPastEvent, isTodayEvent } = useMemo(() => {
-        const eventDate = new Date(date.split(" ")[0]);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        eventDate.setHours(0, 0, 0, 0);
-
-        return {
-            isPastEvent: eventDate.getTime() < today.getTime(),
-            isTodayEvent: eventDate.getTime() === today.getTime(),
-        };
-    }, [date]);
-
+export default function RushEvent({
+    date,
+    image,
+    prizeName,
+    isPastEvent,
+    isTodayEvent,
+}: Omit<TotalRushEventsProps, "id">) {
     const borderClass = isTodayEvent ? "border-s-red" : "border-n-neutral-300";
     const opacityClass = isPastEvent && "opacity-50";
     const textClass = isTodayEvent ? "text-s-red" : "text-n-neutral-950";
@@ -31,7 +24,7 @@ export default function RushEvent({ date, image, prizeName }: RushEventProps) {
             className={`relative w-[160px] h-[200px] py-7 px-5 rounded-500 bg-n-white flex flex-col gap-4 justify-between items-center border ${borderClass} ${opacityClass}`}
         >
             <p className={`h-body-2-bold ${textClass} text-nowrap`}>
-                {isTodayEvent ? "Today" : formatDate(date)}
+                {isTodayEvent ? "Today" : formatSingleDateWithSlash(date)}
             </p>
             <img src={image} alt="event prize" className="object-cover" />
             <p className="h-body-2-medium text-n-neutral-950 text-nowrap">{prizeName}</p>

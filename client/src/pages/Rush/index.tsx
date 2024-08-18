@@ -2,7 +2,6 @@ import Footer from "@/components/Footer";
 import Notice from "@/components/Notice";
 import { RUSH_SECTIONS } from "@/constants/PageSections/sections.ts";
 import {
-    BalanceGame,
     CasperCharge,
     CasperComfortable,
     CasperFar,
@@ -12,6 +11,7 @@ import {
     ElectricAdvantage,
     ElectricReason,
     FAQ,
+    Headline,
     Intro,
     ReasonFirst,
     ReasonSecond,
@@ -30,10 +30,7 @@ export default function Rush() {
 
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
-            <BalanceGame
-                id={RUSH_SECTIONS.BALANCE_GAME}
-                handleScrollToTarget={handleScrollToTarget}
-            />
+            <Headline id={RUSH_SECTIONS.HEADLINE} handleScrollToTarget={handleScrollToTarget} />
             <Intro ref={targetRef} id={RUSH_SECTIONS.INTRO} />
             <FAQ id={RUSH_SECTIONS.FAQ} />
             <ElectricReason id={RUSH_SECTIONS.ELECTRIC_REASON} />

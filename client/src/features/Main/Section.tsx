@@ -12,6 +12,7 @@ interface SectionProps extends PropsWithChildren, SectionKeyProps {
     description: string;
     descriptionColor: string;
     url?: string;
+    onClick?: () => void;
 }
 
 export const Section = forwardRef<HTMLDivElement, SectionProps>(function Section(
@@ -25,6 +26,7 @@ export const Section = forwardRef<HTMLDivElement, SectionProps>(function Section
         descriptionColor,
         children,
         url,
+        onClick,
     },
     ref
 ) {
@@ -44,7 +46,12 @@ export const Section = forwardRef<HTMLDivElement, SectionProps>(function Section
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND)}>{children}</motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND)}>
-                <CTAButton label="이벤트 참여하기" hasArrowIcon={true} url={url} />
+                <CTAButton
+                    label="이벤트 참여하기"
+                    hasArrowIcon={true}
+                    url={url}
+                    onClick={onClick}
+                />
             </motion.div>
         </section>
     );
