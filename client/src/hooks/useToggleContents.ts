@@ -18,7 +18,7 @@ export default function useToggleContents({
     }, []);
 
     useEffect(() => {
-        if (useDuration && duration && duration > 0) {
+        if (useDuration) {
             const timer = setTimeout(() => {
                 toggle();
             }, duration);
