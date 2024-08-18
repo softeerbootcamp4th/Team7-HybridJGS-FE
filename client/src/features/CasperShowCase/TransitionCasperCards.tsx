@@ -81,9 +81,11 @@ export function TransitionCasperCards({
             let nextIdx = visibleCardListIdx + visibleCardCount;
 
             // 만약 nextIdx가 cardList의 길이를 초과하면 0으로 초기화하거나 초과분을 조정합니다.
-            if (nextIdx + visibleCardCount >= cardList.length) {
-                nextIdx = (nextIdx + visibleCardCount) % cardList.length;
+            if (visibleCardListIdx >= cardList.length) {
+                nextIdx = visibleCardListIdx % cardList.length;
             }
+
+            console.log(nextIdx);
 
             setVisibleCardListIdx(nextIdx);
         }

@@ -8,7 +8,7 @@ interface CasperCardsProps {
 }
 
 export function CasperCards({ cardList }: CasperCardsProps) {
-    const cardLength = 20;
+    const cardLength = 10;
     const cardLengthHalf = Math.floor(cardLength / 2);
     const visibleCardCount = useMemo(() => {
         const width = window.innerWidth;
