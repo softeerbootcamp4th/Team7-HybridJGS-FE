@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority";
 import Tooltip from "@/components/Tooltip";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import RushCurrentOptionDisplay from "@/features/RushGame/RushGameComponents/RushCurrentOptionDisplay.tsx";
@@ -6,6 +7,18 @@ import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
+
+const tooltipVariants = cva(`absolute transition-opacity duration-300 ease-in-out`, {
+    variants: {
+        visible: {
+            true: "opacity-1 visibility-visible",
+            false: "opacity-0 visibility-hidden",
+        },
+    },
+    defaultVariants: {
+        visible: true,
+    },
+});
 
 const TOOLTIP_CONTENT = () => (
     <>
@@ -77,17 +90,12 @@ export default function RushCardCurrentRatio() {
                 />
             </div>
             <div className="absolute right-6 bottom-6">
-                {toggleContents ? (
-                    <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left">
-                        <button onClick={fetchRushBalance}>
-                            <Reload />
-                        </button>
-                    </Tooltip>
-                ) : (
-                    <button onClick={fetchRushBalance}>
-                        <Reload />
-                    </button>
-                )}
+                <div className={tooltipVariants({ visible: toggleContents })}>
+                    <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left" />
+                </div>
+                <button onClick={fetchRushBalance}>
+                    <Reload />
+                </button>
             </div>
         </div>
     );
