@@ -52,7 +52,7 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
 }
 
 export default function SelectedCard() {
-    const { toggleContents, toggle } = useToggleContents();
+    const { toggleContents, toggle } = useToggleContents({ useDuration: false });
     const { fetchRushBalance } = useRushGameContext();
 
     useEffect(() => {

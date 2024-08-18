@@ -1,4 +1,5 @@
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { formatTime } from "@/utils/formatTime.ts";
 
 function TimeDisplay({ label, value }: { label: string; value: string }) {
     return (
@@ -13,8 +14,6 @@ export default function RushCountdown() {
     const { runCountdown } = useRushGameContext();
     const minutes = Math.floor((runCountdown % 3600) / 60);
     const seconds = runCountdown % 60;
-
-    const formatTime = (time: number) => time.toString().padStart(2, "0");
 
     return (
         <div className="flex flex-col gap-3 justify-center items-center h-[150px]">

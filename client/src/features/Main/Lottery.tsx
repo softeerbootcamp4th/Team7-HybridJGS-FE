@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import LotteryEvent from "@/components/LotteryEvent";
@@ -11,9 +11,6 @@ import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
 function Lottery({ id }: SectionKeyProps) {
-    const [startDateTime, setStartDateTime] = useState<string>("");
-    const [endDateTime, setEndDateTime] = useState<string>("");
-
     const {
         data: lotteryData,
         isSuccess: isSuccessLottery,
@@ -24,12 +21,8 @@ function Lottery({ id }: SectionKeyProps) {
         getLottery();
     }, []);
 
-    useEffect(() => {
-        if (isSuccessLottery && lotteryData) {
-            setStartDateTime(lotteryData.eventStartDate);
-            setEndDateTime(lotteryData.eventEndDate);
-        }
-    }, [isSuccessLottery, lotteryData]);
+    const { eventStartDate, eventEndDate }: GetLotteryResponse =
+        lotteryData || ({} as GetLotteryResponse);
 
     return (
         <Section
@@ -52,8 +45,8 @@ function Lottery({ id }: SectionKeyProps) {
                     <div className="flex flex-col gap-4">
                         <p className="h-heading-4-bold text-n-white">이벤트 기간</p>
                         <p className="h-body-1-regular text-[#A6B2BA]">
-                            {startDateTime && endDateTime
-                                ? formatEventDateRangeWithDot(startDateTime, endDateTime)
+                            {isSuccessLottery && eventStartDate && eventEndDate
+                                ? formatEventDateRangeWithDot(eventStartDate, eventEndDate)
                                 : ""}
                         </p>
                     </div>

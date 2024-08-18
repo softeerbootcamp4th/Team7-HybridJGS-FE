@@ -1,12 +1,10 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { TotalAPI } from "@/apis/totalAPI.ts";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
-import { COOKIE_KEY } from "@/constants/cookie.ts";
 import useFetch from "@/hooks/useFetch.ts";
 import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
@@ -14,13 +12,9 @@ import { GetTotalEventDateResponse } from "@/types/totalApi.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
 function Headline({ id }: SectionKeyProps) {
-    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const [startDateTime, setStartDateTime] = useState<string>("");
-    const [endDateTime, setEndDateTime] = useState<string>("");
-
     // DATA RESET TEST API
-    const { fetchData: getRushTodayEventTest } = useFetch<RushEventStatusCodeResponse, string>(
-        (token) => RushAPI.getRushTodayEventTest(token)
+    const { fetchData: getRushTodayEventTest } = useFetch<RushEventStatusCodeResponse>(() =>
+        RushAPI.getRushTodayEventTest()
     );
 
     const {
@@ -30,16 +24,12 @@ function Headline({ id }: SectionKeyProps) {
     } = useFetch<GetTotalEventDateResponse>(() => TotalAPI.getTotal());
 
     useEffect(() => {
-        getRushTodayEventTest(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+        getRushTodayEventTest();
         getTotal();
     }, []);
 
-    useEffect(() => {
-        if (isSuccessTotalData && totalData) {
-            setStartDateTime(totalData.totalEventStartDate);
-            setEndDateTime(totalData.totalEventEndDate);
-        }
-    }, [isSuccessTotalData, totalData]);
+    const { totalEventStartDate, totalEventEndDate }: GetTotalEventDateResponse =
+        totalData || ({} as GetTotalEventDateResponse);
 
     return (
         <section
@@ -57,9 +47,10 @@ function Headline({ id }: SectionKeyProps) {
                     className="w-[667px] h-[300px] mt-10"
                 />
                 <p className="h-heading-3-medium text-n-white pb-28">
-                    {startDateTime &&
-                        endDateTime &&
-                        formatEventDateRangeWithDot(startDateTime, endDateTime)}
+                    {isSuccessTotalData &&
+                        totalEventStartDate &&
+                        totalEventEndDate &&
+                        formatEventDateRangeWithDot(totalEventStartDate, totalEventEndDate)}
                 </p>
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>

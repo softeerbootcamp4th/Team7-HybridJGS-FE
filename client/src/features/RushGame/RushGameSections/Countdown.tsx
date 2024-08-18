@@ -2,14 +2,13 @@ import { motion } from "framer-motion";
 import { Background } from "@/components/Background";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { formatTime } from "@/utils/formatTime.ts";
 
 function CountdownTimer() {
     const { preCountdown } = useRushGameContext();
     const hours = Math.floor(preCountdown / 3600);
     const minutes = Math.floor((preCountdown % 3600) / 60);
     const seconds = preCountdown % 60;
-
-    const formatTime = (time: number) => time.toString().padStart(2, "0");
 
     return (
         <Background>

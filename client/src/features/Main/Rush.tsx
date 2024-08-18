@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import RushEvent, { TotalRushEventsProps } from "@/components/RushEvent";
 import { RUSH_EVENT_DATA } from "@/constants/Main/rushEventData.ts";
@@ -10,10 +10,6 @@ import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
 function Rush({ id }: SectionKeyProps) {
-    const [rushEvents, setRushEvents] = useState<TotalRushEventsProps[]>([]);
-    const [startDateTime, setStartDateTime] = useState<string>("");
-    const [endDateTime, setEndDateTime] = useState<string>("");
-
     const {
         data: rushData,
         isSuccess: isSuccessRush,
@@ -24,14 +20,19 @@ function Rush({ id }: SectionKeyProps) {
         getRush();
     }, []);
 
-    useEffect(() => {
+    const {
+        serverTime,
+        todayEventId,
+        eventStartDate,
+        eventEndDate,
+        events = [],
+    }: GetTotalRushEventsResponse = rushData || ({} as GetTotalRushEventsResponse);
+
+    const rushEvents: TotalRushEventsProps[] = useMemo(() => {
         if (isSuccessRush && rushData) {
-            const serverDateTime = getMsTime(rushData.serverTime);
+            const serverDateTime = getMsTime(serverTime);
 
-            setStartDateTime(rushData.eventStartDate);
-            setEndDateTime(rushData.eventEndDate);
-
-            const events = rushData.events.map((event, idx) => {
+            return events.map((event, idx) => {
                 const rushEvent = RUSH_EVENT_DATA[idx];
                 const eventEndTime = getMsTime(event.endDateTime);
 
@@ -42,13 +43,12 @@ function Rush({ id }: SectionKeyProps) {
                     prizeName: rushEvent?.prizeName || "",
                     isPastEvent: serverDateTime > eventEndTime,
                     isTodayEvent:
-                        event.rushEventId === rushData.todayEventId &&
-                        serverDateTime <= eventEndTime,
+                        event.rushEventId === todayEventId && serverDateTime <= eventEndTime,
                 };
             });
-            setRushEvents(events);
         }
-    }, [isSuccessRush, rushData]);
+        return [];
+    }, [isSuccessRush, rushData, serverTime, todayEventId, events]);
 
     return (
         <Section
@@ -67,8 +67,8 @@ function Rush({ id }: SectionKeyProps) {
                         <p className="h-heading-4-bold text-n-black">이벤트 기간</p>
                         <span className="flex flex-col">
                             <p className="h-body-1-regular text-n-neutral-500">
-                                {startDateTime && endDateTime
-                                    ? formatEventDateRangeWithDot(startDateTime, endDateTime)
+                                {isSuccessRush && eventStartDate && eventEndDate
+                                    ? formatEventDateRangeWithDot(eventStartDate, eventEndDate)
                                     : ""}
                             </p>
                             <p className="h-body-1-regular text-s-red">매일 오후 10시!</p>

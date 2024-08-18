@@ -112,11 +112,11 @@ export const RushAPI = {
             throw error;
         }
     },
-    async getRushTodayEventTest(token: string): Promise<RushEventStatusCodeResponse> {
+    async getRushTodayEventTest(): Promise<RushEventStatusCodeResponse> {
         try {
             const response = await fetchWithTimeout(`${baseURL}/today/test`, {
                 method: "GET",
-                headers: { ...headers, Authorization: `Bearer ${token}` },
+                headers: headers,
             });
             if (response.status === 204 || response.status === 404) {
                 return response.status;

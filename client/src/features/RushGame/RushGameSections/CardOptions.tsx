@@ -5,7 +5,7 @@ import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.
 import useToggleContents from "@/hooks/useToggleContents.ts";
 
 export default function CardOptions() {
-    const { toggleContents } = useToggleContents(true, 5000);
+    const { toggleContents } = useToggleContents();
 
     return (
         <motion.div

@@ -1,6 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 
-export default function useToggleContents(initialStatus: boolean = true, duration?: number) {
+interface UseToggleContentsProps {
+    initialStatus?: boolean;
+    duration?: number;
+    useDuration?: boolean;
+}
+
+export default function useToggleContents({
+    initialStatus = true,
+    duration = 5000,
+    useDuration = true,
+}: UseToggleContentsProps = {}) {
     const [toggleContents, setToggleContents] = useState(initialStatus);
 
     const toggle = useCallback(() => {
@@ -8,14 +18,14 @@ export default function useToggleContents(initialStatus: boolean = true, duratio
     }, []);
 
     useEffect(() => {
-        if (duration !== undefined && duration > 0) {
+        if (useDuration && duration && duration > 0) {
             const timer = setTimeout(() => {
                 toggle();
             }, duration);
 
             return () => clearTimeout(timer);
         }
-    }, [duration, toggle]);
+    }, [useDuration, duration, toggle]);
 
     return { toggleContents, toggle };
 }

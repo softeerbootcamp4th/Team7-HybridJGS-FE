@@ -1,18 +1,11 @@
-import Category from "@/components/Category";
 import Tooltip from "@/components/Tooltip";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
+import RushCurrentOptionDisplay from "@/features/RushGame/RushGameComponents/RushCurrentOptionDisplay.tsx";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
-
-interface OptionDisplayProps {
-    mainText: string;
-    userSelectedOptionRatio: number;
-    oppositeOptionRatio: number;
-    isUserSelected: boolean;
-}
 
 const TOOLTIP_CONTENT = () => (
     <>
@@ -44,35 +37,10 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
     }
 }
 
-function ReloadButton({ onClick }: { onClick: () => void }) {
-    return (
-        <button onClick={onClick}>
-            <Reload />
-        </button>
-    );
-}
-
-function OptionDisplay({
-    mainText,
-    userSelectedOptionRatio,
-    oppositeOptionRatio,
-    isUserSelected,
-}: OptionDisplayProps) {
-    return (
-        <div className="flex gap-2 items-center">
-            <p className="h-heading-4-bold text-n-neutral-950">{mainText}</p>
-            {userSelectedOptionRatio > oppositeOptionRatio && (
-                <Category type="limited">우세해요!</Category>
-            )}
-            {isUserSelected && <Category type="selected">당신의 선택</Category>}
-        </div>
-    );
-}
-
 export default function RushCardCurrentRatio() {
     const { gameState, getOptionRatio, fetchRushBalance, getSelectedCardInfo } =
         useRushGameContext();
-    const { toggleContents } = useToggleContents(true, 5000);
+    const { toggleContents } = useToggleContents();
 
     const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
     const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);
@@ -90,13 +58,13 @@ export default function RushCardCurrentRatio() {
             </span>
             <div className="flex flex-col gap-3">
                 <div className="flex justify-between">
-                    <OptionDisplay
+                    <RushCurrentOptionDisplay
                         mainText={leftMainText}
                         userSelectedOptionRatio={leftOptionRatio}
                         oppositeOptionRatio={rightOptionRatio}
                         isUserSelected={gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
                     />
-                    <OptionDisplay
+                    <RushCurrentOptionDisplay
                         mainText={rightMainText}
                         userSelectedOptionRatio={rightOptionRatio}
                         oppositeOptionRatio={leftOptionRatio}
@@ -111,10 +79,14 @@ export default function RushCardCurrentRatio() {
             <div className="absolute right-6 bottom-6">
                 {toggleContents ? (
                     <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left">
-                        <ReloadButton onClick={fetchRushBalance} />
+                        <button onClick={fetchRushBalance}>
+                            <Reload />
+                        </button>
                     </Tooltip>
                 ) : (
-                    <ReloadButton onClick={fetchRushBalance} />
+                    <button onClick={fetchRushBalance}>
+                        <Reload />
+                    </button>
                 )}
             </div>
         </div>

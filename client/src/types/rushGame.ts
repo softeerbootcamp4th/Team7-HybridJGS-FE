@@ -1,8 +1,9 @@
-import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard.ts";
+import { CARD_COLOR, CARD_OPTION, CARD_PHASE, WIN_STATUS } from "@/constants/Rush/rushCard.ts";
 
 export type GamePhase = (typeof CARD_PHASE)[keyof typeof CARD_PHASE];
 export type CardColor = (typeof CARD_COLOR)[keyof typeof CARD_COLOR];
 export type CardOption = (typeof CARD_OPTION)[keyof typeof CARD_OPTION];
+export type WinStatus = (typeof WIN_STATUS)[keyof typeof WIN_STATUS];
 
 export interface CardOptionState {
     mainText: string;

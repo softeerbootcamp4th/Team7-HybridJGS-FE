@@ -153,22 +153,20 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
             const startTime = getMsTime(currentEvent.startDateTime);
             const endTime = getMsTime(currentEvent.endDateTime);
 
-            switch (gameState.phase) {
-                case CARD_PHASE.NOT_STARTED:
-                    if (rushData.serverTime && currentEvent?.startDateTime) {
-                        const preCountdown = Math.max(
-                            0,
-                            Math.floor((startTime - serverTime) / 1000)
-                        );
-                        setInitialPreCountdown(preCountdown);
-                    }
-                    break;
-                case CARD_PHASE.IN_PROGRESS:
-                    if (rushData.serverTime && currentEvent?.endDateTime) {
-                        const runCountdown = Math.max(0, Math.floor((endTime - serverTime) / 1000));
-                        setInitialRunCountdown(runCountdown);
-                    }
-                    break;
+            if (
+                gameState.phase === CARD_PHASE.NOT_STARTED &&
+                rushData.serverTime &&
+                currentEvent?.startDateTime
+            ) {
+                const preCountdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
+                setInitialPreCountdown(preCountdown);
+            } else if (
+                gameState.phase === CARD_PHASE.IN_PROGRESS &&
+                rushData.serverTime &&
+                currentEvent?.endDateTime
+            ) {
+                const runCountdown = Math.max(0, Math.floor((endTime - serverTime) / 1000));
+                setInitialRunCountdown(runCountdown);
             }
         }
     }, [rushData, gameState.phase]);
@@ -177,8 +175,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     // const runCountdown = useCountdown(initialRunCountdown || 1);
 
     // TEST COUNTDOWN CODE
-    const preCountdown = useCountdown(3);
-    const runCountdown = useCountdown(10);
+    const preCountdown = useCountdown(5);
+    const runCountdown = useCountdown(20);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === CARD_PHASE.NOT_STARTED) {

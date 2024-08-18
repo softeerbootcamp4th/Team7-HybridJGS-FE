@@ -2,48 +2,24 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import Category from "@/components/Category";
-import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
+import { CARD_OPTION, WIN_STATUS } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
+import RushResultOptionDisplay from "@/features/RushGame/RushGameComponents/RushResultOptionDisplay.tsx";
 import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
+import { WinStatus } from "@/types/rushGame.ts";
 
 const MESSAGES = {
     WINNING: "축하해요! 선착순 경품 당첨이에요.",
     LOSING: "아쉽네요, 다음 기회를 다시 노려봐요.",
 };
 
-type WinStatus = "Win" | "Lose" | "Tie";
-
 function getWinStatus(ratio: number, oppositeRatio: number): WinStatus {
-    if (ratio === oppositeRatio) return "Tie";
-    return ratio > oppositeRatio ? "Win" : "Lose";
-}
-
-function OptionDisplay({
-    mainText,
-    winStatus,
-    isUserSelected,
-}: {
-    mainText: string;
-    winStatus: WinStatus;
-    isUserSelected: boolean;
-}) {
-    const categoryType = winStatus === "Win" ? "limited" : "basic";
-    return (
-        <div className="flex gap-2 items-center">
-            <p
-                className={`h-heading-4-bold ${winStatus === "Win" ? "text-n-neutral-950" : "text-n-neutral-500"}`}
-            >
-                {mainText}
-            </p>
-            <Category type={categoryType}>{winStatus}</Category>
-            {isUserSelected && <Category type="selected">당신의 선택</Category>}
-        </div>
-    );
+    if (ratio === oppositeRatio) return WIN_STATUS.TIE;
+    return ratio > oppositeRatio ? WIN_STATUS.WIN : WIN_STATUS.LOSE;
 }
 
 export default function FinalResult() {
@@ -114,14 +90,14 @@ export default function FinalResult() {
                 <div className="flex flex-col gap-3">
                     <p className="h-body-2-regular text-n-neutral-500">최종 밸런스 게임 결과</p>
                     <div className="flex justify-between">
-                        <OptionDisplay
+                        <RushResultOptionDisplay
                             mainText={leftMainText}
                             winStatus={leftWinStatus}
                             isUserSelected={
                                 gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS
                             }
                         />
-                        <OptionDisplay
+                        <RushResultOptionDisplay
                             mainText={rightMainText}
                             winStatus={rightWinStatus}
                             isUserSelected={

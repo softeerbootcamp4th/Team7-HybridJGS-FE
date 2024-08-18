@@ -32,13 +32,13 @@ export function useAuth(redirectUrl: string) {
 
     useEffect(() => {
         if (inviteUser) {
-            setCookie(COOKIE_KEY.INVITE_USER, inviteUser);
+            setCookie(COOKIE_KEY.INVITE_USER, inviteUser, { path: "/" });
         }
     }, [inviteUser]);
 
     useEffect(() => {
         if (authToken && isSuccessGetAuthToken) {
-            setCookie(COOKIE_KEY.ACCESS_TOKEN, authToken.accessToken);
+            setCookie(COOKIE_KEY.ACCESS_TOKEN, authToken.accessToken, { path: "/" });
             dispatch({ type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER, payload: phoneNumberState });
             navigate(redirectUrl);
         }
