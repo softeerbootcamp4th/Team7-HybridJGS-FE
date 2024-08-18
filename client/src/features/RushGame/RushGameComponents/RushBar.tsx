@@ -31,7 +31,7 @@ interface BarProps extends BarVariantsProps {
 export default function RushBar({ ratio, color, status, textAlign }: BarProps) {
     return (
         <span className={barVariants({ color, status, textAlign })} style={{ width: `${ratio}%` }}>
-            <p className="px-3">{ratio}%</p>
+            <p className="px-3 z-40">{ratio}%</p>
         </span>
     );
 }
