@@ -34,8 +34,8 @@ export function TransitionCasperCards({
 
     const startAnimation = (x: number) => {
         transitionControls.start({
-            x: [x, x + diffX],
-            transition: CARD_TRANSITION(cardList.length),
+            x: [x, x + diffX * 2],
+            transition: CARD_TRANSITION(visibleCardCount * 2),
         });
     };
 
@@ -80,6 +80,8 @@ export function TransitionCasperCards({
             if (nextIdx >= cardList.length) {
                 nextIdx = nextIdx % cardList.length;
             }
+
+            console.log(nextIdx);
 
             setVisibleCardListIdx(nextIdx);
             startAnimation(initialX);

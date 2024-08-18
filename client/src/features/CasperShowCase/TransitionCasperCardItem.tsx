@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CasperFlipCard } from "@/features/CasperCustom/CasperCard/CasperFlipCard";
-import useLazyLoading from "@/hooks/useLazyLoading";
 import type { CasperCardType } from "@/types/casper";
 
 interface TransitionCasperCardItemProps {
@@ -18,7 +17,6 @@ export function TransitionCasperCardItem({
     startAnimation,
 }: TransitionCasperCardItemProps) {
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
-    const { isInView, cardRef } = useLazyLoading<HTMLLIElement>();
 
     const handleMouseEnter = () => {
         stopAnimation && stopAnimation();
@@ -32,7 +30,6 @@ export function TransitionCasperCardItem({
 
     return (
         <li
-            ref={cardRef}
             key={id}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -41,13 +38,7 @@ export function TransitionCasperCardItem({
                 height: CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_HEIGHT,
             }}
         >
-            {isInView && (
-                <CasperFlipCard
-                    card={cardItem}
-                    size={CASPER_SIZE_OPTION.SM}
-                    isFlipped={isFlipped}
-                />
-            )}
+            <CasperFlipCard card={cardItem} size={CASPER_SIZE_OPTION.SM} isFlipped={isFlipped} />
         </li>
     );
 }
