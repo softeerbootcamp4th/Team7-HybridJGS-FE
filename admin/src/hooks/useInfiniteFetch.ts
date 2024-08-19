@@ -35,7 +35,7 @@ export default function useInfiniteFetch<T, R>({
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [totalLength, setTotalLength] = useState<number>(0);
 
-    const getDataList = (lastPage: R) => {
+    const getDataList = useCallback((lastPage: R) => {
         if (isInfiniteParticipantListData<T>(lastPage)) {
             setTotalLength(lastPage.totalParticipants);
             return lastPage.participantsList;
@@ -45,7 +45,7 @@ export default function useInfiniteFetch<T, R>({
         }
 
         return [];
-    };
+    }, []);
 
     const fetchNextPage = useCallback(async () => {
         if (!hasNextPage || isLoading || currentPageParam === undefined) return;
