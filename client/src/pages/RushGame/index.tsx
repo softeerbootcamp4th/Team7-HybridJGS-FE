@@ -6,12 +6,16 @@ import CardOptions from "@/features/RushGame/RushGameSections/CardOptions.tsx";
 import Countdown from "@/features/RushGame/RushGameSections/Countdown.tsx";
 import FinalResult from "@/features/RushGame/RushGameSections/FinalResult.tsx";
 import SelectedCard from "@/features/RushGame/RushGameSections/SelectedCard.tsx";
+import { useBlockNavigation } from "@/hooks/useBlockNavigation.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToast from "@/hooks/useToast.tsx";
 import { writeClipboard } from "@/utils/writeClipboard.ts";
 
-// TODO: 계속 카운트 다운에 맞춰 매초 렌더링 되는 문제 해결
 export default function RushGame() {
+    useBlockNavigation(
+        "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
+    );
+
     const { gameState } = useRushGameContext();
     const { showToast, ToastComponent } = useToast("🔗 링크가 복사되었어요!");
 
