@@ -26,7 +26,7 @@ export default function RushEvent({
             <p className={`h-body-2-bold ${textClass} text-nowrap`}>
                 {isTodayEvent ? "Today" : formatSingleDateWithSlash(date)}
             </p>
-            <img src={image} alt="event prize" className="w-[130px]" />
+            <img src={image} alt="event prize" className="w-[130px] h-[80px] object-contain" />
             <p className="h-body-2-medium text-n-neutral-950 text-nowrap">{prizeName}</p>
             {isPastEvent && (
                 <p
