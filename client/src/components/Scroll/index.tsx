@@ -19,9 +19,8 @@ const scrollTextVariants = cva(`h-body-2-regular`, {
 export default function Scroll({ type, children, onClick }: ScrollProps) {
     return (
         <div
-            className="inline-flex flex-col items-center gap-500"
+            className={`inline-flex flex-col items-center gap-500 ${onClick && "cursor-pointer"}`}
             onClick={onClick}
-            {...(onClick && { style: { cursor: "pointer" } })}
         >
             <div className={scrollTextVariants({ type })}>{children}</div>
             <img
