@@ -75,13 +75,15 @@ function Lottery({ id }: SectionKeyProps) {
                     </div>
                 </div>
             </div>
-            <Link
-                to="/lottery/show-case"
-                className="flex w-[1200px] justify-end gap-1 h-body-1-regular text-n-neutral-500 hover:underline"
-            >
-                <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
-                <ArrowRightIcon stroke="#637381" />
-            </Link>
+            <div className="flex justify-end">
+                <Link
+                    to="/lottery/show-case"
+                    className="flex gap-1 hover:underline h-body-1-regular text-n-neutral-500"
+                >
+                    <p>다른 사람들의 스마일 로봇 뱃지 보러가기</p>
+                    <ArrowRightIcon stroke="#637381" />
+                </Link>
+            </div>
         </Section>
     );
 }
