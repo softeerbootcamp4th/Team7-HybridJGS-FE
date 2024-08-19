@@ -34,7 +34,9 @@ jobs:
       
 
       - name: Create .env file
-        run: echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > ./.env
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> ./.env
+          echo "VITE_RUSH_URL=${{ secrets.VITE_RUSH_URL }}" >> ./.env
         working-directory: ${{ env.working-directory }}
 
       #       build
