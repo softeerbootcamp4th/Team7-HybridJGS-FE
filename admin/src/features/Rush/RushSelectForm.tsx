@@ -49,7 +49,7 @@ export default function RushSelectForm() {
             formDataArrayWithIndex.forEach((item, idx) => {
                 if (images[idx]) {
                     const { imageUrl } = images[idx] as PostImageResponse;
-                    processedResults[item.index] = imageUrl;
+                    processedResults[item.idx] = imageUrl;
                 }
             });
 
@@ -80,15 +80,15 @@ export default function RushSelectForm() {
 
     const formDataArrayWithIndex = useMemo(() => {
         return selectedFiles
-            .map((file, index) => {
+            .map((file, idx) => {
                 if (!(file instanceof File)) {
                     return null;
                 }
                 const formData = new FormData();
                 formData.append("image", file);
-                return { formData, index };
+                return { formData, idx };
             })
-            .filter((item): item is { formData: FormData; index: number } => item !== null);
+            .filter((item): item is { formData: FormData; idx: number } => item !== null);
     }, [images, selectedFiles]);
 
     const handleUpdate = () => {
