@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import { CARD_COLORS, CARD_DAYS, CARD_OPTION } from "@/constants/Rush/rushCard.ts";
+import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetTodayRushEventResponse, RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { CardOption } from "@/types/rushGame.ts";
-
-const TEMP_CURRENT_DAY: (typeof CARD_DAYS)[keyof typeof CARD_DAYS] = CARD_DAYS.DAY1;
+import { getRandomCardColors } from "@/utils/getRandomCardColors.ts";
 
 const INITIAL_OPTION_NUMBER = -1 as const;
 
@@ -41,16 +40,17 @@ export default function RushCardComparison() {
 
     useEffect(() => {
         if (isSuccessTodayRushEvent && todayRushEventData) {
-            // TODO: 카드 색상 랜덤으로 변경
+            const { leftColor, rightColor } = getRandomCardColors();
+
             updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 mainText: todayRushEventData.leftOption.mainText,
                 subText: todayRushEventData.leftOption.subText,
-                color: CARD_COLORS[TEMP_CURRENT_DAY][CARD_OPTION.LEFT_OPTIONS],
+                color: leftColor,
             });
             updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 mainText: todayRushEventData.rightOption.mainText,
                 subText: todayRushEventData.rightOption.subText,
-                color: CARD_COLORS[TEMP_CURRENT_DAY][CARD_OPTION.RIGHT_OPTIONS],
+                color: rightColor,
             });
         }
     }, [isSuccessTodayRushEvent, todayRushEventData]);
