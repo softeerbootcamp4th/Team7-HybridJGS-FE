@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, type ResolvedValues, motion, useAnimation } from "framer-motion";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
 import type { CasperCardType } from "@/types/casper";
@@ -32,21 +32,24 @@ export function TransitionCasperCards({
     const [x, setX] = useState<number>(initialX);
     const [visibleCardListIdx, setVisibleCardListIdx] = useState(0);
 
-    const startAnimation = (x: number) => {
-        transitionControls.start({
-            x: [x, x + diffX * 2],
-            transition: CARD_TRANSITION(visibleCardCount * 2),
-        });
-    };
+    const startAnimation = useCallback(
+        (x: number) => {
+            transitionControls.start({
+                x: [x, x + diffX * 2],
+                transition: CARD_TRANSITION(visibleCardCount * 2),
+            });
+        },
+        [visibleCardCount, transitionControls]
+    );
 
-    const stopAnimation = () => {
+    const stopAnimation = useCallback(() => {
         transitionControls.stop();
         if (containerRef.current) {
             const computedStyle = window.getComputedStyle(containerRef.current);
             const matrix = new DOMMatrix(computedStyle.transform);
             setX(matrix.m41);
         }
-    };
+    }, [transitionControls, containerRef]);
 
     const visibleCardList = useMemo(() => {
         const list = expandedCardList.slice(
