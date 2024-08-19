@@ -13,6 +13,7 @@ import useToast from "@/hooks/useToast";
 import { LotteryEventType } from "@/types/lottery";
 import { GetLotteryResponse, PutLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
+import { getMsTime } from "@/utils/getMsTime";
 import { validateDateTime } from "@/utils/validateDateTime";
 
 export default function Lottery() {
@@ -67,8 +68,8 @@ export default function Lottery() {
 
         const newLottery = { ...lottery, [key]: text };
 
-        const startDateTime = new Date(`${newLottery.startDate}T${newLottery.startTime}`).getTime();
-        const endDateTime = new Date(`${newLottery.endDate}T${newLottery.endTime}`).getTime();
+        const startDateTime = getMsTime(`${newLottery.startDate}T${newLottery.startTime}`);
+        const endDateTime = getMsTime(`${newLottery.endDate}T${newLottery.endTime}`);
         const currentDateTime = new Date().getTime();
 
         const errorMessage = validateDateTime(key, startDateTime, endDateTime, currentDateTime);

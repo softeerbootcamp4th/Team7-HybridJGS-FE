@@ -13,6 +13,7 @@ import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import useToast from "@/hooks/useToast";
 import { RUSH_ACTION } from "@/types/rush";
 import { PutRushEventResponse } from "@/types/rushApi";
+import { getMsTime } from "@/utils/getMsTime";
 import { getTimeDifference } from "@/utils/getTimeDifference";
 import { validateDateTime } from "@/utils/validateDateTime";
 
@@ -37,9 +38,9 @@ export default function EventList() {
     const handleChangeDate = (changeIdx: number, newDate: string) => {
         const selectedItem = rushList[changeIdx];
         const selectedTime = selectedItem.startTime || "00:00";
-        const selectedDateTime = new Date(`${newDate}T${selectedTime}`).getTime();
+        const selectedDateTime = getMsTime(`${newDate}T${selectedTime}`);
         const currentTime = new Date().getTime();
-        const endDateTime = new Date(`${newDate}T${selectedItem.endTime || "23:59"}`).getTime();
+        const endDateTime = getMsTime(`${newDate}T${selectedItem.endTime || "23:59"}`);
 
         const errorMessage = validateDateTime(
             "startDate",
@@ -63,12 +64,10 @@ export default function EventList() {
         const selectedItem = rushList[changeIdx];
         const selectedDate = selectedItem.eventDate;
 
-        const selectedDateTime = new Date(`${selectedDate}T${newTime}`).getTime();
+        const selectedDateTime = getMsTime(`${selectedDate}T${newTime}`);
         const currentTime = new Date().getTime();
-        const startDateTime = new Date(
-            `${selectedItem.eventDate}T${selectedItem.startTime}`
-        ).getTime();
-        const endDateTime = new Date(`${selectedDate}T${selectedItem.endTime}`).getTime();
+        const startDateTime = getMsTime(`${selectedItem.eventDate}T${selectedItem.startTime}`);
+        const endDateTime = getMsTime(`${selectedDate}T${selectedItem.endTime}`);
 
         const errorMessage = validateDateTime(
             key,
