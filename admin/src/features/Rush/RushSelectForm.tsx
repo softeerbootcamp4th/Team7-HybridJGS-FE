@@ -91,10 +91,10 @@ export default function RushSelectForm() {
             .filter((item): item is { formData: FormData; index: number } => item !== null);
     }, [images, selectedFiles]);
 
-    const handleUpdate = async () => {
+    const handleUpdate = () => {
         const formDataArray = formDataArrayWithIndex.map((item) => item.formData);
 
-        await postImage(formDataArray);
+        postImage(formDataArray);
     };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | File) => {
