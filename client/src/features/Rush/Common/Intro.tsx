@@ -1,12 +1,13 @@
-import { memo } from "react";
+import { forwardRef, memo } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 
-function Intro({ id }: SectionKeyProps) {
+const Intro = forwardRef<HTMLDivElement, SectionKeyProps>(function Intro({ id }, ref) {
     return (
         <section
             id={id}
+            ref={ref}
             className="flex flex-col justify-center items-center gap-3 h-screen bg-[url('/assets/rush/car.jpg')] bg-no-repeat bg-cover snap-start"
         >
             <motion.p className="h-body-1-regular text-n-white" {...SCROLL_MOTION(ASCEND)}>
@@ -29,7 +30,7 @@ function Intro({ id }: SectionKeyProps) {
             </motion.span>
         </section>
     );
-}
+});
 
 const MemoizedIntro = memo(Intro);
 export { MemoizedIntro as Intro };

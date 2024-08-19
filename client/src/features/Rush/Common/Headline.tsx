@@ -11,7 +11,11 @@ import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
-export function Headline({ id }: SectionKeyProps) {
+interface HeadlineProps extends SectionKeyProps {
+    handleClickScroll: () => void;
+}
+
+export function Headline({ id, handleClickScroll }: HeadlineProps) {
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
 
     const { phoneNumberState, handlePhoneNumberChange, handlePhoneNumberConfirm } =
@@ -63,7 +67,7 @@ export function Headline({ id }: SectionKeyProps) {
             </motion.div>
 
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="dark">
+                <Scroll type="dark" onClick={handleClickScroll}>
                     <p className="h-body-2-bold">스크롤</p>
                     <p>하고 캐스퍼 일렉트릭의 놀라운 성능을 알아보세요</p>
                 </Scroll>

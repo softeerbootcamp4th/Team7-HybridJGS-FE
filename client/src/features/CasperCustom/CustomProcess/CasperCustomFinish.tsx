@@ -50,7 +50,7 @@ export function CasperCustomFinish({
     const { showToast, ToastComponent } = useToast(
         isErrorGetShareLink
             ? "공유 링크 생성에 실패했습니다! 캐스퍼 봇 생성 후 다시 시도해주세요."
-            : "링크가 복사되었어요!"
+            : "🔗 링크가 복사되었어요!"
     );
 
     const dispatch = useCasperCustomDispatchContext();

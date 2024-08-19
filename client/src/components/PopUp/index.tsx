@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { PHONE_NUMBER_FORMAT, formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import CTAButton from "../CTAButton";
 import CheckBox from "../CheckBox";
@@ -43,9 +43,21 @@ export default function PopUp({
         setIsMarketingInfoCheck(isChecked);
     }, []);
 
+    const errorMessage = useMemo(() => {
+        if (phoneNumber.length >= 11 && !phoneNumber.match(PHONE_NUMBER_FORMAT)) {
+            return "전화번호는 010으로 시작해야합니다!";
+        }
+        if (!isMarketingInfoCheck || !isUserInfoCheck) {
+            return "필수 약관에 동의해주세요!";
+        }
+        return "";
+    }, [phoneNumber, isUserInfoCheck, isMarketingInfoCheck]);
+
     const handleConfirm = (e: FormEvent) => {
         e.preventDefault();
-        handlePhoneNumberConfirm(phoneNumber);
+        if (!errorMessage) {
+            handlePhoneNumberConfirm(phoneNumber);
+        }
     };
 
     return (
@@ -84,7 +96,11 @@ export default function PopUp({
                     handleValueChange={handleTextFieldChange}
                 />
 
-                <div className="pt-400" />
+                <div className="pt-200" />
+
+                <p className="h-body-2-medium text-s-red pt-400">{errorMessage}</p>
+
+                <div className="pt-500" />
 
                 <div className="flex flex-col gap-500">
                     <div className="flex gap-500">

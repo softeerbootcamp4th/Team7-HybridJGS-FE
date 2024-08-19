@@ -1,111 +1,125 @@
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, type ResolvedValues, motion, useAnimation } from "framer-motion";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
-import { CasperFlipCard } from "@/features/CasperCustom/CasperCard/CasperFlipCard";
-import useLazyLoading from "@/hooks/useLazyLoading";
-import { SelectedCasperIdxType } from "@/types/casperCustom";
+import type { CasperCardType } from "@/types/casper";
+import { TransitionCasperCardItem } from "./TransitionCasperCardItem";
 
-export interface CasperCardType {
-    id: number;
-    casperName: string;
-    expectations: string;
-    selectedCasperIdx: SelectedCasperIdxType;
-}
 interface TransitionCasperCardsProps {
     cardList: CasperCardType[];
     initialX: number;
     diffX: number;
-    totalWidth: number;
+    visibleCardCount: number;
     gap: number;
     isEndCard: (latestX: number) => boolean;
+    isReverseCards?: boolean;
 }
 
 export function TransitionCasperCards({
     cardList,
     initialX,
     diffX,
-    totalWidth,
     gap,
+    visibleCardCount,
     isEndCard,
+    isReverseCards = false,
 }: TransitionCasperCardsProps) {
+    const isAnimated = visibleCardCount <= cardList.length;
+    const expandedCardList = useMemo(() => [...cardList, ...cardList, ...cardList], [cardList]);
+
     const containerRef = useRef<HTMLUListElement>(null);
     const transitionControls = useAnimation();
 
     const [x, setX] = useState<number>(initialX);
+    const [visibleCardListIdx, setVisibleCardListIdx] = useState(0);
 
-    const startAnimation = (x: number) => {
-        transitionControls.start({
-            x: [x, x + diffX],
-            transition: CARD_TRANSITION(cardList.length),
-        });
-    };
+    const startAnimation = useCallback(
+        (x: number) => {
+            transitionControls.start({
+                x: [x, x + diffX * 2],
+                transition: CARD_TRANSITION(visibleCardCount * 2),
+            });
+        },
+        [visibleCardCount, transitionControls]
+    );
 
-    const stopAnimation = () => {
+    const stopAnimation = useCallback(() => {
         transitionControls.stop();
         if (containerRef.current) {
             const computedStyle = window.getComputedStyle(containerRef.current);
             const matrix = new DOMMatrix(computedStyle.transform);
             setX(matrix.m41);
         }
-    };
+    }, [transitionControls, containerRef]);
+
+    const visibleCardList = useMemo(() => {
+        const list = expandedCardList.slice(
+            visibleCardListIdx,
+            visibleCardListIdx + visibleCardCount * 2
+        );
+
+        if (isAnimated && isReverseCards) {
+            return list.reverse();
+        }
+
+        return isAnimated ? list : cardList;
+    }, [
+        isReverseCards,
+        expandedCardList,
+        cardList,
+        isAnimated,
+        visibleCardCount,
+        visibleCardListIdx,
+    ]);
 
     useEffect(() => {
         startAnimation(x);
-    }, [transitionControls, totalWidth]);
+    }, []);
 
-    const renderCardItem = (cardItem: CasperCardType, id: string) => {
-        const [isFlipped, setIsFlipped] = useState<boolean>(false);
-        const { isInView, cardRef } = useLazyLoading<HTMLLIElement>();
+    const handleUpdateAnimation = (latest: ResolvedValues) => {
+        if (isEndCard(parseInt(String(latest.x)))) {
+            let nextIdx = visibleCardListIdx + visibleCardCount;
 
-        const handleMouseEnter = () => {
-            stopAnimation();
-            setIsFlipped(true);
-        };
+            // 만약 nextIdx가 cardList의 길이를 초과하면 배열의 처음부터 다시 index를 카운트하도록 함
+            if (nextIdx >= cardList.length) {
+                nextIdx = nextIdx % cardList.length;
+            }
 
-        const handleMouseLeave = () => {
-            startAnimation(x);
-            setIsFlipped(false);
-        };
-
-        return (
-            <li
-                ref={cardRef}
-                key={id}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                    width: CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH,
-                    height: CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_HEIGHT,
-                }}
-            >
-                {isInView && (
-                    <CasperFlipCard
-                        card={cardItem}
-                        size={CASPER_SIZE_OPTION.SM}
-                        isFlipped={isFlipped}
-                    />
-                )}
-            </li>
-        );
+            setVisibleCardListIdx(nextIdx);
+            startAnimation(initialX);
+        }
     };
 
     return (
         <AnimatePresence>
-            <motion.ul
-                ref={containerRef}
-                className="flex"
-                animate={transitionControls}
-                style={{ gap: `${gap}px` }}
-                onUpdate={(latest) => {
-                    if (isEndCard(parseInt(String(latest.x)))) {
-                        startAnimation(initialX);
-                    }
-                }}
-            >
-                {cardList.map((card) => renderCardItem(card, `${card.id}`))}
-                {cardList.map((card) => renderCardItem(card, `${card.id}-clone`))}
-            </motion.ul>
+            {isAnimated ? (
+                <motion.ul
+                    ref={containerRef}
+                    className="flex"
+                    animate={transitionControls}
+                    style={{ gap: `${gap}px` }}
+                    onUpdate={handleUpdateAnimation}
+                >
+                    {visibleCardList.map((card, idx) => (
+                        <TransitionCasperCardItem
+                            key={`${card.id}-${idx}`}
+                            cardItem={card}
+                            id={`${card.id}-${idx}`}
+                            stopAnimation={stopAnimation}
+                            startAnimation={() => startAnimation(x)}
+                        />
+                    ))}
+                </motion.ul>
+            ) : (
+                <ul className="flex w-screen justify-center" style={{ gap: `${gap}px` }}>
+                    {visibleCardList.map((card, idx) => (
+                        <TransitionCasperCardItem
+                            key={`${card.id}-${idx}`}
+                            cardItem={card}
+                            id={`${card.id}-${idx}`}
+                        />
+                    ))}
+                </ul>
+            )}
         </AnimatePresence>
     );
 }

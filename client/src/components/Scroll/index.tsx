@@ -4,6 +4,7 @@ import { cva } from "class-variance-authority";
 export interface ScrollProps {
     type: "light" | "dark";
     children: ReactNode;
+    onClick?: () => void;
 }
 
 const scrollTextVariants = cva(`h-body-2-regular`, {
@@ -15,9 +16,12 @@ const scrollTextVariants = cva(`h-body-2-regular`, {
     },
 });
 
-export default function Scroll({ type, children }: ScrollProps) {
+export default function Scroll({ type, children, onClick }: ScrollProps) {
     return (
-        <div className="inline-flex flex-col items-center gap-500">
+        <div
+            className={`inline-flex flex-col items-center gap-500 ${onClick && "cursor-pointer"}`}
+            onClick={onClick}
+        >
             <div className={scrollTextVariants({ type })}>{children}</div>
             <img
                 alt="아래 스크롤 아이콘"

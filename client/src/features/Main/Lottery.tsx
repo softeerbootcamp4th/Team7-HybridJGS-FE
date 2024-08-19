@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { forwardRef, memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI.ts";
 import LotteryEvent from "@/components/LotteryEvent";
@@ -10,7 +10,7 @@ import { SectionKeyProps } from "@/types/sections.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
-function Lottery({ id }: SectionKeyProps) {
+const Lottery = forwardRef<HTMLDivElement, SectionKeyProps>(function Lottery({ id }, ref) {
     const {
         data: lotteryData,
         isSuccess: isSuccessLottery,
@@ -27,6 +27,7 @@ function Lottery({ id }: SectionKeyProps) {
     return (
         <Section
             id={id}
+            ref={ref}
             backgroundColor="bg-n-black"
             title="Event 1. 추첨 이벤트"
             titleColor="text-n-white"
@@ -86,7 +87,7 @@ function Lottery({ id }: SectionKeyProps) {
             </div>
         </Section>
     );
-}
+});
 
 const MemoizedLottery = memo(Lottery);
 export { MemoizedLottery as Lottery };

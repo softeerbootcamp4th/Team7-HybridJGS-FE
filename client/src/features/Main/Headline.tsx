@@ -11,7 +11,11 @@ import { SectionKeyProps } from "@/types/sections.ts";
 import { GetTotalEventDateResponse } from "@/types/totalApi.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
 
-function Headline({ id }: SectionKeyProps) {
+interface HeadlineProps extends SectionKeyProps {
+    handleClickScroll: () => void;
+}
+
+function Headline({ id, handleClickScroll }: HeadlineProps) {
     // DATA RESET TEST API
     const { fetchData: getRushTodayEventTest } = useFetch<RushEventStatusCodeResponse>(() =>
         RushAPI.getRushTodayEventTest()
@@ -54,7 +58,7 @@ function Headline({ id }: SectionKeyProps) {
                 </p>
             </motion.div>
             <motion.div {...SCROLL_MOTION(ASCEND_DESCEND)}>
-                <Scroll type="light">
+                <Scroll type="light" onClick={handleClickScroll}>
                     <p>이벤트에 대해 궁금하다면 </p>
                     <p className="h-body-2-bold">스크롤</p>
                     <p>해 보세요</p>

@@ -53,7 +53,7 @@ export default function CasperShowCase() {
     const { showToast, ToastComponent } = useToast(
         isErrorGetShareLink
             ? "공유 링크 생성에 실패했습니다! 캐스퍼 봇 생성 후 다시 시도해주세요."
-            : "링크가 복사되었어요!"
+            : "🔗 링크가 복사되었어요!"
     );
 
     const casperList = useLoaderData() as GetCasperListResponse;
@@ -79,16 +79,32 @@ export default function CasperShowCase() {
                 id={CASPER_SHOWCASE_SECTIONS.SHOWCASE}
                 className="flex flex-col justify-center items-center gap-800 w-full h-screen bg-n-neutral-950 overflow-hidden pt-1000"
             >
-                <motion.div
-                    className="flex flex-col justify-center items-center gap-800 w-full"
-                    {...SCROLL_MOTION(DISSOLVE)}
-                >
-                    <p className="h-body-1-regular text-n-white">
-                        카드 위에 커서를 올리면 기대평을 볼 수 있어요
-                    </p>
+                {cardListData.length === 0 ? (
+                    <motion.div
+                        className="flex flex-col items-center gap-1000"
+                        {...SCROLL_MOTION(DISSOLVE)}
+                    >
+                        <h3 className="h-heading-3-bold text-n-neutral-50">
+                            나만의 캐스퍼 일렉트릭 봇을 만들어주세요!
+                        </h3>
+                        <img
+                            alt="캐스퍼 봇 아이콘"
+                            src="/assets/common/casper.webp"
+                            className="w-[300px] h-[300px]"
+                        />
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        className="flex flex-col justify-center items-center gap-800 w-full"
+                        {...SCROLL_MOTION(DISSOLVE)}
+                    >
+                        <p className="h-body-1-regular text-n-white">
+                            카드 위에 커서를 올리면 기대평을 볼 수 있어요
+                        </p>
 
-                    <CasperCards cardList={cardListData} />
-                </motion.div>
+                        <CasperCards cardList={cardListData} />
+                    </motion.div>
+                )}
 
                 <motion.div className="flex gap-500" {...SCROLL_MOTION(ASCEND)}>
                     <CTAButton label="이벤트 링크 공유" onClick={handleClickShareButton} />

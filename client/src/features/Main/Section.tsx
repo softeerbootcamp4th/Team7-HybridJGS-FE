@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, forwardRef } from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/CTAButton";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -15,21 +15,25 @@ interface SectionProps extends PropsWithChildren, SectionKeyProps {
     onClick?: () => void;
 }
 
-export function Section({
-    id,
-    backgroundColor,
-    title,
-    titleColor,
-    subtitle,
-    description,
-    descriptionColor,
-    children,
-    url,
-    onClick,
-}: SectionProps) {
+export const Section = forwardRef<HTMLDivElement, SectionProps>(function Section(
+    {
+        id,
+        backgroundColor,
+        title,
+        titleColor,
+        subtitle,
+        description,
+        descriptionColor,
+        children,
+        url,
+        onClick,
+    },
+    ref
+) {
     return (
         <section
             id={id}
+            ref={ref}
             className={`flex flex-col gap-3 justify-center items-center h-screen snap-start ${backgroundColor}`}
         >
             <motion.div
@@ -51,4 +55,4 @@ export function Section({
             </motion.div>
         </section>
     );
-}
+});

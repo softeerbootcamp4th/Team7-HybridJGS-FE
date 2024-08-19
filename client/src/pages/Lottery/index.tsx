@@ -17,6 +17,7 @@ import {
 import { useAuth } from "@/hooks/useAuth.ts";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
 import usePopup from "@/hooks/usePopup";
+import useScrollToTarget from "@/hooks/useScrollToTarget";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
 import { GetLotteryResponse } from "@/types/lotteryApi";
@@ -27,6 +28,8 @@ export default function Lottery() {
     const containerRef = useHeaderStyleObserver({
         darkSections: [LOTTERY_SECTIONS.HEADLINE, LOTTERY_SECTIONS.SHORT_CUT],
     });
+
+    const { targetRef, handleScrollToTarget } = useScrollToTarget<HTMLDivElement>();
 
     const lotteryData = useLoaderData() as GetLotteryResponse;
 
@@ -60,8 +63,9 @@ export default function Lottery() {
             <Headline
                 id={LOTTERY_SECTIONS.HEADLINE}
                 handleClickShortCutButton={handleClickShortCut}
+                handleClickScroll={handleScrollToTarget}
             />
-            <Intro id={LOTTERY_SECTIONS.INTRO} />
+            <Intro ref={targetRef} id={LOTTERY_SECTIONS.INTRO} />
             <HeadLamp id={LOTTERY_SECTIONS.HEADLAMP} />
             <PixelDesign id={LOTTERY_SECTIONS.PIXEL_DESIGN} />
             <WheelDesign id={LOTTERY_SECTIONS.WHEEL_DESIGN} />

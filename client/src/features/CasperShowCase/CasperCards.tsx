@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
-import { CasperCardType, TransitionCasperCards } from "./TransitionCasperCards";
+import type { CasperCardType } from "@/types/casper";
+import { TransitionCasperCards } from "./TransitionCasperCards";
 
 interface CasperCardsProps {
     cardList: CasperCardType[];
@@ -8,12 +10,20 @@ interface CasperCardsProps {
 export function CasperCards({ cardList }: CasperCardsProps) {
     const cardLength = cardList.length;
     const cardLengthHalf = Math.floor(cardLength / 2);
-    const topCardList = cardList.slice(0, cardLengthHalf);
-    const bottomCardList = cardList.slice(cardLengthHalf, cardLength);
+    const visibleCardCount = useMemo(() => {
+        const width = window.innerWidth;
+        const cardWidth = CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH;
+
+        return Math.ceil(width / cardWidth);
+    }, []);
+    const isMultipleLine = visibleCardCount * 2 <= cardLength;
+
+    const topCardList = cardList.slice(0, isMultipleLine ? cardLengthHalf : cardLength);
+    const bottomCardList = isMultipleLine ? cardList.slice(cardLengthHalf, cardLength) : [];
 
     const itemWidth = CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH;
     const gap = 40;
-    const totalWidth = (itemWidth + gap) * topCardList.length;
+    const totalWidth = (itemWidth + gap) * visibleCardCount;
 
     const isEndTopCard = (latestX: number) => {
         return latestX <= -totalWidth;
@@ -29,7 +39,7 @@ export function CasperCards({ cardList }: CasperCardsProps) {
                 initialX={0}
                 gap={gap}
                 diffX={-totalWidth}
-                totalWidth={totalWidth}
+                visibleCardCount={visibleCardCount}
                 isEndCard={isEndTopCard}
             />
             <TransitionCasperCards
@@ -37,8 +47,9 @@ export function CasperCards({ cardList }: CasperCardsProps) {
                 initialX={-totalWidth}
                 gap={gap}
                 diffX={totalWidth}
-                totalWidth={totalWidth}
+                visibleCardCount={visibleCardCount}
                 isEndCard={isEndBottomCard}
+                isReverseCards
             />
         </div>
     );

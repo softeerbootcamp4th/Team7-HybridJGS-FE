@@ -17,6 +17,7 @@ import {
     ReasonSecond,
 } from "@/features/Rush";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
+import useScrollToTarget from "@/hooks/useScrollToTarget";
 import useScrollTop from "@/hooks/useScrollTop.tsx";
 
 export default function Rush() {
@@ -25,10 +26,12 @@ export default function Rush() {
         darkSections: [RUSH_SECTIONS.INTRO],
     });
 
+    const { targetRef, handleScrollToTarget } = useScrollToTarget<HTMLDivElement>();
+
     return (
         <div ref={containerRef} className="h-screen overflow-auto snap-y snap-mandatory">
-            <Headline id={RUSH_SECTIONS.HEADLINE} />
-            <Intro id={RUSH_SECTIONS.INTRO} />
+            <Headline id={RUSH_SECTIONS.HEADLINE} handleClickScroll={handleScrollToTarget} />
+            <Intro ref={targetRef} id={RUSH_SECTIONS.INTRO} />
             <FAQ id={RUSH_SECTIONS.FAQ} />
             <ElectricReason id={RUSH_SECTIONS.ELECTRIC_REASON} />
             <ElectricAdvantage id={RUSH_SECTIONS.ELECTRIC_ADVANTAGE} />
