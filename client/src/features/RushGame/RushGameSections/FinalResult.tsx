@@ -22,7 +22,11 @@ function getWinStatus(ratio: number, oppositeRatio: number): WinStatus {
     return ratio > oppositeRatio ? WIN_STATUS.WIN : WIN_STATUS.LOSE;
 }
 
-export default function FinalResult() {
+interface FinalResultProps {
+    unblockNavigation: () => void;
+}
+
+export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const { gameState, getOptionRatio, getSelectedCardInfo, updateCardOptions } =
         useRushGameContext();
@@ -31,12 +35,14 @@ export default function FinalResult() {
         data: resultData,
         isSuccess: isSuccessRushResult,
         fetchData: getRushResult,
-    } = useFetch<GetRushResultResponse>(() =>
-        RushAPI.getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN])
+    } = useFetch<GetRushResultResponse>(
+        () => RushAPI.getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]),
+        false
     );
 
     useEffect(() => {
         getRushResult();
+        unblockNavigation();
     }, []);
 
     useEffect(() => {

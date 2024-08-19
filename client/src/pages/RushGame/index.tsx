@@ -12,7 +12,7 @@ import useToast from "@/hooks/useToast.tsx";
 import { writeClipboard } from "@/utils/writeClipboard.ts";
 
 export default function RushGame() {
-    useBlockNavigation(
+    const { unblockNavigation } = useBlockNavigation(
         "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
     );
 
@@ -34,7 +34,7 @@ export default function RushGame() {
                     return <SelectedCard />;
                 }
             case CARD_PHASE.COMPLETED:
-                return <FinalResult />;
+                return <FinalResult unblockNavigation={unblockNavigation} />;
             default:
                 return null;
         }
