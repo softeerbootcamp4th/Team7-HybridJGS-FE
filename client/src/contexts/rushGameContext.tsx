@@ -20,8 +20,8 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     // const navigate  = useNavigate();
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
-    const [_initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
-    const [_initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
+    const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
+    const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
 
     const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
         phase: CARD_PHASE.NOT_STARTED,
@@ -171,12 +171,12 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [rushData, gameState.phase]);
 
-    // const preCountdown = useCountdown(initialPreCountdown || 1);
-    // const runCountdown = useCountdown(initialRunCountdown || 1);
+    const preCountdown = useCountdown(initialPreCountdown || 1);
+    const runCountdown = useCountdown(initialRunCountdown || 1);
 
     // TEST COUNTDOWN CODE
-    const preCountdown = useCountdown(5);
-    const runCountdown = useCountdown(20);
+    // const preCountdown = useCountdown(5);
+    // const runCountdown = useCountdown(20);
 
     useEffect(() => {
         if (preCountdown <= 0 && gameState.phase === CARD_PHASE.NOT_STARTED) {
