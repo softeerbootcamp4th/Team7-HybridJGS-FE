@@ -13,7 +13,7 @@ import { writeClipboard } from "@/utils/writeClipboard.ts";
 // TODO: 계속 카운트 다운에 맞춰 매초 렌더링 되는 문제 해결
 export default function RushGame() {
     const { gameState } = useRushGameContext();
-    const { showToast, ToastComponent } = useToast("링크가 복사되었어요!");
+    const { showToast, ToastComponent } = useToast("🔗 링크가 복사되었어요!");
 
     const handleClickShareButton = () => {
         writeClipboard(import.meta.env.VITE_RUSH_URL, showToast);
