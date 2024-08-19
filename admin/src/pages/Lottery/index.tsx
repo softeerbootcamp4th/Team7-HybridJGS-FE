@@ -1,41 +1,56 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
 import TimePicker from "@/components/TimePicker";
-import { STATUS_MAP } from "@/constants/common";
+import { EVENT_STATUS, STATUS_MAP } from "@/constants/common";
 import { LOTTERY_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
 import useToast from "@/hooks/useToast";
 import { LotteryEventType } from "@/types/lottery";
-import { PutLotteryResponse } from "@/types/lotteryApi";
+import { GetLotteryResponse, PutLotteryResponse } from "@/types/lotteryApi";
 import { getDateDifference } from "@/utils/getDateDifference";
+import { getMsTime } from "@/utils/getMsTime";
+import { validateDateTime } from "@/utils/validateDateTime";
 
 export default function Lottery() {
     const navigate = useNavigate();
 
     const { showToast, ToastComponent } = useToast("수정 사항이 반영되었습니다!");
 
-    const lotteryData = useLoaderData() as LotteryEventType[];
     const [lottery, setLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
+    const {
+        data: lotteryEvent,
+        isSuccess: isSuccessGetLotteryEvent,
+        fetchData: getLotteryEvent,
+    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token));
+
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PutLotteryResponse>(() =>
-            LotteryAPI.putLottery({
-                startDateTime: `${lottery.startDate} ${lottery.startTime}`,
-                endDateTime: `${lottery.endDate} ${lottery.endTime}`,
-                winnerCount: lottery.winnerCount,
-            })
+        useFetch<PutLotteryResponse>((_, token) =>
+            LotteryAPI.putLottery(
+                {
+                    startDate: lottery.startDate,
+                    startTime: lottery.startTime,
+                    endDate: lottery.endDate,
+                    endTime: lottery.endTime,
+                    winnerCount: lottery.winnerCount,
+                },
+                token
+            )
         );
 
     useEffect(() => {
-        if (lotteryData.length !== 0) {
-            setLottery(lotteryData[0]);
-        }
+        getLotteryEvent();
     }, []);
+    useEffect(() => {
+        if (lotteryEvent && isSuccessGetLotteryEvent) {
+            setLottery(lotteryEvent);
+        }
+    }, [lotteryEvent, isSuccessGetLotteryEvent]);
     useEffect(() => {
         if (isSuccessPostLottery) {
             showToast();
@@ -43,7 +58,27 @@ export default function Lottery() {
     }, [isSuccessPostLottery]);
 
     const handleChangeItem = (key: string, text: string | number) => {
-        setLottery({ ...lottery, [key]: text });
+        if (
+            lottery.status === EVENT_STATUS.DURING &&
+            (key === "startDate" || key === "startTime")
+        ) {
+            alert("활성화된 이벤트의 시작 날짜와 시간을 수정할 수 없습니다!");
+            return;
+        }
+
+        const newLottery = { ...lottery, [key]: text };
+
+        const startDateTime = getMsTime(`${newLottery.startDate}T${newLottery.startTime}`);
+        const endDateTime = getMsTime(`${newLottery.endDate}T${newLottery.endTime}`);
+        const currentDateTime = new Date().getTime();
+
+        const errorMessage = validateDateTime(key, startDateTime, endDateTime, currentDateTime);
+        if (errorMessage) {
+            alert(errorMessage);
+            return;
+        }
+
+        setLottery(newLottery);
     };
 
     const getLotteryData = () => {

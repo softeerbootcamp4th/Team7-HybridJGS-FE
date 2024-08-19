@@ -1,23 +1,23 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 // @ts-expect-error: props로 Generic을 받아서 target 타입 선언 필요
 interface UseIntersectionObserverOptions<T extends HTMLElement> {
     onIntersect: () => void;
     enabled: boolean;
-    root?: Element | null;
+    root?: RefObject<Element | null>;
     rootMargin?: string;
 }
 
 function useIntersectionObserver<T extends HTMLElement>({
     onIntersect,
     enabled,
-    root = document.body,
+    root,
     rootMargin = "0px",
 }: UseIntersectionObserverOptions<T>) {
     const targetRef = useRef<T>(null);
 
     useEffect(() => {
-        if (!enabled || !targetRef.current) {
+        if (!enabled || !targetRef.current || !root?.current) {
             return;
         }
 
@@ -29,7 +29,7 @@ function useIntersectionObserver<T extends HTMLElement>({
         };
 
         const observer = new IntersectionObserver(observerCallback, {
-            root,
+            root: root.current || document.body,
             rootMargin,
         });
         observer.observe(targetRef.current);

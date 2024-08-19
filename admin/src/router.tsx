@@ -1,6 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { LotteryAPI } from "./apis/lotteryAPI";
-import { RushAPI } from "./apis/rushAPI";
 import Layout from "./components/Layout";
 import { ProtectedRoute, UnProtectedRoute } from "./components/Route";
 import RushLayout from "./features/Rush/Layout";
@@ -37,7 +35,6 @@ export const router = createBrowserRouter([
                             {
                                 index: true,
                                 element: <Rush />,
-                                loader: RushAPI.getRush,
                             },
                             {
                                 path: "winner-list",
@@ -51,12 +48,10 @@ export const router = createBrowserRouter([
                             {
                                 index: true,
                                 element: <Lottery />,
-                                loader: LotteryAPI.getLottery,
                             },
                             {
                                 path: "winner",
                                 element: <LotteryWinner />,
-                                loader: LotteryAPI.getLottery,
                             },
                             {
                                 path: "participant-list",

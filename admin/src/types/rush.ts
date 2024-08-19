@@ -1,31 +1,34 @@
 import { Dispatch } from "react";
 import { EVENT_STATUS } from "@/constants/common";
+import { OPTION_POSITION } from "@/constants/rush";
 
 export type RushEventStatusType = (typeof EVENT_STATUS)[keyof typeof EVENT_STATUS];
 export interface RushEventType {
     rushEventId: number;
     eventDate: string;
-    openTime: string;
-    closeTime: string;
+    startTime: string;
+    endTime: string;
     winnerCount: number;
-    prizeImageUrl: File | string;
+    prizeImageUrl: string;
     prizeDescription: string;
     status: RushEventStatusType;
-    leftOption: RushOptionType;
-    rightOption: RushOptionType;
+    options: RushOptionType[];
 }
 
+type RushOptionPositionType = (typeof OPTION_POSITION)[keyof typeof OPTION_POSITION];
+
 export interface RushOptionType {
-    rushOptionId: number;
+    optionId: number;
     mainText: string;
     subText: string;
     resultMainText: string;
     resultSubText: string;
-    imageUrl: File | string;
+    imageUrl: string;
+    position: RushOptionPositionType;
 }
 
 export interface RushPrizeType {
-    prizeImageUrl: File | string;
+    prizeImageUrl: string;
     prizeDescription: string;
 }
 
@@ -36,6 +39,8 @@ export interface RushEventStateType {
 export const RUSH_ACTION = {
     SET_EVENT_LIST: "SET_EVENT_LIST",
 } as const;
+
+export type ImageType = { imgName: string; imgFile: File };
 
 export type RushEventAction = {
     type: typeof RUSH_ACTION.SET_EVENT_LIST;
@@ -54,6 +59,7 @@ export interface RushParticipantType {
     id: number;
     phoneNumber: string;
     balanceGameChoice: number;
-    createdAt: string;
     rank: number;
+    createdDate: string;
+    createdTime: string;
 }

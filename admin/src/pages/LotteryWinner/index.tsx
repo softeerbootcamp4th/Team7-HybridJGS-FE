@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
@@ -8,20 +8,27 @@ import { LotteryEventType } from "@/types/lottery";
 import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lotteryApi";
 
 export default function LotteryWinner() {
-    const lottery = useLoaderData() as GetLotteryResponse;
-
     const navigate = useNavigate();
 
     const [currentLottery, setCurrentLottery] = useState<LotteryEventType>({} as LotteryEventType);
 
+    const {
+        data: lotteryEvent,
+        isSuccess: isSuccessGetLotteryEvent,
+        fetchData: getLotteryEvent,
+    } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token));
+
     const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PostLotteryWinnerResponse>(() => LotteryAPI.postLotteryWinner());
+        useFetch<PostLotteryWinnerResponse>((_, token) => LotteryAPI.postLotteryWinner(token));
 
     useEffect(() => {
-        if (lottery.length !== 0) {
-            setCurrentLottery(lottery[0]);
+        getLotteryEvent();
+    }, []);
+    useEffect(() => {
+        if (lotteryEvent && isSuccessGetLotteryEvent) {
+            setCurrentLottery(lotteryEvent);
         }
-    }, [lottery]);
+    }, [lotteryEvent, isSuccessGetLotteryEvent]);
     useEffect(() => {
         if (isSuccessPostLottery) {
             navigate("/lottery/winner-list");

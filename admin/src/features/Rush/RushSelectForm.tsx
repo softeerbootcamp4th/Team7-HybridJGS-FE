@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ImageAPI } from "@/apis/imageAPI";
 import Button from "@/components/Button";
 import FileInput from "@/components/FileInput";
 import SelectForm from "@/components/SelectForm";
 import TextField from "@/components/TextField";
+import useFetchMultiple from "@/hooks/useFetchMultiple";
 import useRushEventDispatchContext from "@/hooks/useRushEventDispatchContext";
 import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import useToast from "@/hooks/useToast";
+import { PostImageResponse } from "@/types/imageApi";
 import { RUSH_ACTION, RushOptionType } from "@/types/rush";
 
 export default function RushSelectForm() {
@@ -21,31 +24,77 @@ export default function RushSelectForm() {
     const { showToast, ToastComponent } = useToast("입력한 내용이 임시 저장되었습니다!");
 
     const [selectOptionState, setSelectOptionState] = useState<RushOptionType[]>([]);
+    const [selectedFiles, setSelectedFiles] = useState<(File | string | null)[]>([]);
+
+    const {
+        results: images,
+        isSuccess: isSuccessPostImage,
+        fetchMultiple: postImage,
+    } = useFetchMultiple<PostImageResponse, FormData>((formData, token) =>
+        ImageAPI.postImage(formData, token)
+    );
 
     useEffect(() => {
         if (rushIdx !== undefined) {
-            setSelectOptionState([rushList[rushIdx].leftOption, rushList[rushIdx].rightOption]);
+            setSelectOptionState(rushList[rushIdx].options);
+
+            const optionFiles = rushList[rushIdx].options.map((option) => option.imageUrl);
+            setSelectedFiles(optionFiles);
         }
     }, [rushList]);
 
+    useEffect(() => {
+        if (isSuccessPostImage) {
+            const processedResults = [...selectedFiles];
+            formDataArrayWithIndex.forEach((item, idx) => {
+                if (images[idx]) {
+                    const { imageUrl } = images[idx] as PostImageResponse;
+                    processedResults[item.idx] = imageUrl;
+                }
+            });
+
+            const updatedSelectedOptions = selectOptionState.map((option, idx) => ({
+                ...option,
+                imageUrl: processedResults[idx] as string,
+            }));
+            setSelectOptionState(updatedSelectedOptions);
+
+            const updatedTableItemList = rushList.map((item, idx) => {
+                if (idx === rushIdx) {
+                    return {
+                        ...item,
+                        options: updatedSelectedOptions,
+                    };
+                }
+                return { ...item };
+            });
+
+            dispatch({
+                type: RUSH_ACTION.SET_EVENT_LIST,
+                payload: updatedTableItemList,
+            });
+
+            showToast();
+        }
+    }, [isSuccessPostImage]);
+
+    const formDataArrayWithIndex = useMemo(() => {
+        return selectedFiles
+            .map((file, idx) => {
+                if (!(file instanceof File)) {
+                    return null;
+                }
+                const formData = new FormData();
+                formData.append("image", file);
+                return { formData, idx };
+            })
+            .filter((item): item is { formData: FormData; idx: number } => item !== null);
+    }, [images, selectedFiles]);
+
     const handleUpdate = () => {
-        const updatedTableItemList = rushList.map((item, idx) => {
-            if (idx === rushIdx) {
-                return {
-                    ...item,
-                    leftOption: selectOptionState[0],
-                    rightOption: selectOptionState[1],
-                };
-            }
-            return { ...item };
-        });
+        const formDataArray = formDataArrayWithIndex.map((item) => item.formData);
 
-        dispatch({
-            type: RUSH_ACTION.SET_EVENT_LIST,
-            payload: updatedTableItemList,
-        });
-
-        showToast();
+        postImage(formDataArray);
     };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | File) => {
@@ -57,6 +106,16 @@ export default function RushSelectForm() {
         });
 
         setSelectOptionState(updatedItem);
+    };
+
+    const handleSelectFile = (file: File, idx: number) => {
+        const currentFiles = selectedFiles.map((currentFile, currentIdx) => {
+            if (currentIdx === idx) {
+                return file;
+            }
+            return currentFile;
+        });
+        setSelectedFiles(currentFiles);
     };
 
     const getSelectOption = (idx: number) => {
@@ -86,8 +145,8 @@ export default function RushSelectForm() {
                 [
                     "이미지",
                     <FileInput
-                        selectedFile={selectOptionState[idx].imageUrl}
-                        setSelectedFile={(file) => handleChangeItem("imageUrl", idx, file)}
+                        selectedFile={selectedFiles[idx]}
+                        setSelectedFile={(file) => handleSelectFile(file, idx)}
                     />,
                 ],
                 [

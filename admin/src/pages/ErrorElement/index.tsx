@@ -1,12 +1,17 @@
+import { useCookies } from "react-cookie";
 import Button from "@/components/Button";
+import { COOKIE_KEY } from "@/constants/cookie";
 
 interface ErrorElementProps {
     fallbackUrl?: string;
 }
 
 export default function ErrorElement({ fallbackUrl = "/" }: ErrorElementProps) {
+    const [_cookies, _setCookie, removeCookie] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
+
     const handleClickButton = () => {
         window.location.href = fallbackUrl;
+        removeCookie(COOKIE_KEY.ACCESS_TOKEN);
     };
 
     return (

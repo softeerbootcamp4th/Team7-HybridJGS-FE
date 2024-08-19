@@ -15,3 +15,8 @@ export const QUERY_OPTION = {
     OPTION: "option",
     PRIZE: "prize",
 } as const;
+
+export const OPTION_POSITION = {
+    LEFT: "LEFT",
+    RIGHT: "RIGHT",
+} as const;

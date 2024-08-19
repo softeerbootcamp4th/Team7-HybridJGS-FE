@@ -1,4 +1,4 @@
-import { InfiniteParticipantListData } from "./common";
+import { InfiniteExpectationListData, InfiniteParticipantListData } from "./common";
 import {
     LotteryEventType,
     LotteryExpectationsType,
@@ -6,21 +6,17 @@ import {
     LotteryWinnerType,
 } from "./lottery";
 
-export type GetLotteryResponse = LotteryEventType[];
+export type GetLotteryResponse = LotteryEventType;
 
-export interface PutLotteryParams {
-    startDateTime: string;
-    endDateTime: string;
-    winnerCount: number;
-}
+export type PutLotteryParams = Pick<
+    LotteryEventType,
+    "startDate" | "startTime" | "endDate" | "endTime" | "winnerCount"
+>;
 
-export interface PutLotteryResponse {
-    startDate: string;
-    startTime: string;
-    endDate: string;
-    endTime: string;
-    winnerCount: number;
-}
+export type PutLotteryResponse = Pick<
+    LotteryEventType,
+    "startDate" | "startTime" | "endDate" | "endTime" | "winnerCount"
+>;
 
 export interface PostLotteryWinnerResponse {
     message: string;
@@ -34,9 +30,15 @@ export interface GetLotteryWinnerParams {
 
 export interface GetLotteryExpectationsParams {
     participantId: number;
+    size: number;
+    page: number;
 }
 
-export type GetLotteryExpectationsResponse = LotteryExpectationsType[];
+export interface PatchLotteryExpectationParams {
+    casperId: number;
+}
+
+export type GetLotteryExpectationsResponse = InfiniteExpectationListData<LotteryExpectationsType>;
 
 export type GetLotteryWinnerResponse = InfiniteParticipantListData<LotteryWinnerType>;
 

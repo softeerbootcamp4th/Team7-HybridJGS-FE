@@ -3,26 +3,35 @@ import { useCookies } from "react-cookie";
 import { useErrorBoundary } from "react-error-boundary";
 import { COOKIE_KEY } from "@/constants/cookie";
 
-export default function useFetch<T, P = void>(
+export default function useFetchMultiple<T, P>(
     fetch: (params: P, token: string) => Promise<T>,
     showError = true
 ) {
     const { showBoundary } = useErrorBoundary();
 
-    const [data, setData] = useState<T | null>(null);
+    const [results, setResults] = useState<(T | null)[]>([]);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
 
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
-    const fetchData = async (params?: P) => {
-        setIsError(false);
+    const fetchMultiple = async (paramsArray: P[]) => {
         setIsSuccess(false);
+        setIsError(false);
+
+        const token = cookies[COOKIE_KEY.ACCESS_TOKEN];
 
         try {
-            const data = await fetch(params as P, cookies[COOKIE_KEY.ACCESS_TOKEN]);
-            setData(data);
-            setIsSuccess(!!data);
+            const results = await Promise.allSettled(
+                paramsArray.map((params) => fetch(params, token))
+            );
+
+            const processedResults = results.map((result) =>
+                result.status === "fulfilled" ? result.value : null
+            );
+
+            setResults(processedResults);
+            setIsSuccess(true);
         } catch (error) {
             setIsError(true);
             console.error(error);
@@ -32,5 +41,5 @@ export default function useFetch<T, P = void>(
         }
     };
 
-    return { data, isSuccess, isError, fetchData };
+    return { results, isSuccess, isError, fetchMultiple };
 }

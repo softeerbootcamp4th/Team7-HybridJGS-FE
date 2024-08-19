@@ -13,7 +13,9 @@ import useRushEventStateContext from "@/hooks/useRushEventStateContext";
 import useToast from "@/hooks/useToast";
 import { RUSH_ACTION } from "@/types/rush";
 import { PutRushEventResponse } from "@/types/rushApi";
+import { getMsTime } from "@/utils/getMsTime";
 import { getTimeDifference } from "@/utils/getTimeDifference";
+import { validateDateTime } from "@/utils/validateDateTime";
 
 export default function EventList() {
     const navigate = useNavigate();
@@ -23,8 +25,8 @@ export default function EventList() {
     const { rushList } = useRushEventStateContext();
     const dispatch = useRushEventDispatchContext();
 
-    const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(() =>
-        RushAPI.putRush(getFormData())
+    const { isSuccess: isSuccessPutRush, fetchData: putRush } = useFetch<PutRushEventResponse>(
+        (_, token) => RushAPI.putRush(rushList, token)
     );
 
     useEffect(() => {
@@ -33,20 +35,53 @@ export default function EventList() {
         }
     }, [isSuccessPutRush]);
 
-    const getFormData = () => {
-        return rushList.map((rush) => {
-            const formData = new FormData();
-            Object.entries(rush).forEach(([key, value]) => {
-                if (typeof value === "object") {
-                    Object.entries(value).forEach(([subKey, subValue]) => {
-                        formData.append(`${key}[${subKey}]`, subValue as Blob);
-                    });
-                } else {
-                    formData.append(key, value.toString());
-                }
-            });
-            return formData;
-        });
+    const handleChangeDate = (changeIdx: number, newDate: string) => {
+        const selectedItem = rushList[changeIdx];
+        const selectedTime = selectedItem.startTime || "00:00";
+        const selectedDateTime = getMsTime(`${newDate}T${selectedTime}`);
+        const currentTime = new Date().getTime();
+        const endDateTime = getMsTime(`${newDate}T${selectedItem.endTime || "23:59"}`);
+
+        const errorMessage = validateDateTime(
+            "startDate",
+            selectedDateTime,
+            endDateTime,
+            currentTime
+        );
+        if (errorMessage) {
+            alert(errorMessage);
+            return;
+        }
+
+        handleChangeItem("eventDate", changeIdx, newDate);
+    };
+
+    const handleChangeTime = (
+        key: "startTime" | "endTime",
+        changeIdx: number,
+        newTime: string | number
+    ) => {
+        const selectedItem = rushList[changeIdx];
+        const selectedDate = selectedItem.eventDate;
+
+        const selectedDateTime = getMsTime(`${selectedDate}T${newTime}`);
+        const currentTime = new Date().getTime();
+        const startDateTime = getMsTime(`${selectedItem.eventDate}T${selectedItem.startTime}`);
+        const endDateTime = getMsTime(`${selectedDate}T${selectedItem.endTime}`);
+
+        const errorMessage = validateDateTime(
+            key,
+            key === "startTime" ? selectedDateTime : startDateTime,
+            key === "endTime" ? selectedDateTime : endDateTime,
+            currentTime
+        );
+
+        if (errorMessage) {
+            alert(errorMessage);
+            return;
+        }
+
+        handleChangeItem(key, changeIdx, newTime);
     };
 
     const handleChangeItem = (key: string, changeIdx: number, text: string | number) => {
@@ -72,19 +107,19 @@ export default function EventList() {
                 <DatePicker
                     disabled={canEdit}
                     date={item.eventDate}
-                    onChangeDate={(date) => handleChangeItem("eventDate", idx, date)}
+                    onChangeDate={(date) => handleChangeDate(idx, date)}
                 />,
                 <TimePicker
                     disabled={canEdit}
-                    time={item.openTime}
-                    onChangeTime={(time) => handleChangeItem("openTime", idx, time)}
+                    time={item.startTime}
+                    onChangeTime={(time) => handleChangeTime("startTime", idx, time)}
                 />,
                 <TimePicker
                     disabled={canEdit}
-                    time={item.closeTime}
-                    onChangeTime={(time) => handleChangeItem("closeTime", idx, time)}
+                    time={item.endTime}
+                    onChangeTime={(time) => handleChangeTime("endTime", idx, time)}
                 />,
-                getTimeDifference(item.openTime, item.closeTime),
+                getTimeDifference(item.startTime, item.endTime),
                 <Button
                     disabled={canEdit}
                     buttonSize="sm"
