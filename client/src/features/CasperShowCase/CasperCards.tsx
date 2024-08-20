@@ -39,7 +39,7 @@ export function CasperCards({ cardList }: CasperCardsProps) {
                 initialX={0}
                 gap={gap}
                 diffX={-totalWidth}
-                visibleCardCount={visibleCardCount}
+                visibleCardCount={visibleCardCount + 1}
                 isEndCard={isEndTopCard}
             />
             <TransitionCasperCards
@@ -47,7 +47,7 @@ export function CasperCards({ cardList }: CasperCardsProps) {
                 initialX={-(CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH + gap)}
                 gap={gap}
                 diffX={totalWidth}
-                visibleCardCount={visibleCardCount}
+                visibleCardCount={visibleCardCount + 1}
                 isEndCard={isEndBottomCard}
                 isReverseCards
             />

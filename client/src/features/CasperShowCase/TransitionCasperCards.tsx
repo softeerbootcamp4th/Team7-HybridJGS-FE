@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, type ResolvedValues, motion, useAnimation } from "framer-motion";
 import { CARD_TRANSITION } from "@/constants/CasperShowCase/showCase";
 import type { CasperCardType } from "@/types/casper";
