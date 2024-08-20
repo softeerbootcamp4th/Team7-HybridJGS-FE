@@ -26,7 +26,7 @@ export function CasperCards({ cardList }: CasperCardsProps) {
     const totalWidth = (itemWidth + gap) * visibleCardCount;
 
     const isEndTopCard = (latestX: number) => {
-        return latestX <= -totalWidth;
+        return latestX <= -(CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH + gap);
     };
     const isEndBottomCard = (latestX: number) => {
         return latestX >= 0;
@@ -44,7 +44,7 @@ export function CasperCards({ cardList }: CasperCardsProps) {
             />
             <TransitionCasperCards
                 cardList={bottomCardList}
-                initialX={-totalWidth}
+                initialX={-(CASPER_CARD_SIZE[CASPER_SIZE_OPTION.SM].CARD_WIDTH + gap)}
                 gap={gap}
                 diffX={totalWidth}
                 visibleCardCount={visibleCardCount}

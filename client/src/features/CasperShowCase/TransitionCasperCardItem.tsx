@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { CASPER_CARD_SIZE, CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { CasperFlipCard } from "@/features/CasperCustom/CasperCard/CasperFlipCard";
 import type { CasperCardType } from "@/types/casper";
 
 interface TransitionCasperCardItemProps {
     cardItem: CasperCardType;
-    id: string;
+    id: number;
     stopAnimation?: () => void;
     startAnimation?: () => void;
 }
 
-export function TransitionCasperCardItem({
+export const TransitionCasperCardItem = memo(function TransitionCasperCardItem({
     cardItem,
     id,
     stopAnimation,
@@ -41,4 +41,4 @@ export function TransitionCasperCardItem({
             <CasperFlipCard card={cardItem} size={CASPER_SIZE_OPTION.SM} isFlipped={isFlipped} />
         </li>
     );
-}
+});
