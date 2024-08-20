@@ -101,7 +101,7 @@ function CasperCardFrontUI({
             return "";
         }
 
-        const isException = COLOR_STICKER_EXCEPTION[selectedColor.id] === selectedSticker?.id;
+        const isException = COLOR_STICKER_EXCEPTION[selectedColor.id] === selectedSticker.id;
         return isException
             ? STICKER_COLOR_MAP[selectedSticker.id].exception
             : STICKER_COLOR_MAP[selectedSticker.id].default;
