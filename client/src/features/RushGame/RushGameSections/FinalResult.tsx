@@ -58,7 +58,9 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
         }
     }, [resultData, isSuccessRushResult, updateCardOptions]);
 
-    const isWinner = resultData?.winner;
+    const userParticipatedStatus = gameState.userParticipatedStatus;
+
+    const isWinner = resultData?.isWinner;
     const rank = resultData?.rank || 0;
     const totalParticipants = resultData?.totalParticipants || 0;
 
@@ -84,16 +86,18 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
                 <p>입력하신 전화번호로 경품 수령 관련 메시지가 전송될 예정이에요.</p>
             </span>
             <div className="flex flex-col gap-12 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
-                <span className="flex flex-col justify-center items-center text-center gap-3 text-n-black">
-                    <p className="h-heading-4-bold">나의 선착순 등수</p>
-                    <span className="flex gap-3 justify-center items-center ">
-                        <p className="h-heading-1-bold">{rank}등</p>
-                        <p className="h-body-1-regular text-n-neutral-500">
-                            / {totalParticipants.toLocaleString("en-US")}명 중
-                        </p>
+                {userParticipatedStatus && (
+                    <span className="flex flex-col justify-center items-center text-center gap-3 text-n-black">
+                        <p className="h-heading-4-bold">나의 선착순 등수</p>
+                        <span className="flex gap-3 justify-center items-center ">
+                            <p className="h-heading-1-bold">{rank}등</p>
+                            <p className="h-body-1-regular text-n-neutral-500">
+                                / {totalParticipants.toLocaleString("en-US")}명 중
+                            </p>
+                        </span>
                     </span>
-                </span>
-                <div className="flex flex-col gap-3">
+                )}
+                <div className={`flex flex-col gap-3 ${!userParticipatedStatus && "pt-20"}`}>
                     <p className="h-body-2-regular text-n-neutral-500">최종 밸런스 게임 결과</p>
                     <div className="flex justify-between">
                         <RushResultOptionDisplay
@@ -102,6 +106,7 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
                             isUserSelected={
                                 gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS
                             }
+                            userParticipatedStatus={userParticipatedStatus}
                         />
                         <RushResultOptionDisplay
                             mainText={rightMainText}
@@ -109,6 +114,7 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
                             isUserSelected={
                                 gameState.userSelectedOption === CARD_OPTION.RIGHT_OPTIONS
                             }
+                            userParticipatedStatus={userParticipatedStatus}
                         />
                     </div>
                     <RushProgressBar
