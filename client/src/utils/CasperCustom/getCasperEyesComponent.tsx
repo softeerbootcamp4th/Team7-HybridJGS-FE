@@ -1,4 +1,4 @@
-import { EYES_OPTION, POSITION_OPTION } from "@/constants/CasperCustom/casper";
+import { EyesDirectionOptionType, EyesOptionType } from "@/types/casperCustom";
 import Alloy15Center from "/public/assets/casper-custom/eyes/15inch-alloy-center.svg?react";
 import Alloy15Left from "/public/assets/casper-custom/eyes/15inch-alloy-left.svg?react";
 import Alloy15Right from "/public/assets/casper-custom/eyes/15inch-alloy-right.svg?react";
@@ -24,13 +24,7 @@ import VacantCenter from "/public/assets/casper-custom/eyes/vacant-center.svg?re
 import VacantLeft from "/public/assets/casper-custom/eyes/vacant-left.svg?react";
 import VacantRight from "/public/assets/casper-custom/eyes/vacant-right.svg?react";
 
-type EyesOptionType = (typeof EYES_OPTION)[keyof typeof EYES_OPTION];
-type EyesDirectionOptionType = (typeof POSITION_OPTION)[keyof typeof POSITION_OPTION];
-
-const EYES_COMPONENT_MAP: Record<
-    string,
-    React.ComponentType<React.SVGProps<SVGSVGElement>> | null
-> = {
+const EYES_COMPONENT_MAP: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     "15inch-alloy-center": Alloy15Center,
     "15inch-alloy-left": Alloy15Left,
     "15inch-alloy-right": Alloy15Right,
@@ -60,7 +54,7 @@ const EYES_COMPONENT_MAP: Record<
 export function getCasperEyesComponent(
     eyesOption: EyesOptionType,
     eyesDirectionOption: EyesDirectionOptionType
-): React.ComponentType<React.SVGProps<SVGSVGElement>> | null {
+): React.ComponentType<React.SVGProps<SVGSVGElement>> {
     const componentKey = `${eyesOption}-${eyesDirectionOption}`;
     return EYES_COMPONENT_MAP[componentKey];
 }
