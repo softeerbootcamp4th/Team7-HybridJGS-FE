@@ -1,5 +1,12 @@
+import { useEffect, useState } from "react";
+import { RushAPI } from "@/apis/rushAPI.ts";
+import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
+import useCountdown from "@/hooks/useCountdown.ts";
+import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { formatTime } from "@/utils/formatTime.ts";
+import { getMsTime } from "@/utils/getMsTime.ts";
 
 function TimeDisplay({ label, value }: { label: string; value: string }) {
     return (
@@ -11,7 +18,50 @@ function TimeDisplay({ label, value }: { label: string; value: string }) {
 }
 
 export default function RushCountdown() {
-    const { runCountdown } = useRushGameContext();
+    const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
+    const { gameState, setGamePhase } = useRushGameContext();
+
+    const {
+        data: rushData,
+        isSuccess: isSuccessRush,
+        fetchData: getRush,
+    } = useFetch<GetTotalRushEventsResponse>(() => RushAPI.getRush());
+
+    useEffect(() => {
+        getRush();
+    }, []);
+
+    useEffect(() => {
+        if (isSuccessRush && rushData) {
+            const currentEvent = rushData.events.find(
+                (event) => event.rushEventId === rushData.todayEventId
+            );
+
+            if (currentEvent) {
+                const serverTime = getMsTime(rushData.serverTime);
+                const endTime = getMsTime(currentEvent.endDateTime);
+
+                setInitialRunCountdown(Math.max(0, Math.floor((endTime - serverTime) / 1000)));
+            }
+        }
+    }, [isSuccessRush, rushData]);
+
+    const runCountdown = useCountdown(initialRunCountdown || null);
+
+    useEffect(() => {
+        if (
+            runCountdown !== null &&
+            runCountdown <= 0 &&
+            gameState.phase === CARD_PHASE.IN_PROGRESS
+        ) {
+            setGamePhase(CARD_PHASE.COMPLETED);
+        }
+    }, [runCountdown, gameState.phase, setGamePhase]);
+
+    if (initialRunCountdown === null || runCountdown === null) {
+        return <div className="flex flex-col gap-3 justify-center items-center h-[150px]"></div>;
+    }
+
     const minutes = Math.floor((runCountdown % 3600) / 60);
     const seconds = runCountdown % 60;
 

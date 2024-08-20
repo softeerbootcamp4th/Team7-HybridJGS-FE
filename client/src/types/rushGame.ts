@@ -23,12 +23,12 @@ export interface RushGameContextType {
             [key in CardOption]: CardOptionState;
         };
     };
-    preCountdown: number;
-    runCountdown: number;
     updateCardOptions: (option: CardOption, updates: Partial<CardOptionState>) => void;
-    updateUserStatus: (token: string) => Promise<void>;
     updateUserStatusAndSelectedOption: (token: string, selectedOption: CardOption) => Promise<void>;
     getSelectedCardInfo: (option: CardOption) => CardOptionState;
     getOptionRatio: (option: CardOption) => number;
     fetchRushBalance: () => Promise<void>;
+    setUserParticipationStatus: (status: boolean) => void;
+    setGamePhase: (phase: GamePhase) => void;
+    setUserSelectedOption: (option: CardOption) => void;
 }

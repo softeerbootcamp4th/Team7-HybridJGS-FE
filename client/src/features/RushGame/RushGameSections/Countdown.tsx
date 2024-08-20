@@ -1,11 +1,63 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { RushAPI } from "@/apis/rushAPI.ts";
 import { Background } from "@/components/Background";
+import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import useCountdown from "@/hooks/useCountdown.ts";
+import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { formatTime } from "@/utils/formatTime.ts";
+import { getMsTime } from "@/utils/getMsTime.ts";
 
 function CountdownTimer() {
-    const { preCountdown } = useRushGameContext();
+    const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
+    const { gameState, setGamePhase } = useRushGameContext();
+
+    const {
+        data: rushData,
+        isSuccess: isSuccessRush,
+        fetchData: getRush,
+    } = useFetch<GetTotalRushEventsResponse>(() => RushAPI.getRush());
+
+    useEffect(() => {
+        getRush();
+    }, []);
+
+    useEffect(() => {
+        if (isSuccessRush && rushData) {
+            const currentEvent = rushData.events.find(
+                (event) => event.rushEventId === rushData.todayEventId
+            );
+
+            if (currentEvent) {
+                const serverTime = getMsTime(rushData.serverTime);
+                const startDateTime = getMsTime(currentEvent.startDateTime);
+
+                setInitialPreCountdown(
+                    Math.max(0, Math.floor((startDateTime - serverTime) / 1000))
+                );
+            }
+        }
+    }, [isSuccessRush, rushData]);
+
+    const preCountdown = useCountdown(initialPreCountdown || null);
+
+    useEffect(() => {
+        if (
+            preCountdown !== null &&
+            preCountdown <= 0 &&
+            gameState.phase === CARD_PHASE.NOT_STARTED
+        ) {
+            setGamePhase(CARD_PHASE.IN_PROGRESS);
+        }
+    }, [preCountdown, gameState.phase, setGamePhase]);
+
+    if (initialPreCountdown === null || preCountdown === null) {
+        return <Background></Background>;
+    }
+
     const hours = Math.floor(preCountdown / 3600);
     const minutes = Math.floor((preCountdown % 3600) / 60);
     const seconds = preCountdown % 60;

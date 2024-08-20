@@ -1,37 +1,62 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import { RushAPI } from "@/apis/rushAPI.ts";
 import CTAButton from "@/components/CTAButton";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import { COOKIE_KEY } from "@/constants/cookie.ts";
 import CardOptions from "@/features/RushGame/RushGameSections/CardOptions.tsx";
 import Countdown from "@/features/RushGame/RushGameSections/Countdown.tsx";
 import FinalResult from "@/features/RushGame/RushGameSections/FinalResult.tsx";
 import SelectedCard from "@/features/RushGame/RushGameSections/SelectedCard.tsx";
 import { useBlockNavigation } from "@/hooks/useBlockNavigation.ts";
+import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToast from "@/hooks/useToast.tsx";
+import { GetRushUserParticipationStatusResponse } from "@/types/rushApi.ts";
 import { writeClipboard } from "@/utils/writeClipboard.ts";
 
 export default function RushGame() {
+    const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const { unblockNavigation } = useBlockNavigation(
         "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
     );
 
-    const { gameState } = useRushGameContext();
+    const { gameState, setUserParticipationStatus } = useRushGameContext();
     const { showToast, ToastComponent } = useToast("🔗 링크가 복사되었어요!");
 
     const handleClickShareButton = () => {
         writeClipboard(import.meta.env.VITE_RUSH_URL, showToast);
     };
 
+    const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
+        GetRushUserParticipationStatusResponse,
+        string
+    >((token) => RushAPI.getRushUserParticipationStatus(token));
+
+    useEffect(() => {
+        getRushUserParticipationStatus(cookies[COOKIE_KEY.ACCESS_TOKEN]);
+    }, []);
+
+    useEffect(() => {
+        if (userParticipatedStatus !== null) {
+            setUserParticipationStatus(userParticipatedStatus);
+        }
+    }, [userParticipatedStatus]);
+
     const renderRushGameContent = () => {
         switch (gameState.phase) {
             case CARD_PHASE.NOT_STARTED:
                 return <Countdown />;
             case CARD_PHASE.IN_PROGRESS:
-                if (!gameState.userParticipatedStatus) {
-                    return <CardOptions />;
-                } else {
-                    return <SelectedCard unblockNavigation={unblockNavigation} />;
+                if (userParticipatedStatus === null) return <></>;
+                else {
+                    if (!gameState.userParticipatedStatus) {
+                        return <CardOptions />;
+                    } else {
+                        return <SelectedCard unblockNavigation={unblockNavigation} />;
+                    }
                 }
             case CARD_PHASE.COMPLETED:
                 return <FinalResult unblockNavigation={unblockNavigation} />;

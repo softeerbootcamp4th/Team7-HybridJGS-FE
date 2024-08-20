@@ -4,7 +4,6 @@ import { useLoaderData } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
-import useCountdown from "@/hooks/useCountdown.ts";
 import useFetch from "@/hooks/useFetch.ts";
 import {
     GetRushBalanceResponse,
@@ -17,11 +16,8 @@ import { getMsTime } from "@/utils/getMsTime.ts";
 export const RushGameContext = createContext<RushGameContextType | undefined>(undefined);
 
 export const RushGameProvider = ({ children }: { children: ReactNode }) => {
-    // const navigate  = useNavigate();
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const rushData = useLoaderData() as GetTotalRushEventsResponse;
-    const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
-    const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
 
     const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
         phase: CARD_PHASE.NOT_STARTED,
@@ -72,14 +68,13 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         []
     );
 
-    const {
-        data: userParticipatedStatus,
-        isSuccess: isSuccessUserParticipationStatus,
-        fetchData: getRushUserParticipationStatus,
-    } = useFetch<GetRushUserParticipationStatusResponse, string>((token) =>
-        RushAPI.getRushUserParticipationStatus(token)
-    );
+    const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
+        GetRushUserParticipationStatusResponse,
+        string
+    >((token) => RushAPI.getRushUserParticipationStatus(token));
 
+    // TODO: 상태 업데이트랑 옵션 업데이트 분리할까? 어차피 setUserSelectedOption이랑 setUserParticipationStatus 함수 다 내려줄건데 뭐하러 이렇게 하남..?
+    // TODO: 그냥 updateUserStatusAndSelectedOption 이 함수 호출해주는 곳에서 RushAPI.getRushUserParticipationStatus 이거 호출해주고, setUserSelectedOption 함수만 받아서 쓰면 될 것 같은데
     const updateUserStatusAndSelectedOption = useCallback(
         async (token: string, selectedOption: CardOption) => {
             await getRushUserParticipationStatus(token);
@@ -89,10 +84,10 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     );
 
     useEffect(() => {
-        if (isSuccessUserParticipationStatus && userParticipatedStatus) {
+        if (userParticipatedStatus !== null) {
             setUserParticipationStatus(userParticipatedStatus);
         }
-    }, [isSuccessUserParticipationStatus, userParticipatedStatus]);
+    }, [userParticipatedStatus]);
 
     const getSelectedCardInfo = useCallback(
         (option: CardOption) => {
@@ -145,79 +140,39 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
     );
 
     useEffect(() => {
-        const currentEvent = rushData.events.find(
-            (event) => event.rushEventId === rushData.todayEventId
-        );
-        if (currentEvent) {
-            const serverTime = getMsTime(rushData.serverTime);
-            const startTime = getMsTime(currentEvent.startDateTime);
-            const endTime = getMsTime(currentEvent.endDateTime);
+        if (rushData) {
+            const currentEvent = rushData.events.find(
+                (event) => event.rushEventId === rushData.todayEventId
+            );
 
-            if (
-                gameState.phase === CARD_PHASE.NOT_STARTED &&
-                rushData.serverTime &&
-                currentEvent?.startDateTime
-            ) {
-                const preCountdown = Math.max(0, Math.floor((startTime - serverTime) / 1000));
-                setInitialPreCountdown(preCountdown);
-            } else if (
-                gameState.phase === CARD_PHASE.IN_PROGRESS &&
-                rushData.serverTime &&
-                currentEvent?.endDateTime
-            ) {
-                const runCountdown = Math.max(0, Math.floor((endTime - serverTime) / 1000));
-                setInitialRunCountdown(runCountdown);
+            if (currentEvent) {
+                const serverTime = getMsTime(rushData.serverTime);
+                const startTime = getMsTime(currentEvent.startDateTime);
+                const endTime = getMsTime(currentEvent.endDateTime);
+
+                if (serverTime < startTime) {
+                    setGamePhase(CARD_PHASE.NOT_STARTED);
+                } else if (serverTime >= startTime && serverTime <= endTime) {
+                    setGamePhase(CARD_PHASE.IN_PROGRESS);
+                } else if (serverTime > endTime) {
+                    setGamePhase(CARD_PHASE.COMPLETED);
+                }
             }
         }
-    }, [rushData, gameState.phase]);
-
-    const preCountdown = useCountdown(initialPreCountdown || 1);
-    const runCountdown = useCountdown(initialRunCountdown || 1);
-
-    // TEST COUNTDOWN CODE
-    // const preCountdown = useCountdown(5);
-    // const runCountdown = useCountdown(20);
-
-    useEffect(() => {
-        if (preCountdown <= 0 && gameState.phase === CARD_PHASE.NOT_STARTED) {
-            setGamePhase(CARD_PHASE.IN_PROGRESS);
-        } else if (runCountdown <= 0 && gameState.phase === CARD_PHASE.IN_PROGRESS) {
-            setGamePhase(CARD_PHASE.COMPLETED);
-        }
-    }, [preCountdown, runCountdown]);
-
-    // useEffect(() => {
-    //     const currentEvent = rushData.events.find(
-    //         (event) => event.rushEventId === rushData.todayEventId
-    //     );
-    //
-    //     if (currentEvent && gameState.phase === CARD_PHASE.COMPLETED) {
-    //         const serverTime = getMsTime(rushData.serverTime);
-    //         const endTime = getMsTime(currentEvent.endDateTime);
-    //
-    //         if (!gameState.userParticipatedStatus) {
-    //             if (serverTime > endTime) {
-    //                 navigate("/rush");
-    //                 // TODO: 이벤트 참여기간 아닌 분기 처리(이벤트 종료 후 그 당일 12시 직전까지)
-    //             }
-    //         } else {
-    //             // TODO: 참여한 사람일 경우 당일 12시 직전까지 계속 "COMPLETED" 상태 유지
-    //             // TODO: 12시 지나면 다시 "NOT_STARTED" 상태로 변경
-    //         }
-    //     }
-    // }, [gameState.phase, gameState.userParticipatedStatus, rushData, navigate]);
+    }, [rushData, setGamePhase]);
 
     return (
         <RushGameContext.Provider
             value={{
                 gameState,
-                preCountdown,
-                runCountdown,
                 updateCardOptions,
                 updateUserStatusAndSelectedOption,
                 getSelectedCardInfo,
                 getOptionRatio,
                 fetchRushBalance,
+                setUserParticipationStatus,
+                setGamePhase,
+                setUserSelectedOption,
             }}
         >
             {children}
