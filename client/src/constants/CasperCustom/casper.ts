@@ -47,7 +47,7 @@ export const COLOR_OPTION = {
     R_AMBER: "#FFD96B",
     R_YELLOW: "#FEFF78",
 } as const;
-const STICKER_OPTION = {
+export const STICKER_OPTION = {
     ELECTRIC: "electric",
     CHARGE_MAX: "charge-max",
     CHARGE_NONE: "charge-none",

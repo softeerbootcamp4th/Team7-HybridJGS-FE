@@ -27,10 +27,7 @@ import VacantRight from "/public/assets/casper-custom/eyes/vacant-right.svg?reac
 type EyesOptionType = (typeof EYES_OPTION)[keyof typeof EYES_OPTION];
 type EyesDirectionOptionType = (typeof POSITION_OPTION)[keyof typeof POSITION_OPTION];
 
-const EYES_COMPONENT_MAP: Record<
-    string,
-    React.ComponentType<React.SVGProps<SVGSVGElement>> | null
-> = {
+const EYES_COMPONENT_MAP: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     "15inch-alloy-center": Alloy15Center,
     "15inch-alloy-left": Alloy15Left,
     "15inch-alloy-right": Alloy15Right,
@@ -60,7 +57,7 @@ const EYES_COMPONENT_MAP: Record<
 export function getCasperEyesComponent(
     eyesOption: EyesOptionType,
     eyesDirectionOption: EyesDirectionOptionType
-): React.ComponentType<React.SVGProps<SVGSVGElement>> | null {
+): React.ComponentType<React.SVGProps<SVGSVGElement>> {
     const componentKey = `${eyesOption}-${eyesDirectionOption}`;
     return EYES_COMPONENT_MAP[componentKey];
 }
