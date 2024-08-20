@@ -1,3 +1,5 @@
+import { CardOption } from "@/types/rushGame.ts";
+
 interface RushEventType {
     rushEventId: number;
     startDateTime: string;
@@ -34,12 +36,13 @@ export interface GetRushOptionResultResponse {
 }
 
 export interface GetRushBalanceResponse {
-    optionId: number;
+    optionId: CardOption;
     leftOption: number;
     rightOption: number;
 }
 
 export interface GetRushResultResponse {
+    optionId?: CardOption;
     isWinner?: boolean;
     leftOption: number;
     rightOption: number;

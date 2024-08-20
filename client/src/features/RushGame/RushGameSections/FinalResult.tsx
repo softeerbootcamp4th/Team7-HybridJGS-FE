@@ -28,8 +28,13 @@ interface FinalResultProps {
 
 export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, getOptionRatio, getSelectedCardInfo, updateCardOptions } =
-        useRushGameContext();
+    const {
+        gameState,
+        getOptionRatio,
+        getSelectedCardInfo,
+        updateCardOptions,
+        setUserSelectedOption,
+    } = useRushGameContext();
 
     const {
         data: resultData,
@@ -47,7 +52,9 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
 
     useEffect(() => {
         if (resultData && isSuccessRushResult) {
-            const { leftOption, rightOption } = resultData;
+            const { optionId, leftOption, rightOption } = resultData;
+
+            if (optionId) setUserSelectedOption(optionId);
 
             updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 selectionCount: leftOption,
