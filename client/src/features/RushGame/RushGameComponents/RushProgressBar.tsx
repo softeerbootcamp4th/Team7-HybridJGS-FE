@@ -12,7 +12,10 @@ export default function RushProgressBar({
     rightOptionRatio,
 }: RushProgressBarProps) {
     const { gameState } = useRushGameContext();
+
     const isCompleted = gameState.phase === CARD_PHASE.COMPLETED;
+    const isAllZero = leftOptionRatio === 0 && rightOptionRatio === 0;
+
     const leftStatus = isCompleted && leftOptionRatio < rightOptionRatio ? "losing" : "winning";
     const rightStatus = isCompleted && rightOptionRatio < leftOptionRatio ? "losing" : "winning";
 
@@ -23,12 +26,14 @@ export default function RushProgressBar({
                 color={CARD_COLOR.GREEN}
                 status={leftStatus}
                 textAlign="left"
+                isAllZero={isAllZero}
             />
             <RushBar
                 ratio={rightOptionRatio}
                 color={CARD_COLOR.RED}
                 status={rightStatus}
                 textAlign="right"
+                isAllZero={isAllZero}
             />
         </div>
     );
