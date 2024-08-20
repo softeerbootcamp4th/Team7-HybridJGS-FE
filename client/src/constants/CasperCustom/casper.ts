@@ -1,4 +1,4 @@
-import { SelectedColorType, SelectedStickerType } from "@/types/casperCustom";
+import { ColorOptionType, StickerOptionType } from "@/types/casperCustom";
 
 export const CUSTOM_OPTION = {
     EYES: "eyes",
@@ -105,7 +105,7 @@ export const STICKER_COLOR_MAP = {
     },
 } as const;
 
-export const COLOR_STICKER_EXCEPTION: Partial<Record<SelectedColorType, SelectedStickerType>> = {
+export const COLOR_STICKER_EXCEPTION: Partial<Record<ColorOptionType, StickerOptionType>> = {
     [COLOR_OPTION.C_SILVER]: STICKER_OPTION.CHARGE_MAX,
     [COLOR_OPTION.R_PURPLE]: STICKER_OPTION.CHARGE_MAX,
     [COLOR_OPTION.R_ORANGE]: STICKER_OPTION.CHARGE_NONE,

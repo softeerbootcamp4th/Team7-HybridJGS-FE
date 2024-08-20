@@ -1,8 +1,18 @@
 import { Dispatch } from "react";
-import { COLOR_OPTION, CUSTOM_OPTION, STICKER_OPTION } from "@/constants/CasperCustom/casper";
+import {
+    COLOR_OPTION,
+    CUSTOM_OPTION,
+    EYES_OPTION,
+    MOUTH_OPTION,
+    POSITION_OPTION,
+    STICKER_OPTION,
+} from "@/constants/CasperCustom/casper";
 
-export type SelectedColorType = (typeof COLOR_OPTION)[keyof typeof COLOR_OPTION];
-export type SelectedStickerType = (typeof STICKER_OPTION)[keyof typeof STICKER_OPTION];
+export type ColorOptionType = (typeof COLOR_OPTION)[keyof typeof COLOR_OPTION];
+export type StickerOptionType = (typeof STICKER_OPTION)[keyof typeof STICKER_OPTION];
+export type EyesOptionType = (typeof EYES_OPTION)[keyof typeof EYES_OPTION];
+export type EyesDirectionOptionType = (typeof POSITION_OPTION)[keyof typeof POSITION_OPTION];
+export type MouthOptionType = (typeof MOUTH_OPTION)[keyof typeof MOUTH_OPTION];
 
 export type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
 type CasperFaceKeys = Exclude<CustomOptionType, typeof CUSTOM_OPTION.STICKER>;

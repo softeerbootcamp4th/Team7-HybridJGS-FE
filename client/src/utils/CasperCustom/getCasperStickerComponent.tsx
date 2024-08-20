@@ -1,11 +1,9 @@
-import { STICKER_OPTION } from "@/constants/CasperCustom/casper";
+import { StickerOptionType } from "@/types/casperCustom";
 import ChargeMax from "/public/assets/casper-custom/sticker/charge-max.svg?react";
 import ChargeNone from "/public/assets/casper-custom/sticker/charge-none.svg?react";
 import Electric from "/public/assets/casper-custom/sticker/electric.svg?react";
 import Lovely from "/public/assets/casper-custom/sticker/lovely.svg?react";
 import Twinkle from "/public/assets/casper-custom/sticker/twinkle.svg?react";
-
-type StickerOptionType = (typeof STICKER_OPTION)[keyof typeof STICKER_OPTION];
 
 const STICKER_COMPONENT_MAP: Record<
     string,
