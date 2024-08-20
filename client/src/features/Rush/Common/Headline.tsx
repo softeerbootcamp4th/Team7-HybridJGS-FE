@@ -33,7 +33,7 @@ export function Headline({ id, handleClickScroll }: HeadlineProps) {
         // TODO: 당일 이벤트 종료 시 참여 여부를 기준으로 분기 처리 (T: FinalResult() / F: 이벤트 참여 기간 아님)
         const startDate = getMsTime(rushData.eventStartDate);
         const endDate = getMsTime(rushData.eventEndDate);
-        const currentDate = new Date().getTime();
+        const currentDate = getMsTime(rushData.serverTime);
 
         const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
 
