@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 import { motion } from "framer-motion";
 import Tooltip from "@/components/Tooltip";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -12,17 +12,14 @@ interface ElectricSectionProps extends SectionKeyProps {
     descriptionChildren: ReactNode;
 }
 
-export function ElectricSection({
-    id,
-    tooltipContent,
-    tooltipChildren,
-    children,
-    descriptionClass,
-    descriptionChildren,
-}: ElectricSectionProps) {
+const ElectricSection = forwardRef<HTMLDivElement, ElectricSectionProps>(function ElectricSection(
+    { id, tooltipContent, tooltipChildren, children, descriptionClass, descriptionChildren },
+    ref
+) {
     return (
         <section
             id={id}
+            ref={ref}
             className="h-screen bg-n-white flex flex-col justify-center items-center pt-32 snap-start"
         >
             <motion.div {...SCROLL_MOTION(ASCEND)}>
@@ -44,4 +41,6 @@ export function ElectricSection({
             </motion.div>
         </section>
     );
-}
+});
+
+export { ElectricSection };
