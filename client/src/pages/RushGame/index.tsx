@@ -31,7 +31,7 @@ export default function RushGame() {
                 if (!gameState.userParticipatedStatus) {
                     return <CardOptions />;
                 } else {
-                    return <SelectedCard />;
+                    return <SelectedCard unblockNavigation={unblockNavigation} />;
                 }
             case CARD_PHASE.COMPLETED:
                 return <FinalResult unblockNavigation={unblockNavigation} />;

@@ -9,11 +9,11 @@ import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
-interface SelectedCardProps {
+interface SelectedCardDetailsProps {
     onClick: () => void;
 }
 
-function SelectedCardDescription({ onClick }: SelectedCardProps) {
+function SelectedCardDescription({ onClick }: SelectedCardDetailsProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardResultDescription />
@@ -32,7 +32,7 @@ function SelectedCardDescription({ onClick }: SelectedCardProps) {
     );
 }
 
-function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
+function SelectedCardCurrentRatio({ onClick }: SelectedCardDetailsProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardCurrentRatio />
@@ -51,12 +51,17 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
     );
 }
 
-export default function SelectedCard() {
+interface SelectedCardProps {
+    unblockNavigation: () => void;
+}
+
+export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
     const { toggleContents, toggle } = useToggleContents({ useDuration: false });
     const { fetchRushBalance } = useRushGameContext();
 
     useEffect(() => {
         fetchRushBalance();
+        unblockNavigation();
     }, []);
 
     return (
