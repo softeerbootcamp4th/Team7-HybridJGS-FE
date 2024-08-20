@@ -1,5 +1,8 @@
 import { Dispatch } from "react";
-import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
+import { COLOR_OPTION, CUSTOM_OPTION, STICKER_OPTION } from "@/constants/CasperCustom/casper";
+
+export type SelectedColorType = (typeof COLOR_OPTION)[keyof typeof COLOR_OPTION];
+export type SelectedStickerType = (typeof STICKER_OPTION)[keyof typeof STICKER_OPTION];
 
 export type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
 type CasperFaceKeys = Exclude<CustomOptionType, typeof CUSTOM_OPTION.STICKER>;

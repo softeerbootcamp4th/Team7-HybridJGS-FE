@@ -8,7 +8,9 @@ import {
     CASPER_SIZE_OPTION,
     CASPER_Z_INDEX,
     COLOR_BACKGROUND_MAP,
+    COLOR_STICKER_EXCEPTION,
     CUSTOM_OPTION,
+    STICKER_COLOR_MAP,
 } from "@/constants/CasperCustom/casper";
 import { SelectedCasperIdxType } from "@/types/casperCustom";
 import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
@@ -94,6 +96,17 @@ function CasperCardFrontUI({
         selectedSticker !== null ? selectedSticker.id : null
     );
 
+    const getStickerColor = () => {
+        if (!selectedSticker) {
+            return "";
+        }
+
+        const isException = COLOR_STICKER_EXCEPTION[selectedColor.id] === selectedSticker?.id;
+        return isException
+            ? STICKER_COLOR_MAP[selectedSticker.id].exception
+            : STICKER_COLOR_MAP[selectedSticker.id].default;
+    };
+
     return (
         <div
             className={casperCardContainerVariants({
@@ -156,6 +169,7 @@ function CasperCardFrontUI({
             {selectedSticker && CasperStickerSvgComponent && (
                 <CasperStickerSvgComponent
                     className="absolute top-0"
+                    fill={getStickerColor()}
                     style={{
                         width: CARD_WIDTH,
                         height: CARD_HEIGHT,

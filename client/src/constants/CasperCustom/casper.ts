@@ -1,3 +1,5 @@
+import { SelectedColorType, SelectedStickerType } from "@/types/casperCustom";
+
 export const CUSTOM_OPTION = {
     EYES: "eyes",
     EYES_DIRECTION: "eyesDirection",
@@ -79,6 +81,43 @@ export const COLOR_BACKGROUND_MAP = [
     COLOR_OPTION.R_MAGENTA,
     COLOR_OPTION.R_LIGHTBLUE,
 ] as const;
+
+export const STICKER_COLOR_MAP = {
+    [STICKER_OPTION.CHARGE_MAX]: {
+        default: "#515867",
+        exception: "#333741",
+    },
+    [STICKER_OPTION.CHARGE_NONE]: {
+        default: "#5CDD6A",
+        exception: "#FEFF78",
+    },
+    [STICKER_OPTION.ELECTRIC]: {
+        default: "#FEFF78",
+        exception: "#FEFF78",
+    },
+    [STICKER_OPTION.LOVELY]: {
+        default: "#FF6EB0",
+        exception: "#11CCF2",
+    },
+    [STICKER_OPTION.TWINKLE]: {
+        default: "#11CCF2",
+        exception: "#FEFF78",
+    },
+} as const;
+
+export const COLOR_STICKER_EXCEPTION: Partial<Record<SelectedColorType, SelectedStickerType>> = {
+    [COLOR_OPTION.C_SILVER]: STICKER_OPTION.CHARGE_MAX,
+    [COLOR_OPTION.R_PURPLE]: STICKER_OPTION.CHARGE_MAX,
+    [COLOR_OPTION.R_ORANGE]: STICKER_OPTION.CHARGE_NONE,
+    [COLOR_OPTION.R_INDIGO]: STICKER_OPTION.CHARGE_NONE,
+    [COLOR_OPTION.R_LIGHTBLUE]: STICKER_OPTION.LOVELY,
+    [COLOR_OPTION.R_AMBER]: STICKER_OPTION.LOVELY,
+    [COLOR_OPTION.R_MAGENTA]: STICKER_OPTION.TWINKLE,
+    [COLOR_OPTION.R_YELLOW]: STICKER_OPTION.TWINKLE,
+    [COLOR_OPTION.C_BLACK]: STICKER_OPTION.TWINKLE,
+    [COLOR_OPTION.R_DEEPPURPLE]: STICKER_OPTION.TWINKLE,
+    [COLOR_OPTION.C_ORANGE]: STICKER_OPTION.TWINKLE,
+};
 
 export const CASPER_Z_INDEX = {
     CASPER: 2,
