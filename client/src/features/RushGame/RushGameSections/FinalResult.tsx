@@ -11,6 +11,7 @@ import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
 import { WinStatus } from "@/types/rushGame.ts";
+import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 
 const MESSAGES = {
@@ -29,8 +30,7 @@ interface FinalResultProps {
 
 export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, getOptionRatio, setCardOptions, setUserSelectedOption } =
-        useRushGameContext();
+    const { gameState, setCardOptions, setUserSelectedOption } = useRushGameContext();
 
     const {
         data: resultData,
@@ -78,8 +78,14 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
         option: CARD_OPTION.RIGHT_OPTIONS,
     });
 
-    const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
-    const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);
+    const leftOptionRatio = getOptionRatio({
+        gameState: gameState,
+        option: CARD_OPTION.LEFT_OPTIONS,
+    });
+    const rightOptionRatio = getOptionRatio({
+        gameState: gameState,
+        option: CARD_OPTION.RIGHT_OPTIONS,
+    });
 
     const leftWinStatus = getWinStatus(leftOptionRatio, rightOptionRatio);
     const rightWinStatus = getWinStatus(rightOptionRatio, leftOptionRatio);

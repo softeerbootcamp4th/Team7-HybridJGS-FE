@@ -9,6 +9,7 @@ import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushOptionResultResponse } from "@/types/rushApi.ts";
 import { CardOption } from "@/types/rushGame.ts";
+import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 
 const backgroundGradients = cva(
@@ -30,7 +31,7 @@ const backgroundGradients = cva(
 
 export default function RushCardResultDescription() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, setCardOptions, getOptionRatio } = useRushGameContext();
+    const { gameState, setCardOptions } = useRushGameContext();
 
     const {
         data: userResultData,
@@ -62,7 +63,10 @@ export default function RushCardResultDescription() {
         option: gameState.userSelectedOption,
     });
 
-    const selectedOptionRatio = getOptionRatio(gameState.userSelectedOption);
+    const selectedOptionRatio = getOptionRatio({
+        gameState: gameState,
+        option: gameState.userSelectedOption,
+    });
 
     return (
         <div className={backgroundGradients({ color })}>

@@ -6,6 +6,7 @@ import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgress
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
+import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
 
@@ -52,11 +53,17 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
 }
 
 export default function RushCardCurrentRatio() {
-    const { gameState, getOptionRatio, fetchRushBalance } = useRushGameContext();
+    const { gameState, fetchRushBalance } = useRushGameContext();
     const { toggleContents } = useToggleContents();
 
-    const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
-    const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);
+    const leftOptionRatio = getOptionRatio({
+        gameState: gameState,
+        option: CARD_OPTION.LEFT_OPTIONS,
+    });
+    const rightOptionRatio = getOptionRatio({
+        gameState: gameState,
+        option: CARD_OPTION.RIGHT_OPTIONS,
+    });
 
     const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
 

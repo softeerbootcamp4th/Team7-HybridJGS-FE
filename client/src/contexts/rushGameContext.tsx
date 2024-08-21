@@ -87,19 +87,6 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [isSuccessRushBalance, rushBalanceData, setUserSelectedOption, setCardOptions]);
 
-    // TODO: 유틸로 빼기
-    const getOptionRatio = useCallback(
-        (option: CardOption): number => {
-            const total =
-                gameState.cardOptions[CARD_OPTION.LEFT_OPTIONS].selectionCount +
-                gameState.cardOptions[CARD_OPTION.RIGHT_OPTIONS].selectionCount;
-            if (total === 0) return 0;
-            const ratio = (gameState.cardOptions[option].selectionCount / total) * 100;
-            return Math.round(ratio * 100) / 100;
-        },
-        [gameState.cardOptions]
-    );
-
     // TODO: dispatch action으로 함수로 빼서 RushGame 컴포넌트에서 함수를 호출해서 초기화해주는 것이 맞다고 생각..
     useEffect(() => {
         if (rushData) {
@@ -131,7 +118,6 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 gameState,
                 setCardOptions,
-                getOptionRatio,
                 fetchRushBalance,
                 setUserParticipationStatus,
                 setGamePhase,

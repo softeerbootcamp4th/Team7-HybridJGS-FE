@@ -24,7 +24,6 @@ export interface RushGameContextType {
         };
     };
     setCardOptions: (option: CardOption, updates: Partial<CardOptionState>) => void;
-    getOptionRatio: (option: CardOption) => number;
     fetchRushBalance: () => Promise<void>;
     setUserParticipationStatus: (status: boolean) => void;
     setGamePhase: (phase: GamePhase) => void;
