@@ -1,22 +1,19 @@
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
-import { CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard.ts";
+import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import useFetch from "@/hooks/useFetch.ts";
-import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
+import { useFetchRushUserParticipationStatus } from "@/hooks/useFetchRushUserParticipationStatus.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
-import {
-    GetRushUserParticipationStatusResponse,
-    RushEventStatusCodeResponse,
-} from "@/types/rushApi.ts";
+import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { CardOption } from "@/types/rushGame.ts";
 
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, setUserSelectedOption, setUserParticipationStatus } = useRushGameContext();
-    const fetchRushBalance = useFetchRushBalance();
+    const { gameState, setUserSelectedOption } = useRushGameContext();
+    const { getRushUserParticipationStatus } = useFetchRushUserParticipationStatus();
 
     const {
         data: postSelectedRushOptionResponse,
@@ -25,11 +22,6 @@ export default function RushCardComparison() {
     } = useFetch<RushEventStatusCodeResponse, { token: string; optionId: CardOption }>(
         ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId)
     );
-
-    const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
-        GetRushUserParticipationStatusResponse,
-        string
-    >((token) => RushAPI.getRushUserParticipationStatus(token));
 
     const handleCardSelection = async (optionId: CardOption) => {
         await postSelectedRushOptionApply({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], optionId });
@@ -41,15 +33,6 @@ export default function RushCardComparison() {
             getRushUserParticipationStatus(cookies[COOKIE_KEY.ACCESS_TOKEN]);
         }
     }, [isSuccessPostSelectedRushOption, postSelectedRushOptionResponse]);
-
-    useEffect(() => {
-        if (userParticipatedStatus !== null) {
-            setUserParticipationStatus(userParticipatedStatus);
-            if (userParticipatedStatus && CARD_PHASE.IN_PROGRESS) {
-                fetchRushBalance();
-            }
-        }
-    }, [userParticipatedStatus]);
 
     const leftOptionData = gameState.cardOptions[CARD_OPTION.LEFT_OPTIONS];
     const rightOptionData = gameState.cardOptions[CARD_OPTION.RIGHT_OPTIONS];

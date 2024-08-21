@@ -6,7 +6,7 @@ import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetTodayRushEventResponse } from "@/types/rushApi.ts";
 import { getRandomCardColors } from "@/utils/getRandomCardColors";
 
-export const useFetchTodayRushEvent = () => {
+export function useFetchTodayRushEvent() {
     const { setCardOptions } = useRushGameContext();
 
     const {
@@ -33,4 +33,4 @@ export const useFetchTodayRushEvent = () => {
     }, [isSuccessTodayRushEvent, todayRushEventData]);
 
     return { getTodayRushEvent };
-};
+}
