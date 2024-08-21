@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
@@ -8,10 +8,14 @@ interface ReasonSectionProps extends SectionKeyProps {
     children: ReactNode;
 }
 
-export function ReasonSection({ id, subtitle, children }: ReasonSectionProps) {
+const ReasonSection = forwardRef<HTMLDivElement, ReasonSectionProps>(function ReasonSection(
+    { id, subtitle, children },
+    ref
+) {
     return (
         <section
             id={id}
+            ref={ref}
             className="h-[316px] bg-n-neutral-50 flex justify-center items-center gap-3 snap-start"
         >
             <motion.div
@@ -25,4 +29,6 @@ export function ReasonSection({ id, subtitle, children }: ReasonSectionProps) {
             </motion.div>
         </section>
     );
-}
+});
+
+export { ReasonSection };
