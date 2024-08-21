@@ -1,15 +1,13 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
-import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION, WIN_STATUS } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import RushResultOptionDisplay from "@/features/RushGame/RushGameComponents/RushResultOptionDisplay.tsx";
-import useFetch from "@/hooks/useFetch.ts";
+import { useFetchRushResult } from "@/hooks/useFetchRushResult.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
-import { GetRushResultResponse } from "@/types/rushApi.ts";
 import { WinStatus } from "@/types/rushGame.ts";
 import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
@@ -30,36 +28,13 @@ interface FinalResultProps {
 
 export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, setCardOptions, setUserSelectedOption } = useRushGameContext();
-
-    const {
-        data: resultData,
-        isSuccess: isSuccessRushResult,
-        fetchData: getRushResult,
-    } = useFetch<GetRushResultResponse>(
-        () => RushAPI.getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]),
-        false
-    );
+    const { gameState } = useRushGameContext();
+    const { getRushResult, resultData } = useFetchRushResult();
 
     useEffect(() => {
-        getRushResult();
+        getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]);
         unblockNavigation();
     }, []);
-
-    useEffect(() => {
-        if (resultData && isSuccessRushResult) {
-            const { optionId, leftOption, rightOption } = resultData;
-
-            if (optionId) setUserSelectedOption(optionId);
-
-            setCardOptions(CARD_OPTION.LEFT_OPTIONS, {
-                selectionCount: leftOption,
-            });
-            setCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
-                selectionCount: rightOption,
-            });
-        }
-    }, [resultData, isSuccessRushResult, setCardOptions]);
 
     const userParticipatedStatus = gameState.userParticipatedStatus;
 
