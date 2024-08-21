@@ -75,7 +75,7 @@ function CountdownTimer() {
                 <p className="leading-[100px]">:</p>
                 <TimeDisplay label="Minutes" value={formatTime(minutes)} />
                 <p className="leading-[100px]">:</p>
-                <TimeDisplay label="Minutes" value={formatTime(seconds)} />
+                <TimeDisplay label="Seconds" value={formatTime(seconds)} />
             </div>
         </Background>
     );

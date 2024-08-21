@@ -51,6 +51,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         setGameState((prevState) => ({ ...prevState, userSelectedOption: option }));
     }, []);
 
+    // TODO: set으로 이름 바꾸기
     const updateCardOptions = useCallback(
         (option: CardOption, updates: Partial<CardOptionState>) => {
             setGameState((prevState) => ({
@@ -64,6 +65,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         []
     );
 
+    // TODO: getter 니까 유틸로?
     const getSelectedCardInfo = useCallback(
         (option: CardOption) => {
             const cardInfo = gameState.cardOptions[option];
@@ -79,6 +81,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         [gameState.userSelectedOption, gameState.cardOptions]
     );
 
+    // TODO: 훅으로 빼기
     const {
         data: rushBalanceData,
         isSuccess: isSuccessRushBalance,
@@ -91,7 +94,9 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         if (isSuccessRushBalance && rushBalanceData) {
-            const { leftOption, rightOption } = rushBalanceData;
+            const { optionId, leftOption, rightOption } = rushBalanceData;
+
+            setUserSelectedOption(optionId);
 
             updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 selectionCount: leftOption,
@@ -100,8 +105,9 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
                 selectionCount: rightOption,
             });
         }
-    }, [isSuccessRushBalance, rushBalanceData]);
+    }, [isSuccessRushBalance, rushBalanceData, setUserSelectedOption, updateCardOptions]);
 
+    // TODO: 유틸로 빼기
     const getOptionRatio = useCallback(
         (option: CardOption): number => {
             const total =
@@ -114,6 +120,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         [gameState.cardOptions]
     );
 
+    // TODO: dispatch action으로 함수로 빼서 RushGame 컴포넌트에서 함수를 호출해서 초기화해주는 것이 맞다고 생각..
     useEffect(() => {
         if (rushData) {
             const serverDate = new Date(rushData.serverTime).toISOString().split("T")[0];

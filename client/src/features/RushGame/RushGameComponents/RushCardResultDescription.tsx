@@ -45,7 +45,7 @@ export default function RushCardResultDescription() {
             token: cookies[COOKIE_KEY.ACCESS_TOKEN],
             optionId: gameState.userSelectedOption,
         });
-    }, []);
+    }, [cookies, gameState.userSelectedOption, getUserResultData]);
 
     useEffect(() => {
         if (isSuccessUserResultData && userResultData) {
