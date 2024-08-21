@@ -29,8 +29,7 @@ const backgroundGradients = cva(
 
 export default function RushCardResultDescription() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, updateCardOptions, getSelectedCardInfo, getOptionRatio } =
-        useRushGameContext();
+    const { gameState, setCardOptions, getSelectedCardInfo, getOptionRatio } = useRushGameContext();
 
     const {
         data: userResultData,
@@ -49,7 +48,7 @@ export default function RushCardResultDescription() {
 
     useEffect(() => {
         if (isSuccessUserResultData && userResultData) {
-            updateCardOptions(gameState.userSelectedOption, {
+            setCardOptions(gameState.userSelectedOption, {
                 mainText: userResultData.mainText,
                 resultMainText: userResultData.resultMainText,
                 resultSubText: userResultData.resultSubText,

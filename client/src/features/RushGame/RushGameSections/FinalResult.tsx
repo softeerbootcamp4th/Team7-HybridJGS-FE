@@ -32,7 +32,7 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
         gameState,
         getOptionRatio,
         getSelectedCardInfo,
-        updateCardOptions,
+        setCardOptions,
         setUserSelectedOption,
     } = useRushGameContext();
 
@@ -56,14 +56,14 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
 
             if (optionId) setUserSelectedOption(optionId);
 
-            updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
+            setCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 selectionCount: leftOption,
             });
-            updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
+            setCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 selectionCount: rightOption,
             });
         }
-    }, [resultData, isSuccessRushResult, updateCardOptions]);
+    }, [resultData, isSuccessRushResult, setCardOptions]);
 
     const userParticipatedStatus = gameState.userParticipatedStatus;
 

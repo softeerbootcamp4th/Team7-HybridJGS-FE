@@ -51,19 +51,15 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         setGameState((prevState) => ({ ...prevState, userSelectedOption: option }));
     }, []);
 
-    // TODO: set으로 이름 바꾸기
-    const updateCardOptions = useCallback(
-        (option: CardOption, updates: Partial<CardOptionState>) => {
-            setGameState((prevState) => ({
-                ...prevState,
-                cardOptions: {
-                    ...prevState.cardOptions,
-                    [option]: { ...prevState.cardOptions[option], ...updates },
-                },
-            }));
-        },
-        []
-    );
+    const setCardOptions = useCallback((option: CardOption, updates: Partial<CardOptionState>) => {
+        setGameState((prevState) => ({
+            ...prevState,
+            cardOptions: {
+                ...prevState.cardOptions,
+                [option]: { ...prevState.cardOptions[option], ...updates },
+            },
+        }));
+    }, []);
 
     // TODO: getter 니까 유틸로?
     const getSelectedCardInfo = useCallback(
@@ -98,14 +94,14 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
 
             setUserSelectedOption(optionId);
 
-            updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
+            setCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 selectionCount: leftOption,
             });
-            updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
+            setCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 selectionCount: rightOption,
             });
         }
-    }, [isSuccessRushBalance, rushBalanceData, setUserSelectedOption, updateCardOptions]);
+    }, [isSuccessRushBalance, rushBalanceData, setUserSelectedOption, setCardOptions]);
 
     // TODO: 유틸로 빼기
     const getOptionRatio = useCallback(
@@ -150,7 +146,7 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         <RushGameContext.Provider
             value={{
                 gameState,
-                updateCardOptions,
+                setCardOptions,
                 getSelectedCardInfo,
                 getOptionRatio,
                 fetchRushBalance,

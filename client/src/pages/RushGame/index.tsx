@@ -27,7 +27,7 @@ export default function RushGame() {
         "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
     );
 
-    const { gameState, setUserParticipationStatus, updateCardOptions, fetchRushBalance } =
+    const { gameState, setUserParticipationStatus, setCardOptions, fetchRushBalance } =
         useRushGameContext();
     const { showToast, ToastComponent } = useToast("🔗 링크가 복사되었어요!");
 
@@ -50,12 +50,12 @@ export default function RushGame() {
         if (isSuccessTodayRushEvent && todayRushEventData) {
             const { leftColor, rightColor } = getRandomCardColors();
 
-            updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
+            setCardOptions(CARD_OPTION.LEFT_OPTIONS, {
                 mainText: todayRushEventData.leftOption.mainText,
                 subText: todayRushEventData.leftOption.subText,
                 color: leftColor,
             });
-            updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
+            setCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
                 mainText: todayRushEventData.rightOption.mainText,
                 subText: todayRushEventData.rightOption.subText,
                 color: rightColor,
