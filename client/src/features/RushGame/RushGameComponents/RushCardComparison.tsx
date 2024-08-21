@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
@@ -6,20 +6,20 @@ import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
-import { GetTodayRushEventResponse, RushEventStatusCodeResponse } from "@/types/rushApi.ts";
+import {
+    GetRushUserParticipationStatusResponse,
+    GetTodayRushEventResponse,
+    RushEventStatusCodeResponse,
+} from "@/types/rushApi.ts";
 import { CardOption } from "@/types/rushGame.ts";
 import { getRandomCardColors } from "@/utils/getRandomCardColors.ts";
 
-const INITIAL_OPTION_NUMBER = -1 as const;
-
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const [optionId, setOptionId] = useState<CardOption | typeof INITIAL_OPTION_NUMBER>(
-        INITIAL_OPTION_NUMBER
-    );
-    const { gameState, updateUserStatusAndSelectedOption, updateCardOptions } =
+    const { gameState, setUserSelectedOption, updateCardOptions, setUserParticipationStatus } =
         useRushGameContext();
 
+    // TODO: getTodayRushEvent -> RushGame 컴포넌트로 옮기기
     const {
         data: todayRushEventData,
         isSuccess: isSuccessTodayRushEvent,
@@ -33,6 +33,11 @@ export default function RushCardComparison() {
     } = useFetch<RushEventStatusCodeResponse, { token: string; optionId: CardOption }>(
         ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId)
     );
+
+    const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
+        GetRushUserParticipationStatusResponse,
+        string
+    >((token) => RushAPI.getRushUserParticipationStatus(token));
 
     useEffect(() => {
         getTodayRushEvent(cookies[COOKIE_KEY.ACCESS_TOKEN]);
@@ -57,18 +62,20 @@ export default function RushCardComparison() {
 
     const handleCardSelection = async (optionId: CardOption) => {
         await postSelectedRushOptionApply({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], optionId });
-        setOptionId(optionId);
+        setUserSelectedOption(optionId);
     };
 
     useEffect(() => {
-        if (
-            isSuccessPostSelectedRushOption &&
-            postSelectedRushOptionResponse === 204 &&
-            optionId !== INITIAL_OPTION_NUMBER
-        ) {
-            updateUserStatusAndSelectedOption(cookies[COOKIE_KEY.ACCESS_TOKEN], optionId);
+        if (isSuccessPostSelectedRushOption && postSelectedRushOptionResponse === 204) {
+            getRushUserParticipationStatus(cookies[COOKIE_KEY.ACCESS_TOKEN]);
         }
-    }, [optionId]);
+    }, [isSuccessPostSelectedRushOption, postSelectedRushOptionResponse]);
+
+    useEffect(() => {
+        if (userParticipatedStatus !== null) {
+            setUserParticipationStatus(userParticipatedStatus);
+        }
+    }, [userParticipatedStatus]);
 
     const leftOptionData = gameState.cardOptions[CARD_OPTION.LEFT_OPTIONS];
     const rightOptionData = gameState.cardOptions[CARD_OPTION.RIGHT_OPTIONS];

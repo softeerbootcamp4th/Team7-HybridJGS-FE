@@ -5,11 +5,7 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import {
-    GetRushBalanceResponse,
-    GetRushUserParticipationStatusResponse,
-    GetTotalRushEventsResponse,
-} from "@/types/rushApi.ts";
+import { GetRushBalanceResponse, GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/types/rushGame";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
@@ -67,27 +63,6 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         },
         []
     );
-
-    const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
-        GetRushUserParticipationStatusResponse,
-        string
-    >((token) => RushAPI.getRushUserParticipationStatus(token));
-
-    // TODO: 상태 업데이트랑 옵션 업데이트 분리할까? 어차피 setUserSelectedOption이랑 setUserParticipationStatus 함수 다 내려줄건데 뭐하러 이렇게 하남..?
-    // TODO: 그냥 updateUserStatusAndSelectedOption 이 함수 호출해주는 곳에서 RushAPI.getRushUserParticipationStatus 이거 호출해주고, setUserSelectedOption 함수만 받아서 쓰면 될 것 같은데
-    const updateUserStatusAndSelectedOption = useCallback(
-        async (token: string, selectedOption: CardOption) => {
-            await getRushUserParticipationStatus(token);
-            setUserSelectedOption(selectedOption);
-        },
-        []
-    );
-
-    useEffect(() => {
-        if (userParticipatedStatus !== null) {
-            setUserParticipationStatus(userParticipatedStatus);
-        }
-    }, [userParticipatedStatus]);
 
     const getSelectedCardInfo = useCallback(
         (option: CardOption) => {
@@ -169,7 +144,6 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 gameState,
                 updateCardOptions,
-                updateUserStatusAndSelectedOption,
                 getSelectedCardInfo,
                 getOptionRatio,
                 fetchRushBalance,
