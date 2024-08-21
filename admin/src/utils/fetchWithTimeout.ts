@@ -1,4 +1,4 @@
-export async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout = 5000) {
+export async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout = 30000) {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     options.signal = controller.signal;
