@@ -4,6 +4,7 @@ import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import Suspense from "@/components/Suspense";
 import TabHeader from "@/components/TabHeader";
+import { ERROR_MAP } from "@/constants/common";
 import useFetch from "@/hooks/useFetch";
 import { LotteryEventType } from "@/types/lottery";
 import {
@@ -27,6 +28,7 @@ export default function LotteryWinner() {
         isSuccess: isSuccessPostLottery,
         isLoading: isLoadingPostLottery,
         isError: isErrorPostLottery,
+        errorStatus: lotteryPostErrorStatus,
         fetchData: postLottery,
     } = useFetch<PostLotteryWinnerResponse>(
         (_, token) => LotteryAPI.postLotteryWinner(token),
@@ -53,13 +55,13 @@ export default function LotteryWinner() {
         }
     }, [isSuccessPostLottery]);
     useEffect(() => {
-        if (isErrorPostLottery) {
+        if (isErrorPostLottery && lotteryPostErrorStatus === ERROR_MAP.CONFLICT) {
             const isDelete = confirm("이미 추첨한 이벤트입니다. 삭제 후 다시 추첨하시겠습니까?");
             if (isDelete) {
                 deleteLottery();
             }
         }
-    }, [isErrorPostLottery]);
+    }, [isErrorPostLottery, lotteryPostErrorStatus]);
     useEffect(() => {
         if (isSuccessDeleteLottery) {
             postLottery();

@@ -9,3 +9,7 @@ export const STATUS_MAP = {
     [EVENT_STATUS.DURING]: "활성화",
     [EVENT_STATUS.AFTER]: "종료",
 };
+
+export const ERROR_MAP = {
+    CONFLICT: "409",
+} as const;
