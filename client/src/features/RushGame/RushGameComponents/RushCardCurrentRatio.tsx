@@ -6,6 +6,7 @@ import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgress
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
+import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
 
 const tooltipVariants = cva(`absolute transition-opacity duration-300 ease-in-out`, {
@@ -51,8 +52,7 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
 }
 
 export default function RushCardCurrentRatio() {
-    const { gameState, getOptionRatio, fetchRushBalance, getSelectedCardInfo } =
-        useRushGameContext();
+    const { gameState, getOptionRatio, fetchRushBalance } = useRushGameContext();
     const { toggleContents } = useToggleContents();
 
     const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
@@ -60,8 +60,14 @@ export default function RushCardCurrentRatio() {
 
     const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
 
-    const { mainText: leftMainText } = getSelectedCardInfo(CARD_OPTION.LEFT_OPTIONS);
-    const { mainText: rightMainText } = getSelectedCardInfo(CARD_OPTION.RIGHT_OPTIONS);
+    const { mainText: leftMainText } = getSelectedCardInfo({
+        gameState: gameState,
+        option: CARD_OPTION.LEFT_OPTIONS,
+    });
+    const { mainText: rightMainText } = getSelectedCardInfo({
+        gameState: gameState,
+        option: CARD_OPTION.RIGHT_OPTIONS,
+    });
 
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">

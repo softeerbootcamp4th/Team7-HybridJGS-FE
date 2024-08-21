@@ -11,6 +11,7 @@ import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
 import { WinStatus } from "@/types/rushGame.ts";
+import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 
 const MESSAGES = {
     WINNING: "축하해요! 선착순 경품 당첨이에요.",
@@ -28,13 +29,8 @@ interface FinalResultProps {
 
 export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const {
-        gameState,
-        getOptionRatio,
-        getSelectedCardInfo,
-        setCardOptions,
-        setUserSelectedOption,
-    } = useRushGameContext();
+    const { gameState, getOptionRatio, setCardOptions, setUserSelectedOption } =
+        useRushGameContext();
 
     const {
         data: resultData,
@@ -73,8 +69,14 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
 
     const message = isWinner ? MESSAGES.WINNING : MESSAGES.LOSING;
 
-    const { mainText: leftMainText } = getSelectedCardInfo(CARD_OPTION.LEFT_OPTIONS);
-    const { mainText: rightMainText } = getSelectedCardInfo(CARD_OPTION.RIGHT_OPTIONS);
+    const { mainText: leftMainText } = getSelectedCardInfo({
+        gameState: gameState,
+        option: CARD_OPTION.LEFT_OPTIONS,
+    });
+    const { mainText: rightMainText } = getSelectedCardInfo({
+        gameState: gameState,
+        option: CARD_OPTION.RIGHT_OPTIONS,
+    });
 
     const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
     const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);

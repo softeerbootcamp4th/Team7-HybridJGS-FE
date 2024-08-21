@@ -61,22 +61,6 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
         }));
     }, []);
 
-    // TODO: getter 니까 유틸로?
-    const getSelectedCardInfo = useCallback(
-        (option: CardOption) => {
-            const cardInfo = gameState.cardOptions[option];
-            return {
-                mainText: cardInfo.mainText,
-                subText: cardInfo.subText,
-                resultMainText: cardInfo.resultMainText,
-                resultSubText: cardInfo.resultSubText,
-                color: cardInfo.color,
-                selectionCount: cardInfo.selectionCount,
-            };
-        },
-        [gameState.userSelectedOption, gameState.cardOptions]
-    );
-
     // TODO: 훅으로 빼기
     const {
         data: rushBalanceData,
@@ -147,7 +131,6 @@ export const RushGameProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 gameState,
                 setCardOptions,
-                getSelectedCardInfo,
                 getOptionRatio,
                 fetchRushBalance,
                 setUserParticipationStatus,

@@ -9,6 +9,7 @@ import useFetch from "@/hooks/useFetch.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import { GetRushOptionResultResponse } from "@/types/rushApi.ts";
 import { CardOption } from "@/types/rushGame.ts";
+import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 
 const backgroundGradients = cva(
     `flex gap-[35px] w-[834px] h-[400px] rounded-800 py-6 px-[37px] justify-between break-keep`,
@@ -29,7 +30,7 @@ const backgroundGradients = cva(
 
 export default function RushCardResultDescription() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, setCardOptions, getSelectedCardInfo, getOptionRatio } = useRushGameContext();
+    const { gameState, setCardOptions, getOptionRatio } = useRushGameContext();
 
     const {
         data: userResultData,
@@ -56,9 +57,10 @@ export default function RushCardResultDescription() {
         }
     }, [isSuccessUserResultData, userResultData]);
 
-    const { mainText, resultMainText, resultSubText, color } = getSelectedCardInfo(
-        gameState.userSelectedOption
-    );
+    const { mainText, resultMainText, resultSubText, color } = getSelectedCardInfo({
+        gameState: gameState,
+        option: gameState.userSelectedOption,
+    });
 
     const selectedOptionRatio = getOptionRatio(gameState.userSelectedOption);
 
