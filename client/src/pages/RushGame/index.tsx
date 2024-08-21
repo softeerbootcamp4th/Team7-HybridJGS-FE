@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
+import { useLoaderData } from "react-router-dom";
 import CTAButton from "@/components/CTAButton";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
@@ -12,8 +13,10 @@ import SelectedCard from "@/features/RushGame/RushGameSections/SelectedCard.tsx"
 import { useBlockNavigation } from "@/hooks/useBlockNavigation.ts";
 import { useFetchRushUserParticipationStatus } from "@/hooks/useFetchRushUserParticipationStatus.ts";
 import { useFetchTodayRushEvent } from "@/hooks/useFetchTodayRushEvent.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import { useRushGameStateContext } from "@/hooks/useRushGameStateContext.ts";
+import useSetGamePhase from "@/hooks/useSetGamePhase.ts";
 import useToast from "@/hooks/useToast.tsx";
+import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { writeClipboard } from "@/utils/writeClipboard.ts";
 
 export default function RushGame() {
@@ -22,10 +25,13 @@ export default function RushGame() {
         "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
     );
     const { getTodayRushEvent } = useFetchTodayRushEvent();
-    const { gameState } = useRushGameContext();
+    const { gameState } = useRushGameStateContext();
     const { showToast, ToastComponent } = useToast("🔗 링크가 복사되었어요!");
     const { getRushUserParticipationStatus, userParticipatedStatus } =
         useFetchRushUserParticipationStatus();
+
+    const rushData = useLoaderData() as GetTotalRushEventsResponse;
+    useSetGamePhase(rushData);
 
     const handleClickShareButton = () => {
         writeClipboard(import.meta.env.VITE_RUSH_URL, showToast);
