@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
@@ -132,6 +132,11 @@ export default function LotteryWinnerList() {
         patchLotteryExpectation(id);
     };
 
+    const handleSubmitSearch = (e: FormEvent) => {
+        e.preventDefault();
+        handleRefetch();
+    };
+
     const expectations = useMemo(
         () =>
             expectation.map((winner) => [
@@ -183,15 +188,15 @@ export default function LotteryWinnerList() {
                         <p className="h-body-1-medium">당첨자 리스트</p>
                     </div>
 
-                    <div className="flex gap-2">
+                    <form className="flex gap-2" onSubmit={handleSubmitSearch}>
                         <input
                             ref={phoneNumberInputRef}
                             className="border border-neutral-950 rounded-lg text-neutral-950 h-body-1-medium"
                         />
-                        <Button buttonSize="sm" onClick={handleRefetch}>
+                        <Button buttonSize="sm" type="submit">
                             검색
                         </Button>
-                    </div>
+                    </form>
                 </div>
 
                 <Table
@@ -201,7 +206,7 @@ export default function LotteryWinnerList() {
                     dataLastItem={targetRef}
                 />
 
-                <Button buttonSize="lg" onClick={handleLottery}>
+                <Button buttonSize="lg" type="button" onClick={handleLottery}>
                     당첨자 다시 추첨하기
                 </Button>
             </div>

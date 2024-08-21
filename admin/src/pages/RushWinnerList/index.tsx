@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RushAPI } from "@/apis/rushAPI";
@@ -137,6 +137,11 @@ export default function RushWinnerList() {
         setSelectedOptionIdx(() => idx);
     };
 
+    const handleSubmitSearch = (e: FormEvent) => {
+        e.preventDefault();
+        handleSearchPhoneNumber();
+    };
+
     const optionTitleList = useMemo(
         () =>
             options
@@ -198,21 +203,22 @@ export default function RushWinnerList() {
                         </p>
                         <Button
                             buttonSize="sm"
+                            type="button"
                             onClick={() => setIsWinnerToggle((prevToggle) => !prevToggle)}
                         >
                             당첨자 수만 보기 {isWinnerToggle ? "OFF" : "ON"}
                         </Button>
                     </div>
 
-                    <div className="flex gap-2">
+                    <form className="flex gap-2" onSubmit={handleSubmitSearch}>
                         <input
                             ref={phoneNumberInputRef}
                             className="border border-neutral-950 rounded-lg text-neutral-950 h-body-1-medium"
                         />
-                        <Button buttonSize="sm" onClick={handleSearchPhoneNumber}>
+                        <Button buttonSize="sm" type="submit">
                             검색
                         </Button>
-                    </div>
+                    </form>
                 </div>
 
                 <Table
