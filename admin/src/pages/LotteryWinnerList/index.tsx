@@ -5,6 +5,7 @@ import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
+import { ERROR_MAP } from "@/constants/common";
 import { COOKIE_KEY } from "@/constants/cookie";
 import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_WINNER_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
@@ -30,6 +31,8 @@ export default function LotteryWinnerList() {
     const {
         data: winnerInfo,
         isSuccess: isSuccessGetLotteryWinner,
+        isError: isErrorGetLotteryWinner,
+        errorStatus: lotteryWinnerGetErrorStatus,
         fetchNextPage: getWinnerInfo,
         refetch: refetchWinnerInfo,
     } = useInfiniteFetch<LotteryWinnerType, GetLotteryWinnerResponse>({
@@ -46,6 +49,7 @@ export default function LotteryWinnerList() {
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
+        showError: false,
     });
 
     const {
@@ -103,6 +107,12 @@ export default function LotteryWinnerList() {
             refetchLotteryExpectation();
         }
     }, [isSuccessPatchLotteryExpectation]);
+    useEffect(() => {
+        if (isErrorGetLotteryWinner && lotteryWinnerGetErrorStatus === ERROR_MAP.NOT_FOUND) {
+            alert("아직 추첨되지 않은 이벤트입니다.");
+            navigate("/");
+        }
+    }, [isErrorGetLotteryWinner, lotteryWinnerGetErrorStatus]);
 
     const handleRefetch = () => {
         phoneNumberRef.current = phoneNumberInputRef.current?.value || "";

@@ -12,4 +12,5 @@ export const STATUS_MAP = {
 
 export const ERROR_MAP = {
     CONFLICT: "409",
+    NOT_FOUND: "404",
 } as const;
