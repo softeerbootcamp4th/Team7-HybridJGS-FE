@@ -1,12 +1,17 @@
 export function getTimeDifference(openTime: string, closeTime: string) {
     const timeRegex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
 
-    if (!openTime.match(timeRegex) && !closeTime.match(timeRegex)) {
+    const isMinuteEndOpenTime = openTime.split(":").length === 2;
+    const formattedOpenTime = `${openTime}${isMinuteEndOpenTime ? `:00` : ""}`;
+    const isMinuteEndCloseTime = closeTime.split(":").length === 2;
+    const formattedCloseTime = `${closeTime}${isMinuteEndCloseTime ? `:00` : ""}`;
+
+    if (!formattedOpenTime.match(timeRegex) && !formattedCloseTime.match(timeRegex)) {
         return "";
     }
 
-    const [openHours, openMinutes, openSeconds] = openTime.split(":").map(Number);
-    const [closeHours, closeMinutes, closeSeconds] = closeTime.split(":").map(Number);
+    const [openHours, openMinutes, openSeconds] = formattedOpenTime.split(":").map(Number);
+    const [closeHours, closeMinutes, closeSeconds] = formattedCloseTime.split(":").map(Number);
 
     const openTimeInSeconds = openHours * 3600 + openMinutes * 60 + openSeconds;
     const closeTimeInSeconds = closeHours * 3600 + closeMinutes * 60 + closeSeconds;
