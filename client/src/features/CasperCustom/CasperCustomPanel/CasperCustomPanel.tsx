@@ -33,7 +33,7 @@ function getCustomOptionImageItem({
 }
 
 interface GetFilteredOptionsProps {
-    optionType: (typeof OPTION_TYPE)[keyof typeof OPTION_TYPE];
+    optionType: OPTION_TYPE;
     options: (typeof CASPER_OPTION)[keyof typeof CASPER_OPTION];
     selectedOptionId?: string;
     handleClickOption: (optionId: string) => void;

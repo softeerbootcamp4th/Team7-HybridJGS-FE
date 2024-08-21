@@ -3,7 +3,7 @@ import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
 import { CasperCardBackUI } from "./CasperCardBackUI";
 
 interface MyCasperCardBackProps {
-    size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    size?: CASPER_SIZE_OPTION;
     casperName: string;
     expectations?: string;
 }

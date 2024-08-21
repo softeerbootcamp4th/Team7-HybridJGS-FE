@@ -3,7 +3,7 @@ import Category from "@/components/Category";
 import { CUSTOM_OPTION } from "@/constants/CasperCustom/casper";
 import { CasperCustomPanelLayout } from "./CasperCustomPanelLayout";
 
-type CustomOptionType = (typeof CUSTOM_OPTION)[keyof typeof CUSTOM_OPTION];
+type CustomOptionType = CUSTOM_OPTION;
 type OptionListItemType = {
     id: string;
     component: ReactNode;

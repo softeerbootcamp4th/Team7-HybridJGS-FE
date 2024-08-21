@@ -2,7 +2,6 @@ import { Dispatch } from "react";
 import { EVENT_STATUS } from "@/constants/common";
 import { OPTION_POSITION } from "@/constants/rush";
 
-export type RushEventStatusType = (typeof EVENT_STATUS)[keyof typeof EVENT_STATUS];
 export interface RushEventType {
     rushEventId: number;
     eventDate: string;
@@ -11,11 +10,9 @@ export interface RushEventType {
     winnerCount: number;
     prizeImageUrl: string;
     prizeDescription: string;
-    status: RushEventStatusType;
+    status: EVENT_STATUS;
     options: RushOptionType[];
 }
-
-type RushOptionPositionType = (typeof OPTION_POSITION)[keyof typeof OPTION_POSITION];
 
 export interface RushOptionType {
     optionId: number;
@@ -24,7 +21,7 @@ export interface RushOptionType {
     resultMainText: string;
     resultSubText: string;
     imageUrl: string;
-    position: RushOptionPositionType;
+    position: OPTION_POSITION;
 }
 
 export interface RushPrizeType {
@@ -36,9 +33,9 @@ export interface RushEventStateType {
     rushList: RushEventType[];
 }
 
-export const RUSH_ACTION = {
-    SET_EVENT_LIST: "SET_EVENT_LIST",
-} as const;
+export enum RUSH_ACTION {
+    SET_EVENT_LIST = "SET_EVENT_LIST",
+}
 
 export type ImageType = { imgName: string; imgFile: File };
 

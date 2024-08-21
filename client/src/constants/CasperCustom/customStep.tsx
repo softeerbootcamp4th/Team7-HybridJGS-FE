@@ -6,12 +6,12 @@ import {
 } from "@/features/CasperCustom/CasperCustomPanel/CasperCustomPanel";
 import { CUSTOM_OPTION } from "./casper";
 
-export const CUSTOM_STEP_OPTION = {
-    PROCESS: "process",
-    FORM: "form",
-    FINISHING: "finishing",
-    FINISH: "finish",
-} as const;
+export enum CUSTOM_STEP_OPTION {
+    PROCESS = "process",
+    FORM = "form",
+    FINISHING = "finishing",
+    FINISH = "finish",
+}
 export const CUSTOM_STEP_OPTION_ARRAY = [
     CUSTOM_STEP_OPTION.PROCESS,
     CUSTOM_STEP_OPTION.FORM,

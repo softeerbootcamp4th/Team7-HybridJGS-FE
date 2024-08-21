@@ -1,65 +1,63 @@
-import { ColorOptionType, StickerOptionType } from "@/types/casperCustom";
-
-export const CUSTOM_OPTION = {
-    EYES: "eyes",
-    EYES_DIRECTION: "eyesDirection",
-    MOUTH: "mouth",
-    COLOR: "color",
-    STICKER: "sticker",
-} as const;
-export const EYES_OPTION = {
-    "15INCH_ALLOY": "15inch-alloy",
-    "17INCH_ALLOY": "17inch-alloy",
-    PIXEL: "pixel",
-    ELECTRIC: "electric",
-    VACANT: "vacant",
-    SMILE: "smile",
-    CUTE: "cute",
-    HEART: "heart",
-} as const;
-export const POSITION_OPTION = {
-    LEFT: "left",
-    CENTER: "center",
-    RIGHT: "right",
-} as const;
-export const MOUTH_OPTION = {
-    SMILE: "smile",
-    CLOUDY: "cloudy",
-    MOCKING: "mocking",
-    LAUGH: "laugh",
-    EXPRESSIONLESS: "expressionless",
-} as const;
-export const COLOR_OPTION = {
-    C_CREAM: "#D8D2BC",
-    C_ORANGE: "#CA7349",
-    C_KHAKI: "#515868",
-    C_SILVER: "#AAAEB1",
-    C_BLACK: "#000000",
-    R_LIME: "#5CDD6A",
-    R_TEAL: "#1CD6BE",
-    R_LIGHTBLUE: "#11CCF2",
-    R_SKYBLUE: "#3FB6FF",
-    R_BLUE: "#638DFF",
-    R_INDIGO: "#797AF7",
-    R_DEEPPURPLE: "#A17CF6",
-    R_PURPLE: "#CE7BF0",
-    R_MAGENTA: "#FF6FB0",
-    R_RED: "#FF687A",
-    R_ORANGE: "#FF875C",
-    R_AMBER: "#FFD96B",
-    R_YELLOW: "#FEFF78",
-} as const;
-export const STICKER_OPTION = {
-    ELECTRIC: "electric",
-    CHARGE_MAX: "charge-max",
-    CHARGE_NONE: "charge-none",
-    LOVELY: "lovely",
-    TWINKLE: "twinkle",
-} as const;
-export const OPTION_TYPE = {
-    LIMITED: "limited",
-    BASIC: "basic",
-} as const;
+export enum CUSTOM_OPTION {
+    EYES = "eyes",
+    EYES_DIRECTION = "eyesDirection",
+    MOUTH = "mouth",
+    COLOR = "color",
+    STICKER = "sticker",
+}
+export enum EYES_OPTION {
+    "15INCH_ALLOY" = "15inch-alloy",
+    "17INCH_ALLOY" = "17inch-alloy",
+    PIXEL = "pixel",
+    ELECTRIC = "electric",
+    VACANT = "vacant",
+    SMILE = "smile",
+    CUTE = "cute",
+    HEART = "heart",
+}
+export enum POSITION_OPTION {
+    LEFT = "left",
+    CENTER = "center",
+    RIGHT = "right",
+}
+export enum MOUTH_OPTION {
+    SMILE = "smile",
+    CLOUDY = "cloudy",
+    MOCKING = "mocking",
+    LAUGH = "laugh",
+    EXPRESSIONLESS = "expressionless",
+}
+export enum COLOR_OPTION {
+    C_CREAM = "#D8D2BC",
+    C_ORANGE = "#CA7349",
+    C_KHAKI = "#515868",
+    C_SILVER = "#AAAEB1",
+    C_BLACK = "#000000",
+    R_LIME = "#5CDD6A",
+    R_TEAL = "#1CD6BE",
+    R_LIGHTBLUE = "#11CCF2",
+    R_SKYBLUE = "#3FB6FF",
+    R_BLUE = "#638DFF",
+    R_INDIGO = "#797AF7",
+    R_DEEPPURPLE = "#A17CF6",
+    R_PURPLE = "#CE7BF0",
+    R_MAGENTA = "#FF6FB0",
+    R_RED = "#FF687A",
+    R_ORANGE = "#FF875C",
+    R_AMBER = "#FFD96B",
+    R_YELLOW = "#FEFF78",
+}
+export enum STICKER_OPTION {
+    ELECTRIC = "electric",
+    CHARGE_MAX = "charge-max",
+    CHARGE_NONE = "charge-none",
+    LOVELY = "lovely",
+    TWINKLE = "twinkle",
+}
+export enum OPTION_TYPE {
+    LIMITED = "limited",
+    BASIC = "basic",
+}
 
 export const COLOR_BACKGROUND_MAP = [
     COLOR_OPTION.R_BLUE,
@@ -105,7 +103,7 @@ export const STICKER_COLOR_MAP = {
     },
 } as const;
 
-export const COLOR_STICKER_EXCEPTION: Partial<Record<ColorOptionType, StickerOptionType>> = {
+export const COLOR_STICKER_EXCEPTION: Partial<Record<COLOR_OPTION, STICKER_OPTION>> = {
     [COLOR_OPTION.C_SILVER]: STICKER_OPTION.CHARGE_MAX,
     [COLOR_OPTION.R_PURPLE]: STICKER_OPTION.CHARGE_MAX,
     [COLOR_OPTION.R_ORANGE]: STICKER_OPTION.CHARGE_NONE,
@@ -119,11 +117,11 @@ export const COLOR_STICKER_EXCEPTION: Partial<Record<ColorOptionType, StickerOpt
     [COLOR_OPTION.C_ORANGE]: STICKER_OPTION.TWINKLE,
 };
 
-export const CASPER_Z_INDEX = {
-    CASPER: 2,
-    UNDER_CASPER: 1,
-    UPPER_CASPER: 3,
-} as const;
+export enum CASPER_Z_INDEX {
+    CASPER = 2,
+    UNDER_CASPER = 1,
+    UPPER_CASPER = 3,
+}
 
 export const CASPER_OPTION = {
     [CUSTOM_OPTION.EYES]: [
@@ -305,10 +303,10 @@ export const OPTION_MAX_COUNT = {
     [CUSTOM_OPTION.COLOR]: CASPER_OPTION[CUSTOM_OPTION.COLOR].length,
 };
 
-export const CASPER_SIZE_OPTION = {
-    LG: "lg",
-    SM: "sm",
-} as const;
+export enum CASPER_SIZE_OPTION {
+    LG = "lg",
+    SM = "sm",
+}
 
 export const CASPER_CARD_SIZE = {
     [CASPER_SIZE_OPTION.LG]: {
