@@ -27,9 +27,12 @@ function CountdownTimer() {
 
     useEffect(() => {
         if (isSuccessRush && rushData) {
-            const currentEvent = rushData.events.find(
-                (event) => event.rushEventId === rushData.todayEventId
-            );
+            const serverDate = new Date(rushData.serverTime).toISOString().split("T")[0];
+
+            const currentEvent = rushData.events.find((event) => {
+                const eventDate = new Date(event.startDateTime).toISOString().split("T")[0];
+                return eventDate === serverDate && event.rushEventId === rushData.todayEventId;
+            });
 
             if (currentEvent) {
                 const serverTime = getMsTime(rushData.serverTime);
