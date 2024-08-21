@@ -4,7 +4,7 @@ import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameComponents/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameComponents/RushCardResultDescription.tsx";
 import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.tsx";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
@@ -57,7 +57,7 @@ interface SelectedCardProps {
 
 export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
     const { toggleContents, toggle } = useToggleContents({ useDuration: false });
-    const { fetchRushBalance } = useRushGameContext();
+    const fetchRushBalance = useFetchRushBalance();
 
     useEffect(() => {
         fetchRushBalance();

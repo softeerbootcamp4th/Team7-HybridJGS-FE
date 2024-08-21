@@ -12,6 +12,7 @@ import FinalResult from "@/features/RushGame/RushGameSections/FinalResult.tsx";
 import SelectedCard from "@/features/RushGame/RushGameSections/SelectedCard.tsx";
 import { useBlockNavigation } from "@/hooks/useBlockNavigation.ts";
 import useFetch from "@/hooks/useFetch.ts";
+import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToast from "@/hooks/useToast.tsx";
 import {
@@ -27,9 +28,9 @@ export default function RushGame() {
         "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
     );
 
-    const { gameState, setUserParticipationStatus, setCardOptions, fetchRushBalance } =
-        useRushGameContext();
+    const { gameState, setUserParticipationStatus, setCardOptions } = useRushGameContext();
     const { showToast, ToastComponent } = useToast("🔗 링크가 복사되었어요!");
+    const fetchRushBalance = useFetchRushBalance();
 
     const handleClickShareButton = () => {
         writeClipboard(import.meta.env.VITE_RUSH_URL, showToast);

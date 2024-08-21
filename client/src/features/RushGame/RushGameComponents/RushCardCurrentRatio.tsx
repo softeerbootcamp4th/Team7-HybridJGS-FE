@@ -3,6 +3,7 @@ import Tooltip from "@/components/Tooltip";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import RushCurrentOptionDisplay from "@/features/RushGame/RushGameComponents/RushCurrentOptionDisplay.tsx";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
+import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
@@ -53,8 +54,9 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
 }
 
 export default function RushCardCurrentRatio() {
-    const { gameState, fetchRushBalance } = useRushGameContext();
+    const { gameState } = useRushGameContext();
     const { toggleContents } = useToggleContents();
+    const fetchRushBalance = useFetchRushBalance();
 
     const leftOptionRatio = getOptionRatio({
         gameState: gameState,

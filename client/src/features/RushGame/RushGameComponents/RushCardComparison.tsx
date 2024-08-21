@@ -5,6 +5,7 @@ import { CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import useFetch from "@/hooks/useFetch.ts";
+import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
 import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
 import {
     GetRushUserParticipationStatusResponse,
@@ -14,8 +15,8 @@ import { CardOption } from "@/types/rushGame.ts";
 
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, setUserSelectedOption, setUserParticipationStatus, fetchRushBalance } =
-        useRushGameContext();
+    const { gameState, setUserSelectedOption, setUserParticipationStatus } = useRushGameContext();
+    const fetchRushBalance = useFetchRushBalance();
 
     const {
         data: postSelectedRushOptionResponse,
