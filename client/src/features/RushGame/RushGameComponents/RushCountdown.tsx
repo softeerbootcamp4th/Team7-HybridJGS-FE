@@ -3,8 +3,10 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import useCountdown from "@/hooks/useCountdown.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
+import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { formatTime } from "@/utils/formatTime.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
@@ -19,7 +21,8 @@ function TimeDisplay({ label, value }: { label: string; value: string }) {
 
 export default function RushCountdown() {
     const [initialRunCountdown, setInitialRunCountdown] = useState<number | null>(null);
-    const { gameState, setGamePhase } = useRushGameContext();
+    const gameState = useRushGameStateContext();
+    const dispatch = useRushGameDispatchContext();
 
     const {
         data: rushData,
@@ -57,9 +60,9 @@ export default function RushCountdown() {
             runCountdown <= 0 &&
             gameState.phase === CARD_PHASE.IN_PROGRESS
         ) {
-            setGamePhase(CARD_PHASE.COMPLETED);
+            dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.COMPLETED });
         }
-    }, [runCountdown, gameState.phase, setGamePhase]);
+    }, [runCountdown, gameState.phase]);
 
     if (initialRunCountdown === null || runCountdown === null) {
         return <div className="flex flex-col gap-3 justify-center items-center h-[150px]"></div>;

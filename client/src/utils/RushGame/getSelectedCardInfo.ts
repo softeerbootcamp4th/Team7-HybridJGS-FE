@@ -1,7 +1,7 @@
-import { CardOption, RushGameContextType } from "@/types/rushGame.ts";
+import { CardOption, RushGameStateType } from "@/types/rushGame.ts";
 
 interface GetSelectedCardInfoProps {
-    gameState: RushGameContextType["gameState"];
+    gameState: RushGameStateType;
     option: CardOption;
 }
 

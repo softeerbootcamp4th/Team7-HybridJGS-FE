@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
+import { RUSH_ACTION } from "@/types/rushGame.ts";
 
 export function useFetchRushResult() {
-    const { setUserSelectedOption, setCardOptions } = useRushGameContext();
+    const dispatch = useRushGameDispatchContext();
 
     const {
         data: resultData,
@@ -18,16 +19,31 @@ export function useFetchRushResult() {
         if (resultData && isSuccessRushResult) {
             const { optionId, leftOption, rightOption } = resultData;
 
-            if (optionId) setUserSelectedOption(optionId);
+            if (optionId) {
+                dispatch({ type: RUSH_ACTION.SET_USER_OPTION, payload: optionId });
+            }
 
-            setCardOptions(CARD_OPTION.LEFT_OPTIONS, {
-                selectionCount: leftOption,
+            dispatch({
+                type: RUSH_ACTION.SET_CARD_OPTIONS,
+                payload: {
+                    option: CARD_OPTION.LEFT_OPTIONS,
+                    updates: {
+                        selectionCount: leftOption,
+                    },
+                },
             });
-            setCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
-                selectionCount: rightOption,
+
+            dispatch({
+                type: RUSH_ACTION.SET_CARD_OPTIONS,
+                payload: {
+                    option: CARD_OPTION.RIGHT_OPTIONS,
+                    updates: {
+                        selectionCount: rightOption,
+                    },
+                },
             });
         }
-    }, [resultData, isSuccessRushResult, setCardOptions]);
+    }, [resultData, isSuccessRushResult]);
 
     return { getRushResult, resultData };
 }

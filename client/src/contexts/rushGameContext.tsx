@@ -1,67 +1,71 @@
-import { ReactNode, createContext, useCallback, useState } from "react";
+import { ReactNode, createContext, useReducer } from "react";
 import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
-import { CardOption, CardOptionState, GamePhase, RushGameContextType } from "@/types/rushGame";
+import {
+    RUSH_ACTION,
+    RushGameAction,
+    RushGameDispatchType,
+    RushGameStateType,
+} from "@/types/rushGame";
 
-export const RushGameContext = createContext<RushGameContextType | undefined>(undefined);
+export const RushGameStateContext = createContext<RushGameStateType | undefined>(undefined);
+export const RushGameDispatchContext = createContext<RushGameDispatchType | undefined>(undefined);
+
+const initialGameState: RushGameStateType = {
+    phase: CARD_PHASE.NOT_STARTED,
+    userParticipatedStatus: false,
+    userSelectedOption: CARD_OPTION.LEFT_OPTIONS,
+    cardOptions: {
+        [CARD_OPTION.LEFT_OPTIONS]: {
+            mainText: "",
+            subText: "",
+            resultMainText: "",
+            resultSubText: "",
+            color: CARD_COLOR.GREEN,
+            selectionCount: 0,
+        },
+        [CARD_OPTION.RIGHT_OPTIONS]: {
+            mainText: "",
+            subText: "",
+            resultMainText: "",
+            resultSubText: "",
+            color: CARD_COLOR.BLUE,
+            selectionCount: 0,
+        },
+    },
+};
+
+const rushGameReducer = (state: RushGameStateType, action: RushGameAction): RushGameStateType => {
+    switch (action.type) {
+        case RUSH_ACTION.SET_PHASE:
+            return { ...state, phase: action.payload };
+        case RUSH_ACTION.SET_USER_PARTICIPATION:
+            return { ...state, userParticipatedStatus: action.payload };
+        case RUSH_ACTION.SET_USER_OPTION:
+            return { ...state, userSelectedOption: action.payload };
+        case RUSH_ACTION.SET_CARD_OPTIONS:
+            return {
+                ...state,
+                cardOptions: {
+                    ...state.cardOptions,
+                    [action.payload.option]: {
+                        ...state.cardOptions[action.payload.option],
+                        ...action.payload.updates,
+                    },
+                },
+            };
+        default:
+            return state;
+    }
+};
 
 export const RushGameProvider = ({ children }: { children: ReactNode }) => {
-    const [gameState, setGameState] = useState<RushGameContextType["gameState"]>({
-        phase: CARD_PHASE.NOT_STARTED,
-        userParticipatedStatus: false,
-        userSelectedOption: CARD_OPTION.LEFT_OPTIONS,
-        cardOptions: {
-            [CARD_OPTION.LEFT_OPTIONS]: {
-                mainText: "",
-                subText: "",
-                resultMainText: "",
-                resultSubText: "",
-                color: CARD_COLOR.GREEN,
-                selectionCount: 0,
-            },
-            [CARD_OPTION.RIGHT_OPTIONS]: {
-                mainText: "",
-                subText: "",
-                resultMainText: "",
-                resultSubText: "",
-                color: CARD_COLOR.BLUE,
-                selectionCount: 0,
-            },
-        },
-    });
-
-    const setGamePhase = useCallback((phase: GamePhase) => {
-        setGameState((prevState) => ({ ...prevState, phase }));
-    }, []);
-
-    const setUserParticipationStatus = useCallback((status: boolean) => {
-        setGameState((prevState) => ({ ...prevState, userParticipatedStatus: status }));
-    }, []);
-
-    const setUserSelectedOption = useCallback((option: CardOption) => {
-        setGameState((prevState) => ({ ...prevState, userSelectedOption: option }));
-    }, []);
-
-    const setCardOptions = useCallback((option: CardOption, updates: Partial<CardOptionState>) => {
-        setGameState((prevState) => ({
-            ...prevState,
-            cardOptions: {
-                ...prevState.cardOptions,
-                [option]: { ...prevState.cardOptions[option], ...updates },
-            },
-        }));
-    }, []);
+    const [gameState, dispatch] = useReducer(rushGameReducer, initialGameState);
 
     return (
-        <RushGameContext.Provider
-            value={{
-                gameState,
-                setCardOptions,
-                setUserParticipationStatus,
-                setGamePhase,
-                setUserSelectedOption,
-            }}
-        >
-            {children}
-        </RushGameContext.Provider>
+        <RushGameDispatchContext.Provider value={dispatch}>
+            <RushGameStateContext.Provider value={gameState}>
+                {children}
+            </RushGameStateContext.Provider>
+        </RushGameDispatchContext.Provider>
     );
 };

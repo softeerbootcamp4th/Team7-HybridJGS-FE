@@ -3,11 +3,12 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import useFetch from "@/hooks/useFetch.ts";
 import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
 import { GetRushUserParticipationStatusResponse } from "@/types/rushApi.ts";
+import { RUSH_ACTION } from "@/types/rushGame.ts";
 
 export function useFetchRushUserParticipationStatus() {
-    const { setUserParticipationStatus } = useRushGameContext();
+    const dispatch = useRushGameDispatchContext();
     const fetchRushBalance = useFetchRushBalance();
 
     const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
@@ -17,7 +18,7 @@ export function useFetchRushUserParticipationStatus() {
 
     useEffect(() => {
         if (userParticipatedStatus !== null) {
-            setUserParticipationStatus(userParticipatedStatus);
+            dispatch({ type: RUSH_ACTION.SET_USER_PARTICIPATION, payload: userParticipatedStatus });
             if (userParticipatedStatus && CARD_PHASE.IN_PROGRESS) {
                 fetchRushBalance();
             }

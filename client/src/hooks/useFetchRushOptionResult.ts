@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { GetRushOptionResultResponse } from "@/types/rushApi.ts";
-import { CardOption } from "@/types/rushGame.ts";
+import { CardOption, RUSH_ACTION } from "@/types/rushGame.ts";
 
 export function useFetchRushOptionResult() {
-    const { gameState, setCardOptions } = useRushGameContext();
+    const gameState = useRushGameStateContext();
+    const dispatch = useRushGameDispatchContext();
 
     const {
         data: userResultData,
@@ -18,10 +20,16 @@ export function useFetchRushOptionResult() {
 
     useEffect(() => {
         if (isSuccessUserResultData && userResultData) {
-            setCardOptions(gameState.userSelectedOption, {
-                mainText: userResultData.mainText,
-                resultMainText: userResultData.resultMainText,
-                resultSubText: userResultData.resultSubText,
+            dispatch({
+                type: RUSH_ACTION.SET_CARD_OPTIONS,
+                payload: {
+                    option: gameState.userSelectedOption,
+                    updates: {
+                        mainText: userResultData.mainText,
+                        resultMainText: userResultData.resultMainText,
+                        resultSubText: userResultData.resultSubText,
+                    },
+                },
             });
         }
     }, [isSuccessUserResultData, userResultData]);

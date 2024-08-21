@@ -6,13 +6,15 @@ import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
 import useFetch from "@/hooks/useFetch.ts";
 import { useFetchRushUserParticipationStatus } from "@/hooks/useFetchRushUserParticipationStatus.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
-import { CardOption } from "@/types/rushGame.ts";
+import { CardOption, RUSH_ACTION } from "@/types/rushGame.ts";
 
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState, setUserSelectedOption } = useRushGameContext();
+    const gameState = useRushGameStateContext();
+    const dispatch = useRushGameDispatchContext();
     const { getRushUserParticipationStatus } = useFetchRushUserParticipationStatus();
 
     const {
@@ -25,7 +27,7 @@ export default function RushCardComparison() {
 
     const handleCardSelection = async (optionId: CardOption) => {
         await postSelectedRushOptionApply({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], optionId });
-        setUserSelectedOption(optionId);
+        dispatch({ type: RUSH_ACTION.SET_USER_OPTION, payload: optionId });
     };
 
     useEffect(() => {

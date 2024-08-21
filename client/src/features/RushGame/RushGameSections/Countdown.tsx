@@ -6,14 +6,17 @@ import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import useCountdown from "@/hooks/useCountdown.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
+import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { formatTime } from "@/utils/formatTime.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
 function CountdownTimer() {
     const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
-    const { gameState, setGamePhase } = useRushGameContext();
+    const gameState = useRushGameStateContext();
+    const dispatch = useRushGameDispatchContext();
 
     const {
         data: rushData,
@@ -53,9 +56,9 @@ function CountdownTimer() {
             preCountdown <= 0 &&
             gameState.phase === CARD_PHASE.NOT_STARTED
         ) {
-            setGamePhase(CARD_PHASE.IN_PROGRESS);
+            dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.IN_PROGRESS });
         }
-    }, [preCountdown, gameState.phase, setGamePhase]);
+    }, [preCountdown, gameState.phase]);
 
     if (initialPreCountdown === null || preCountdown === null) {
         return <Background></Background>;

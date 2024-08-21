@@ -7,7 +7,7 @@ import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
 import RushResultOptionDisplay from "@/features/RushGame/RushGameComponents/RushResultOptionDisplay.tsx";
 import { useFetchRushResult } from "@/hooks/useFetchRushResult.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { WinStatus } from "@/types/rushGame.ts";
 import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
@@ -28,7 +28,7 @@ interface FinalResultProps {
 
 export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState } = useRushGameContext();
+    const gameState = useRushGameStateContext();
     const { getRushResult, resultData } = useFetchRushResult();
 
     useEffect(() => {

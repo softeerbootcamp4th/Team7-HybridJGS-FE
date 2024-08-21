@@ -1,8 +1,8 @@
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
-import { CardOption, RushGameContextType } from "@/types/rushGame.ts";
+import { CardOption, RushGameStateType } from "@/types/rushGame.ts";
 
 interface GetOptionRatioProps {
-    gameState: RushGameContextType["gameState"];
+    gameState: RushGameStateType;
     option: CardOption;
 }
 

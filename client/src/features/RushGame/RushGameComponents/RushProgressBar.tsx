@@ -1,6 +1,6 @@
 import { CARD_COLOR, CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import RushBar from "@/features/RushGame/RushGameComponents/RushBar.tsx";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 
 interface RushProgressBarProps {
     leftOptionRatio: number;
@@ -11,7 +11,7 @@ export default function RushProgressBar({
     leftOptionRatio,
     rightOptionRatio,
 }: RushProgressBarProps) {
-    const { gameState } = useRushGameContext();
+    const gameState = useRushGameStateContext();
 
     const isCompleted = gameState.phase === CARD_PHASE.COMPLETED;
     const isAllZero = leftOptionRatio === 0 && rightOptionRatio === 0;

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { CARD_PHASE } from "@/constants/Rush/rushCard";
-import { useRushGameStateContext } from "@/hooks/useRushGameStateContext.ts";
+import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
+import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { getMsTime } from "@/utils/getMsTime";
 
 export default function useSetGamePhase(rushData: GetTotalRushEventsResponse) {
-    const { setGamePhase } = useRushGameStateContext();
+    const dispatch = useRushGameDispatchContext();
 
     useEffect(() => {
         if (rushData) {
@@ -22,11 +23,11 @@ export default function useSetGamePhase(rushData: GetTotalRushEventsResponse) {
                 const endTime = getMsTime(currentEvent.endDateTime);
 
                 if (serverTime < startTime) {
-                    setGamePhase(CARD_PHASE.NOT_STARTED);
+                    dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.NOT_STARTED });
                 } else if (serverTime >= startTime && serverTime <= endTime) {
-                    setGamePhase(CARD_PHASE.IN_PROGRESS);
+                    dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.IN_PROGRESS });
                 } else if (serverTime > endTime) {
-                    setGamePhase(CARD_PHASE.COMPLETED);
+                    dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.COMPLETED });
                 }
             }
         }

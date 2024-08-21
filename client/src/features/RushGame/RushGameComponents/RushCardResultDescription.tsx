@@ -5,7 +5,7 @@ import Category from "@/components/Category";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import { useFetchRushOptionResult } from "@/hooks/useFetchRushOptionResult.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 
@@ -28,7 +28,7 @@ const backgroundGradients = cva(
 
 export default function RushCardResultDescription() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { gameState } = useRushGameContext();
+    const gameState = useRushGameStateContext();
     const { getUserResultData } = useFetchRushOptionResult();
 
     useEffect(() => {
