@@ -66,7 +66,7 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const rightWinStatus = getWinStatus(rightOptionRatio, leftOptionRatio);
 
     function formatNumber(value?: number): string {
-        if (value === undefined) return "";
+        if (value === undefined || value === null) return "";
         return value.toLocaleString("en-US");
     }
 
