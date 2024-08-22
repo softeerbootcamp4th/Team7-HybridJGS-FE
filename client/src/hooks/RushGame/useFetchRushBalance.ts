@@ -3,8 +3,8 @@ import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
+import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
 import { GetRushBalanceResponse } from "@/types/rushApi.ts";
 import { RUSH_ACTION } from "@/types/rushGame.ts";
 

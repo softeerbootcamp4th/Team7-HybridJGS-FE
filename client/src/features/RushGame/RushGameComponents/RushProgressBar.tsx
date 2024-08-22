@@ -1,6 +1,6 @@
 import { CARD_COLOR, CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import RushBar from "@/features/RushGame/RushGameComponents/RushBar.tsx";
-import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
+import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
 
 interface RushProgressBarProps {
     leftOptionRatio: number;

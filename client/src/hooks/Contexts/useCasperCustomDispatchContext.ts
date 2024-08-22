@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { CasperCustomDispatchType } from "@/types/casperCustom";
-import { CasperCustomDispatchContext } from "../contexts/casperCustomContext";
+import { CasperCustomDispatchType } from "@/types/casperCustom.ts";
+import { CasperCustomDispatchContext } from "../../contexts/casperCustomContext.tsx";
 
 export default function useCasperCustomDispatchContext(): CasperCustomDispatchType {
     const context = useContext(CasperCustomDispatchContext);

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { CARD_PHASE } from "@/constants/Rush/rushCard";
-import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
+import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
+import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { RUSH_ACTION } from "@/types/rushGame.ts";
-import { getMsTime } from "@/utils/getMsTime";
+import { getMsTime } from "@/utils/getMsTime.ts";
 
 export default function useSetGamePhase(rushData: GetTotalRushEventsResponse) {
     const dispatch = useRushGameDispatchContext();

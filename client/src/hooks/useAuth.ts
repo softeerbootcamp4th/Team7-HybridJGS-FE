@@ -3,9 +3,9 @@ import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthAPI } from "@/apis/authAPI";
 import { COOKIE_KEY } from "@/constants/cookie";
+import usePhoneNumberDispatchContext from "@/hooks/Contexts/usePhoneNumberDispatchContext.ts";
+import usePhoneNumberStateContext from "@/hooks/Contexts/usePhoneNumberStateContext.ts";
 import useFetch from "@/hooks/useFetch";
-import usePhoneNumberDispatchContext from "@/hooks/usePhoneNumberDispatchContext";
-import usePhoneNumberStateContext from "@/hooks/usePhoneNumberStateContext";
 import { PostAuthResponse } from "@/types/authApi";
 import { PHONE_NUMBER_ACTION } from "@/types/phoneNumber";
 

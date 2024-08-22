@@ -4,8 +4,8 @@ import { useCookies } from "react-cookie";
 import Category from "@/components/Category";
 import { CARD_COLOR } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
-import { useFetchRushOptionResult } from "@/hooks/useFetchRushOptionResult.ts";
-import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
+import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
+import { useFetchRushOptionResult } from "@/hooks/RushGame/useFetchRushOptionResult.ts";
 import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
 import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 

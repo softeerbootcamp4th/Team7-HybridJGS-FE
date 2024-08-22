@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
+import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
 import { GetRushResultResponse } from "@/types/rushApi.ts";
 import { RUSH_ACTION } from "@/types/rushGame.ts";
 

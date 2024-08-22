@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { CasperCustomStateType } from "@/types/casperCustom";
-import { CasperCustomStateContext } from "../contexts/casperCustomContext";
+import { CasperCustomStateType } from "@/types/casperCustom.ts";
+import { CasperCustomStateContext } from "../../contexts/casperCustomContext.tsx";
 
 export default function useCasperCustomStateContext(): CasperCustomStateType {
     const context = useContext(CasperCustomStateContext);

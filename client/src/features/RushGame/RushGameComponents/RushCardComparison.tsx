@@ -4,10 +4,10 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
+import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
+import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
+import { useFetchRushUserParticipationStatus } from "@/hooks/RushGame/useFetchRushUserParticipationStatus.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { useFetchRushUserParticipationStatus } from "@/hooks/useFetchRushUserParticipationStatus.ts";
-import useRushGameDispatchContext from "@/hooks/useRushGameDispatchContext.ts";
-import useRushGameStateContext from "@/hooks/useRushGameStateContext.ts";
 import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { CardOption, RUSH_ACTION } from "@/types/rushGame.ts";
 

@@ -4,7 +4,7 @@ import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameComponents/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameComponents/RushCardResultDescription.tsx";
 import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.tsx";
-import useFetchRushBalance from "@/hooks/useFetchRushBalance.ts";
+import useFetchRushBalance from "@/hooks/RushGame/useFetchRushBalance.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
