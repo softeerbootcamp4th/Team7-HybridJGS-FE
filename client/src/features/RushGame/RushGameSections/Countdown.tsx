@@ -14,41 +14,9 @@ import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { formatTime } from "@/utils/formatTime.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
-function CountdownTimer() {
-    const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
+function CountdownTimer({ initialPreCountdown }: { initialPreCountdown: number | null }) {
     const gameState = useRushGameStateContext();
     const dispatch = useRushGameDispatchContext();
-
-    const {
-        data: rushData,
-        isSuccess: isSuccessRush,
-        fetchData: getRush,
-    } = useFetch<GetTotalRushEventsResponse>(() => RushAPI.getRush());
-
-    useEffect(() => {
-        getRush();
-    }, []);
-
-    useEffect(() => {
-        if (isSuccessRush && rushData) {
-            const serverDate = new Date(rushData.serverTime).toISOString().split("T")[0];
-
-            const currentEvent = rushData.events.find((event) => {
-                const eventDate = new Date(event.startDateTime).toISOString().split("T")[0];
-                return eventDate === serverDate && event.rushEventId === rushData.todayEventId;
-            });
-
-            if (currentEvent) {
-                const serverTime = getMsTime(rushData.serverTime);
-                const startDateTime = getMsTime(currentEvent.startDateTime);
-
-                setInitialPreCountdown(
-                    Math.max(0, Math.floor((startDateTime - serverTime) / 1000))
-                );
-            }
-        }
-    }, [isSuccessRush, rushData]);
-
     const preCountdown = useCountdown(initialPreCountdown || null);
 
     useEffect(() => {
@@ -61,9 +29,7 @@ function CountdownTimer() {
         }
     }, [preCountdown, gameState.phase]);
 
-    if (initialPreCountdown === null || preCountdown === null) {
-        return <Background></Background>;
-    }
+    if (preCountdown === null) return null;
 
     const hours = Math.floor(preCountdown / 3600);
     const minutes = Math.floor((preCountdown % 3600) / 60);
@@ -95,12 +61,45 @@ function TimeDisplay({ label, value }: { label: string; value: string }) {
 }
 
 export default function Countdown() {
+    const [initialPreCountdown, setInitialPreCountdown] = useState<number | null>(null);
+    const {
+        data: rushData,
+        isSuccess: isSuccessRush,
+        fetchData: getRush,
+    } = useFetch<GetTotalRushEventsResponse>(() => RushAPI.getRush());
+
+    useEffect(() => {
+        getRush();
+    }, []);
+
+    useEffect(() => {
+        if (isSuccessRush && rushData) {
+            const serverDate = new Date(rushData.serverTime).toISOString().split("T")[0];
+
+            const currentEvent = rushData.events.find((event) => {
+                const eventDate = new Date(event.startDateTime).toISOString().split("T")[0];
+                return eventDate === serverDate && event.rushEventId === rushData.todayEventId;
+            });
+
+            if (currentEvent) {
+                const serverTime = getMsTime(rushData.serverTime);
+                const startDateTime = getMsTime(currentEvent.startDateTime);
+
+                setInitialPreCountdown(
+                    Math.max(0, Math.floor((startDateTime - serverTime) / 1000))
+                );
+            }
+        }
+    }, [isSuccessRush, rushData]);
+
+    if (initialPreCountdown === null) return null;
+
     return (
         <>
             <motion.p className="h-heading-2-bold pt-10" {...SCROLL_MOTION(ASCEND)}>
                 이제 곧 하단에 밸런스 게임 주제가 공개돼요!
             </motion.p>
-            <CountdownTimer />
+            <CountdownTimer initialPreCountdown={initialPreCountdown} />
             <RushShareLink />
         </>
     );
