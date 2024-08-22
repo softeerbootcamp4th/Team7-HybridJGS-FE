@@ -1,3 +1,5 @@
+import { buttonStyles } from "./index.style";
+
 interface NavigationConfirmPopup {
     handleConfirm: () => void;
     handleClose: () => void;
@@ -21,14 +23,11 @@ export default function NavigationConfirmPopup({
                 </p>
 
                 <div className="flex gap-500 mt-800">
-                    <button
-                        className="flex-1 py-400 rounded-1000 bg-s-blue border border-s-blue h-body-1-regular text-n-white hover:bg-s-hover transition-all"
-                        onClick={handleClose}
-                    >
+                    <button className={buttonStyles({ variant: "primary" })} onClick={handleClose}>
                         아니요
                     </button>
                     <button
-                        className="flex-1 py-400 rounded-1000 bg-n-white border border-s-blue h-body-1-regular text-s-blue hover:bg-neutral-100 transition-all"
+                        className={buttonStyles({ variant: "secondary" })}
                         onClick={handleConfirm}
                     >
                         네
