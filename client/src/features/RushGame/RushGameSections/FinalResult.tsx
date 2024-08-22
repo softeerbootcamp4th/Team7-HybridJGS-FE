@@ -30,15 +30,13 @@ interface FinalResultProps {
 
 export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const gameState = useRushGameStateContext();
+    const { cardOptions, userParticipatedStatus, userSelectedOption } = useRushGameStateContext();
     const { getRushResult, resultData } = useFetchRushResult();
 
     useEffect(() => {
         getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]);
         unblockNavigation();
     }, []);
-
-    const userParticipatedStatus = gameState.userParticipatedStatus;
 
     const isWinner = resultData?.isWinner;
     const rank = resultData?.rank;
@@ -47,20 +45,20 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const message = isWinner ? MESSAGES.WINNING : MESSAGES.LOSING;
 
     const { mainText: leftMainText } = getSelectedCardInfo({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.LEFT_OPTIONS,
     });
     const { mainText: rightMainText } = getSelectedCardInfo({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.RIGHT_OPTIONS,
     });
 
     const leftOptionRatio = getOptionRatio({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.LEFT_OPTIONS,
     });
     const rightOptionRatio = getOptionRatio({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.RIGHT_OPTIONS,
     });
 
@@ -107,17 +105,13 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
                             <RushResultOptionDisplay
                                 mainText={leftMainText}
                                 winStatus={leftWinStatus}
-                                isUserSelected={
-                                    gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS
-                                }
+                                isUserSelected={userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
                                 userParticipatedStatus={userParticipatedStatus}
                             />
                             <RushResultOptionDisplay
                                 mainText={rightMainText}
                                 winStatus={rightWinStatus}
-                                isUserSelected={
-                                    gameState.userSelectedOption === CARD_OPTION.RIGHT_OPTIONS
-                                }
+                                isUserSelected={userSelectedOption === CARD_OPTION.RIGHT_OPTIONS}
                                 userParticipatedStatus={userParticipatedStatus}
                             />
                         </div>

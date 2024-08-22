@@ -1,12 +1,14 @@
-import { CardOption, RushGameStateType } from "@/types/rushGame.ts";
+import { CardOption, CardOptionState } from "@/types/rushGame.ts";
 
 interface GetSelectedCardInfoProps {
-    gameState: RushGameStateType;
+    cardOptions: {
+        [key in CardOption]: CardOptionState;
+    };
     option: CardOption;
 }
 
-export const getSelectedCardInfo = ({ gameState, option }: GetSelectedCardInfoProps) => {
-    const cardInfo = gameState.cardOptions[option];
+export const getSelectedCardInfo = ({ cardOptions, option }: GetSelectedCardInfoProps) => {
+    const cardInfo = cardOptions[option];
     return {
         mainText: cardInfo.mainText,
         subText: cardInfo.subText,

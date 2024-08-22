@@ -54,27 +54,27 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
 }
 
 export default function RushCardCurrentRatio() {
-    const gameState = useRushGameStateContext();
+    const { userSelectedOption, cardOptions } = useRushGameStateContext();
     const { toggleContents } = useToggleContents();
     const fetchRushBalance = useFetchRushBalance();
 
     const leftOptionRatio = getOptionRatio({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.LEFT_OPTIONS,
     });
     const rightOptionRatio = getOptionRatio({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.RIGHT_OPTIONS,
     });
 
-    const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
+    const message = getMessage(leftOptionRatio, rightOptionRatio, userSelectedOption);
 
     const { mainText: leftMainText } = getSelectedCardInfo({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.LEFT_OPTIONS,
     });
     const { mainText: rightMainText } = getSelectedCardInfo({
-        gameState: gameState,
+        cardOptions: cardOptions,
         option: CARD_OPTION.RIGHT_OPTIONS,
     });
 
@@ -90,13 +90,13 @@ export default function RushCardCurrentRatio() {
                         mainText={leftMainText}
                         userSelectedOptionRatio={leftOptionRatio}
                         oppositeOptionRatio={rightOptionRatio}
-                        isUserSelected={gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
+                        isUserSelected={userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
                     />
                     <RushCurrentOptionDisplay
                         mainText={rightMainText}
                         userSelectedOptionRatio={rightOptionRatio}
                         oppositeOptionRatio={leftOptionRatio}
-                        isUserSelected={gameState.userSelectedOption === CARD_OPTION.RIGHT_OPTIONS}
+                        isUserSelected={userSelectedOption === CARD_OPTION.RIGHT_OPTIONS}
                     />
                 </div>
                 <RushProgressBar

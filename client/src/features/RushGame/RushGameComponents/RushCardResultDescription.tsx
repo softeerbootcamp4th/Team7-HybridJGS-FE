@@ -28,24 +28,24 @@ const backgroundGradients = cva(
 
 export default function RushCardResultDescription() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const gameState = useRushGameStateContext();
+    const { cardOptions, userSelectedOption } = useRushGameStateContext();
     const { getUserResultData } = useFetchRushOptionResult();
 
     useEffect(() => {
         getUserResultData({
             token: cookies[COOKIE_KEY.ACCESS_TOKEN],
-            optionId: gameState.userSelectedOption,
+            optionId: userSelectedOption,
         });
-    }, [cookies, gameState.userSelectedOption]);
+    }, [cookies, userSelectedOption]);
 
     const { mainText, resultMainText, resultSubText, color } = getSelectedCardInfo({
-        gameState: gameState,
-        option: gameState.userSelectedOption,
+        cardOptions: cardOptions,
+        option: userSelectedOption,
     });
 
     const selectedOptionRatio = getOptionRatio({
-        gameState: gameState,
-        option: gameState.userSelectedOption,
+        cardOptions: cardOptions,
+        option: userSelectedOption,
     });
 
     if (selectedOptionRatio === null) return null;
