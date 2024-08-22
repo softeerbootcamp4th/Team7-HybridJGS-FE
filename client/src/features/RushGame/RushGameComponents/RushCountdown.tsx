@@ -56,11 +56,11 @@ export default function RushCountdown() {
     const runCountdown = useCountdown(initialRunCountdown || null);
 
     useEffect(() => {
-        if (
+        const isTimeout =
             runCountdown !== null &&
             runCountdown <= 0 &&
-            gameState.phase === CARD_PHASE.IN_PROGRESS
-        ) {
+            gameState.phase === CARD_PHASE.IN_PROGRESS;
+        if (isTimeout) {
             dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.COMPLETED });
         }
     }, [runCountdown, gameState.phase]);

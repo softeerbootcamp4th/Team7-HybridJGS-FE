@@ -25,11 +25,11 @@ function CountdownTimer({ initialPreCountdown }: CountdownTimerProps) {
     const preCountdown = useCountdown(initialPreCountdown || null);
 
     useEffect(() => {
-        if (
+        const isTimeout =
             preCountdown !== null &&
             preCountdown <= 0 &&
-            gameState.phase === CARD_PHASE.NOT_STARTED
-        ) {
+            gameState.phase === CARD_PHASE.NOT_STARTED;
+        if (isTimeout) {
             dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.IN_PROGRESS });
         }
     }, [preCountdown, gameState.phase]);
