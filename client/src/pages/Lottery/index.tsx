@@ -47,7 +47,7 @@ export default function Lottery() {
     const handleClickShortCut = useCallback(() => {
         const startDate = getMsTime(lotteryData.eventStartDate);
         const endDate = getMsTime(lotteryData.eventEndDate);
-        const currentDate = new Date().getTime();
+        const currentDate = getMsTime(lotteryData.serverDateTime);
 
         const isEventPeriod = currentDate >= startDate && currentDate <= endDate;
 

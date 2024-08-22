@@ -4,16 +4,17 @@ import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameComponents/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameComponents/RushCardResultDescription.tsx";
 import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.tsx";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import RushShareLink from "@/features/RushGame/RushGameComponents/RushShareLink.tsx";
+import useFetchRushBalance from "@/hooks/RushGame/useFetchRushBalance.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
 import ArrowRightIcon from "/public/assets/icons/arrow-line-right.svg?react";
 
-interface SelectedCardProps {
+interface SelectedCardDetailsProps {
     onClick: () => void;
 }
 
-function SelectedCardDescription({ onClick }: SelectedCardProps) {
+function SelectedCardDescription({ onClick }: SelectedCardDetailsProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardResultDescription />
@@ -32,7 +33,7 @@ function SelectedCardDescription({ onClick }: SelectedCardProps) {
     );
 }
 
-function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
+function SelectedCardCurrentRatio({ onClick }: SelectedCardDetailsProps) {
     return (
         <motion.div className="relative flex gap-10" {...SCROLL_MOTION(DISSOLVE)}>
             <RushCardCurrentRatio />
@@ -51,25 +52,38 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardProps) {
     );
 }
 
-export default function SelectedCard() {
+interface SelectedCardProps {
+    unblockNavigation: () => void;
+}
+
+export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
     const { toggleContents, toggle } = useToggleContents({ useDuration: false });
-    const { fetchRushBalance } = useRushGameContext();
+    const fetchRushBalance = useFetchRushBalance();
+
+    const selectedCardToggle = () => {
+        toggle();
+        fetchRushBalance();
+    };
 
     useEffect(() => {
         fetchRushBalance();
+        unblockNavigation();
     }, []);
 
     return (
-        <motion.div
-            className="flex flex-col gap-3 justify-center items-center pt-6"
-            {...SCROLL_MOTION(ASCEND)}
-        >
-            <RushCountdown />
-            {toggleContents ? (
-                <SelectedCardDescription onClick={toggle} />
-            ) : (
-                <SelectedCardCurrentRatio onClick={toggle} />
-            )}
-        </motion.div>
+        <>
+            <motion.div
+                className="flex flex-col gap-3 justify-center items-center pt-6"
+                {...SCROLL_MOTION(ASCEND)}
+            >
+                <RushCountdown />
+                {toggleContents ? (
+                    <SelectedCardDescription onClick={selectedCardToggle} />
+                ) : (
+                    <SelectedCardCurrentRatio onClick={selectedCardToggle} />
+                )}
+            </motion.div>
+            <RushShareLink />
+        </>
     );
 }

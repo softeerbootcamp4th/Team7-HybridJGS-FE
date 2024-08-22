@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { PhoneNumberStateType } from "@/types/phoneNumber";
-import { PhoneNumberStateContext } from "../contexts/phoneNumberContext";
+import { PhoneNumberStateType } from "@/types/phoneNumber.ts";
+import { PhoneNumberStateContext } from "../../contexts/phoneNumberContext.tsx";
 
 export default function usePhoneNumberStateContext(): PhoneNumberStateType {
     const context = useContext(PhoneNumberStateContext);

@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { CASPER_OPTION, CUSTOM_OPTION, OPTION_TYPE } from "@/constants/CasperCustom/casper";
-import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
-import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import useCasperCustomDispatchContext from "@/hooks/Contexts/useCasperCustomDispatchContext.ts";
+import useCasperCustomStateContext from "@/hooks/Contexts/useCasperCustomStateContext.ts";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { CustomOptionImageItem } from "./CustomOptionImageItem";
 import { EyesPanel as EyesPanelComponent } from "./EyesPanel";

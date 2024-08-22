@@ -4,7 +4,7 @@ import { CASPER_SIZE_OPTION } from "@/constants/CasperCustom/casper";
 import { DISSOLVE } from "@/constants/animation";
 import { SCROLL_MOTION } from "@/constants/animation";
 import { CasperFlipCard } from "@/features/CasperCustom/CasperCard/CasperFlipCard";
-import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import useCasperCustomStateContext from "@/hooks/Contexts/useCasperCustomStateContext.ts";
 import useToast from "@/hooks/useToast";
 import type { CasperCardType } from "@/types/casper";
 

@@ -3,9 +3,12 @@ import Tooltip from "@/components/Tooltip";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import RushCurrentOptionDisplay from "@/features/RushGame/RushGameComponents/RushCurrentOptionDisplay.tsx";
 import RushProgressBar from "@/features/RushGame/RushGameComponents/RushProgressBar.tsx";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
+import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
+import useFetchRushBalance from "@/hooks/RushGame/useFetchRushBalance.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import { CardOption } from "@/types/rushGame.ts";
+import { getOptionRatio } from "@/utils/RushGame/getOptionRatio.ts";
+import { getSelectedCardInfo } from "@/utils/RushGame/getSelectedCardInfo.ts";
 import Reload from "/public/assets/icons/reload.svg?react";
 
 const tooltipVariants = cva(`absolute transition-opacity duration-300 ease-in-out`, {
@@ -51,17 +54,29 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
 }
 
 export default function RushCardCurrentRatio() {
-    const { gameState, getOptionRatio, fetchRushBalance, getSelectedCardInfo } =
-        useRushGameContext();
+    const { userSelectedOption, cardOptions } = useRushGameStateContext();
     const { toggleContents } = useToggleContents();
+    const fetchRushBalance = useFetchRushBalance();
 
-    const leftOptionRatio = getOptionRatio(CARD_OPTION.LEFT_OPTIONS);
-    const rightOptionRatio = getOptionRatio(CARD_OPTION.RIGHT_OPTIONS);
+    const leftOptionRatio = getOptionRatio({
+        cardOptions: cardOptions,
+        option: CARD_OPTION.LEFT_OPTIONS,
+    });
+    const rightOptionRatio = getOptionRatio({
+        cardOptions: cardOptions,
+        option: CARD_OPTION.RIGHT_OPTIONS,
+    });
 
-    const message = getMessage(leftOptionRatio, rightOptionRatio, gameState.userSelectedOption);
+    const message = getMessage(leftOptionRatio, rightOptionRatio, userSelectedOption);
 
-    const { mainText: leftMainText } = getSelectedCardInfo(CARD_OPTION.LEFT_OPTIONS);
-    const { mainText: rightMainText } = getSelectedCardInfo(CARD_OPTION.RIGHT_OPTIONS);
+    const { mainText: leftMainText } = getSelectedCardInfo({
+        cardOptions: cardOptions,
+        option: CARD_OPTION.LEFT_OPTIONS,
+    });
+    const { mainText: rightMainText } = getSelectedCardInfo({
+        cardOptions: cardOptions,
+        option: CARD_OPTION.RIGHT_OPTIONS,
+    });
 
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
@@ -75,13 +90,13 @@ export default function RushCardCurrentRatio() {
                         mainText={leftMainText}
                         userSelectedOptionRatio={leftOptionRatio}
                         oppositeOptionRatio={rightOptionRatio}
-                        isUserSelected={gameState.userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
+                        isUserSelected={userSelectedOption === CARD_OPTION.LEFT_OPTIONS}
                     />
                     <RushCurrentOptionDisplay
                         mainText={rightMainText}
                         userSelectedOptionRatio={rightOptionRatio}
                         oppositeOptionRatio={leftOptionRatio}
-                        isUserSelected={gameState.userSelectedOption === CARD_OPTION.RIGHT_OPTIONS}
+                        isUserSelected={userSelectedOption === CARD_OPTION.RIGHT_OPTIONS}
                     />
                 </div>
                 <RushProgressBar

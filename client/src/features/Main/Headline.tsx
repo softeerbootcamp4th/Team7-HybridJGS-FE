@@ -1,12 +1,10 @@
 import { memo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { RushAPI } from "@/apis/rushAPI.ts";
 import { TotalAPI } from "@/apis/totalAPI.ts";
 import Keyword from "@/components/Keyword";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
 import { GetTotalEventDateResponse } from "@/types/totalApi.ts";
 import { formatEventDateRangeWithDot } from "@/utils/formatDate.ts";
@@ -16,11 +14,6 @@ interface HeadlineProps extends SectionKeyProps {
 }
 
 function Headline({ id, handleClickScroll }: HeadlineProps) {
-    // DATA RESET TEST API
-    const { fetchData: getRushTodayEventTest } = useFetch<RushEventStatusCodeResponse>(() =>
-        RushAPI.getRushTodayEventTest()
-    );
-
     const {
         data: totalData,
         isSuccess: isSuccessTotalData,
@@ -28,7 +21,6 @@ function Headline({ id, handleClickScroll }: HeadlineProps) {
     } = useFetch<GetTotalEventDateResponse>(() => TotalAPI.getTotal());
 
     useEffect(() => {
-        getRushTodayEventTest();
         getTotal();
     }, []);
 
