@@ -1,14 +1,27 @@
 import { useEffect, useState } from "react";
-import { unstable_usePrompt, useLocation } from "react-router-dom";
+import { useBlocker, useLocation } from "react-router-dom";
 
-export function useBlockNavigation(message: string) {
+export function useBlockNavigation() {
     const location = useLocation();
     const [isBlocking, setIsBlocking] = useState(false);
 
-    unstable_usePrompt({ when: isBlocking, message });
+    const blocker = useBlocker(isBlocking);
+    const isBlockedNavigation = blocker.state === "blocked";
 
     const unblockNavigation = () => {
         setIsBlocking(false);
+    };
+
+    const cancelNavigation = () => {
+        if (blocker.state === "blocked") {
+            blocker.reset();
+        }
+    };
+
+    const proceedNavigation = () => {
+        if (blocker.state === "blocked") {
+            blocker.proceed();
+        }
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -25,6 +38,7 @@ export function useBlockNavigation(message: string) {
             setIsBlocking(false);
         };
     }, [location]);
+
     useEffect(() => {
         window.addEventListener("beforeunload", handleBeforeUnload);
 
@@ -33,5 +47,5 @@ export function useBlockNavigation(message: string) {
         };
     }, [isBlocking]);
 
-    return { unblockNavigation };
+    return { unblockNavigation, isBlockedNavigation, proceedNavigation, cancelNavigation };
 }

@@ -16,7 +16,7 @@ import {
 } from "@/features/Lottery";
 import { useAuth } from "@/hooks/useAuth.ts";
 import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver.ts";
-import usePopup from "@/hooks/usePopup";
+import usePhoneNumberPopUp from "@/hooks/usePhoneNumberPopup";
 import useScrollToTarget from "@/hooks/useScrollToTarget";
 import useScrollTop from "@/hooks/useScrollTop";
 import useToast from "@/hooks/useToast";
@@ -36,7 +36,7 @@ export default function Lottery() {
     const { phoneNumberState, handlePhoneNumberChange, handlePhoneNumberConfirm } =
         useAuth("/lottery/custom");
 
-    const { handleOpenPopup, PopupComponent } = usePopup({
+    const { handleOpenPopup, PopupComponent } = usePhoneNumberPopUp({
         phoneNumber: phoneNumberState,
         handlePhoneNumberChange,
         handlePhoneNumberConfirm,

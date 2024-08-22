@@ -5,7 +5,7 @@ import CTAButton from "@/components/CTAButton";
 import Scroll from "@/components/Scroll";
 import { ASCEND, ASCEND_DESCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { useAuth } from "@/hooks/useAuth.ts";
-import usePopup from "@/hooks/usePopup.tsx";
+import usePhoneNumberPopUp from "@/hooks/usePhoneNumberPopup";
 import useToast from "@/hooks/useToast.tsx";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { SectionKeyProps } from "@/types/sections.ts";
@@ -21,7 +21,7 @@ export function Headline({ id, handleClickScroll }: HeadlineProps) {
     const { phoneNumberState, handlePhoneNumberChange, handlePhoneNumberConfirm } =
         useAuth("/rush/game");
 
-    const { handleOpenPopup, PopupComponent } = usePopup({
+    const { handleOpenPopup, PopupComponent } = usePhoneNumberPopUp({
         phoneNumber: phoneNumberState,
         handlePhoneNumberChange,
         handlePhoneNumberConfirm,
