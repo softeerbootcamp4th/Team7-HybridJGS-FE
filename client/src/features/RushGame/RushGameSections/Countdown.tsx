@@ -14,7 +14,11 @@ import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { formatTime } from "@/utils/formatTime.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
 
-function CountdownTimer({ initialPreCountdown }: { initialPreCountdown: number | null }) {
+interface CountdownTimerProps {
+    initialPreCountdown: number | null;
+}
+
+function CountdownTimer({ initialPreCountdown }: CountdownTimerProps) {
     const gameState = useRushGameStateContext();
     const dispatch = useRushGameDispatchContext();
     const preCountdown = useCountdown(initialPreCountdown || null);
