@@ -22,6 +22,10 @@ export interface PostLotteryWinnerResponse {
     message: string;
 }
 
+export interface DeleteLotteryWinnerResponse {
+    message: string;
+}
+
 export interface GetLotteryWinnerParams {
     size: number;
     page: number;

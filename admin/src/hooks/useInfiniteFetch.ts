@@ -7,6 +7,7 @@ interface UseInfiniteFetchProps<R> {
     initialPageParam?: number;
     getNextPageParam: (currentPageParam: number, lastPage: R) => number | undefined;
     startFetching?: boolean;
+    showError?: boolean;
 }
 
 interface InfiniteScrollData<T> {
@@ -17,6 +18,7 @@ interface InfiniteScrollData<T> {
     hasNextPage: boolean;
     isSuccess: boolean;
     isError: boolean;
+    errorStatus: string | null;
 }
 
 export default function useInfiniteFetch<T, R>({
@@ -24,6 +26,7 @@ export default function useInfiniteFetch<T, R>({
     initialPageParam = 0,
     getNextPageParam,
     startFetching = true,
+    showError = true,
 }: UseInfiniteFetchProps<R>): InfiniteScrollData<T> {
     const { showBoundary } = useErrorBoundary();
 
@@ -32,6 +35,8 @@ export default function useInfiniteFetch<T, R>({
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
+    const [errorStatus, setErrorStatus] = useState<string | null>(null);
+
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [totalLength, setTotalLength] = useState<number>(0);
 
@@ -53,6 +58,7 @@ export default function useInfiniteFetch<T, R>({
         setIsLoading(true);
         setIsError(false);
         setIsSuccess(false);
+        setErrorStatus(null);
         try {
             const lastPage = await fetch(currentPageParam);
             const nextPageParam = getNextPageParam(currentPageParam, lastPage);
@@ -62,9 +68,14 @@ export default function useInfiniteFetch<T, R>({
             setHasNextPage(nextPageParam !== undefined);
             setIsSuccess(true);
         } catch (error) {
-            showBoundary(error);
             setIsError(true);
             setIsSuccess(false);
+            if (error instanceof Error) {
+                setErrorStatus(error.message);
+            }
+            if (showError) {
+                showBoundary(error);
+            }
         } finally {
             setIsLoading(false);
         }
@@ -91,5 +102,6 @@ export default function useInfiniteFetch<T, R>({
         hasNextPage,
         isSuccess,
         isError,
+        errorStatus,
     };
 }

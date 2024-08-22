@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
+import Suspense from "@/components/Suspense";
 import TabHeader from "@/components/TabHeader";
+import { ERROR_MAP } from "@/constants/common";
 import useFetch from "@/hooks/useFetch";
 import { LotteryEventType } from "@/types/lottery";
-import { GetLotteryResponse, PostLotteryWinnerResponse } from "@/types/lotteryApi";
+import {
+    DeleteLotteryWinnerResponse,
+    GetLotteryResponse,
+    PostLotteryWinnerResponse,
+} from "@/types/lotteryApi";
 
 export default function LotteryWinner() {
     const navigate = useNavigate();
@@ -18,8 +24,22 @@ export default function LotteryWinner() {
         fetchData: getLotteryEvent,
     } = useFetch<GetLotteryResponse>((_, token) => LotteryAPI.getLottery(token));
 
-    const { isSuccess: isSuccessPostLottery, fetchData: postLottery } =
-        useFetch<PostLotteryWinnerResponse>((_, token) => LotteryAPI.postLotteryWinner(token));
+    const {
+        isSuccess: isSuccessPostLottery,
+        isLoading: isLoadingPostLottery,
+        isError: isErrorPostLottery,
+        errorStatus: lotteryPostErrorStatus,
+        fetchData: postLottery,
+    } = useFetch<PostLotteryWinnerResponse>(
+        (_, token) => LotteryAPI.postLotteryWinner(token),
+        false
+    );
+
+    const { isSuccess: isSuccessDeleteLottery, fetchData: deleteLottery } =
+        useFetch<DeleteLotteryWinnerResponse>(
+            (_, token) => LotteryAPI.deleteLotteryWinner(token),
+            false
+        );
 
     useEffect(() => {
         getLotteryEvent();
@@ -34,31 +54,48 @@ export default function LotteryWinner() {
             navigate("/lottery/winner-list");
         }
     }, [isSuccessPostLottery]);
+    useEffect(() => {
+        if (isErrorPostLottery && lotteryPostErrorStatus === ERROR_MAP.CONFLICT) {
+            const isDelete = confirm("이미 추첨한 이벤트입니다. 삭제 후 다시 추첨하시겠습니까?");
+            if (isDelete) {
+                deleteLottery();
+            }
+        }
+    }, [isErrorPostLottery, lotteryPostErrorStatus]);
+    useEffect(() => {
+        if (isSuccessDeleteLottery) {
+            postLottery();
+        }
+    }, [isSuccessDeleteLottery]);
 
     const handleLottery = () => {
         postLottery();
     };
 
     return (
-        <div className="flex flex-col items-center h-screen">
-            <TabHeader />
+        <Suspense isLoading={isLoadingPostLottery}>
+            <div className="flex flex-col items-center h-screen">
+                <TabHeader />
 
-            <div className="flex flex-col h-full items-center justify-center gap-8 pb-40">
-                <div className="flex border">
-                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">전체 참여자 수</p>
-                    <p className="px-6 py-4 w-[200px] h-body-1-regular">
-                        {currentLottery.appliedCount}
-                    </p>
-                    <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
-                    <p className="px-6 py-4 w-[200px] h-body-1-regular">
-                        {currentLottery.winnerCount}
-                    </p>
+                <div className="flex flex-col h-full items-center justify-center gap-8 pb-40">
+                    <div className="flex border">
+                        <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">
+                            전체 참여자 수
+                        </p>
+                        <p className="px-6 py-4 w-[200px] h-body-1-regular">
+                            {currentLottery.appliedCount}
+                        </p>
+                        <p className="px-6 py-4 w-[200px] bg-gray-50 h-body-1-bold">당첨자 수</p>
+                        <p className="px-6 py-4 w-[200px] h-body-1-regular">
+                            {currentLottery.winnerCount}
+                        </p>
+                    </div>
+
+                    <Button buttonSize="lg" onClick={handleLottery}>
+                        당첨자 추첨하기
+                    </Button>
                 </div>
-
-                <Button buttonSize="lg" onClick={handleLottery}>
-                    당첨자 추첨하기
-                </Button>
             </div>
-        </div>
+        </Suspense>
     );
 }
