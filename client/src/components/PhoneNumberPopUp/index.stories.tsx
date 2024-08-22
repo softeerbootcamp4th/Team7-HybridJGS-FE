@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta } from "@storybook/react";
-import Component, { PopUpProps } from "./index";
+import Component, { PhoneNumberPopUpProps } from "./index";
 
 const meta = {
     title: "PopUp",
@@ -15,7 +15,7 @@ const meta = {
 
 export default meta;
 
-const PopUp = (args: PopUpProps) => {
+const PopUp = (args: PhoneNumberPopUpProps) => {
     const [phoneNumber, setPhoneNumber] = useState(args.phoneNumber);
 
     const handlePhoneNumberChange = (val: string) => {
@@ -32,7 +32,7 @@ const PopUp = (args: PopUpProps) => {
     );
 };
 
-export const Default = (args: PopUpProps) => (
+export const Default = (args: PhoneNumberPopUpProps) => (
     <>
         <PopUp {...args} />
     </>

@@ -24,7 +24,7 @@ export default function NavigationConfirmPopUp({
                 className="absolute left-0 top-0 w-[100%] h-[100%] bg-n-black/[.4]"
                 onClick={handleClose}
             />
-            <div className="px-[50px] py-1000 bg-n-white rounded-600 absolute left-[50%] top-[40%] translate-y-[-50%] translate-x-[-50%]">
+            <div className="px-[50px] py-1000 bg-n-white rounded-600 absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
                 <p className="h-body-1-regular">
                     이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다.
                     <br />
