@@ -16,7 +16,7 @@ export interface CardOptionState {
 }
 
 export interface RushGameStateType {
-    phase: GamePhase;
+    phase: GamePhase | null;
     userParticipatedStatus: boolean;
     userSelectedOption: CardOption;
     cardOptions: {

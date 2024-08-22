@@ -4,6 +4,7 @@ import { RushAPI } from "@/apis/rushAPI.ts";
 import { Background } from "@/components/Background";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
+import RushShareLink from "@/features/RushGame/RushGameComponents/RushShareLink.tsx";
 import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
 import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
 import useCountdown from "@/hooks/useCountdown.ts";
@@ -100,6 +101,7 @@ export default function Countdown() {
                 이제 곧 하단에 밸런스 게임 주제가 공개돼요!
             </motion.p>
             <CountdownTimer />
+            <RushShareLink />
         </>
     );
 }

@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useReducer } from "react";
-import { CARD_COLOR, CARD_OPTION, CARD_PHASE } from "@/constants/Rush/rushCard";
+import { CARD_COLOR, CARD_OPTION } from "@/constants/Rush/rushCard";
 import {
     RUSH_ACTION,
     RushGameAction,
@@ -11,7 +11,7 @@ export const RushGameStateContext = createContext<RushGameStateType | undefined>
 export const RushGameDispatchContext = createContext<RushGameDispatchType | undefined>(undefined);
 
 const initialGameState: RushGameStateType = {
-    phase: CARD_PHASE.NOT_STARTED,
+    phase: null,
     userParticipatedStatus: false,
     userSelectedOption: CARD_OPTION.LEFT_OPTIONS,
     cardOptions: {

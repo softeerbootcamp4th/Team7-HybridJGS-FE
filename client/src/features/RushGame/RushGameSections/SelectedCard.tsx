@@ -4,6 +4,7 @@ import { ASCEND, DISSOLVE, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushCardCurrentRatio from "@/features/RushGame/RushGameComponents/RushCardCurrentRatio.tsx";
 import RushCardResultDescription from "@/features/RushGame/RushGameComponents/RushCardResultDescription.tsx";
 import RushCountdown from "@/features/RushGame/RushGameComponents/RushCountdown.tsx";
+import RushShareLink from "@/features/RushGame/RushGameComponents/RushShareLink.tsx";
 import useFetchRushBalance from "@/hooks/RushGame/useFetchRushBalance.ts";
 import useToggleContents from "@/hooks/useToggleContents.ts";
 import ArrowLeftIcon from "/public/assets/icons/arrow-line-left.svg?react";
@@ -65,16 +66,19 @@ export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
     }, []);
 
     return (
-        <motion.div
-            className="flex flex-col gap-3 justify-center items-center pt-6"
-            {...SCROLL_MOTION(ASCEND)}
-        >
-            <RushCountdown />
-            {toggleContents ? (
-                <SelectedCardDescription onClick={toggle} />
-            ) : (
-                <SelectedCardCurrentRatio onClick={toggle} />
-            )}
-        </motion.div>
+        <>
+            <motion.div
+                className="flex flex-col gap-3 justify-center items-center pt-6"
+                {...SCROLL_MOTION(ASCEND)}
+            >
+                <RushCountdown />
+                {toggleContents ? (
+                    <SelectedCardDescription onClick={toggle} />
+                ) : (
+                    <SelectedCardCurrentRatio onClick={toggle} />
+                )}
+            </motion.div>
+            <RushShareLink />
+        </>
     );
 }
