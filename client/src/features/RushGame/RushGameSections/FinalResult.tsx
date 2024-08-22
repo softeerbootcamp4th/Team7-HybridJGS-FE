@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCookies } from "react-cookie";
+import Suspense from "@/components/Suspense";
 import { CARD_OPTION, WIN_STATUS } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
@@ -66,12 +67,19 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
     const leftWinStatus = getWinStatus(leftOptionRatio, rightOptionRatio);
     const rightWinStatus = getWinStatus(rightOptionRatio, leftOptionRatio);
 
-    const isValidData =
-        isWinner !== undefined && rank !== undefined && totalParticipants !== undefined;
-    if (!isValidData) return null;
+    function formatNumber(value?: number): string {
+        if (value === undefined) return "";
+        return value.toLocaleString("en-US");
+    }
+
+    const formattedRank = formatNumber(rank);
+    const formattedTotalParticipants = formatNumber(totalParticipants);
+
+    const isNotValidData =
+        isWinner === undefined || rank === undefined || totalParticipants === undefined;
 
     return (
-        <>
+        <Suspense isLoading={isNotValidData}>
             <motion.div
                 className="flex flex-col justify-center items-center gap-8"
                 {...SCROLL_MOTION(ASCEND)}
@@ -86,9 +94,9 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
                         <span className="flex flex-col justify-center items-center text-center gap-3 text-n-black">
                             <p className="h-heading-4-bold">나의 선착순 등수</p>
                             <span className="flex gap-3 justify-center items-center ">
-                                <p className="h-heading-1-bold">{rank}등</p>
+                                <p className="h-heading-1-bold">{formattedRank}등</p>
                                 <p className="h-body-1-regular text-n-neutral-500">
-                                    / {totalParticipants.toLocaleString("en-US")}명 중
+                                    / {formattedTotalParticipants}명 중
                                 </p>
                             </span>
                         </span>
@@ -121,6 +129,6 @@ export default function FinalResult({ unblockNavigation }: FinalResultProps) {
                 </div>
             </motion.div>
             <RushShareLink />
-        </>
+        </Suspense>
     );
 }

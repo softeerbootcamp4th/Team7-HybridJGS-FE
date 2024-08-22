@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { RushAPI } from "@/apis/rushAPI.ts";
+import Suspense from "@/components/Suspense";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
 import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
@@ -60,28 +61,27 @@ export default function RushCountdown() {
             runCountdown !== null &&
             runCountdown <= 0 &&
             gameState.phase === CARD_PHASE.IN_PROGRESS;
+
         if (isTimeout) {
             dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.COMPLETED });
         }
     }, [runCountdown, gameState.phase]);
 
-    if (initialRunCountdown === null || runCountdown === null) {
-        return <div className="flex flex-col gap-3 justify-center items-center h-[150px]"></div>;
-    }
-
-    const minutes = Math.floor((runCountdown % 3600) / 60);
-    const seconds = runCountdown % 60;
+    const minutes = Math.floor(((runCountdown ?? 0) % 3600) / 60);
+    const seconds = (runCountdown ?? 0) % 60;
 
     return (
         <div className="flex flex-col gap-3 justify-center items-center h-[150px]">
-            <p className="h-body-2-medium text-n-neutral-500">
-                밸런스 게임 결과 공개까지 남은 시간
-            </p>
-            <div className="flex items-end text-n-neutral-950">
-                <TimeDisplay label="Minutes" value={formatTime(minutes)} />
-                <p className="h-heading-1-bold">:</p>
-                <TimeDisplay label="Seconds" value={formatTime(seconds)} />
-            </div>
+            <Suspense isLoading={initialRunCountdown === null || runCountdown == null}>
+                <p className="h-body-2-medium text-n-neutral-500">
+                    밸런스 게임 결과 공개까지 남은 시간
+                </p>
+                <div className="flex items-end text-n-neutral-950">
+                    <TimeDisplay label="Minutes" value={formatTime(minutes)} />
+                    <p className="h-heading-1-bold">:</p>
+                    <TimeDisplay label="Seconds" value={formatTime(seconds)} />
+                </div>
+            </Suspense>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { Background } from "@/components/Background";
+import Suspense from "@/components/Suspense";
 import { CARD_PHASE } from "@/constants/Rush/rushCard.ts";
 import { ASCEND, SCROLL_MOTION } from "@/constants/animation.ts";
 import RushShareLink from "@/features/RushGame/RushGameComponents/RushShareLink.tsx";
@@ -29,30 +30,31 @@ function CountdownTimer({ initialPreCountdown }: CountdownTimerProps) {
             preCountdown !== null &&
             preCountdown <= 0 &&
             gameState.phase === CARD_PHASE.NOT_STARTED;
+
         if (isTimeout) {
             dispatch({ type: RUSH_ACTION.SET_PHASE, payload: CARD_PHASE.IN_PROGRESS });
         }
     }, [preCountdown, gameState.phase]);
 
-    if (preCountdown === null) return null;
-
-    const hours = Math.floor(preCountdown / 3600);
-    const minutes = Math.floor((preCountdown % 3600) / 60);
-    const seconds = preCountdown % 60;
+    const hours = Math.floor((preCountdown ?? 0) / 3600);
+    const minutes = Math.floor(((preCountdown ?? 0) % 3600) / 60);
+    const seconds = (preCountdown ?? 0) % 60;
 
     return (
-        <Background>
-            <p className="h-body-1-regular text-n-neutral-500">
-                밸런스 게임 주제 공개까지 남은 시간
-            </p>
-            <div className="flex items-end gap-6 font-['HyundaiSansTextOffice-Bold'] font-normal text-[100px] text-n-neutral-950">
-                <TimeDisplay label="Hours" value={formatTime(hours)} />
-                <p className="leading-[100px]">:</p>
-                <TimeDisplay label="Minutes" value={formatTime(minutes)} />
-                <p className="leading-[100px]">:</p>
-                <TimeDisplay label="Seconds" value={formatTime(seconds)} />
-            </div>
-        </Background>
+        <Suspense isLoading={preCountdown === null}>
+            <Background>
+                <p className="h-body-1-regular text-n-neutral-500">
+                    밸런스 게임 주제 공개까지 남은 시간
+                </p>
+                <div className="flex items-end gap-6 font-['HyundaiSansTextOffice-Bold'] font-normal text-[100px] text-n-neutral-950">
+                    <TimeDisplay label="Hours" value={formatTime(hours)} />
+                    <p className="leading-[100px]">:</p>
+                    <TimeDisplay label="Minutes" value={formatTime(minutes)} />
+                    <p className="leading-[100px]">:</p>
+                    <TimeDisplay label="Seconds" value={formatTime(seconds)} />
+                </div>
+            </Background>
+        </Suspense>
     );
 }
 
@@ -97,15 +99,13 @@ export default function Countdown() {
         }
     }, [isSuccessRush, rushData]);
 
-    if (initialPreCountdown === null) return null;
-
     return (
-        <>
+        <Suspense isLoading={initialPreCountdown === null}>
             <motion.p className="h-heading-2-bold pt-10" {...SCROLL_MOTION(ASCEND)}>
                 이제 곧 하단에 밸런스 게임 주제가 공개돼요!
             </motion.p>
             <CountdownTimer initialPreCountdown={initialPreCountdown} />
             <RushShareLink />
-        </>
+        </Suspense>
     );
 }
