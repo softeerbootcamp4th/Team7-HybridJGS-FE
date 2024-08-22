@@ -11,12 +11,12 @@ export const EVENT_LIST_HEADER = [
     "참여자 리스트 보기",
 ];
 
-export const QUERY_OPTION = {
-    OPTION: "option",
-    PRIZE: "prize",
-} as const;
+export const enum QUERY_OPTION {
+    OPTION = "option",
+    PRIZE = "prize",
+}
 
-export const OPTION_POSITION = {
-    LEFT: "LEFT",
-    RIGHT: "RIGHT",
-} as const;
+export const enum OPTION_POSITION {
+    LEFT = "LEFT",
+    RIGHT = "RIGHT",
+}

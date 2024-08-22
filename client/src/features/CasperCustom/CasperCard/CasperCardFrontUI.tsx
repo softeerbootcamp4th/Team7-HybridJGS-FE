@@ -20,7 +20,7 @@ import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react
 import CasperFace from "/public/assets/casper-custom/face.svg?react";
 
 interface CasperCardFrontUIProps {
-    size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    size?: CASPER_SIZE_OPTION;
     optionDescription?: string;
     casperName?: string;
     hasRandomButton?: boolean;

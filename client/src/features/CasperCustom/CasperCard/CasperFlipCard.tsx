@@ -6,7 +6,7 @@ import { CasperCardBackUI } from "./CasperCardBackUI";
 import { CasperCardFrontUI } from "./CasperCardFrontUI";
 
 interface CasperFlipCardProps {
-    size: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    size: CASPER_SIZE_OPTION;
     card: Omit<CasperCardType, "id">;
     isFlipped: boolean;
 }

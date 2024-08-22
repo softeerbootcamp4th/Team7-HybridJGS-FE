@@ -16,7 +16,7 @@ import CasperFace from "/public/assets/casper-custom/face.svg?react";
 import HyundaiLogo from "/public/assets/hyundai-logo.svg?react";
 
 interface CasperCardBackUIProps {
-    size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    size?: CASPER_SIZE_OPTION;
     casperName: string;
     expectations?: string;
     selectedCasperIdx: SelectedCasperIdxType;

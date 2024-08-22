@@ -4,12 +4,12 @@ export interface PhoneNumberStateType {
     phoneNumber: string;
 }
 
-export const PHONE_NUMBER_ACTION = {
-    SET_PHONE_NUMBER: "SET_PHONE_NUMBER",
-} as const;
+export const enum PHONE_NUMBER_ACTION {
+    SET_PHONE_NUMBER = "SET_PHONE_NUMBER",
+}
 
 export type PhoneNumberAction = {
-    type: typeof PHONE_NUMBER_ACTION.SET_PHONE_NUMBER;
+    type: PHONE_NUMBER_ACTION.SET_PHONE_NUMBER;
     payload: string;
 };
 

@@ -1,6 +1,5 @@
 import { EVENT_STATUS } from "@/constants/common";
 
-export type LotteryEventStatusType = (typeof EVENT_STATUS)[keyof typeof EVENT_STATUS];
 export interface LotteryEventType {
     startDate: string;
     startTime: string;
@@ -8,7 +7,7 @@ export interface LotteryEventType {
     endTime: string;
     appliedCount: number;
     winnerCount: number;
-    status: LotteryEventStatusType;
+    status: EVENT_STATUS;
 }
 
 export interface LotteryExpectationsType {

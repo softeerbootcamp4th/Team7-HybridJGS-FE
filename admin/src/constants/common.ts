@@ -1,8 +1,8 @@
-export const EVENT_STATUS = {
-    BEFORE: "BEFORE",
-    DURING: "DURING",
-    AFTER: "AFTER",
-} as const;
+export const enum EVENT_STATUS {
+    BEFORE = "BEFORE",
+    DURING = "DURING",
+    AFTER = "AFTER",
+}
 
 export const STATUS_MAP = {
     [EVENT_STATUS.BEFORE]: "오픈 전",
