@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import NavigationConfirmPopUp from "@/components/NavigationConfirmPopUp";
+import NavigationConfirmPopUp from "@/components/NavigationConfirmPopup";
 import {
     CUSTOM_STEP_HEADLINE,
     CUSTOM_STEP_OPTION,

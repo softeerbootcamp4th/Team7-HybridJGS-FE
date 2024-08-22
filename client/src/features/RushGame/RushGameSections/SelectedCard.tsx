@@ -52,11 +52,7 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardDetailsProps) {
     );
 }
 
-interface SelectedCardProps {
-    unblockNavigation: () => void;
-}
-
-export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
+export default function SelectedCard() {
     const { toggleContents, toggle } = useToggleContents({ useDuration: false });
     const fetchRushBalance = useFetchRushBalance();
 
@@ -67,7 +63,6 @@ export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
 
     useEffect(() => {
         fetchRushBalance();
-        unblockNavigation();
     }, []);
 
     return (

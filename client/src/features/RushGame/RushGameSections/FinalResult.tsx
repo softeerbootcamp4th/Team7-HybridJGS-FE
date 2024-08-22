@@ -24,18 +24,13 @@ function getWinStatus(ratio: number, oppositeRatio: number): WinStatus {
     return ratio > oppositeRatio ? WIN_STATUS.WIN : WIN_STATUS.LOSE;
 }
 
-interface FinalResultProps {
-    unblockNavigation: () => void;
-}
-
-export default function FinalResult({ unblockNavigation }: FinalResultProps) {
+export default function FinalResult() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
     const { cardOptions, userParticipatedStatus, userSelectedOption } = useRushGameStateContext();
     const { getRushResult, resultData } = useFetchRushResult();
 
     useEffect(() => {
         getRushResult(cookies[COOKIE_KEY.ACCESS_TOKEN]);
-        unblockNavigation();
     }, []);
 
     const isWinner = resultData?.isWinner;

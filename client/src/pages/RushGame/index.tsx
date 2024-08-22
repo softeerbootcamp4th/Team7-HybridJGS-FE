@@ -11,14 +11,10 @@ import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts
 import { useFetchRushUserParticipationStatus } from "@/hooks/RushGame/useFetchRushUserParticipationStatus.ts";
 import { useFetchTodayRushEvent } from "@/hooks/RushGame/useFetchTodayRushEvent.ts";
 import useSetGamePhase from "@/hooks/RushGame/useSetGamePhase.ts";
-import { useBlockNavigation } from "@/hooks/useBlockNavigation.ts";
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 
 export default function RushGame() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const { unblockNavigation } = useBlockNavigation(
-        "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
-    );
     const { getTodayRushEvent } = useFetchTodayRushEvent();
     const gameState = useRushGameStateContext();
     const { getRushUserParticipationStatus, userParticipatedStatus } =
@@ -43,11 +39,11 @@ export default function RushGame() {
                     if (!gameState.userParticipatedStatus) {
                         return <CardOptions />;
                     } else {
-                        return <SelectedCard unblockNavigation={unblockNavigation} />;
+                        return <SelectedCard />;
                     }
                 }
             case CARD_PHASE.COMPLETED:
-                return <FinalResult unblockNavigation={unblockNavigation} />;
+                return <FinalResult />;
             default:
                 return null;
         }
