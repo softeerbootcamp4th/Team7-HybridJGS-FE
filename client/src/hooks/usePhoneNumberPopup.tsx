@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import Popup, { PopUpProps } from "@/components/PopUp";
+import PhoneNumberPopUp, { PhoneNumberPopUpProps } from "@/components/PhoneNumberPopUp";
 
-export default function usePopup({
+export default function usePhoneNumberPopUp({
     phoneNumber,
     handlePhoneNumberChange,
     handlePhoneNumberConfirm,
-}: Omit<PopUpProps, "handleClose">) {
+}: Omit<PhoneNumberPopUpProps, "handleClose">) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function usePopup({
     };
 
     const PopupComponent = isVisible ? (
-        <Popup
+        <PhoneNumberPopUp
             phoneNumber={phoneNumber}
             handlePhoneNumberChange={handlePhoneNumberChange}
             handlePhoneNumberConfirm={handlePhoneNumberConfirm}

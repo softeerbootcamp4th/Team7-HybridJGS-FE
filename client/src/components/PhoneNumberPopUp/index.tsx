@@ -4,19 +4,19 @@ import CTAButton from "../CTAButton";
 import CheckBox from "../CheckBox";
 import Input from "../Input";
 
-export interface PopUpProps {
+export interface PhoneNumberPopUpProps {
     phoneNumber: string;
     handlePhoneNumberChange: (val: string) => void;
     handlePhoneNumberConfirm: (val: string) => void;
     handleClose: () => void;
 }
 
-export default function PopUp({
+export default function PhoneNumberPopUp({
     phoneNumber = "",
     handlePhoneNumberChange,
     handlePhoneNumberConfirm,
     handleClose,
-}: PopUpProps) {
+}: PhoneNumberPopUpProps) {
     const [isUserInfoCheck, setIsUserInfoCheck] = useState(true);
     const [isMarketingInfoCheck, setIsMarketingInfoCheck] = useState(true);
     const [canConfirm, setCanConfirm] = useState(false);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import NavigationConfirmPopup from "@/components/NavigationConfirmPopup";
+import NavigationConfirmPopUp from "@/components/NavigationConfirmPopUp";
 import {
     CUSTOM_STEP_HEADLINE,
     CUSTOM_STEP_OPTION,
@@ -84,7 +84,7 @@ export default function CasperCustom() {
             </div>
 
             {isBlockedNavigation && (
-                <NavigationConfirmPopup
+                <NavigationConfirmPopUp
                     handleConfirm={proceedNavigation}
                     handleClose={cancelNavigation}
                 />

@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { buttonStyles } from "./index.style";
 
-interface NavigationConfirmPopup {
+interface NavigationConfirmPopUpProps {
     handleConfirm: () => void;
     handleClose: () => void;
 }
 
-export default function NavigationConfirmPopup({
+export default function NavigationConfirmPopUp({
     handleConfirm,
     handleClose,
-}: NavigationConfirmPopup) {
+}: NavigationConfirmPopUpProps) {
     useEffect(() => {
         document.body.style.overflow = "hidden";
 
