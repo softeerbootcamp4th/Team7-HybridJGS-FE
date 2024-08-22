@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import NavigationConfirmPopup from "@/components/NavigationConfirmPopup";
 import {
     CUSTOM_STEP_HEADLINE,
     CUSTOM_STEP_OPTION,
@@ -21,9 +22,8 @@ import useHeaderStyleObserver from "@/hooks/useHeaderStyleObserver";
 const INITIAL_STEP = 0;
 
 export default function CasperCustom() {
-    const { unblockNavigation } = useBlockNavigation(
-        "이 페이지를 떠나면 모든 변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?"
-    );
+    const { unblockNavigation, isBlockedNavigation, proceedNavigation, cancelNavigation } =
+        useBlockNavigation();
 
     const containerRef = useHeaderStyleObserver({
         darkSections: [CASPER_CUSTOM_SECTIONS.CUSTOM],
@@ -82,6 +82,13 @@ export default function CasperCustom() {
                     {renderCustomStep()}
                 </section>
             </div>
+
+            {isBlockedNavigation && (
+                <NavigationConfirmPopup
+                    handleConfirm={proceedNavigation}
+                    handleClose={cancelNavigation}
+                />
+            )}
         </CasperCustomProvider>
     );
 }
