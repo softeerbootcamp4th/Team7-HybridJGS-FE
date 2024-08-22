@@ -11,7 +11,7 @@ export interface CasperCustomStateType {
     expectations: string;
 }
 
-export enum CASPER_ACTION {
+export const enum CASPER_ACTION {
     SET_CASPER = "SET_CASPER",
     SET_CASPER_NAME = "SET_CASPER_NAME",
     SET_EXPECTATIONS = "SET_EXPECTATIONS",

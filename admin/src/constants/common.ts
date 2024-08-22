@@ -1,4 +1,4 @@
-export enum EVENT_STATUS {
+export const enum EVENT_STATUS {
     BEFORE = "BEFORE",
     DURING = "DURING",
     AFTER = "AFTER",

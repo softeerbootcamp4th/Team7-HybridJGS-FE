@@ -33,14 +33,14 @@ export interface RushEventStateType {
     rushList: RushEventType[];
 }
 
-export enum RUSH_ACTION {
+export const enum RUSH_ACTION {
     SET_EVENT_LIST = "SET_EVENT_LIST",
 }
 
 export type ImageType = { imgName: string; imgFile: File };
 
 export type RushEventAction = {
-    type: typeof RUSH_ACTION.SET_EVENT_LIST;
+    type: RUSH_ACTION.SET_EVENT_LIST;
     payload: RushEventType[];
 };
 

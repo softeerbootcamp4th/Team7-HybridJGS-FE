@@ -1,11 +1,11 @@
-export enum CUSTOM_OPTION {
+export const enum CUSTOM_OPTION {
     EYES = "eyes",
     EYES_DIRECTION = "eyesDirection",
     MOUTH = "mouth",
     COLOR = "color",
     STICKER = "sticker",
 }
-export enum EYES_OPTION {
+export const enum EYES_OPTION {
     "15INCH_ALLOY" = "15inch-alloy",
     "17INCH_ALLOY" = "17inch-alloy",
     PIXEL = "pixel",
@@ -15,19 +15,19 @@ export enum EYES_OPTION {
     CUTE = "cute",
     HEART = "heart",
 }
-export enum POSITION_OPTION {
+export const enum POSITION_OPTION {
     LEFT = "left",
     CENTER = "center",
     RIGHT = "right",
 }
-export enum MOUTH_OPTION {
+export const enum MOUTH_OPTION {
     SMILE = "smile",
     CLOUDY = "cloudy",
     MOCKING = "mocking",
     LAUGH = "laugh",
     EXPRESSIONLESS = "expressionless",
 }
-export enum COLOR_OPTION {
+export const enum COLOR_OPTION {
     C_CREAM = "#D8D2BC",
     C_ORANGE = "#CA7349",
     C_KHAKI = "#515868",
@@ -47,14 +47,14 @@ export enum COLOR_OPTION {
     R_AMBER = "#FFD96B",
     R_YELLOW = "#FEFF78",
 }
-export enum STICKER_OPTION {
+export const enum STICKER_OPTION {
     ELECTRIC = "electric",
     CHARGE_MAX = "charge-max",
     CHARGE_NONE = "charge-none",
     LOVELY = "lovely",
     TWINKLE = "twinkle",
 }
-export enum OPTION_TYPE {
+export const enum OPTION_TYPE {
     LIMITED = "limited",
     BASIC = "basic",
 }
@@ -117,7 +117,7 @@ export const COLOR_STICKER_EXCEPTION: Partial<Record<COLOR_OPTION, STICKER_OPTIO
     [COLOR_OPTION.C_ORANGE]: STICKER_OPTION.TWINKLE,
 };
 
-export enum CASPER_Z_INDEX {
+export const enum CASPER_Z_INDEX {
     CASPER = 2,
     UNDER_CASPER = 1,
     UPPER_CASPER = 3,
@@ -303,7 +303,7 @@ export const OPTION_MAX_COUNT = {
     [CUSTOM_OPTION.COLOR]: CASPER_OPTION[CUSTOM_OPTION.COLOR].length,
 };
 
-export enum CASPER_SIZE_OPTION {
+export const enum CASPER_SIZE_OPTION {
     LG = "lg",
     SM = "sm",
 }

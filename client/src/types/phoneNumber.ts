@@ -4,7 +4,7 @@ export interface PhoneNumberStateType {
     phoneNumber: string;
 }
 
-export enum PHONE_NUMBER_ACTION {
+export const enum PHONE_NUMBER_ACTION {
     SET_PHONE_NUMBER = "SET_PHONE_NUMBER",
 }
 

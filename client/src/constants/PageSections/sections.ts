@@ -1,11 +1,11 @@
-export enum MAIN_SECTIONS {
+export const enum MAIN_SECTIONS {
     HEADLINE = "HEADLINE",
     LOTTERY = "LOTTERY",
     RUSH = "RUSH",
     LEARN_MORE = "LEARN_MORE",
 }
 
-export enum LOTTERY_SECTIONS {
+export const enum LOTTERY_SECTIONS {
     HEADLINE = "HEADLINE",
     INTRO = "INTRO",
     HEADLAMP = "HEADLAMP",
@@ -17,7 +17,7 @@ export enum LOTTERY_SECTIONS {
     SHORT_CUT = "SHORT_CUT",
 }
 
-export enum RUSH_SECTIONS {
+export const enum RUSH_SECTIONS {
     HEADLINE = "HEADLINE",
     INTRO = "INTRO",
     FAQ = "FAQ",
@@ -33,10 +33,10 @@ export enum RUSH_SECTIONS {
     CASPER_SMART_KEY = "CASPER_SMART_KEY",
 }
 
-export enum CASPER_CUSTOM_SECTIONS {
+export const enum CASPER_CUSTOM_SECTIONS {
     CUSTOM = "CUSTOM",
 }
 
-export enum CASPER_SHOWCASE_SECTIONS {
+export const enum CASPER_SHOWCASE_SECTIONS {
     SHOWCASE = "SHOWCASE",
 }
