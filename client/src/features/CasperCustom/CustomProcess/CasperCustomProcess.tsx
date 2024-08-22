@@ -6,7 +6,7 @@ import { CUSTOM_OPTION_ARRAY } from "@/constants/CasperCustom/customStep";
 import { DISSOLVE } from "@/constants/animation";
 import { SCROLL_MOTION } from "@/constants/animation";
 import { MyCasperCardFront } from "@/features/CasperCustom/CasperCard/MyCasperCardFront";
-import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import useCasperCustomStateContext from "@/hooks/Contexts/useCasperCustomStateContext.ts";
 import { getCasperOptionDescription } from "@/utils/CasperCustom/getCasperOptionDescription";
 
 interface CasperCustomProcessProps {

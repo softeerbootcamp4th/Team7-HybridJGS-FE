@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
 import { COOKIE_KEY } from "@/constants/cookie.ts";
 import RushCard from "@/features/RushGame/RushGameComponents/RushCard.tsx";
+import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchContext.ts";
+import useRushGameStateContext from "@/hooks/Contexts/useRushGameStateContext.ts";
+import { useFetchRushUserParticipationStatus } from "@/hooks/RushGame/useFetchRushUserParticipationStatus.ts";
 import useFetch from "@/hooks/useFetch.ts";
-import { useRushGameContext } from "@/hooks/useRushGameContext.ts";
-import { GetTodayRushEventResponse, RushEventStatusCodeResponse } from "@/types/rushApi.ts";
-import { CardOption } from "@/types/rushGame.ts";
-import { getRandomCardColors } from "@/utils/getRandomCardColors.ts";
-
-const INITIAL_OPTION_NUMBER = -1 as const;
+import { RushEventStatusCodeResponse } from "@/types/rushApi.ts";
+import { CardOption, RUSH_ACTION } from "@/types/rushGame.ts";
 
 export default function RushCardComparison() {
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
-    const [optionId, setOptionId] = useState<CardOption | typeof INITIAL_OPTION_NUMBER>(
-        INITIAL_OPTION_NUMBER
-    );
-    const { gameState, updateUserStatusAndSelectedOption, updateCardOptions } =
-        useRushGameContext();
-
-    const {
-        data: todayRushEventData,
-        isSuccess: isSuccessTodayRushEvent,
-        fetchData: getTodayRushEvent,
-    } = useFetch<GetTodayRushEventResponse, string>((token) => RushAPI.getTodayRushEvent(token));
+    const gameState = useRushGameStateContext();
+    const dispatch = useRushGameDispatchContext();
+    const { getRushUserParticipationStatus } = useFetchRushUserParticipationStatus();
 
     const {
         data: postSelectedRushOptionResponse,
@@ -34,41 +25,16 @@ export default function RushCardComparison() {
         ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId)
     );
 
-    useEffect(() => {
-        getTodayRushEvent(cookies[COOKIE_KEY.ACCESS_TOKEN]);
-    }, []);
-
-    useEffect(() => {
-        if (isSuccessTodayRushEvent && todayRushEventData) {
-            const { leftColor, rightColor } = getRandomCardColors();
-
-            updateCardOptions(CARD_OPTION.LEFT_OPTIONS, {
-                mainText: todayRushEventData.leftOption.mainText,
-                subText: todayRushEventData.leftOption.subText,
-                color: leftColor,
-            });
-            updateCardOptions(CARD_OPTION.RIGHT_OPTIONS, {
-                mainText: todayRushEventData.rightOption.mainText,
-                subText: todayRushEventData.rightOption.subText,
-                color: rightColor,
-            });
-        }
-    }, [isSuccessTodayRushEvent, todayRushEventData]);
-
     const handleCardSelection = async (optionId: CardOption) => {
         await postSelectedRushOptionApply({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], optionId });
-        setOptionId(optionId);
+        dispatch({ type: RUSH_ACTION.SET_USER_OPTION, payload: optionId });
     };
 
     useEffect(() => {
-        if (
-            isSuccessPostSelectedRushOption &&
-            postSelectedRushOptionResponse === 204 &&
-            optionId !== INITIAL_OPTION_NUMBER
-        ) {
-            updateUserStatusAndSelectedOption(cookies[COOKIE_KEY.ACCESS_TOKEN], optionId);
+        if (isSuccessPostSelectedRushOption && postSelectedRushOptionResponse === 204) {
+            getRushUserParticipationStatus(cookies[COOKIE_KEY.ACCESS_TOKEN]);
         }
-    }, [optionId]);
+    }, [isSuccessPostSelectedRushOption, postSelectedRushOptionResponse]);
 
     const leftOptionData = gameState.cardOptions[CARD_OPTION.LEFT_OPTIONS];
     const rightOptionData = gameState.cardOptions[CARD_OPTION.RIGHT_OPTIONS];

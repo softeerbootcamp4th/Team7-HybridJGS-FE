@@ -5,12 +5,14 @@ interface RushResultOptionDisplayProps {
     mainText: string;
     winStatus: WinStatus;
     isUserSelected: boolean;
+    userParticipatedStatus: boolean;
 }
 
 export default function RushResultOptionDisplay({
     mainText,
     winStatus,
     isUserSelected,
+    userParticipatedStatus,
 }: RushResultOptionDisplayProps) {
     const categoryType = winStatus === "Win" ? "limited" : "basic";
     return (
@@ -21,7 +23,9 @@ export default function RushResultOptionDisplay({
                 {mainText}
             </p>
             <Category type={categoryType}>{winStatus}</Category>
-            {isUserSelected && <Category type="selected">당신의 선택</Category>}
+            {userParticipatedStatus && isUserSelected && (
+                <Category type="selected">당신의 선택</Category>
+            )}
         </div>
     );
 }

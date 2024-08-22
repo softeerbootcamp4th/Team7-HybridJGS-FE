@@ -6,8 +6,8 @@ import {
     OPTION_TYPE,
     POSITION_OPTION,
 } from "@/constants/CasperCustom/casper";
-import useCasperCustomDispatchContext from "@/hooks/useCasperCustomDispatchContext";
-import useCasperCustomStateContext from "@/hooks/useCasperCustomStateContext";
+import useCasperCustomDispatchContext from "@/hooks/Contexts/useCasperCustomDispatchContext.ts";
+import useCasperCustomStateContext from "@/hooks/Contexts/useCasperCustomStateContext.ts";
 import { CASPER_ACTION } from "@/types/casperCustom";
 import { CasperCustomPanelLayout } from "./CasperCustomPanelLayout";
 import { EyesOptionImageItem } from "./EyesOptionImageItem";
