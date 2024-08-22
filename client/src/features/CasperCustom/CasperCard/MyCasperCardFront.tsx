@@ -6,7 +6,7 @@ import { CASPER_ACTION } from "@/types/casperCustom";
 import { CasperCardFrontUI } from "./CasperCardFrontUI";
 
 interface MyCasperCardFrontProps {
-    size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    size?: CASPER_SIZE_OPTION;
     optionDescription?: string;
     casperName?: string;
     hasRandomButton?: boolean;

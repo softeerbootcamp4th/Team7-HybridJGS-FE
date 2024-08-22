@@ -10,14 +10,18 @@ export default function useFetch<T, P = void>(
     const { showBoundary } = useErrorBoundary();
 
     const [data, setData] = useState<T | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
+    const [errorStatus, setErrorStatus] = useState<string | null>(null);
 
     const [cookies] = useCookies([COOKIE_KEY.ACCESS_TOKEN]);
 
     const fetchData = async (params?: P) => {
         setIsError(false);
         setIsSuccess(false);
+        setIsLoading(true);
+        setErrorStatus(null);
 
         try {
             const data = await fetch(params as P, cookies[COOKIE_KEY.ACCESS_TOKEN]);
@@ -25,12 +29,16 @@ export default function useFetch<T, P = void>(
             setIsSuccess(!!data);
         } catch (error) {
             setIsError(true);
-            console.error(error);
+            if (error instanceof Error) {
+                setErrorStatus(error.message);
+            }
             if (showError) {
                 showBoundary(error);
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    return { data, isSuccess, isError, fetchData };
+    return { data, isSuccess, isLoading, isError, errorStatus, fetchData };
 }

@@ -12,7 +12,9 @@ export default function TimePicker({ time, disabled = false, onChangeTime }: Tim
          * 시간-분 까지만 선택 가능
          * 초는 0초를 디폴트로 넣는다
          */
-        const time = `${e.target.value}:00`;
+        const value = e.target.value;
+        const isMinuteEnd = value.split(":").length === 2;
+        const time = `${e.target.value}${isMinuteEnd ? `:00` : ""}`;
         onChangeTime(time);
     };
 

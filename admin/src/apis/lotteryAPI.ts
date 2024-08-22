@@ -1,4 +1,5 @@
 import {
+    DeleteLotteryWinnerResponse,
     GetLotteryExpectationsParams,
     GetLotteryExpectationsResponse,
     GetLotteryParticipantResponse,
@@ -47,6 +48,18 @@ export const LotteryAPI = {
         try {
             const response = await fetchWithTimeout(`${baseURL}/winner`, {
                 method: "POST",
+                headers: { ...headers, Authorization: `Bearer ${token}` },
+            });
+            return response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    },
+    async deleteLotteryWinner(token: string): Promise<DeleteLotteryWinnerResponse> {
+        try {
+            const response = await fetchWithTimeout(`${baseURL}/winner`, {
+                method: "DELETE",
                 headers: { ...headers, Authorization: `Bearer ${token}` },
             });
             return response.json();

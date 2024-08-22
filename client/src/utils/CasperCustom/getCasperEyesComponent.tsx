@@ -24,43 +24,37 @@ import VacantCenter from "/public/assets/casper-custom/eyes/vacant-center.svg?re
 import VacantLeft from "/public/assets/casper-custom/eyes/vacant-left.svg?react";
 import VacantRight from "/public/assets/casper-custom/eyes/vacant-right.svg?react";
 
-type EyesOptionType = (typeof EYES_OPTION)[keyof typeof EYES_OPTION];
-type EyesDirectionOptionType = (typeof POSITION_OPTION)[keyof typeof POSITION_OPTION];
-
-const EYES_COMPONENT_MAP: Record<
-    string,
-    React.ComponentType<React.SVGProps<SVGSVGElement>> | null
-> = {
-    "15inch-alloy-center": Alloy15Center,
-    "15inch-alloy-left": Alloy15Left,
-    "15inch-alloy-right": Alloy15Right,
-    "17inch-alloy-center": Alloy17Center,
-    "17inch-alloy-left": Alloy17Left,
-    "17inch-alloy-right": Alloy17Right,
-    "cute-center": CuteCenter,
-    "cute-left": CuteLeft,
-    "cute-right": CuteRight,
-    "electric-center": ElectricCenter,
-    "electric-left": ElectricLeft,
-    "electric-right": ElectricRight,
-    "heart-center": HeartCenter,
-    "heart-left": HeartLeft,
-    "heart-right": HeartRight,
-    "pixel-center": PixelCenter,
-    "pixel-left": PixelLeft,
-    "pixel-right": PixelRight,
-    "smile-center": SmileCenter,
-    "smile-left": SmileLeft,
-    "smile-right": SmileRight,
-    "vacant-center": VacantCenter,
-    "vacant-left": VacantLeft,
-    "vacant-right": VacantRight,
+const EYES_COMPONENT_MAP: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    [`${EYES_OPTION["15INCH_ALLOY"]}-${[POSITION_OPTION.CENTER]}`]: Alloy15Center,
+    [`${EYES_OPTION["15INCH_ALLOY"]}-${[POSITION_OPTION.LEFT]}`]: Alloy15Left,
+    [`${EYES_OPTION["15INCH_ALLOY"]}-${[POSITION_OPTION.RIGHT]}`]: Alloy15Right,
+    [`${EYES_OPTION["17INCH_ALLOY"]}-${[POSITION_OPTION.CENTER]}`]: Alloy17Center,
+    [`${EYES_OPTION["17INCH_ALLOY"]}-${[POSITION_OPTION.LEFT]}`]: Alloy17Left,
+    [`${EYES_OPTION["17INCH_ALLOY"]}-${[POSITION_OPTION.RIGHT]}`]: Alloy17Right,
+    [`${EYES_OPTION.CUTE}-${[POSITION_OPTION.CENTER]}`]: CuteCenter,
+    [`${EYES_OPTION.CUTE}-${[POSITION_OPTION.LEFT]}`]: CuteLeft,
+    [`${EYES_OPTION.CUTE}-${[POSITION_OPTION.RIGHT]}`]: CuteRight,
+    [`${EYES_OPTION.ELECTRIC}-${[POSITION_OPTION.CENTER]}`]: ElectricCenter,
+    [`${EYES_OPTION.ELECTRIC}-${[POSITION_OPTION.LEFT]}`]: ElectricLeft,
+    [`${EYES_OPTION.ELECTRIC}-${[POSITION_OPTION.RIGHT]}`]: ElectricRight,
+    [`${EYES_OPTION.HEART}-${[POSITION_OPTION.CENTER]}`]: HeartCenter,
+    [`${EYES_OPTION.HEART}-${[POSITION_OPTION.LEFT]}`]: HeartLeft,
+    [`${EYES_OPTION.HEART}-${[POSITION_OPTION.RIGHT]}`]: HeartRight,
+    [`${EYES_OPTION.PIXEL}-${[POSITION_OPTION.CENTER]}`]: PixelCenter,
+    [`${EYES_OPTION.PIXEL}-${[POSITION_OPTION.LEFT]}`]: PixelLeft,
+    [`${EYES_OPTION.PIXEL}-${[POSITION_OPTION.RIGHT]}`]: PixelRight,
+    [`${EYES_OPTION.SMILE}-${[POSITION_OPTION.CENTER]}`]: SmileCenter,
+    [`${EYES_OPTION.SMILE}-${[POSITION_OPTION.LEFT]}`]: SmileLeft,
+    [`${EYES_OPTION.SMILE}-${[POSITION_OPTION.RIGHT]}`]: SmileRight,
+    [`${EYES_OPTION.VACANT}-${[POSITION_OPTION.CENTER]}`]: VacantCenter,
+    [`${EYES_OPTION.VACANT}-${[POSITION_OPTION.LEFT]}`]: VacantLeft,
+    [`${EYES_OPTION.VACANT}-${[POSITION_OPTION.RIGHT]}`]: VacantRight,
 };
 
 export function getCasperEyesComponent(
-    eyesOption: EyesOptionType,
-    eyesDirectionOption: EyesDirectionOptionType
-): React.ComponentType<React.SVGProps<SVGSVGElement>> | null {
+    eyesOption: EYES_OPTION,
+    eyesDirectionOption: POSITION_OPTION
+): React.ComponentType<React.SVGProps<SVGSVGElement>> {
     const componentKey = `${eyesOption}-${eyesDirectionOption}`;
     return EYES_COMPONENT_MAP[componentKey];
 }

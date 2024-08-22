@@ -8,16 +8,19 @@ import {
     CASPER_SIZE_OPTION,
     CASPER_Z_INDEX,
     COLOR_BACKGROUND_MAP,
+    COLOR_STICKER_EXCEPTION,
     CUSTOM_OPTION,
+    STICKER_COLOR_MAP,
 } from "@/constants/CasperCustom/casper";
 import { SelectedCasperIdxType } from "@/types/casperCustom";
 import { getCasperEyesComponent } from "@/utils/CasperCustom/getCasperEyesComponent";
 import { getCasperMouthComponent } from "@/utils/CasperCustom/getCasperMouthComponent";
+import { getCasperStickerComponent } from "@/utils/CasperCustom/getCasperStickerComponent";
 import CasperEyesLayout from "/public/assets/casper-custom/eyes/layout.svg?react";
 import CasperFace from "/public/assets/casper-custom/face.svg?react";
 
 interface CasperCardFrontUIProps {
-    size?: (typeof CASPER_SIZE_OPTION)[keyof typeof CASPER_SIZE_OPTION];
+    size?: CASPER_SIZE_OPTION;
     optionDescription?: string;
     casperName?: string;
     hasRandomButton?: boolean;
@@ -67,6 +70,10 @@ function CasperCardFrontUI({
         CASPER_OPTION[CUSTOM_OPTION.EYES_DIRECTION][selectedEyesDirectionIdx];
     const selectedMouth = CASPER_OPTION[CUSTOM_OPTION.MOUTH][selectedMouthIdx];
     const selectedColor = CASPER_OPTION[CUSTOM_OPTION.COLOR][selectedColorIdx];
+    const selectedSticker =
+        selectedStickerIdx !== null
+            ? CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx]
+            : null;
 
     const { CARD_WIDTH, CARD_HEIGHT } = CASPER_CARD_SIZE[size];
     const {
@@ -85,6 +92,20 @@ function CasperCardFrontUI({
         selectedEyesDirection.id
     );
     const CasperMouthSvgComponent = getCasperMouthComponent(selectedMouth.id);
+    const CasperStickerSvgComponent = getCasperStickerComponent(
+        selectedSticker !== null ? selectedSticker.id : null
+    );
+
+    const getStickerColor = () => {
+        if (!selectedSticker) {
+            return "";
+        }
+
+        const isException = COLOR_STICKER_EXCEPTION[selectedColor.id] === selectedSticker.id;
+        return isException
+            ? STICKER_COLOR_MAP[selectedSticker.id].exception
+            : STICKER_COLOR_MAP[selectedSticker.id].default;
+    };
 
     return (
         <div
@@ -125,39 +146,34 @@ function CasperCardFrontUI({
                             height: EYES_HEIGHT,
                         }}
                     />
-                    {CasperEyesSvgComponent && (
-                        <CasperEyesSvgComponent
-                            className="absolute left-[50%] translate-x-[-50%]"
-                            fill={selectedColor.id}
-                            style={{
-                                top: EYES_TOP,
-                                width: EYES_WIDTH,
-                                height: EYES_HEIGHT,
-                            }}
-                        />
-                    )}
-                    {CasperMouthSvgComponent && (
-                        <CasperMouthSvgComponent
-                            className="absolute left-[50%] translate-x-[-50%]"
-                            fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
-                            style={{
-                                top: MOUTH_TOP,
-                                width: MOUTH_WIDTH,
-                            }}
-                        />
-                    )}
+                    <CasperEyesSvgComponent
+                        className="absolute left-[50%] translate-x-[-50%]"
+                        fill={selectedColor.id}
+                        style={{
+                            top: EYES_TOP,
+                            width: EYES_WIDTH,
+                            height: EYES_HEIGHT,
+                        }}
+                    />
+                    <CasperMouthSvgComponent
+                        className="absolute left-[50%] translate-x-[-50%]"
+                        fill={selectedColor.isDarkMode ? "#ffffff" : "#000000"}
+                        style={{
+                            top: MOUTH_TOP,
+                            width: MOUTH_WIDTH,
+                        }}
+                    />
                 </div>
             </div>
 
-            {selectedStickerIdx !== null && (
-                <img
-                    alt="캐스퍼 일렉트릭 봇 스티커"
+            {selectedSticker && CasperStickerSvgComponent && (
+                <CasperStickerSvgComponent
                     className="absolute top-0"
-                    src={`/assets/casper-custom/sticker/${CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx].id}.png`}
+                    fill={getStickerColor()}
                     style={{
                         width: CARD_WIDTH,
                         height: CARD_HEIGHT,
-                        zIndex: CASPER_OPTION[CUSTOM_OPTION.STICKER][selectedStickerIdx]["z-index"],
+                        zIndex: selectedSticker["z-index"],
                     }}
                 />
             )}

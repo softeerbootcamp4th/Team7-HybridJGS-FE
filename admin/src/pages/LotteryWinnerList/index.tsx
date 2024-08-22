@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { LotteryAPI } from "@/apis/lotteryAPI";
 import Button from "@/components/Button";
 import TabHeader from "@/components/TabHeader";
 import Table from "@/components/Table";
+import { ERROR_MAP } from "@/constants/common";
 import { COOKIE_KEY } from "@/constants/cookie";
 import { LOTTERY_EXPECTATIONS_HEADER, LOTTERY_WINNER_HEADER } from "@/constants/lottery";
 import useFetch from "@/hooks/useFetch";
@@ -30,6 +31,8 @@ export default function LotteryWinnerList() {
     const {
         data: winnerInfo,
         isSuccess: isSuccessGetLotteryWinner,
+        isError: isErrorGetLotteryWinner,
+        errorStatus: lotteryWinnerGetErrorStatus,
         fetchNextPage: getWinnerInfo,
         refetch: refetchWinnerInfo,
     } = useInfiniteFetch<LotteryWinnerType, GetLotteryWinnerResponse>({
@@ -46,6 +49,7 @@ export default function LotteryWinnerList() {
         getNextPageParam: (currentPageParam: number, lastPage: GetLotteryWinnerResponse) => {
             return lastPage.isLastPage ? undefined : currentPageParam + 1;
         },
+        showError: false,
     });
 
     const {
@@ -103,6 +107,12 @@ export default function LotteryWinnerList() {
             refetchLotteryExpectation();
         }
     }, [isSuccessPatchLotteryExpectation]);
+    useEffect(() => {
+        if (isErrorGetLotteryWinner && lotteryWinnerGetErrorStatus === ERROR_MAP.NOT_FOUND) {
+            alert("아직 추첨되지 않은 이벤트입니다.");
+            navigate("/");
+        }
+    }, [isErrorGetLotteryWinner, lotteryWinnerGetErrorStatus]);
 
     const handleRefetch = () => {
         phoneNumberRef.current = phoneNumberInputRef.current?.value || "";
@@ -120,6 +130,11 @@ export default function LotteryWinnerList() {
 
     const handleClickDelete = (id: number) => {
         patchLotteryExpectation(id);
+    };
+
+    const handleSubmitSearch = (e: FormEvent) => {
+        e.preventDefault();
+        handleRefetch();
     };
 
     const expectations = useMemo(
@@ -173,15 +188,15 @@ export default function LotteryWinnerList() {
                         <p className="h-body-1-medium">당첨자 리스트</p>
                     </div>
 
-                    <div className="flex gap-2">
+                    <form className="flex gap-2" onSubmit={handleSubmitSearch}>
                         <input
                             ref={phoneNumberInputRef}
                             className="border border-neutral-950 rounded-lg text-neutral-950 h-body-1-medium"
                         />
-                        <Button buttonSize="sm" onClick={handleRefetch}>
+                        <Button buttonSize="sm" type="submit">
                             검색
                         </Button>
-                    </div>
+                    </form>
                 </div>
 
                 <Table
@@ -191,7 +206,7 @@ export default function LotteryWinnerList() {
                     dataLastItem={targetRef}
                 />
 
-                <Button buttonSize="lg" onClick={handleLottery}>
+                <Button buttonSize="lg" type="button" onClick={handleLottery}>
                     당첨자 다시 추첨하기
                 </Button>
             </div>
