@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { buttonStyles } from "./index.style";
 
 interface NavigationConfirmPopup {
@@ -9,6 +10,14 @@ export default function NavigationConfirmPopup({
     handleConfirm,
     handleClose,
 }: NavigationConfirmPopup) {
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, []);
+
     return (
         <div className="fixed w-full h-full left-0 top-0 z-20">
             <div
