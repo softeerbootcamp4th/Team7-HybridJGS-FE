@@ -60,6 +60,11 @@ export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
     const { toggleContents, toggle } = useToggleContents({ useDuration: false });
     const fetchRushBalance = useFetchRushBalance();
 
+    const selectedCardToggle = () => {
+        toggle();
+        fetchRushBalance();
+    };
+
     useEffect(() => {
         fetchRushBalance();
         unblockNavigation();
@@ -73,9 +78,9 @@ export default function SelectedCard({ unblockNavigation }: SelectedCardProps) {
             >
                 <RushCountdown />
                 {toggleContents ? (
-                    <SelectedCardDescription onClick={toggle} />
+                    <SelectedCardDescription onClick={selectedCardToggle} />
                 ) : (
-                    <SelectedCardCurrentRatio onClick={toggle} />
+                    <SelectedCardCurrentRatio onClick={selectedCardToggle} />
                 )}
             </motion.div>
             <RushShareLink />

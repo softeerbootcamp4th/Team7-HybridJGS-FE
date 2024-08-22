@@ -48,6 +48,8 @@ export default function RushCardResultDescription() {
         option: gameState.userSelectedOption,
     });
 
+    if (selectedOptionRatio === null) return null;
+
     return (
         <div className={backgroundGradients({ color })}>
             <div className="flex flex-col gap-2 justify-center items-center w-[245px]">
