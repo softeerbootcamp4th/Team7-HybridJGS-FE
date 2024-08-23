@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { cva } from "class-variance-authority";
 import Tooltip from "@/components/Tooltip";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
@@ -57,6 +58,7 @@ export default function RushCardCurrentRatio() {
     const { userSelectedOption, cardOptions } = useRushGameStateContext();
     const { toggleContents } = useToggleContents();
     const fetchRushBalance = useFetchRushBalance();
+    const [throttle, setThrottle] = useState<boolean>(false);
 
     const leftOptionRatio = getOptionRatio({
         cardOptions: cardOptions,
@@ -77,6 +79,16 @@ export default function RushCardCurrentRatio() {
         cardOptions: cardOptions,
         option: CARD_OPTION.RIGHT_OPTIONS,
     });
+
+    const reloadThrottleButton = () => {
+        if (!throttle) {
+            fetchRushBalance();
+            setThrottle(true);
+            setTimeout(() => {
+                setThrottle(false);
+            }, 500);
+        }
+    };
 
     return (
         <div className="relative flex flex-col gap-16 w-[834px] h-[400px] bg-n-neutral-50 rounded-800 pt-12 pb-[94px] px-[57px] justify-between break-keep">
@@ -108,7 +120,10 @@ export default function RushCardCurrentRatio() {
                 <div className={tooltipVariants({ visible: toggleContents })}>
                     <Tooltip content={TOOLTIP_CONTENT()} tooltipPosition="left" />
                 </div>
-                <button onClick={fetchRushBalance}>
+                <button
+                    onClick={reloadThrottleButton}
+                    className={`${throttle && "opacity-50 cursor-default"}`}
+                >
                     <Reload />
                 </button>
             </div>
