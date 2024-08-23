@@ -1,11 +1,11 @@
-name: HybridJGS-FE Dev Production
+name: HybridJGS-FE Main Production
 
 on:
   push:
     branches:
-      - dev
+      - main
     paths:
-      - 'client/**'
+      - "client/**"
 
 jobs:
   build-and-deploy-client:
@@ -31,7 +31,6 @@ jobs:
       - name: Install dependencies
         run: yarn
         working-directory: ${{ env.working-directory }}
-      
 
       - name: Create .env file
         run: |

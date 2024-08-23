@@ -1,11 +1,11 @@
-name: HybridJGS-FE Dev Production
+name: HybridJGS-FE Main Production
 
 on:
   push:
     branches:
-      - dev
+      - main
     paths:
-      - 'admin/**'
+      - "admin/**"
 
 jobs:
   build-and-deploy-admin:
