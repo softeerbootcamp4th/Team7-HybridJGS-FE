@@ -2,58 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+input {
+    background: none;
+}
+input:focus {
+    outline: none;
+}
+textarea {
+    background: none;
+    resize: none;
+}
+textarea:focus {
+    outline: none;
+}
+
+p {
+    display: inline;
+}
+
 @font-face {
     font-family: "HyundaiSansHeadOffice-Bold";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Bold.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Bold.woff") format("woff");
-    font-weight: 700;
+    src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFBold.otf") format("opentype");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HyundaiSansHeadOffice-Medium";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Medium.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Medium.woff") format("woff");
-    font-weight: 500;
+    src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFMedium.otf") format("opentype");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HyundaiSansHeadOffice-Regular";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Regular.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Regular.woff") format("woff");
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: "HyundaiSansHeadOffice-Light";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Light.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansHeadOffice-Light.woff") format("woff");
-    font-weight: 300;
+    src: url("/public/fonts/hyundai-sans/HyundaiSansHeadKROTFRegular.otf") format("opentype");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HyundaiSansTextOffice-Bold";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Bold.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Bold.woff") format("woff");
-    font-weight: 700;
+    src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFBold.otf") format("opentype");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HyundaiSansTextOffice-Medium";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Medium.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Medium.woff") format("woff");
-    font-weight: 500;
+    src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFMedium.otf") format("opentype");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HyundaiSansTextOffice-Regular";
-    src:
-        url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Regular.woff2") format("woff2"),
-        url("/public/fonts/hyundai-sans/HyundaiSansTextOffice-Regular.woff") format("woff");
-    font-weight: 400;
+    src: url("/public/fonts/hyundai-sans/HyundaiSansTextKROTFRegular.otf") format("opentype");
+    font-display: swap;
 }

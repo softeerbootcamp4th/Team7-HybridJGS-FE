@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:focus {
+    outline: none;
+}
+
+@font-face {
+    font-family: "HyundaiSansHeadOffice-Bold";
+    src: url("/public/fonts/HyundaiSansHeadKROTFBold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansHeadOffice-Medium";
+    src: url("/public/fonts/HyundaiSansHeadKROTFMedium.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansHeadOffice-Regular";
+    src: url("/public/fonts/HyundaiSansHeadKROTFRegular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansHeadOffice-Light";
+    src: url("/public/fonts/HyundaiSansHeadKROTFLight.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansTextOffice-Bold";
+    src: url("/public/fonts/HyundaiSansTextKROTFBold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansTextOffice-Medium";
+    src: url("/public/fonts/HyundaiSansTextKROTFMedium.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HyundaiSansTextOffice-Regular";
+    src: url("/public/fonts/HyundaiSansTextKROTFRegular.otf") format("opentype");
+}
