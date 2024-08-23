@@ -57,7 +57,7 @@ function getMessage(leftRatio: number, rightRatio: number, userSelectedOption: C
 export default function RushCardCurrentRatio() {
     const { userSelectedOption, cardOptions } = useRushGameStateContext();
     const { toggleContents } = useToggleContents();
-    const fetchRushBalance = useFetchRushBalance();
+    const { fetchRushBalance, isLoadingRushBalance } = useFetchRushBalance();
     const [throttle, setThrottle] = useState<boolean>(false);
 
     const leftOptionRatio = getOptionRatio({
@@ -81,7 +81,7 @@ export default function RushCardCurrentRatio() {
     });
 
     const reloadThrottleButton = () => {
-        if (!throttle) {
+        if (!throttle && !isLoadingRushBalance) {
             fetchRushBalance();
             setThrottle(true);
             setTimeout(() => {

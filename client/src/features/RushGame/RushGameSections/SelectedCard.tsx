@@ -54,7 +54,7 @@ function SelectedCardCurrentRatio({ onClick }: SelectedCardDetailsProps) {
 
 export default function SelectedCard() {
     const { toggleContents, toggle } = useToggleContents({ useDuration: false });
-    const fetchRushBalance = useFetchRushBalance();
+    const { fetchRushBalance } = useFetchRushBalance();
 
     const selectedCardToggle = () => {
         toggle();
