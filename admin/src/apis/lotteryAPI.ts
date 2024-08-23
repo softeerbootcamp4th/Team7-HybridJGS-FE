@@ -27,7 +27,6 @@ export const LotteryAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -40,7 +39,6 @@ export const LotteryAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -52,7 +50,6 @@ export const LotteryAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -64,7 +61,6 @@ export const LotteryAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -82,7 +78,6 @@ export const LotteryAPI = {
             );
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -100,7 +95,6 @@ export const LotteryAPI = {
             );
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -118,7 +112,6 @@ export const LotteryAPI = {
             );
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -133,7 +126,6 @@ export const LotteryAPI = {
             });
             return {};
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },

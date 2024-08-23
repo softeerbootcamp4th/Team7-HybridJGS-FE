@@ -34,7 +34,6 @@ export default function useFetchMultiple<T, P>(
             setIsSuccess(true);
         } catch (error) {
             setIsError(true);
-            console.error(error);
             if (showError) {
                 showBoundary(error);
             }

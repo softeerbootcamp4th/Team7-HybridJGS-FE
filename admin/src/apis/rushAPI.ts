@@ -24,7 +24,6 @@ export const RushAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -40,7 +39,6 @@ export const RushAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -58,7 +56,6 @@ export const RushAPI = {
             );
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -76,7 +73,6 @@ export const RushAPI = {
             );
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
@@ -91,7 +87,6 @@ export const RushAPI = {
             });
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },

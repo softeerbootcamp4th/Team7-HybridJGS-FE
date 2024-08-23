@@ -18,7 +18,6 @@ export const AuthAPI = {
 
             return response.json();
         } catch (error) {
-            console.error("Error:", error);
             throw error;
         }
     },
