@@ -20,7 +20,6 @@ export default function useFetch<T, P = void>(fetch: (params: P) => Promise<T>, 
             setIsSuccess(!!data);
         } catch (error) {
             setIsError(true);
-            console.error(error);
             if (showError) {
                 showBoundary(error);
             }
