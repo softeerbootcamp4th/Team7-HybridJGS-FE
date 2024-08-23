@@ -24,7 +24,8 @@ export default function RushCardComparison() {
         isLoading: isLoadingPostSelectedRushOption,
         fetchData: postSelectedRushOptionApply,
     } = useFetch<RushEventStatusCodeResponse, { token: string; optionId: CardOption }>(
-        ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId)
+        ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId),
+        false
     );
 
     const handleCardSelection = async (optionId: CardOption) => {
