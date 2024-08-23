@@ -15,6 +15,7 @@ export default function useFetchRushBalance() {
     const {
         data: rushBalanceData,
         isSuccess: isSuccessRushBalance,
+        isLoading: isLoadingRushBalance,
         fetchData: getRushBalance,
     } = useFetch<GetRushBalanceResponse, string>((token) => RushAPI.getRushBalance(token));
 
@@ -50,5 +51,5 @@ export default function useFetchRushBalance() {
         }
     }, [isSuccessRushBalance, rushBalanceData]);
 
-    return fetchRushBalance;
+    return { fetchRushBalance, isSuccessRushBalance, isLoadingRushBalance };
 }

@@ -9,7 +9,7 @@ import { RUSH_ACTION } from "@/types/rushGame.ts";
 
 export function useFetchRushUserParticipationStatus() {
     const dispatch = useRushGameDispatchContext();
-    const fetchRushBalance = useFetchRushBalance();
+    const { fetchRushBalance } = useFetchRushBalance();
 
     const { data: userParticipatedStatus, fetchData: getRushUserParticipationStatus } = useFetch<
         GetRushUserParticipationStatusResponse,
