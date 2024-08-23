@@ -74,7 +74,7 @@ export function CasperCustomFinish({
 
         unblockNavigation();
         getApplyCount();
-    }, [cookies]);
+    }, []);
 
     const handleSaveImage = () => {
         if (!casperCustomRef.current) {
