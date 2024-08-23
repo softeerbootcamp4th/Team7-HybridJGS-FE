@@ -14,7 +14,6 @@ import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { formatTime } from "@/utils/formatTime.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
-import parseIsoDateTime from "@/utils/parseIsoDateTime.ts";
 
 interface CountdownTimerProps {
     initialPreCountdown: number | null;
@@ -81,11 +80,8 @@ export default function Countdown() {
 
     useEffect(() => {
         if (isSuccessRush && rushData) {
-            const serverDate = parseIsoDateTime(rushData.serverTime);
-
             const currentEvent = rushData.events.find((event) => {
-                const eventDate = parseIsoDateTime(event.startDateTime);
-                return eventDate === serverDate && event.rushEventId === rushData.todayEventId;
+                return event.rushEventId === rushData.todayEventId;
             });
 
             if (currentEvent) {
