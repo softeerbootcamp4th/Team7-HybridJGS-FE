@@ -18,6 +18,6 @@ export async function saveDomImage({ casperCustomDom, casperName }: SaveDomImage
         link.href = pngDataUrl;
         link.click();
     } catch (error) {
-        console.error("Failed to save image:", error);
+        throw error;
     }
 }
