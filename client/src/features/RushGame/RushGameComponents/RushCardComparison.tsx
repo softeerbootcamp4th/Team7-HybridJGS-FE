@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { RushAPI } from "@/apis/rushAPI.ts";
 import { CARD_OPTION } from "@/constants/Rush/rushCard.ts";
@@ -16,18 +16,29 @@ export default function RushCardComparison() {
     const gameState = useRushGameStateContext();
     const dispatch = useRushGameDispatchContext();
     const { getRushUserParticipationStatus } = useFetchRushUserParticipationStatus();
+    const [throttle, setThrottle] = useState<boolean>(false);
 
     const {
         data: postSelectedRushOptionResponse,
         isSuccess: isSuccessPostSelectedRushOption,
+        isLoading: isLoadingPostSelectedRushOption,
         fetchData: postSelectedRushOptionApply,
     } = useFetch<RushEventStatusCodeResponse, { token: string; optionId: CardOption }>(
         ({ token, optionId }) => RushAPI.postSelectedRushOptionApply(token, optionId)
     );
 
     const handleCardSelection = async (optionId: CardOption) => {
-        await postSelectedRushOptionApply({ token: cookies[COOKIE_KEY.ACCESS_TOKEN], optionId });
-        dispatch({ type: RUSH_ACTION.SET_USER_OPTION, payload: optionId });
+        if (!throttle && !isLoadingPostSelectedRushOption) {
+            await postSelectedRushOptionApply({
+                token: cookies[COOKIE_KEY.ACCESS_TOKEN],
+                optionId,
+            });
+            dispatch({ type: RUSH_ACTION.SET_USER_OPTION, payload: optionId });
+            setThrottle(true);
+            setTimeout(() => {
+                setThrottle(false);
+            }, 1000);
+        }
     };
 
     useEffect(() => {
