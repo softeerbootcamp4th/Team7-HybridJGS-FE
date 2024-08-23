@@ -4,18 +4,14 @@ import useRushGameDispatchContext from "@/hooks/Contexts/useRushGameDispatchCont
 import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
-import parseIsoDateTime from "@/utils/parseIsoDateTime.ts";
 
 export default function useSetGamePhase(rushData: GetTotalRushEventsResponse) {
     const dispatch = useRushGameDispatchContext();
 
     useEffect(() => {
         if (rushData) {
-            const serverDate = parseIsoDateTime(rushData.serverTime);
-
             const currentEvent = rushData.events.find((event) => {
-                const eventDate = parseIsoDateTime(event.startDateTime);
-                return eventDate === serverDate && event.rushEventId === rushData.todayEventId;
+                return event.rushEventId === rushData.todayEventId;
             });
 
             if (currentEvent) {

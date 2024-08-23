@@ -10,7 +10,6 @@ import { GetTotalRushEventsResponse } from "@/types/rushApi.ts";
 import { RUSH_ACTION } from "@/types/rushGame.ts";
 import { formatTime } from "@/utils/formatTime.ts";
 import { getMsTime } from "@/utils/getMsTime.ts";
-import parseIsoDateTime from "@/utils/parseIsoDateTime.ts";
 
 function TimeDisplay({ label, value }: { label: string; value: string }) {
     return (
@@ -38,11 +37,8 @@ export default function RushCountdown() {
 
     useEffect(() => {
         if (isSuccessRush && rushData) {
-            const serverDate = parseIsoDateTime(rushData.serverTime);
-
             const currentEvent = rushData.events.find((event) => {
-                const eventDate = parseIsoDateTime(event.startDateTime);
-                return eventDate === serverDate && event.rushEventId === rushData.todayEventId;
+                return event.rushEventId === rushData.todayEventId;
             });
 
             if (currentEvent) {
