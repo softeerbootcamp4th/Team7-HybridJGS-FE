@@ -53,7 +53,8 @@ const casperCustomReducer = (
             }
             return state;
         }
-        case CASPER_ACTION.SHUFFLE_CASPER:
+        case CASPER_ACTION.SHUFFLE_CASPER: {
+            const hasSticker = state.selectedCasperIdx[CUSTOM_OPTION.STICKER] !== null;
             return {
                 ...state,
                 selectedCasperIdx: {
@@ -64,8 +65,12 @@ const casperCustomReducer = (
                     ),
                     [CUSTOM_OPTION.MOUTH]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.MOUTH]),
                     [CUSTOM_OPTION.COLOR]: getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.COLOR]),
+                    [CUSTOM_OPTION.STICKER]: hasSticker
+                        ? getRandomInt(OPTION_MAX_COUNT[CUSTOM_OPTION.STICKER])
+                        : null,
                 },
             };
+        }
         case CASPER_ACTION.RESET_CUSTOM:
             return initialState;
         default:
