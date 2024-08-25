@@ -105,13 +105,52 @@ https://github.com/user-attachments/assets/506be25c-f477-475b-9a70-fb26d754ce71
 
 ## 기술 스택 
 
-**Frontend**
+### Frontend
 
-react, TypeScript, TailwindCSS, yarn, Vite, storybook, framer-motion, prettier, eslint
+<div>
 
-**Backend**
+<img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=Yarn&logoColor=white">
+<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white">
+<img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">
+<img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
+</div>
 
-SpringBoot, MySQL, JPA, Swagger, Grafana, Prometheus, k6, redis, github action, s3, codedeploy, aws ec2, aws s3, docker, promtail, loki
+<div>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
+<img src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=Tailwind%20CSS&logoColor=white">
+<img src="https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=Storybook&logoColor=white">
+<img src="https://img.shields.io/badge/Framer%20Motion-0055FF?style=for-the-badge&logo=Framer&logoColor=white">
+
+</div>
+
+<div>
+<img src="https://img.shields.io/badge/AWS%20S3-569A31?style=for-the-badge&logo=Amazon%20S3&logoColor=white">
+<img src="https://img.shields.io/badge/AWS%20CloudFront-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white">
+<img src="https://img.shields.io/badge/AWS%20Route%2053-8C4FFF?style=for-the-badge&logo=Amazon%20Route%2053&logoColor=white">
+<img src="https://img.shields.io/badge/Github%20Actions-2088FF?style=for-the-badge&logo=Github%20Actions&logoColor=white">
+</div>
+
+### Backend
+
+<div>
+    <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=Spring%20Boot&logoColor=white">
+    <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
+    <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white">
+    <img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=Grafana&logoColor=white">
+    <img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white">
+    <img src="https://img.shields.io/badge/k6-7D64FF?style=for-the-badge&logo=k6&logoColor=white">
+    <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=Redis&logoColor=white">
+</div>
+
+
+<div>
+<img src="https://img.shields.io/badge/AWS%20S3-569A31?style=for-the-badge&logo=Amazon%20S3&logoColor=white">
+<img src="https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=Amazon%20EC2&logoColor=white">
+<img src="https://img.shields.io/badge/CodeDeploy-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white">
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+<img src="https://img.shields.io/badge/Github%20Actions-2088FF?style=for-the-badge&logo=Github%20Actions&logoColor=white">
+</div>
 
 ## 산출물
 
