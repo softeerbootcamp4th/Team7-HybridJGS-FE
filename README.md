@@ -8,67 +8,120 @@
 | FE                          | FE                          | BE                          | BE                          |
 | [@jhj2713](https://github.com/jhj2713)       | [@sooyeoniya](https://github.com/sooyeoniya)       | [@k000927](https://github.com/k000927)                    | [@wjddn2165](https://github.com/wjddn2165)                |
 
-## 서비스 소개
+## 서비스명
 
-### 서비스명
 캐스퍼 일렉트릭 출시 기념 이벤트 웹 사이트
 
-### 시연 영상
+## 시연 영상
 
 https://youtu.be/DEIrSgmXlkE
 
-### 메인 서비스
+## 메인 서비스
 
-**랜딩 페이지**
-![메인](https://github.com/user-attachments/assets/b5c3814b-5d45-4eae-a6ec-c2f4dd62a318)
+### 1) 랜딩 페이지
+
+
+
+https://github.com/user-attachments/assets/47501178-e7d4-4dc3-9454-4271e0fcd055
 
 
 추첨 이벤트와 선착순 밸런스 게임 이벤트를 소개합니다.
 
-**캐스퍼 봇 만들기 추첨 이벤트**
+<br/>
 
-![추첨이벤트](https://github.com/user-attachments/assets/779f925c-fa33-46ee-98b5-3b3c024e23c2)
 
+### 2) 캐스퍼 봇 만들기 추첨 이벤트
+
+
+
+https://github.com/user-attachments/assets/c67334f3-ea8b-4c8b-9a4e-931ba198cfd2
 
 
 캐스퍼 일렉트릭의 특징에 대해 소개합니다.
 
-![image](https://github.com/user-attachments/assets/fef8917c-6487-4f74-bee9-6f5149e7fcbc)
+<br/>
+
+
+https://github.com/user-attachments/assets/25a29ed6-6b88-4e32-83d8-8f05da43d4f8
+
+
 
 캐스퍼 일렉트릭 봇 만들기를 통해 추첨 이벤트에 참여할 수 있습니다.
 
-**선착순 밸런스 게임 이벤트**
 
-![선착순이벤트](https://github.com/user-attachments/assets/f7ba173a-5590-43f1-8939-edb29720e20f)
+<br/>
+
+
+### 3) 선착순 밸런스 게임 이벤트
+
+
+https://github.com/user-attachments/assets/3d1b3690-8d29-40a4-9aed-7c5cba2c02d7
+
+
 
 캐스퍼 일렉트릭의 장점에 대해 소개합니다.
 
-![선착순이벤트](https://github.com/user-attachments/assets/82b1ed99-eb66-4446-8557-aa52894f3d8e)
+<br/>
+
+
+https://github.com/user-attachments/assets/506be25c-f477-475b-9a70-fb26d754ce71
 
 
 캐스퍼 일렉트릭의 장점과 관련된 밸런스 게임을 통해 선착순 이벤트에 참여할 수 있습니다.
 
-### 어드민 서비스
 
-**선착순 밸런스 게임 이벤트 관리**
+<br/>
+
+## 어드민 서비스
+
+### 1) 선착순 밸런스 게임 이벤트 관리
 
 ![image](https://github.com/user-attachments/assets/ba57d8d1-0dcc-458f-913e-11e27d3bb89d)
 
 선착순 이벤트를 관리할 수 있습니다.
 
+<br/>
+
 ![image](https://github.com/user-attachments/assets/c17a045c-d718-4a81-9825-a9697daa8499)
 
 선착순 밸런스 게임 이벤트에 참여한 참여자 목록을 조회할 수 있습니다.
 
-**캐스퍼 봇 만들기 추첨 이벤트 관리**
+<br/>
+
+### 2) 캐스퍼 봇 만들기 추첨 이벤트 관리
 
 ![image](https://github.com/user-attachments/assets/674b49fc-c66b-475a-bacd-a24ad03562c1)
 
 추첨 이벤트를 관리할 수 있습니다.
 
+<br/>
+
 ![image](https://github.com/user-attachments/assets/d0f02e91-bb4d-4508-b866-91ca909a0732)
 
 캐스퍼 봇 만들기 추첨 이벤트에 참여한 참여자 목록을 조회할 수 있습니다.
+
+<br/>
+
+
+## 기술 스택 
+
+**Frontend**
+
+react, TypeScript, TailwindCSS, yarn, Vite, storybook, framer-motion, prettier, eslint
+
+**Backend**
+
+SpringBoot, MySQL, JPA, Swagger, Grafana, Prometheus, k6, redis, github action, s3, codedeploy, aws ec2, aws s3, docker, promtail, loki
+
+## 산출물
+
+| 자료명 | 링크 |
+| --- | --- |
+| 기획/디자인 링크 | [Figma](https://www.figma.com/design/RjcSZf0akqXegZpLM400IJ/Handoff_%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C%EC%A0%95%EA%B0%81%EC%84%B8?node-id=2542-5422&t=SxvR5Gn63FeFrEli-1) |
+| Git Project | [github](https://github.com/orgs/softeerbootcamp4th/projects/8) |
+| API 명세서 | [notion](https://www.notion.so/bce83d7d25244ea3b59cabd53531211b?pvs=21) |
+| 노션 | [notion](https://www.notion.so/0f847f8e83e9423394eeb95e460a0840?pvs=21) |
+| FE 학습 정리 | [github wiki](https://github.com/softeerbootcamp4th/Team7-HybridJGS-FE/wiki) |
 
 ## 협업 전략
 
@@ -188,36 +241,6 @@ fix/#2-category
     └── resources
 ```
 
-### Pull Requests 템플릿
-
-```
-## 🖥️ Preview
-
-close #{issue number}
-
-## ✏️ 한 일
-
-## ❗️ 발생한 이슈 (해결 방안)
-
-## ❓ 논의가 필요한 사항
-```
-
-### Issues 템플릿
-
-```
-## 🖥️ 어떤 기능인가요?
-
-## ✏️ 작업 상세 내용
-
-## ❗️ 참고 자료 (선택)
-```
-
-```
-## 🖥️ 어떤 버그인가요?
-
-## ❗️ 참고 자료 (선택)
-```
-
 ## 그라운드 룰
 
 ### 소통과 피드백 💬
@@ -258,22 +281,6 @@ close #{issue number}
 - 웃으며 일하기!
 - 프로덕트의 비전과 미션을 주기적으로 상기
 - 친해지기 위해 노력하기. (밥 같이 먹기 등)
-
-## 기획/디자인 링크
-
-[Figma](https://www.figma.com/design/RjcSZf0akqXegZpLM400IJ/Handoff_%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C%EC%A0%95%EA%B0%81%EC%84%B8?node-id=2542-5422&t=SxvR5Gn63FeFrEli-1)
-
-## Git Project
-
-[github](https://github.com/orgs/softeerbootcamp4th/projects/8)
-
-## 노션
-
-[notion](https://www.notion.so/0f847f8e83e9423394eeb95e460a0840?pvs=21)
-
-## 개발 이슈
-
-[notion](https://www.notion.so/941aa9df9b7b4bc69d0219e05a105077?pvs=21)
 
 ### 백엔드 ER 다이어그램
 
