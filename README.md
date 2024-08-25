@@ -324,3 +324,8 @@ fix/#2-category
 ### 백엔드 ER 다이어그램
 
 ![image](https://github.com/user-attachments/assets/b2a9050e-a565-441f-98c3-25ec1b6547c1)
+
+### 서버 구조
+![Untitled (2)](https://github.com/user-attachments/assets/171047c9-2660-4fd0-bfc7-54a15dbc52f1)
+
+
