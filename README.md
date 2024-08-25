@@ -1,4 +1,4 @@
-# ⚡️ 하이브리드정각세
+# ⚡️ TEAM 하이브리드정각세
 
 ## 팀원 소개
 
@@ -9,6 +9,9 @@
 | [@jhj2713](https://github.com/jhj2713)       | [@sooyeoniya](https://github.com/sooyeoniya)       | [@k000927](https://github.com/k000927)                    | [@wjddn2165](https://github.com/wjddn2165)                |
 
 ## 서비스 소개
+
+### 서비스명
+캐스퍼 일렉트릭 출시 기념 이벤트 웹 사이트
 
 ### 시연 영상
 
