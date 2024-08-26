@@ -327,6 +327,7 @@ fix/#2-category
 
 ### 서버 구조
 
-![Untitled (2)](https://github.com/user-attachments/assets/797acb64-37b4-418c-91cd-2b50e4ee3060)
+![Untitled (2)](https://github.com/user-attachments/assets/d96406a2-7e1a-459e-be6a-dbdb3e276a08)
+
 
 
