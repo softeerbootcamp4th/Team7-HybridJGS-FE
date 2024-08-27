@@ -127,7 +127,6 @@ https://github.com/user-attachments/assets/506be25c-f477-475b-9a70-fb26d754ce71
 <div>
 <img src="https://img.shields.io/badge/AWS%20S3-569A31?style=for-the-badge&logo=Amazon%20S3&logoColor=white">
 <img src="https://img.shields.io/badge/AWS%20CloudFront-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white">
-<img src="https://img.shields.io/badge/AWS%20Route%2053-8C4FFF?style=for-the-badge&logo=Amazon%20Route%2053&logoColor=white">
 <img src="https://img.shields.io/badge/Github%20Actions-2088FF?style=for-the-badge&logo=Github%20Actions&logoColor=white">
 </div>
 
